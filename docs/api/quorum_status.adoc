@@ -1,0 +1,21 @@
+= quorum_status API Documentation
+
+== call
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/quorum_status/:quorum_status_id/call
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

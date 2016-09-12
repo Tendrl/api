@@ -1,0 +1,1617 @@
+= osd API Documentation
+
+== blacklist.add 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/blacklist.add
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== blacklist.ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/blacklist.ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== blacklist.rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/blacklist.rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== blocked-by
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/blocked-by
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== create 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/create
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.add
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.add
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.add-bucket
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.add-bucket
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.create-or-move 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/crush.create-or-move
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.dump
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.dump
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.get-tunable
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.get-tunable
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.link
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.link
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.move
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.move
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.remove
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/crush.remove
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rename-bucket
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.rename-bucket
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.reweight
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.reweight
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.reweight-all
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.reweight-all
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.reweight-subtree
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.reweight-subtree
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/crush.rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.create-erasure 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/crush.rule.create-erasure
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.create-simple 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/crush.rule.create-simple
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.dump
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.rule.dump
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.rule.ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.list
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.rule.list
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.rule.rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/crush.rule.rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.set
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.set
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.set-tunable
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.set-tunable
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.show-tunables
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.show-tunables
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.tree
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.tree
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.tunables
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/crush.tunables
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== crush.unlink
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/crush.unlink
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== df
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/df
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== deep-scrub
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/deep-scrub
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== down
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/down
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== dump
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/dump
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== erasure-code-profile.get
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/erasure-code-profile.get
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== erasure-code-profile.ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/erasure-code-profile.ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== erasure-code-profile.rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/erasure-code-profile.rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== erasure-code-profile.set
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/erasure-code-profile.set
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== find
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/find
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== getcrushmap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/getcrushmap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== getmap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/getmap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== getmaxosd
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/getmaxosd
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== in
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/in
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== lost
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/lost
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== lspools
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/lspools
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== map
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/map
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== metadata
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/metadata
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== out
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/out
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pause
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/pause
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== perf
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/perf
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pg-temp
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/pg-temp
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.create 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/pool.create
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.delete
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/pool.delete
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.get
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/pool.get
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.get-quota
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/pool.get-quota
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/pool.ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.mksnap 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/pool.mksnap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.rename
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/pool.rename
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.rmsnap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/pool.rmsnap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.set
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/pool.set
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.set-quota
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/pool.set-quota
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.stats
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/pool.stats
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== primary-affinity
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/primary-affinity
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== primary-temp
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/primary-temp
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== repair
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/repair
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== reweight
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/reweight
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== reweight-by-pg
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/reweight-by-pg
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== reweight-by-utilization
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/reweight-by-utilization
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== scrub
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/scrub
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/set
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== setcrushmap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/setcrushmap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== setmaxosd
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/setmaxosd
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== stat
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/stat
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== thrash
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/thrash
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.add 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/tier.add
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.add-cache 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/osd/tier.add-cache
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.cache-mode
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/tier.cache-mode
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.remove
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/tier.remove
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.remove-overlay
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/osd/:osd_id/tier.remove-overlay
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tier.set-overlay
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/tier.set-overlay
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tree
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/osd/:osd_id/tree
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== unpause
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/unpause
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== unset
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/osd/:osd_id/unset
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
