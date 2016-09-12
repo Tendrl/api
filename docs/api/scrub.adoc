@@ -1,0 +1,21 @@
+= scrub API Documentation
+
+== call
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/scrub/:scrub_id/call
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

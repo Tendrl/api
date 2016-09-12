@@ -1,0 +1,108 @@
+= config-key API Documentation
+
+== del
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/config-key/:config-key_id/del
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== exists
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/config-key/:config-key_id/exists
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== get
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/config-key/:config-key_id/get
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== list
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/config-key/list
+-------------------
+==== Parameters
+[width="100%",cols="3",options="header"]
+|======================
+|Name     |Description| Example
+|before   |before the query date. |2016-03-01
+|after    |after the query date. |2016-02-01
+|page     |page number|Default: 1
+|per_page |Number of results per page| Default: 10
+|======================
+*Note: All the above query parameters can be used in combination with each
+other to retrieve the desired result.
+
+=== Sample curl command
+-------------------
+curl -XGET 
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== put 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/config-key/put
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

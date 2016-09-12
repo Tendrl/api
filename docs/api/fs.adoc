@@ -1,0 +1,78 @@
+= fs API Documentation
+
+== ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/fs/:fs_id/ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== new 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/fs/new
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== reset
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/fs/:fs_id/reset
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/fs/:fs_id/rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

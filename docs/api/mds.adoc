@@ -1,0 +1,420 @@
+= mds API Documentation
+
+== add_data_pool
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/add_data_pool
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== cluster_down
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/cluster_down
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== cluster_up
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/cluster_up
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== compat.rm_compat
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/compat.rm_compat
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== compat.rm_incompat
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/compat.rm_incompat
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== compat.show
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/compat.show
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== deactivate
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/deactivate
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== dump
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/dump
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== fail
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/fail
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== getmap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/getmap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== newfs 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/mds/newfs
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== remove_data_pool
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/mds/:mds_id/remove_data_pool
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/mds/:mds_id/rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== rmfailed
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/mds/:mds_id/rmfailed
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set.max_mds
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/set.max_mds
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set.max_file_size
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/set.max_file_size
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set.allow_new_snaps
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/set.allow_new_snaps
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set.inline_data
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/set.inline_data
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== set_state
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/set_state
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== stat
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/stat
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== stop
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/stop
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== tell
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/mds/:mds_id/tell
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

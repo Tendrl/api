@@ -1,0 +1,192 @@
+= auth API Documentation
+
+== add 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/auth/add
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== caps
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/auth/:auth_id/caps
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== del
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/auth/:auth_id/del
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== export
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/auth/:auth_id/export
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== get
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/auth/:auth_id/get
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== get-key
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/auth/:auth_id/get-key
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== get-or-create-key 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/auth/get-or-create-key
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== import 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/auth/import
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== list
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/auth/:auth_id/list
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== print-key
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/auth/:auth_id/print-key
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------

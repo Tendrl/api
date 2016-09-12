@@ -1,0 +1,420 @@
+= rados API Documentation
+
+== lspools
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/lspools
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== df
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/df
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== mkpool 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/rados/mkpool
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== rmpool
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/rados/:rados_id/rmpool
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.get
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.get
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.put
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/rados/:rados_id/pool.put
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.rm
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/rados/:rados_id/pool.rm
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.listwatchers
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.listwatchers
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.ls
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.ls
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.lssnap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.lssnap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.clonedata
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.clonedata
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.mksnap 
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+POST /clusters/:cluster_id/rados/pool.mksnap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPOST
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.rmsnap
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/rados/:rados_id/pool.rmsnap
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.bench
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.bench
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.cleanup
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.cleanup
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.listomapkeys
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.listomapkeys
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.listomapvals
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.listomapvals
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.getomapval
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.getomapval
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.setomapval
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/rados/:rados_id/pool.setomapval
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.rmomapkey
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+DELETE /clusters/:cluster_id/rados/:rados_id/pool.rmomapkey
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XDELETE
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.getomapheader
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+GET /clusters/:cluster_id/rados/:rados_id/pool.getomapheader
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XGET
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
+== pool.setomapheader
+[abstract]
+--
+Description to explain the usage.
+--
+=== Path
+-------------------
+PUT /clusters/:cluster_id/rados/:rados_id/pool.setomapheader
+-------------------
+
+=== Sample curl command
+-------------------
+curl -XPUT
+-------------------
+
+=== Sample response
+-------------------
+{}
+-------------------
