@@ -1,0 +1,10 @@
+*~
+*.gem
+.*.swp
+.bundle
+.config
+Gemfile.lock
+tags
+tmp
+vendor/
+.DS_Store
