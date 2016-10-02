@@ -1,0 +1,49 @@
+---
+config_version: '1.0'
+sdss_type: ceph
+objects:
+  cluster:
+    properties:
+      cluster_id: String
+      name: String
+      config: Hash
+      health: Hash
+  osd:
+    properties:
+      osd_id: String
+      osd_cluster_id: String
+      reweight: Float
+      server: %s
+    states:
+      up: Boolean
+      in: Boolean
+    actions: Array
+  pool: 
+    states: 
+      full: Boolean
+    properties:
+      pool_id: Integer
+      name: String
+      size: Integer
+      pg_num: Integer
+      crush_rule_set: %s
+      min_size: Integer
+      crash_replay_interval: Integer
+      pgp_num: Integer
+      hashpspool: Boolean
+      quota_max_objects: Integer
+      quota_max_bytes: Integer
+relationships:
+  cluster:
+    has_many:
+      - node
+      - osd
+      - pool
+      - mon
+      - service
+      - plancement_group
+      - crush_node
+      - crush_type
+    has_one:
+      - crush_map
+      - crush_rule_set
