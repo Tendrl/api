@@ -1,0 +1,20 @@
+---
+:development:
+  :host: '127.0.0.1'
+  :port: 2379
+  :user_name: 'username'
+  :password: 'password'
+
+:test:
+  :host: '127.0.0.1'
+  :port: 2379
+  :user_name: 'username'
+  :password: 'password'
+
+:production:
+  :host: '127.0.0.1'
+  :port: 2379
+  :user_name: 'username'
+  :password: 'password'
+
+
