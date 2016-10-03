@@ -1,0 +1,7 @@
+---
+:production:
+  :host: "<%= ENV['ETCD_HOST'] %>"
+  :port: "<%= ENV['ETCD_PORT'] %>"
+  :user_name: "<%= ENV['ETCD_USERNAME'] %>"
+  :password: "<%= ENV['ETCD_PASSWORD'] %>"
+
