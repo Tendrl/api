@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.0.0'
 
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'etcd'
 gem 'sinatra-cross_origin', "~> 0.3.1"
-gem 'activesupport', require: false
+gem 'activesupport', "4.2.2", require: false
 
 group :development do
   gem 'rubocop', require: false
