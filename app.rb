@@ -45,11 +45,11 @@ class App < Sinatra::Base
   }
 
   before do
-    @cluster = etcd.get("/clusters/#{params[:cluster_id]}")
   end
 
   get '/cluster/:cluster_id/:object_type/attributes' do
-    component = Tendrl::Component.new(@cluster[:sds_version],
+    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
+    component = Tendrl::Component.new(cluster['sds_version'],
                                       params[:object_type])
 
     respond_to do |f|
@@ -58,7 +58,8 @@ class App < Sinatra::Base
   end
 
   get '/cluster/:cluster_id/:object_type/actions' do
-    component = Tendrl::Component.new(@cluster[:sds_version],
+    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
+    component = Tendrl::Component.new(cluster['sds_version'],
                                       params[:object_type])
 
     respond_to do |f|
@@ -67,7 +68,8 @@ class App < Sinatra::Base
   end
 
   post '/cluster/:cluster_id/:object_type/:action' do
-    component = Tendrl::Component.new(@cluster[:sds_version],
+    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
+    component = Tendrl::Component.new(cluster['sds_version'],
                                       params[:object_type])
     body = JSON.parse(request.body.read)
     job_id = SecureRandom.hex
@@ -78,7 +80,7 @@ class App < Sinatra::Base
       object_type: params[:object_type],
       status: 'processing',
       attributes: body.slice(*component.attributes.keys)
-    })
+    }.to_json)
 
     job = { 
       job_id: job_id,

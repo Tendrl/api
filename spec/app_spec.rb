@@ -4,7 +4,10 @@ describe 'API' do
 
   before do
     etcd = instance_double(Etcd::Client)
-    allow(etcd).to receive(:get).and_return({ sds_version: 'gluster-3.8.3' })
+    etcd_response = instance_double(Etcd::Response)
+    allow(etcd).to receive(:get).and_return(etcd_response)
+    allow(etcd_response).to receive(:value).
+      and_return({ sds_version: 'gluster-3.8.3' }.to_json)
     allow(etcd).to receive(:set).and_return({ })
     App.settings.etcd = etcd
     @cluster_id = 'd74371ad-c292-4ccd-949c-d48de9472afd'

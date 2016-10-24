@@ -2,3 +2,4 @@ config/etcd.yml
 config/tendrl.yml
 *.log
 .DS_Store
+config/sds
