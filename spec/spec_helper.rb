@@ -1,7 +1,7 @@
 ENV['RACK_ENV'] = 'test'
 
 require_relative File.join('..', 'app')
-require 'tendrl'
+require './lib/tendrl'
 
 RSpec.configure do |config|
   include Rack::Test::Methods
