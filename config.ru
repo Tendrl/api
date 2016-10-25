@@ -1,3 +1,3 @@
 require './app'
 
-run App
+map('/1.0') { run App }

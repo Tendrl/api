@@ -1,10 +1,10 @@
 require 'active_support/core_ext/hash/deep_merge'
-require 'tendrl/version'
-require 'tendrl/component'
+require './lib/tendrl/version'
+require './lib/tendrl/component'
 
 #Errors
-require 'tendrl/errors/tendrl_error'
-require 'tendrl/errors/invalid_object_error'
+require './lib/tendrl/errors/tendrl_error'
+require './lib/tendrl/errors/invalid_object_error'
 
 module Tendrl
 

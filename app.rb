@@ -4,7 +4,7 @@ require 'sinatra/base'
 require "sinatra/multi_route"
 require 'securerandom'
 require 'active_support/core_ext/hash'
-require 'tendrl'
+require './lib/tendrl'
 
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 
@@ -43,9 +43,6 @@ class App < Sinatra::Base
       password: etcd_config[:password]
     )
   }
-
-  before do
-  end
 
   get '/cluster/:cluster_id/:object_type/attributes' do
     cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
