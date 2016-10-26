@@ -1,0 +1,84 @@
+---
+valid_objects:
+- volume
+- tendrl_context
+
+object_details:
+  tendrl_context:
+    enabled: True
+    value: /clusters/$cluster.id/tendrl_context
+    attrs:
+      sds_type:
+        type: String
+        value: 'gluster-3.8.3'
+        help: "NVR of the Tendrl managed sds, eg: 'gluster-3.2.0'"
+  volume:
+    enabled: True
+    value: "/clusters/$cluster.id/volumes/$volume.id"
+    attrs:
+      volname:
+        type: String
+        help: "Name of the gluster volume"
+      stripe_count:
+        type: Integer
+        help: "Volume Stripe count"
+      replica_count:
+        type: Integer
+      disperse_count:
+        type: Integer
+      redundancy_count:
+        type: Integer
+      transport:
+        type: String
+      brickdetails:
+        type: Brick[]
+      force:
+        type: Boolean
+      directory:
+        type: String
+      bitrot:
+        type: Boolean
+      scrub-frequency:
+        type: Integer
+      scrub-throttle:
+        type: Integer
+    atoms:
+      create:
+        enabled: True
+        uuid: "statically generated per atom"
+        # List of flows this of which this atom can be part of
+        flows: ["CreateGlusterVolume"]
+        run: "tendrl.gluster_bridge.atoms.volume.create.Create"
+        type: "create"
+        pre_run : ["tendrl.gluster_bridge.atoms.<atom_name>.<boolean_function>1"]
+        post_run: ["tendrl.gluster_bridge.atoms.<atom_name>.<boolean_function>1"]
+        name: "Meaningful name for this atom, should be something that is distinguishable and understandable for notification, debugging, storing and any other similar purposes"
+        outputs:
+        - "A map of type {object.attr1 : {required: True}, object.attr2:{required: False}}}} that this will be providing (or could provide) to others, used to correlate and associate the thing/s this atom produces, if it produces anything at all."
+        inputs:
+        - 'An immutable {object1.attr1 : {value: "cluster1"}, object.attr2:{value: "123?"}}}} dictionary which specifies any initial inputs that should be automatically injected into the atoms scope before the atom execution commences (this allows for providing atom local values that do not need to be provided by other atoms/dependents).'
+        version: "An immutable version that associates version information with this atom. It can be useful in resuming older versions of atoms. Standard major, minor versioning concepts should apply"
+  flows:
+    CreateGlusterVolume:
+      enabled: True
+      tendrl_context: "A map of Tendrl flow level context items like cluster id,tendrl id etc"
+      uuid: "pre-generated uuid here"
+      description: "Create Gluster Volume with given context/params"
+      atoms: ["volume.atoms.create"]
+      pre_run : ["tendrl.node_agent.atoms.<atom_name>.<boolean_function>1"]
+                #boolean returning pre/post conditions function list
+      post_run: ["tendrl.node_agent.atoms.<atom_name>.<boolean_function>1"]
+      run: "tendrl.gluster_bridge.flows.create_gluster_volume.CreateGlusterVolume"
+      type: Create
+      outputs:
+      - "A map of type {object.attr1 : {required: True}, object
+     .attr2:{required: False}}}} that this will be providing (or could
+     provide) to others, used to correlate and associate the thing/s this flow
+      produces, if it produces anything at all."
+      inputs:
+      - 'An immutable {object1.attr1 : {value: "cluster1"}, object
+     .attr2:{value: "123?"}}}} dictionary which specifies any initial inputs
+      that should be automatically injected into the flow scope before the
+      flow execution commences (this allows for providing flow local values
+      that do not need to be provided by other flow/dependents).'
+      version: 'An immutable version that associates version information with this flow. It can be useful in resuming older versions of flow. Standard major, minor versioning concepts should apply'

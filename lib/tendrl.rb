@@ -13,11 +13,9 @@ module Tendrl
     $config = {}
     Dir.glob("#{sds_dir_path}/*.yaml").each do |file|
       content = YAML.load_file(file)
-      if $config[content['sds_version']]
-        $config[content['sds_version']].deep_merge!(content)
-      else
-        $config[content['sds_version']] = content
-      end
+      sds_version =
+        content['object_details']['tendrl_context']['attrs']['sds_type']['value']
+      $config[sds_version] = content
     end
     $config
   end

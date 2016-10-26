@@ -69,7 +69,7 @@ class App < Sinatra::Base
     component = Tendrl::Component.new(cluster['sds_version'],
                                       params[:object_type])
     body = JSON.parse(request.body.read)
-    job_id = SecureRandom.hex
+    job_id = SecureRandom.uuid
     etcd.set("/queue/#{job_id}", value: {
       cluster_id: params[:cluster_id],
       sds_type: 'gluster',
