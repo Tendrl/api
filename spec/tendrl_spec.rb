@@ -7,7 +7,7 @@ RSpec.describe Tendrl do
     it 'load the global sds configuration' do
       Tendrl.sds_config('spec/fixtures')
       expect(Tendrl.sds_config['gluster-3.8.3']).not_to be_empty
-      expect(Tendrl.sds_config['gluster-3.8.3']['sds_version']).to eq('gluster-3.8.3')
+      expect(Tendrl.sds_config['gluster-3.8.3']['object_details']['tendrl_context']['attrs']['sds_type']['value']).to eq('gluster-3.8.3')
     end
      
 

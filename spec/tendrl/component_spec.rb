@@ -21,7 +21,7 @@ RSpec.describe Tendrl::Component do
     end
 
     it 'sets the defined performable actions' do
-      expect(Tendrl::Component.new('gluster-3.8.3', 'volume').actions).to include('info' => {"type"=>"get"})
+      expect(Tendrl::Component.new('gluster-3.8.3', 'volume').actions.keys).to include('create')
     end
 
   end
