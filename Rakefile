@@ -3,6 +3,7 @@ require 'etcd'
 require 'yaml'
 require 'json'
 require 'securerandom'
+require 'rspec/core/rake_task'
 
 ENV['RACK_ENV'] ||= 'development'
 
@@ -21,3 +22,9 @@ namespace :etcd do
     p "Sample cluster id generated #{cluster_id}"
   end
 end
+
+RSpec::Core::RakeTask.new :specs do |task|
+  task.pattern = Dir['spec/**/*_spec.rb']
+end
+
+task :default => ['specs']
