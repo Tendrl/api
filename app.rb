@@ -72,7 +72,7 @@ class App < Sinatra::Base
     job_id = SecureRandom.uuid
     etcd.set("/queue/#{job_id}", value: {
       cluster_id: params[:cluster_id],
-      sds_type: 'gluster',
+      sds_nvr: cluster['sds_version'],
       action: params[:action],
       object_type: params[:object_type],
       status: 'processing',
@@ -82,7 +82,7 @@ class App < Sinatra::Base
     job = { 
       job_id: job_id,
       status: 'processing',
-      sds_type: 'gluster',
+      sds_nvr: cluster['sds_version'],
       action: params[:action],
       object_type: params[:object_type] 
     }
