@@ -23,3 +23,6 @@ group :production do
   gem 'puma'
 end
 
+group :documentation do
+  gem 'asciidoctor'
+end

@@ -1,0 +1,78 @@
+//vim: tw=79
+= Tendrl API
+
+== Installation
+
+. Install the build toolchain
+.. On CentOS7
+
+ $ sudo yum groupinstall 'Development Tools'
+
+. Install Ruby 2.0.0p598
+.. On CentOS7
+
+ $ sudo yum install ruby ruby-devel rubygem-bundler
+
+.. Or use https://github.com/rbenv/rbenv[rbenv] or https://rvm.io/[rvm].
+. Clone tendrl-api
+
+ $ git clone https://github.com/Tendrl/tendrl-api.git
+
+. Install the gem dependencies
+
+ $ cd tendrl-api
+
+.. Everything
+
+ $ bundle install --path vendor/bundle --binstubs vendor/bin
+
+.. Development setup only
+
+ $ bundle install --path vendor/bundle --binstubs vendor/bin --without production
+
+.. Production setup only
+
+ $ bundle install --path vendor/bundle --binstubs vendor/bin --without development \
+   test documentation
+
+== Development Setup
+
+NOTE: Using binstubs allows any of the executables to be executed directly from
+`vendor/bin`, instead of via `bundle exec`.
+
+NOTE: All the commands below are assumed to be run from inside the git checkout
+directory.
+
+. Tendrl Definitions
++
+The API needs the proper Tendrl definitions yaml file to generate the
+attributes and actions. You can either download it or use the one from the
+fixtures to explore the API.
+
+ $ cp spec/fixtures/sds/tendrl_definitions_gluster-3.8.3.yaml \
+   config/sds/tendrl_definitions_gluster-3.8.3.yaml
+
+. Connecting to etcd
++
+Copy the sample config/etcd.sample.yaml file to config/etcd.yml and add your
+etcd connection configuration to the yaml file.
+
+ $ cp config/etcd.sample.yml config/etcd.yml
+
+. Seed the etcd instance (optional)
++
+The script will seed the etcd instance with mock cluster data and print a
+cluster uuid which can be used to make API requests.
+
+ $ vendor/bin/rake etcd:seed # Seed the local store with cluster
+
+. Start the development server
+
+ $ vendor/bin/shotgun
+
+
+== Test Environment
+
+The test environment does not need the local etcd instance to run the tests.
+
+ $ vendor/bin/rspec
