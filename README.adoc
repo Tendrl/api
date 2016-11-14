@@ -32,7 +32,8 @@
 
 .. Production setup only
 
- $ bundle install --path vendor/bundle --binstubs vendor/bin --without development test
+ $ bundle install --path vendor/bundle --binstubs vendor/bin --without development \
+   test documentation
 
 
 == Development Setup
@@ -43,7 +44,8 @@ The API needs the proper Tendrl definitions yaml file to generate the
 attributes and actions. You can either download it or use the one from the
 fixtures to explore the API.
 
- $ cp spec/fixtures/sds/tendrl_definitions_gluster-3.8.3.yaml config/sds/tendrl_definitions_gluster-3.8.3.yaml
+ $ cp spec/fixtures/sds/tendrl_definitions_gluster-3.8.3.yaml \
+   config/sds/tendrl_definitions_gluster-3.8.3.yaml
 
 . Connecting to etcd
 +
