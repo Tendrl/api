@@ -35,8 +35,13 @@
  $ bundle install --path vendor/bundle --binstubs vendor/bin --without development \
    test documentation
 
-
 == Development Setup
+
+NOTE: Using binstubs allows any of the executables to be executed directly from
+`vendor/bin`, instead of via `bundle exec`.
+
+NOTE: All the commands below are assumed to be run from inside the git checkout
+directory.
 
 . Tendrl Definitions
 +
