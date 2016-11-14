@@ -1,78 +1,147 @@
 //vim: tw=79
+:sectanchors:
+:sectlinks:
+:toc:
+
 = Tendrl API
 
-== Installation
+== Installation from Source on CentOS 7
 
-. Install the build toolchain
-.. On CentOS7
+NOTE: All the commands are run as a regular user that has `sudo` privileges.
+The commands are all assumed to be run from a single directory, which by
+default could be the user's home directory. If different, the required current
+directory is indicated in `[]` before the shell prompt `$`.
+
+=== Deployment Requirements
+
+Ensure that etcd is running on a node in the network and is reachable from the
+node you're about to install tendrl-api on. Note it's address and port. In most
+development setups, both etcd and tendrl-api would reside on the same host.
+
+=== System Setup
+
+. Install the build toolchain.
 
  $ sudo yum groupinstall 'Development Tools'
 
-. Install Ruby 2.0.0p598
-.. On CentOS7
+. Install Ruby 2.0.0p598.
 
  $ sudo yum install ruby ruby-devel rubygem-bundler
 
-.. Or use https://github.com/rbenv/rbenv[rbenv] or https://rvm.io/[rvm].
-. Clone tendrl-api
+=== Install tendrl-api
+
+. Clone tendrl-api.
 
  $ git clone https://github.com/Tendrl/tendrl-api.git
 
-. Install the gem dependencies
+. Install the gem dependencies, either..
 
  $ cd tendrl-api
 
-.. Everything
+.. everything,
 
- $ bundle install --path vendor/bundle --binstubs vendor/bin
+ [tendrl-api] $ bundle install --path vendor/bundle --binstubs vendor/bin
 
-.. Development setup only
+.. OR development setup only,
 
- $ bundle install --path vendor/bundle --binstubs vendor/bin --without production
+ [tendrl-api] $ bundle install --path vendor/bundle --binstubs vendor/bin \
+                --without production
 
-.. Production setup only
+.. OR production setup only.
 
- $ bundle install --path vendor/bundle --binstubs vendor/bin --without development \
-   test documentation
-
-== Development Setup
+ [tendrl-api] $ bundle install --path vendor/bundle --binstubs vendor/bin \
+                --without development test documentation
 
 NOTE: Using binstubs allows any of the executables to be executed directly from
 `vendor/bin`, instead of via `bundle exec`.
 
+=== Configuration
+
+To configure the etcd connection information, copy the sample configuration
+file to the appropriate location and make the necessary changes based on your
+etcd configuration, as discussed in the <<_deployment_requirements,Deployment
+Requirements>> section.
+
+ [tendrl-api] $ cp config/etcd.sample.yml config/etcd.yml
+
+
+== Development Environment
+
 NOTE: All the commands below are assumed to be run from inside the git checkout
 directory.
 
-. Tendrl Definitions
+. Tendrl Definitions:
 +
 The API needs the proper Tendrl definitions yaml file to generate the
 attributes and actions. You can either download it or use the one from the
 fixtures to explore the API.
 
- $ cp spec/fixtures/sds/tendrl_definitions_gluster-3.8.3.yaml \
-   config/sds/tendrl_definitions_gluster-3.8.3.yaml
+ [tendrl-api] $ cp spec/fixtures/sds/tendrl_definitions_gluster-3.8.3.yaml \
+                config/sds/tendrl_definitions_gluster-3.8.3.yaml
 
-. Connecting to etcd
-+
-Copy the sample config/etcd.sample.yaml file to config/etcd.yml and add your
-etcd connection configuration to the yaml file.
-
- $ cp config/etcd.sample.yml config/etcd.yml
-
-. Seed the etcd instance (optional)
+. Seed the etcd instance (optional):
 +
 The script will seed the etcd instance with mock cluster data and print a
 cluster uuid which can be used to make API requests.
 
- $ vendor/bin/rake etcd:seed # Seed the local store with cluster
+ [tendrl-api] $ vendor/bin/rake etcd:seed # Seed the local store with cluster
 
-. Start the development server
+. Start the development server:
++
+This server will reload itself when any of the source files are updated.
 
- $ vendor/bin/shotgun
+ [tendrl-api] $ vendor/bin/shotgun
++
+NOTE: This makes the development server to be queryable on `localhost:9393` by
+default. Check `vendor/bin/shotgun --help` to change the ip:port binding.
 
 
 == Test Environment
 
 The test environment does not need the local etcd instance to run the tests.
 
- $ vendor/bin/rspec
+ [tendrl-api] $ vendor/bin/rspec
+
+
+== Running on Port 80
+
+Binding to port 80 requires root permissions. However, tendrl-api runs as a
+normal user. In order to make the application available on port 80, apache
+needs to be installed and configured.
+
+. Install apache
+
+ $ sudo yum install httpd
+
+. Copy over the sample configuration file and validate it's syntax.
++
+IMPORTANT: Update the file for your specific host details. The file is
+commented to point out the suggested changes. The file is configured to connect
+to the tendrl-api application server on port 9292.
++
+IMPORTANT: Running behind apache makes the API available at
+`http://<hostname>:80/api/`. Client applications' (including tendrl frontend's)
+configuration needs to be updated to make all API queries behind this endpoint.
+
+ [tendrl-api] $ sudo cp config/apache.vhost.sample \
+                /etc/httpd/conf.d/tendrl.conf
+ $ sudo apachectl configtest
+
+. Update the SELinux configuration to allow apache to make connections.
+
+ $ sudo setsebool -P httpd_can_network_connect 1
+
+. Run the application via the production server `puma`, daemonised, listening
+on port 9292.
+
+ [tendrl-api] $ vendor/bin/puma -e development -d
++
+NOTE: It is possible to run both the development and the production servers at
+the same time, with the production server behind apache. While the production
+server `puma` runs, by default, on port 9292; the development server `shotgun`
+listens on port 9393.
+
+. Start apache.
+
+ $ sudo systemctl start httpd.service
+
