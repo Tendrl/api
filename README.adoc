@@ -118,6 +118,10 @@ needs to be installed and configured.
 IMPORTANT: Update the file for your specific host details. The file is
 commented to point out the suggested changes. The file is configured to connect
 to the tendrl-api application server on port 9292.
++
+IMPORTANT: Running behind apache makes the API available at
+`http://<hostname>:80/api/`. Client applications' (including tendrl frontend's)
+configuration needs to be updated to make all API queries behind this endpoint.
 
  [tendrl-api] $ sudo cp config/apache.vhost.sample \
                 /etc/httpd/conf.d/tendrl.conf
@@ -140,3 +144,4 @@ listens on port 9393.
 . Start apache.
 
  $ sudo systemctl start httpd.service
+
