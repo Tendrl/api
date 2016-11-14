@@ -1,3 +1,7 @@
-require './app'
+require './node'
+require './cluster'
 
-map('/1.0') { run App }
+map('/1.0') { 
+  use Node
+  run Cluster
+}
