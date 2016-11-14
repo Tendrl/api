@@ -1,0 +1,19 @@
+# vim: ft=apache
+## Sample apache configuration file for tendrl.
+
+<VirtualHost *:80>
+  # Adjust the ServerName directive to reflect the FQDN for your host. Add
+  # additional ServerAlias directives if required.
+  ServerName tendrl
+
+  # This is where the tendrl frontend assets will be installed.
+  DocumentRoot /var/www/tendrl
+
+  # Adjust the logging configuration as required.
+  ErrorLog "logs/tendrl-error_log"
+  CustomLog "logs/tendrl-access_log" combined
+
+  # The requests to /api/ will all be forwarded to the tendrl-api application.
+  ProxyPass "/api" http://127.0.0.1:9292/
+  ProxyPassReverse "/api" http://127.0.0.1:9292/
+</VirtualHost>
