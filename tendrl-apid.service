@@ -1,0 +1,13 @@
+[Unit]
+Description=Tendrl Api Daemon
+
+[Service]
+Type=simple
+ExecStart=vendor/bin/puma -e development -d
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
