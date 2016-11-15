@@ -7,6 +7,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    asciidoctor (1.5.5)
     ast (2.3.0)
     backports (3.6.8)
     diff-lcs (1.2.5)
@@ -73,6 +74,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (= 4.2.2)
+  asciidoctor
   etcd
   puma
   rack-test
@@ -84,5 +86,8 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-cross_origin (~> 0.3.1)
 
+RUBY VERSION
+   ruby 2.0.0p598
+
 BUNDLED WITH
-   1.11.2
+   1.13.6

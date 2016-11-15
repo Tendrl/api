@@ -40,11 +40,24 @@ namespace.tendrl.node_agent:
           run: tendrl.node_agent.atoms.node.cmd.Cmd
           type: Create
           uuid: dc8fff3a-34d9-4786-9282-55eff6abb6c3
+        check_node_up:
+          enabled: true
+          inputs:
+            mandatory:
+              - Node.fqdn
+          outputs:
+            - Node.status
+          name: "check whether the node is up"
+          run: tendrl.node_agent.atoms.node.check_node_up
+          type: Create
+          uuid: eda0b13a-7362-48d5-b5ca-4b6d6533a5ab
       attrs:
         cmd_str:
           type: String
         fqdn:
           type: String
+        status:
+          type: Boolean
       enabled: true
       value: /nodes/$node.id/node
     OS:
@@ -137,12 +150,8 @@ namespace.tendrl.node_agent:
           help: "Service state can be started|stopped|restarted|reloaded"
           type: String
       enabled: true
-    File:
-      atoms:
-        -
-      attrs: 
-        -
     Tendrl_context:
+      enabled: True
       attrs:
         cluster_id:
           help: "Tendrl managed/generated cluster id for the sds being managed by Tendrl"
@@ -153,8 +162,22 @@ namespace.tendrl.node_agent:
         sds_version:
           help: "Version of the Tendrl managed sds, eg: '3.2.1'"
           type: String
+        node_id:
+          help: "Tendrl ID for the managed node"
+          type: String
+    Node_context:
+      attrs:
+        machine_id:
+          help: "Unique /etc/machine-id"
+          type: String
+        fqdn:
+          help: "FQDN of the Tendrl managed node"
+          type: String
+        node_id:
+          help: "Tendrl ID for the managed node"
+          type: String
       enabled: true
-
+      value: /nodes/$node.id/node_context
 namespace.tendrl.node_agent.gluster_integration:
   flows:
     ImportCluster:
@@ -167,16 +190,16 @@ namespace.tendrl.node_agent.gluster_integration:
       enabled: true
       inputs:
         mandatory:
-          - "Node[]"
+          - "node[]"
           - Tendrl_context.sds_name
           - Tendrl_context.sds_version
           - Tendrl_context.cluster_id
       post_run:
         - tendrl.node_agent.gluster_integration.objects.Tendrl_context.atoms.check_cluster_id_exists
       pre_run:
-        - tendrl.node_agent.objects.Node.atoms.check_nodes_up
+        - tendrl.node_agent.objects.Node.atoms.check_node_up
         - tendrl.node_agent.objects.Tendrl_context.atoms.compare
-      run: tendrl.node_agent.gluster_integration.flows.import_gluster_cluster.ImportCluster
+      run: tendrl.node_agent.gluster_integration.flows.import_cluster.ImportCluster
       type: Create
       uuid: 2f94a48a-05d7-408c-b400-e27827f4edef
       version: 1
@@ -211,4 +234,58 @@ namespace.tendrl.node_agent.gluster_integration:
           type: String
       enabled: true
 
-tendrl_schema_version: 0.2
+namespace.tendrl.node_agent.ceph_integration:
+  flows:
+    ImportCluster:
+      atoms:
+        - tendrl.node_agent.objects.Package.atoms.install
+        - tendrl.node_agent.ceph_integration.objects.Config.atoms.generate
+        - tendrl.node_agent.objects.File.atoms.write
+        - tendrl.node_agent.objects.Node.atoms.cmd
+      description: "Import existing Ceph Cluster"
+      enabled: true
+      inputs:
+        mandatory:
+          - "node[]"
+          - Tendrl_context.sds_name
+          - Tendrl_context.sds_version
+          - Tendrl_context.cluster_id
+      post_run:
+        - tendrl.node_agent.ceph_integration.objects.Tendrl_context.atoms.check_cluster_id_exists
+      pre_run:
+        - tendrl.node_agent.objects.Node.atoms.check_nodes_up
+        - tendrl.node_agent.objects.Tendrl_context.atoms.compare
+      run: tendrl.node_agent.ceph_integration.flows.import_cluster.ImportCluster
+      type: Create
+      uuid: 5a48d43b-a163-496c-b01d-9c600ea0a5db
+      version: 1
+  objects:
+    Config:
+      atoms:
+        generate:
+          enabled: true
+          inputs:
+            mandatory:
+              - Config.etcd_port
+              - Config.etcd_connection
+          name: "Generate Ceph Integration configuration based on provided inputs"
+          outputs:
+            - Config.data
+            - Config.file_path
+          run: tendrl.node_agent.ceph_integration.objects.Config.atoms.generate.Generate
+          uuid: 61959242-628f-4847-a5e2-2c8d8daac0cd
+      attrs:
+        data:
+          help: "Configuration data of Ceph Integration for this Tendrl deployment"
+          type: String
+        etcd_connection:
+          help: "Host/IP of the etcd central store for this Tendrl deployment"
+          type: String
+        etcd_port:
+          help: "Port of the etcd central store for this Tendrl deployment"
+          type: String
+        file_path:
+          default: /etc/tendrl/ceph_integration.conf
+          help: "Path to the Ceph integration tendrl configuration"
+          type: String
+      enabled: true

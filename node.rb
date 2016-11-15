@@ -13,13 +13,6 @@ class Node < Base
     end
   end
 
-  get '/Flows/:flow/Attributes' do
-    flow = Flow.find_by_external_name_and_type(params[:flow], 'node')
-    respond_to do |f|
-      f.json { attributes.attributes.to_json }
-    end
-  end
-
   get '/GetNodeList' do
     nodes = []
     etcd.get('/nodes').children.each do |node|
@@ -50,7 +43,8 @@ class Node < Base
         status: 'processing',
         parameters: body,
         run: flow.run,
-        type: 'node'
+        type: 'node',
+        created_from: 'API'
       }.
       to_json
     )
@@ -59,7 +53,5 @@ class Node < Base
       f.json { { job_id: job_id }.to_json }
     end
   end
-
-
 
 end

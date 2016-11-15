@@ -5,7 +5,7 @@ require "sinatra/multi_route"
 require 'securerandom'
 require 'active_support/core_ext/hash'
 require 'active_support/inflector'
-require './lib/tendrl'
+require 'tendrl'
 
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 
@@ -39,10 +39,6 @@ class Base < Sinatra::Base
 
   def etcd
     settings.etcd
-  end
-
-  def node_definitions
-    settings.node_definitions
   end
 
 end

@@ -4,7 +4,7 @@ module Tendrl
       @config = Tendrl.node_definitions
       @type = type
       @namespace = namespace
-      @object = @config[namespace]['object_details'][type]
+      @object = @config[namespace]['objects'][type]
     end
 
     def attributes
@@ -22,8 +22,9 @@ module Tendrl
     def self.find_by_attribute(attribute)
       object, attribute = attribute.split('.')
       config = Tendrl.node_definitions
-      objects = config['namespace.tendrl.node_agent']['object_details']
-      objects[object]['attrs'][attribute].merge(name: attribute)
+      objects = config['namespace.tendrl.node_agent']['objects']
+      attrs = objects[object]['attrs']
+      attrs[attribute].merge(name: "#{object}.#{attribute}")
     end
 
   end
