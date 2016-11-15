@@ -13,5 +13,15 @@ module Tendrl
       @required = nil
     end
 
+    def to_hash
+      {  
+        name: "#{@object_type}.#{@name}",
+        help: @help,
+        type: @type,
+        default: @default,
+        required: @required
+      }
+    end
+
   end
 end

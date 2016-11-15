@@ -11,6 +11,10 @@ require './lib/tendrl/errors/invalid_object_error'
 
 module Tendrl
 
+  def self.current_definitions
+    @cluster_definitions || @node_definitions
+  end
+
   def self.cluster_definitions
     @cluster_definitions
   end

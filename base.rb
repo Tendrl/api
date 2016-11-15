@@ -35,6 +35,14 @@ class Base < Sinatra::Base
     )
   }
 
+  get '/ping' do
+    'pong'
+  end
+
+  get '/GetJobList' do
+
+  end
+
   protected
 
   def etcd
