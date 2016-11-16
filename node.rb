@@ -37,7 +37,7 @@ class Node < Base
       "/queue/#{job_id}", 
       value: {
         cluster_id: body['Tendrl_context.cluster_id'],
-        status: 'processing',
+        status: 'new',
         parameters: body,
         run: flow.run,
         type: 'node',

@@ -48,7 +48,7 @@ class Cluster < Base
       "/queue/#{job_id}", 
       value: {
         cluster_id: params[:cluster_id],
-        status: 'processing',
+        status: 'new',
         parameters: body.merge(tendrl_context),
         run: flow.run,
         type: 'sds',
@@ -76,7 +76,7 @@ class Cluster < Base
       "/queue/#{job_id}", 
       value: {
         cluster_id: params[:cluster_id],
-        status: 'processing',
+        status: 'new',
         parameters: body.merge(tendrl_context),
         run: flow.run,
         type: 'sds',
