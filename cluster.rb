@@ -26,7 +26,7 @@ class Cluster < Base
     halt 404 if cluster(cluster_id).nil?
     objects = []
     etcd.get(
-      "#{@cluster.key}/#{object_name.downcase.pluralize}", recursive: true
+      "#{@cluster.key}/#{object_name.pluralize}", recursive: true
     ).children.each do |node|
       objects << recurse(node)
     end
