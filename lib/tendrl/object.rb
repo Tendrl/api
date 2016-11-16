@@ -22,6 +22,7 @@ module Tendrl
     def self.find_by_object_name(object_name)
       object = nil
       Tendrl.current_definitions.keys.each do |key|
+        next if key == 'tendrl_schema_version'
         objects = Tendrl.current_definitions[key]['objects'].keys
         if objects.include?(object_name)
           object = Object.new(key, object_name)

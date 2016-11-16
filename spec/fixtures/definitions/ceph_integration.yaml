@@ -1,0 +1,115 @@
+--- 
+namespace.tendrl.ceph_integration: 
+  flows: 
+    CreatePool: 
+      atoms: 
+        - tendrl.ceph_integration.objects.pool.atoms.create
+      description: "Create Ceph Pool"
+      enabled: true
+      inputs: 
+        mandatory: 
+          - Pool.poolname
+          - Pool.pg_num
+          - Pool.min_size
+          - Tendrl_context.sds_name
+          - Tendrl_context.sds_version
+          - Tendrl_context.cluster_id
+      run: tendrl.ceph_integration.flows.flow.Flow
+      type: Create
+      uuid: faeab231-69e9-4c9d-b5ef-a67ed057f98b
+      version: 1
+    DeletePool: 
+      atoms: 
+        - tendrl.ceph_integration.objects.pool.atoms.delete
+      description: "Delete Ceph Pool"
+      enabled: true
+      inputs: 
+        mandatory: 
+          - Pool.pool_id
+          - Tendrl_context.sds_name
+          - Tendrl_context.sds_version
+          - Tendrl_context.cluster_id
+      run: tendrl.ceph_integration.flows.flow.Flow
+      type: Delete
+      uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3b9
+      version: 1
+  objects: 
+    Pool: 
+      atoms: 
+        create: 
+          enabled: true
+          inputs: 
+            mandatory: 
+              - Pool.poolname
+              - Pool.pg_num
+              - Pool.min_size
+            optional: 
+              - Pool.max_objects
+              - Pool.max_bytes
+              - Pool.ec_profile
+          name: "Create Pool"
+          run: tendrl.ceph_integration.objects.pool.atoms.create.Create
+          type: Create
+          uuid: bd0155a8-ff15-42ff-9c76-5176f53c13e0
+        delete: 
+          enabled: true
+          inputs: 
+            mandatory: 
+              - Pool.pool_id
+          name: "Delete Pool"
+          run: tendrl.ceph_integration.objects.pool.atoms.delete.Delete
+          type: Delete
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3720
+      attrs: 
+        crush_ruleset: 
+          help: "The ID of a CRUSH ruleset to use for this pool. The specified ruleset must exist."
+          type: Integer
+        ec_profile: 
+          help: "For erasure pools only.It must be an existing profile "
+          type: String
+        max_bytes: 
+          help: "quota for maximum number of bytes. To remove quota set the value to zero"
+          type: Integer
+        max_objects: 
+          help: "quota for maximum number of objects. To remove quota set the value to zero"
+          type: Integer
+        min_size: 
+          help: "sets the number of replicas for objects in the pool"
+          type: Integer
+        pg_num: 
+          help: "The total number of placement groups for placement purposes."
+          type: Integer
+        pgp_num: 
+          help: "The total number of placement groups for the pool."
+          type: Integer
+        pool_id: 
+          help: "id of the pool"
+          type: Integer
+        poolname: 
+          help: "Name of the Ceph pool"
+          type: String
+        pooltype: 
+          help: "Type of the Ceph pool(ec or replicated)"
+          type: String
+        replica_count: 
+          help: "Replica count of volume"
+          type: Integer
+        size: 
+          help: "Sets the minimum number of replicas required for I/O"
+          type: Integer
+      enabled: true
+      value: clusters/$Tendrl_context.cluster_id/maps/osd_map/data
+    Tendrl_context: 
+      attrs: 
+        cluster_id: 
+          help: "Tendrl managed/generated cluster id for the sds being managed by Tendrl"
+          type: String
+        sds_name: 
+          help: gluster|ceph
+          type: String
+        sds_version: 
+          help: "Sds version eg: 1.2.3"
+          type: String
+      enabled: true
+      value: clusters/$Tendrl_context.cluster_id/Tendrl_context/
+tendrl_schema_version: 0.3
