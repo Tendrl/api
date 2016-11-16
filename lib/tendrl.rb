@@ -20,6 +20,7 @@ module Tendrl
   end
 
   def self.cluster_definitions=(definitions)
+    @node_definitions = nil
     @cluster_definitions = definitions
   end
 
@@ -28,6 +29,7 @@ module Tendrl
   end
 
   def self.node_definitions=(definitions)
+    @cluster_definitions = nil
     @node_definitions = definitions
   end
 
