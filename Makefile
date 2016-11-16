@@ -32,7 +32,7 @@ rpm:
 	rpmbuild -ba $(RPMBUILD)/SPECS/tendrl-api.spec
 	$(PRINT_STATUS); \
 	if [ "$$EC" -eq "0" ]; then \
-		FILE=$$(readlink -f $$(find $(RPMBUILD)/RPMS -name tendrl-api-$(VERSION)*.rpm)); \
+		FILE=$$(readlink -f $$(find $(RPMBUILD)/RPMS -name tendrl-api*.rpm)); \
 		cp -f $$FILE $(DEPLOY)/latest/; \
 		printf "\nThe tendrl-api RPMs are located at:\n\n"; \
 		printf "   $(DEPLOY)/latest\n\n\n\n"; \

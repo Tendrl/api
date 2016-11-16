@@ -10,8 +10,7 @@ BuildArch: noarch
 
 BuildRequires: ruby
 
-Requires: httpd
-Requires: ruby
+Requires: ruby = 2.0
 Requires: rubygem-sinatra
 Requires: rubygem-sinatra-contrib
 Requires: rubygem-activesupport
@@ -22,39 +21,55 @@ Requires: rubygem-sinatra-cross_origin
 %description
 Collection of tendrl api.
 
+%package doc
+Summary: Documentation for %{name}
+Group: Documentation
+Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
+
+%description doc
+Documentation for %{name}.
+
+%package httpd
+Summary: Tendrl api httpd
+Requires: %{name} = %{version}-%{release}
+BuildArch: noarch
+Requires: httpd
+
+%description httpd
+Tendrl api httpd
+
 %prep
 %setup
 
 %install
 install -m 755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -m 755 --directory config $RPM_BUILD_ROOT%{_datadir}/%{name}/config
+install -m 755 --directory config $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 755 --directory lib $RPM_BUILD_ROOT%{_datadir}/%{name}/lib
 install -Dm 0644 *.ru *.rb $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/api/config/etcd.yml
-install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
+install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/etcd.yml
+install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
+install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 
-%post
+%post httpd
 setsebool -P httpd_can_network_connect 1
-/bin/systemctl  start httpd.service >/dev/null 2>&1 || :
-%systemd_post tendrl-apid.service
-
-%preun
-%systemd_preun tendrl-apid.service
-
-%postun
-%systemd_postun_with_restart tendrl-apid.service
 
 %files
 %{_datadir}/%{name}/*.ru
 %{_datadir}/%{name}/*.rb
 %dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/config
 %dir %{_datadir}/%{name}/lib
-%{_sysconfdir}/tendrl/api/config/etcd.yml
-%{_sysconfdir}/httpd/conf.d/tendrl.conf
 %{_unitdir}/tendrl-apid.service
 
+%files doc
+%doc %{_datadir}/doc/tendrl/README.adoc
+%{_datadir}/doc/tendrl/Rakefile
+%{_datadir}/doc/tendrl/config/etcd.yml
+
+%files httpd
+%{_sysconfdir}/httpd/conf.d/tendrl.conf
+
 %changelog
-* Fri Nov 14 2016 Tim <tim.gluster@gmail.com> - 0.0.1-1
+* Wed Nov 16 2016 Tim <tim.gluster@gmail.com> - 0.0.1-1
 - Initial package

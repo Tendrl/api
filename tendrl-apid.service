@@ -3,7 +3,7 @@ Description=Tendrl Api Daemon
 
 [Service]
 Type=simple
-ExecStart=vendor/bin/puma -e development -d
+ExecStart=vendor/bin/puma -e production -d
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
