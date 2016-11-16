@@ -6,7 +6,7 @@ class Cluster < Base
     clusters = []
     etcd.get('/clusters', recursive: true).children.each do |cluster|
       cluster_attrs = {}
-      tendrl_context = "#{cluster.key}/tendrl_context"
+      tendrl_context = "#{cluster.key}/Tendrl_context"
       clusters << recurse(etcd.get(tendrl_context))
     end
     respond_to do |f|
@@ -105,7 +105,7 @@ class Cluster < Base
   end
 
   def context(cluster_id)
-    tendrl_context = "#{@cluster.key}/tendrl_context"
+    tendrl_context = "#{@cluster.key}/Tendrl_context"
     attrs = recurse(etcd.get(tendrl_context))
     {
       'Tendrl_context.sds_name' => attrs['sds_name'],

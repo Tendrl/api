@@ -17,8 +17,8 @@ class Node < Base
     nodes = []
     etcd.get('/nodes').children.each do |node|
       node_attrs = {}
-      etcd.get("#{node.key}/node_context").children.each do |child|
-        node_attrs[child.key.split("#{node.key}/node_context/")[1]] = child.value
+      etcd.get("#{node.key}/Node_context").children.each do |child|
+        node_attrs[child.key.split("#{node.key}/Node_context/")[1]] = child.value
       end
       nodes << node_attrs
     end
