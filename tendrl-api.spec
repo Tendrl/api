@@ -9,6 +9,7 @@ Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: ruby
+BuildRequires: systemd-units
 
 Requires: ruby = 2.0
 Requires: rubygem-sinatra
@@ -58,9 +59,9 @@ setsebool -P httpd_can_network_connect 1
 %files
 %{_datadir}/%{name}/*.ru
 %{_datadir}/%{name}/*.rb
+%{_unitdir}/tendrl-apid.service
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/lib
-%{_unitdir}/tendrl-apid.service
 
 %files doc
 %doc %{_datadir}/doc/tendrl/README.adoc
