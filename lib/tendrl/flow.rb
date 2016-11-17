@@ -2,12 +2,12 @@ module Tendrl
   class Flow
 
     METHOD_MAPPING = { 'create' => 'POST', 'update' => 'PUT', 'delete' =>
-                       'DELETE' }
+                       'DELETE', 'action' => 'GET' }
 
     attr_reader :namespace, :flow_name
 
     def initialize(namespace, flow_name)
-      @instance = Tendrl.node_definitions
+      @instance = Tendrl.current_definitions
       @namespace = namespace
       @flow_name = flow_name
       @flow = @instance[namespace]['flows'][flow_name]
@@ -79,8 +79,11 @@ module Tendrl
       optional_attributes.each do |ma|
         next if ma.end_with?('cluster_id')
         if ma.end_with?('[]')
-          flow_attributes << { name: ma, type: 'List',
-                               required: false }
+          flow_attributes << { 
+            name: ma,
+            type: 'List',
+            required: false 
+          }
         else
           attribute = Object.find_by_attribute(ma)
           attribute[:required] = false
@@ -93,12 +96,15 @@ module Tendrl
 
     def self.find_all
       flows = []
-      Tendrl.node_definitions.keys.map do |key|
+      Tendrl.current_definitions.keys.map do |key|
         if key.end_with?('_integration')
-          Tendrl.node_definitions[key]['flows'].keys.each do |fk|
+          Tendrl.current_definitions[key]['flows'].keys.each do |fk|
             flow = Tendrl::Flow.new(key, fk)
-            flows << { name: flow.name, method: flow.method, attributes:
-                       flow.attributes  }
+            flows << { 
+              name: flow.name,
+              method: flow.method,
+              attributes: flow.attributes  
+            }
           end
         end
       end
@@ -109,7 +115,7 @@ module Tendrl
       if type == 'node'
         partial_namespace = 'namespace.tendrl.node_agent'
       elsif type == 'cluster'
-        partial_namespace = 'namespace.tendrl.cluster_agent'
+        partial_namespace = 'namespace.tendrl'
       end
       sds_name, operation, object = external_name.underscore.split('_')
       namespace = "#{partial_namespace}.#{sds_name}_integration"

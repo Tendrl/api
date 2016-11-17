@@ -2,58 +2,132 @@ require './base'
 
 class Cluster < Base
 
-  get '/ping' do
-    'pong'
-  end
-
-  get '/cluster/:cluster_id/:object_type/attributes' do
-    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
-    component = Tendrl::Component.new(cluster['sds_version'],
-                                      params[:object_type])
-
+  get '/GetClusterList' do
+    clusters = []
+    etcd.get('/clusters', recursive: true).children.each do |cluster|
+      cluster_attrs = {}
+      tendrl_context = "#{cluster.key}/Tendrl_context"
+      clusters << recurse(etcd.get(tendrl_context))
+    end
     respond_to do |f|
-      f.json { component.attributes.to_json }
+      f.json { clusters.to_json }
     end
   end
 
-  get '/cluster/:cluster_id/:object_type/actions' do
-    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
-    component = Tendrl::Component.new(cluster['sds_version'],
-                                      params[:object_type])
-
+  get '/:cluster_id/Flows' do
+    halt 404 if cluster(params[:cluster_id]).nil?
+    flows = Tendrl::Flow.find_all
     respond_to do |f|
-      f.json { component.actions.to_json }
+      f.json { flows.to_json }
     end
   end
 
-  post '/cluster/:cluster_id/:object_type/:action' do
-    cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
-    component = Tendrl::Component.new(cluster['sds_version'],
-                                      params[:object_type])
+  get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
+    halt 404 if cluster(cluster_id).nil?
+    objects = []
+    etcd.get(
+      "#{@cluster.key}/#{object_name.pluralize}", recursive: true
+    ).children.each do |node|
+      objects << recurse(node)
+    end
+    respond_to do |f|
+      f.json { objects.to_json }
+    end
+  end
+
+  post '/:cluster_id/:flow' do
+    halt 404 if cluster(params[:cluster_id]).nil?
+    flow = Tendrl::Flow.find_by_external_name_and_type(
+      params[:flow], 'cluster'
+    )
+    raise Sinatra::NotFound if flow.nil?
     body = JSON.parse(request.body.read)
-    job_id = SecureRandom.uuid
-    etcd.set("/queue/#{job_id}", value: {
-      cluster_id: params[:cluster_id],
-        sds_nvr: cluster['sds_version'],
-        action: params[:action],
-        object_type: params[:object_type],
-        status: 'processing',
-        attributes: body.slice(*component.attributes.keys)
-    }.to_json)
-
-    job = { 
-      job_id: job_id,
-      status: 'processing',
-      sds_nvr: cluster['sds_version'],
-      action: params[:action],
-      object_type: params[:object_type] 
-    }
-
+    job_id = SecureRandom.hex
+    tendrl_context = context(params[:cluster_id])
+    job = etcd.set(
+      "/queue/#{job_id}", 
+      value: {
+        cluster_id: params[:cluster_id],
+        status: 'new',
+        parameters: body.merge(tendrl_context),
+        run: flow.run,
+        type: 'sds',
+        created_from: 'API'
+      }.
+      to_json
+    )
     respond_to do |f|
       status 202
-      f.json { job.to_json }
+      f.json { { job_id: job_id }.to_json }
+    end
+
+  end
+
+  delete '/:cluster_id/:flow' do
+    status 404 if cluster(params[:cluster_id]).nil?
+    flow = Tendrl::Flow.find_by_external_name_and_type(
+      params[:flow], 'cluster'
+    )
+    status 404 if flow.nil?
+    body = JSON.parse(request.body.read)
+    job_id = SecureRandom.hex
+    tendrl_context = context(params[:cluster_id])
+    job = etcd.set(
+      "/queue/#{job_id}", 
+      value: {
+        cluster_id: params[:cluster_id],
+        status: 'new',
+        parameters: body.merge(tendrl_context),
+        run: flow.run,
+        type: 'sds',
+        created_from: 'API'
+      }.
+      to_json
+    )
+    respond_to do |f|
+      status 202
+      f.json { { job_id: job_id }.to_json }
+    end
+
+  end
+
+  private
+
+  def recurse(node, attrs={})
+    node.children.each do |child|
+      if child.dir
+        recurse(child, attrs)
+      else
+        attrs[child.key.split('/')[-1]] = child.value
+      end
+    end
+    attrs
+  end
+
+  def context(cluster_id)
+    tendrl_context = "#{@cluster.key}/Tendrl_context"
+    attrs = recurse(etcd.get(tendrl_context))
+    {
+      'Tendrl_context.sds_name' => attrs['sds_name'],
+      'Tendrl_context.sds_version' => attrs['sds_version'],
+      'Tendrl_context.cluster_id' => attrs['cluster_id']
+    }
+  end
+
+  def cluster(cluster_id)
+    begin
+      @cluster ||= etcd.get("/clusters/#{cluster_id}")
+      load_definitions(cluster_id)
+    rescue Etcd::KeyNotFound
+      nil
     end
   end
 
+  def load_definitions(cluster_id)
+    definitions = etcd.get(
+      "/clusters/#{cluster_id}/definitions/data"
+    ).value
+    Tendrl.cluster_definitions = YAML.load(definitions)
+  end
 
 end

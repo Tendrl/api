@@ -190,7 +190,7 @@ namespace.tendrl.node_agent.gluster_integration:
       enabled: true
       inputs:
         mandatory:
-          - "node[]"
+          - "Node[]"
           - Tendrl_context.sds_name
           - Tendrl_context.sds_version
           - Tendrl_context.cluster_id
