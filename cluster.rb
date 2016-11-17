@@ -1,48 +1,10 @@
-require 'bundler'
-require 'yaml'
-require 'sinatra/base'
-require "sinatra/multi_route"
-require 'securerandom'
-require 'active_support/core_ext/hash'
-require './lib/tendrl'
+require './base'
 
-Bundler.require :default, ENV['RACK_ENV'].to_sym
+class Cluster < Base
 
-class App < Sinatra::Base
-  register Sinatra::RespondWith
-  register Sinatra::CrossOrigin
-  register Sinatra::MultiRoute
-
-  set :root, File.dirname(__FILE__)
-
-  set :env, ENV['RACK_ENV'] || 'development'
-
-  enable :cross_origin
-
-  configure :development, :test do
-    set :etcd_config, Proc.new {
-      YAML.load_file('config/etcd.yml')[settings.env.to_sym] 
-    }
+  get '/ping' do
+    'pong'
   end
-
-  configure :production do
-    set :etcd_config, Proc.new {
-      YAML.load(ERB.new(File.read('config/etcd_prod.yml')).result)[settings.env.to_sym] 
-    }
-  end
-
-  before do
-    Tendrl.sds_config
-  end
-
-  set :etcd, Proc.new {
-    Etcd.client(
-      host: etcd_config[:host],
-      port: etcd_config[:port],
-      user_name: etcd_config[:user_name],
-      password: etcd_config[:password]
-    )
-  }
 
   get '/cluster/:cluster_id/:object_type/attributes' do
     cluster = JSON.parse(etcd.get("/clusters/#{params[:cluster_id]}").value)
@@ -72,11 +34,11 @@ class App < Sinatra::Base
     job_id = SecureRandom.uuid
     etcd.set("/queue/#{job_id}", value: {
       cluster_id: params[:cluster_id],
-      sds_nvr: cluster['sds_version'],
-      action: params[:action],
-      object_type: params[:object_type],
-      status: 'processing',
-      attributes: body.slice(*component.attributes.keys)
+        sds_nvr: cluster['sds_version'],
+        action: params[:action],
+        object_type: params[:object_type],
+        status: 'processing',
+        attributes: body.slice(*component.attributes.keys)
     }.to_json)
 
     job = { 
@@ -93,10 +55,5 @@ class App < Sinatra::Base
     end
   end
 
-  private
-
-  def etcd
-    settings.etcd
-  end
 
 end
