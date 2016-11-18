@@ -1,6 +1,7 @@
 require './base'
 class Node < Base
 
+  
   before do
     definitions = etcd.get('/tendrl_definitions_node_agent/data').value
     Tendrl.node_definitions = YAML.load(definitions)
@@ -8,9 +9,7 @@ class Node < Base
 
   get '/Flows' do
     flows = Tendrl::Flow.find_all
-    respond_to do |f|
-      f.json { flows.to_json }
-    end
+    flows.to_json
   end
 
   get '/GetNodeList' do
@@ -22,14 +21,12 @@ class Node < Base
       end
       nodes << node_attrs
     end
-    respond_to do |f|
-      f.json { nodes.to_json }
-    end
+    nodes.to_json
   end
 
   post '/:flow' do
     flow = Tendrl::Flow.find_by_external_name_and_type(params[:flow], 'node')
-    raise Sinatra::NotFound if flow.nil?
+    halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
     body['Tendrl_context.cluster_id'] = SecureRandom.uuid
     job_id = SecureRandom.hex
@@ -45,10 +42,8 @@ class Node < Base
       }.
       to_json
     )
-    respond_to do |f|
-      status 202
-      f.json { { job_id: job_id }.to_json }
-    end
+    status 202
+    { job_id: job_id }.to_json
   end
 
 end

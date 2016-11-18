@@ -9,17 +9,13 @@ class Cluster < Base
       tendrl_context = "#{cluster.key}/Tendrl_context"
       clusters << recurse(etcd.get(tendrl_context))
     end
-    respond_to do |f|
-      f.json { clusters.to_json }
-    end
+    clusters.to_json
   end
 
   get '/:cluster_id/Flows' do
     halt 404 if cluster(params[:cluster_id]).nil?
     flows = Tendrl::Flow.find_all
-    respond_to do |f|
-      f.json { flows.to_json }
-    end
+    flows.to_json
   end
 
   get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
@@ -30,9 +26,7 @@ class Cluster < Base
     ).children.each do |node|
       objects << recurse(node)
     end
-    respond_to do |f|
-      f.json { objects.to_json }
-    end
+    objects.to_json
   end
 
   post '/:cluster_id/:flow' do
@@ -56,19 +50,16 @@ class Cluster < Base
       }.
       to_json
     )
-    respond_to do |f|
-      status 202
-      f.json { { job_id: job_id }.to_json }
-    end
-
+    status 202
+    { job_id: job_id }.to_json
   end
 
   delete '/:cluster_id/:flow' do
-    status 404 if cluster(params[:cluster_id]).nil?
+    halt 404 if cluster(params[:cluster_id]).nil?
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
     )
-    status 404 if flow.nil?
+    halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
     job_id = SecureRandom.hex
     tendrl_context = context(params[:cluster_id])
@@ -84,11 +75,8 @@ class Cluster < Base
       }.
       to_json
     )
-    respond_to do |f|
-      status 202
-      f.json { { job_id: job_id }.to_json }
-    end
-
+    status 202
+    { job_id: job_id }.to_json
   end
 
   private
