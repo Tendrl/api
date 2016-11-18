@@ -11,11 +11,17 @@ Bundler.require :default, ENV['RACK_ENV'].to_sym
 class Base < Sinatra::Base
   set :root, File.dirname(__FILE__)
 
-  set :env, ENV['RACK_ENV'] || 'development'
+  set :environment, ENV['RACK_ENV'] || 'development'
 
-  configure do
+  configure :development, :test do
     set :etcd_config, Proc.new {
-      YAML.load_file('config/etcd.yml')[settings.env.to_sym] 
+      YAML.load_file('config/etcd.yml')[settings.environment.to_sym] 
+    }
+  end
+
+  configure :production do
+    set :etcd_config, Proc.new {
+      YAML.load_file('/etc/tendrl/etcd.yml')[settings.environment.to_sym] 
     }
   end
 
@@ -69,18 +75,6 @@ class Base < Sinatra::Base
 
   protected
 
-  # def http_allowed_methods
-  #   settings.http_allowed_methods.join(',')
-  # end
-  #
-  # def http_allowed_headers
-  #   settings.http_allowed_headers.join(',')
-  # end
-  #
-  # def http_allowed_origin
-  #   settings.http_allowed_origin.join(',')
-  # end
-  #
   def etcd
     settings.etcd
   end
