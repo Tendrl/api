@@ -13,7 +13,6 @@ dist:
 	rm -fr $(HOME)/$(BUILDS)
 	mkdir -p $(HOME)/$(BUILDS) $(RPMBUILD)/SOURCES
 	cp -fr $(BASEDIR) $(HOME)/$(BUILDS)/$(TARDIR)
-	rm -rf $(HOME)/$(BUILDS)/$(TARDIR)/*.egg-info
 	cd $(HOME)/$(BUILDS); \
 	tar --exclude-vcs --exclude=.* -zcf tendrl-api-$(VERSION).tar.gz $(TARDIR); \
 	cp tendrl-api-$(VERSION).tar.gz $(RPMBUILD)/SOURCES

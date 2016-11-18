@@ -11,13 +11,11 @@ BuildArch: noarch
 BuildRequires: ruby
 BuildRequires: systemd-units
 
-Requires: ruby = 2.0
+Requires: ruby >= 2.0.0
 Requires: rubygem-sinatra
-Requires: rubygem-sinatra-contrib
 Requires: rubygem-activesupport
 Requires: rubygem-etcd
 Requires: rubygem-puma
-Requires: rubygem-sinatra-cross_origin
 
 %description
 Collection of tendrl api.
@@ -38,7 +36,7 @@ BuildArch: noarch
 Requires: httpd
 
 %description httpd
-Tendrl api httpd
+Tendrl API httpd configuration.
 
 %prep
 %setup
@@ -47,26 +45,31 @@ Tendrl api httpd
 install -m 755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 755 --directory config $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -m 755 --directory lib $RPM_BUILD_ROOT%{_datadir}/%{name}/lib
+install -m 755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -Dm 0644 *.ru *.rb $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
-install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/etcd.yml
+install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
+install -Dm 0644 config/*.sample $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/.
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
 
 %files
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/lib
+%dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/*.ru
 %{_datadir}/%{name}/*.rb
 %{_unitdir}/tendrl-apid.service
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/lib
+%{_sysconfdir}/tendrl/etcd.yml
 
 %files doc
+%dir %{_datadir}/doc/tendrl/config
 %doc %{_datadir}/doc/tendrl/README.adoc
+%{_datadir}/doc/tendrl/config/
 %{_datadir}/doc/tendrl/Rakefile
-%{_datadir}/doc/tendrl/config/etcd.yml
 
 %files httpd
 %{_sysconfdir}/httpd/conf.d/tendrl.conf
