@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'sinatra', '1.4.5'
+gem 'sinatra', '1.4.5', require: 'sinatra/base'
 gem 'etcd', '0.3.0'
 gem 'activesupport', "4.2.6", require: false
 gem 'rake', '0.9.6'
