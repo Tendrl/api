@@ -38,6 +38,7 @@ class Base < Sinatra::Base
     'Content-Type',
     'Accept',
     'Authorization',
+    'X-Requested-With'
   ]
 
   set :http_allow_origin, [
