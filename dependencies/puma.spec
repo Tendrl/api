@@ -41,6 +41,7 @@ Documentation for %{name}.
 gem unpack %{SOURCE0}
 
 %setup -q -D -T -n  %{gem_name}-%{version}
+bundle install --path vendor/bundle --binstubs vendor/bin
 
 gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
 
@@ -57,8 +58,13 @@ mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
-mkdir -p %{buildroot}%{gem_extdir_mri}
-# cp -a .%{gem_extdir_mri}/{gem.build_complete,*.so} %{buildroot}%{gem_extdir_mri}/
+mkdir -p %{buildroot}%{gem_extdir_mri}/puma
+cp -a .%{gem_extdir_mri}/gem.build_complete %{buildroot}%{gem_extdir_mri}/ || :
+cp -a .%{gem_extdir_mri}/puma/*.so %{buildroot}%{gem_extdir_mri}/puma  || :
+install -Dm 0755 vendor/bin/puma %{buildroot}%{gem_extdir_mri}/puma/
+
+#mkdir -p %{buildroot}%{gem_extdir_mri}
+cp -a .%{gem_extdir_mri}/{gem.build_complete,*.so} %{buildroot}%{gem_extdir_mri}/  || :
 
 # Prevent dangling symlink in -debuginfo (rhbz#878863).
 rm -rf %{buildroot}%{gem_instdir}/ext/
@@ -84,11 +90,11 @@ popd
 %license %{gem_instdir}/LICENSE
 %{gem_instdir}/Manifest.txt
 %{gem_instdir}/bin
-#%{gem_instdir}/ext
 %{gem_libdir}
 %{gem_instdir}/tools
 %exclude %{gem_cache}
 %{gem_spec}
+%{buildroot}/etc/
 
 %files doc
 %doc %{gem_docdir}
@@ -100,5 +106,9 @@ popd
 %{gem_instdir}/puma.gemspec
 
 %changelog
+* Fri Nov 18 2016 Tim <tim.gluster@gmail.com> - 3.6.0-2
+- Fix .so file path
+- Fix ext not found error
+
 * Wed Nov 16 2016 Tim <tim.gluster@gmail.com> - 3.6.0-1
 - Initial package

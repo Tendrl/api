@@ -12,10 +12,21 @@ BuildRequires: ruby
 BuildRequires: systemd-units
 
 Requires: ruby >= 2.0.0
-Requires: rubygem-sinatra
-Requires: rubygem-activesupport
+Requires: rubygem-i18n >= 0.7.0
+Requires: rubygem-json
+Requires: rubygem-minitest >= 5.9.1
+Requires: rubygem-thread_safe >= 0.3.5
+Requires: rubygem-mixlib-log >= 1.7.1
+Requires: rubygem-puma >= 3.6.0
+Requires: rubygem-rake >= 0.9.6
+Requires: rubygem-rack >= 1.6.4
+Requires: rubygem-tilt >= 1.4.1
+Requires: rubygem-bundler >= 1.13.6
+Requires: rubygem-tzinfo >= 1.2.2
 Requires: rubygem-etcd
-Requires: rubygem-puma
+Requires: rubygem-rack-protection >= 1.5.3
+Requires: rubygem-activesupport >= 4.2.6
+Requires: rubygem-sinatra >= 1.4.5
 
 %description
 Collection of tendrl api.
@@ -42,26 +53,26 @@ Tendrl API httpd configuration.
 %setup
 
 %install
-install -m 755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -m 755 --directory config $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -m 755 --directory lib $RPM_BUILD_ROOT%{_datadir}/%{name}/lib
-install -m 755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
-install -Dm 0644 *.ru *.rb $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
+install -Dm 0644 *.ru *.rb Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
+install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
+install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
-install -Dm 0644 config/*.sample $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/.
+install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
 
 %files
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/lib
 %dir %{_sysconfdir}/tendrl
-%{_datadir}/%{name}/*.ru
-%{_datadir}/%{name}/*.rb
+%{_datadir}/%{name}/
 %{_unitdir}/tendrl-apid.service
 %{_sysconfdir}/tendrl/etcd.yml
 
