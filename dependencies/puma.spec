@@ -41,7 +41,6 @@ Documentation for %{name}.
 gem unpack %{SOURCE0}
 
 %setup -q -D -T -n  %{gem_name}-%{version}
-bundle install --path vendor/bundle --binstubs vendor/bin
 
 gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
 
@@ -61,9 +60,6 @@ cp -a .%{gem_dir}/* \
 mkdir -p %{buildroot}%{gem_extdir_mri}/puma
 cp -a .%{gem_extdir_mri}/gem.build_complete %{buildroot}%{gem_extdir_mri}/ || :
 cp -a .%{gem_extdir_mri}/puma/*.so %{buildroot}%{gem_extdir_mri}/puma  || :
-install -Dm 0755 vendor/bin/puma %{buildroot}%{gem_extdir_mri}/puma/
-
-#mkdir -p %{buildroot}%{gem_extdir_mri}
 cp -a .%{gem_extdir_mri}/{gem.build_complete,*.so} %{buildroot}%{gem_extdir_mri}/  || :
 
 # Prevent dangling symlink in -debuginfo (rhbz#878863).
@@ -94,7 +90,6 @@ popd
 %{gem_instdir}/tools
 %exclude %{gem_cache}
 %{gem_spec}
-%{buildroot}/etc/
 
 %files doc
 %doc %{gem_docdir}
