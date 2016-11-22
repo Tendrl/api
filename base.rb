@@ -1,12 +1,4 @@
-require 'bundler'
-require 'yaml'
-require 'sinatra/base'
-require 'securerandom'
-require 'active_support/core_ext/hash'
-require 'active_support/inflector'
 require 'tendrl'
-
-Bundler.require :default, ENV['RACK_ENV'].to_sym
 
 class Base < Sinatra::Base
   set :root, File.dirname(__FILE__)

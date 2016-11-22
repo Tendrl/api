@@ -1,4 +1,16 @@
-require 'active_support/core_ext/hash/deep_merge'
+require 'yaml'
+require 'securerandom'
+require 'bundler'
+
+unless File.exists?('.deploy')
+  Bundler.require :default, ENV['RACK_ENV']
+else
+  require 'sinatra/base'
+  require 'etcd'
+end
+
+require 'active_support/core_ext/hash'
+require 'active_support/inflector'
 require './lib/tendrl/version'
 require './lib/tendrl/flow'
 require './lib/tendrl/object'
@@ -8,6 +20,7 @@ require './lib/tendrl/attribute'
 #Errors
 require './lib/tendrl/errors/tendrl_error'
 require './lib/tendrl/errors/invalid_object_error'
+
 
 module Tendrl
 
