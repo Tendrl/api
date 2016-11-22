@@ -2,16 +2,15 @@ require 'yaml'
 require 'securerandom'
 require 'bundler'
 
-begin
-  Bundler.require :default, ENV['RACK_ENV'].to_sym
-rescue Bundler::GemNotFound
+unless File.exists?('.deploy')
+  Bundler.require :default, ENV['RACK_ENV']
+else
   require 'sinatra/base'
   require 'etcd'
 end
 
 require 'active_support/core_ext/hash'
 require 'active_support/inflector'
-require 'active_support/core_ext/hash/deep_merge'
 require './lib/tendrl/version'
 require './lib/tendrl/flow'
 require './lib/tendrl/object'
