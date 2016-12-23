@@ -5,6 +5,10 @@ class Base < Sinatra::Base
 
   set :environment, ENV['RACK_ENV'] || 'development'
 
+  set :logging, true
+
+  set :logging, Logger::INFO
+
   configure :development, :test do
     set :etcd_config, Proc.new {
       YAML.load_file('config/etcd.yml')[settings.environment.to_sym] 
@@ -72,8 +76,37 @@ class Base < Sinatra::Base
 
   protected
 
+  def monitoring
+    yaml = etcd.get('/monitoring/config').value
+    config = YAML.load(yaml)
+    @monitoring = Tendrl::MonitoringApi.new(config)
+  rescue Etcd::KeyNotFound
+    logger.debug 'Monitoring API not enabled.'
+    nil
+  end
+
   def etcd
     settings.etcd
   end
+
+  def recurse(parent, attrs={})
+    parent_key = parent.key.split('/')[-1].downcase
+    return attrs if ['definitions', 'raw_map'].include?(parent_key)
+    parent.children.each do |child|
+      child_key = child.key.split('/')[-1].downcase
+      attrs[parent_key] ||= {}
+      if child.dir
+        recurse(child, attrs[parent_key])
+      else
+        if attrs[parent_key]
+          attrs[parent_key][child_key] = child.value
+        else
+          attrs[child_key] = child.value
+        end
+      end
+    end
+    attrs
+  end
+  
 
 end

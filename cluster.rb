@@ -4,12 +4,13 @@ class Cluster < Base
 
   get '/GetClusterList' do
     clusters = []
+    cluster_ids = []
     etcd.get('/clusters', recursive: true).children.each do |cluster|
-      cluster_attrs = {}
-      tendrl_context = "#{cluster.key}/Tendrl_context"
-      clusters << recurse(etcd.get(tendrl_context))
+      cluster_ids << cluster.key.split('/')[-1]
+      clusters << recurse(cluster) 
     end
-    clusters.to_json
+    clusters = load_stats(clusters)
+    { clusters: clusters }.to_json
   end
 
   get '/:cluster_id/Flows' do
@@ -81,17 +82,6 @@ class Cluster < Base
 
   private
 
-  def recurse(node, attrs={})
-    node.children.each do |child|
-      if child.dir
-        recurse(child, attrs)
-      else
-        attrs[child.key.split('/')[-1]] = child.value
-      end
-    end
-    attrs
-  end
-
   def context(cluster_id)
     tendrl_context = "#{@cluster.key}/Tendrl_context"
     attrs = recurse(etcd.get(tendrl_context))
@@ -117,5 +107,20 @@ class Cluster < Base
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
   end
+
+  def load_stats(clusters)
+    stats = []
+    unless monitoring.nil?
+      cluster_ids = clusters.map{|e| e.keys.first }
+      stats = @monitoring.cluster_stats(cluster_ids)
+      stats.each do |stat|
+        cluster = clusters.find{|e| e.keys.first == stat['id'] }
+        next if cluster.nil?
+        cluster[:stats] = stat['summary']
+      end
+    end
+    clusters
+  end
+
 
 end

@@ -1,0 +1,1 @@
+{"action":"get","node":{"key":"/monitoring/config","value":"---\n:url: http://127.0.0.1:9000\n"}}

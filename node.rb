@@ -9,19 +9,17 @@ class Node < Base
 
   get '/Flows' do
     flows = Tendrl::Flow.find_all
-    flows.to_json
+    { flows: flows }.to_json
   end
 
   get '/GetNodeList' do
     nodes = []
-    etcd.get('/nodes').children.each do |node|
-      node_attrs = {}
-      etcd.get("#{node.key}/Node_context").children.each do |child|
-        node_attrs[child.key.split("#{node.key}/Node_context/")[1]] = child.value
-      end
-      nodes << node_attrs
+    node_ids = []
+    etcd.get('/nodes', recursive: true).children.each do |node|
+      nodes << recurse(node)
     end
-    nodes.to_json
+    nodes = load_stats(nodes)
+    { nodes: nodes }.to_json
   end
 
   post '/:flow' do
@@ -45,5 +43,22 @@ class Node < Base
     status 202
     { job_id: job_id }.to_json
   end
+
+  private
+
+  def load_stats(nodes)
+    stats = []
+    unless monitoring.nil?
+      node_ids = nodes.map{|e| e.keys.first }
+      stats = @monitoring.node_stats(node_ids)
+      stats.each do |stat|
+        node = nodes.find{|e| e.keys.first == stat['id'] }
+        next if node.nil?
+        node[:stats] = stat['summary']
+      end
+    end
+    nodes
+  end
+
 
 end

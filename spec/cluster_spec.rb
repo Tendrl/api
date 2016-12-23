@@ -1,15 +1,28 @@
 require 'spec_helper'
 
-describe 'API' do
+describe Cluster do
 
-  before do
-  end
+  context 'list' do
 
-  context 'Volume Definitions' do
+    before do
+      stub_clusters
+    end
 
-  end
+    it 'cluster without monitoring' do
+      stub_monitoring_config(404, "monitoring_config_error.json")
+      get "/GetClusterList", { "CONTENT_TYPE" => "application/json" }
+      expect(last_response.status).to eq 200
+    end
 
-  context 'Volume actions' do
+    it 'cluster with monitoring stats' do
+      stub_monitoring_config
+      stub_cluster_monitoring
+      get "/GetClusterList", { "CONTENT_TYPE" => "application/json" }
+      puts last_response.errors
+      p last_response.body
+
+      expect(last_response.status).to eq 200
+    end
 
   end
 
