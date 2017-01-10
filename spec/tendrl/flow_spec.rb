@@ -3,9 +3,10 @@ require 'spec_helper'
 RSpec.describe Tendrl::Flow do
 
   before do
-    Tendrl.node_definitions = YAML.load_file(
-      'spec/fixtures/definitions/tendrl_definitions_node_agent.yaml'
-    )
+    definitions = JSON.parse(File.read(
+      'spec/fixtures/definitions/tendrl_definitions_node_agent.json'
+    ))['node']['value']
+    Tendrl.node_definitions = YAML.load(definitions)
   end
 
   context 'node' do

@@ -7,7 +7,7 @@ class Base < Sinatra::Base
 
   set :logging, true
 
-  set :logging, Logger::INFO
+  set :logging, ENV['LOG_LEVEL'] || Logger::INFO
 
   configure :development, :test do
     set :etcd_config, Proc.new {

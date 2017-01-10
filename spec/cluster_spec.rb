@@ -18,9 +18,6 @@ describe Cluster do
       stub_monitoring_config
       stub_cluster_monitoring
       get "/GetClusterList", { "CONTENT_TYPE" => "application/json" }
-      puts last_response.errors
-      p last_response.body
-
       expect(last_response.status).to eq 200
     end
 

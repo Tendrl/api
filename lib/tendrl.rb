@@ -17,6 +17,8 @@ require './lib/tendrl/object'
 require './lib/tendrl/atom'
 require './lib/tendrl/attribute'
 require './lib/tendrl/monitoring_api'
+require './lib/tendrl/monitoring_api'
+require './lib/tendrl/presenters/node_presenter'
 
 #Errors
 require './lib/tendrl/errors/tendrl_error'

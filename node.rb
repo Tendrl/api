@@ -18,8 +18,8 @@ class Node < Base
     etcd.get('/nodes', recursive: true).children.each do |node|
       nodes << recurse(node)
     end
-    nodes = load_stats(nodes)
-    { nodes: nodes }.to_json
+    nodes, clusters = NodePresenter.list(nodes) 
+    { nodes: nodes, clusters: clusters }.to_json
   end
 
   post '/:flow' do
