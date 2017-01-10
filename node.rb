@@ -19,6 +19,7 @@ class Node < Base
       nodes << recurse(node)
     end
     nodes, clusters = NodePresenter.list(nodes) 
+    nodes = load_stats(nodes)
     { nodes: nodes, clusters: clusters }.to_json
   end
 
@@ -49,7 +50,7 @@ class Node < Base
   def load_stats(nodes)
     stats = []
     unless monitoring.nil?
-      node_ids = nodes.map{|e| e.keys.first }
+      node_ids = nodes.map{|n| n['node_id'] } 
       stats = @monitoring.node_stats(node_ids)
       stats.each do |stat|
         node = nodes.find{|e| e.keys.first == stat['id'] }
