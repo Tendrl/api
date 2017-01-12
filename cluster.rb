@@ -9,6 +9,7 @@ class Cluster < Base
       cluster_ids << cluster.key.split('/')[-1]
       clusters << recurse(cluster) 
     end
+    clusters = ClusterPresenter.list(clusters)
     clusters = load_stats(clusters)
     { clusters: clusters }.to_json
   end
@@ -111,12 +112,12 @@ class Cluster < Base
   def load_stats(clusters)
     stats = []
     unless monitoring.nil?
-      cluster_ids = clusters.map{|e| e.keys.first }
+      cluster_ids = clusters.map{|e| e['cluster_id'] }
       stats = @monitoring.cluster_stats(cluster_ids)
       stats.each do |stat|
-        cluster = clusters.find{|e| e.keys.first == stat['id'] }
+        cluster = clusters.find{|e| e['cluster_id'] == stat['id'] }
         next if cluster.nil?
-        cluster[:stats] = stat['summary']
+        cluster['stats'] = stat['summary']
       end
     end
     clusters

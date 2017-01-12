@@ -1,7 +1,7 @@
 [{
 	"id": "3038c577-b233-4513-926d-a8a1ac63b0a3",
-	"summary": "{alert_cnt': 10, 'storage': {'total': 42949672960, 'used': 21474836480, 'updated_at': '2016-12-19T23:12:51.278616', 'percent-used': 50}, 'cpu': {'updated_at': '2016-12-19T23:12:51.278516', 'percent-used': 4.5}, 'memory': {'total': 4294967296, 'used': 2147483648, 'updated_at': '2016-12-19T23:12:51.278593', 'percent-used': 50}}"
+	"summary": "{alert_cnt': 10, 'storage': {'total': 42949672960, 'used': 21474836480, 'updated_at': '2016-12-19T23:12:51.278616', 'percent-used': 50}, 'cpu': {'updated_at': '2016-12-19T23:12:51.278516', 'percent-used': 4.5}, 'memory': {'total': 4294967296, 'used': 2147483648, 'updated_at': '2016-12-19T23:12:51.278593', 'percent_used': 50}}"
 }, {
 	"id": "7a880068-bf5e-465f-a083-0c23aeaf30f4",
-	"summary": "{'alert_cnt': 10, 'storage': {'total': 42949672960, 'used': 21474836480, 'updated_at': '2016-12-19T23:14:12.795506', 'percent-used': 50}, 'cpu': {'updated_at': '2016-12-19T23:14:12.795414', 'percent-used': 4.5}, 'memory': {'total': 4294967296, 'used': 2147483648, 'updated_at': '2016-12-19T23:14:12.795486', 'percent-used': 50}}"
+	"summary": "{'alert_cnt': 10, 'storage': {'total': 42949672960, 'used': 21474836480, 'updated_at': '2016-12-19T23:14:12.795506', 'percent-used': 50}, 'cpu': {'updated_at': '2016-12-19T23:14:12.795414', 'percent-used': 4.5}, 'memory': {'total': 4294967296, 'used': 2147483648, 'updated_at': '2016-12-19T23:14:12.795486', 'percent_used': 50}}"
 }]

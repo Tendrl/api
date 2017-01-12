@@ -19,6 +19,7 @@ require './lib/tendrl/attribute'
 require './lib/tendrl/monitoring_api'
 require './lib/tendrl/monitoring_api'
 require './lib/tendrl/presenters/node_presenter'
+require './lib/tendrl/presenters/cluster_presenter'
 
 #Errors
 require './lib/tendrl/errors/tendrl_error'
