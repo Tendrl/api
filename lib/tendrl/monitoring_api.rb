@@ -6,7 +6,11 @@ module Tendrl
     attr_accessor :base_uri
 
     def initialize(config)
-      @base_uri = config[:url]
+      config = config['api_server']
+      scheme = config['api_server_scheme'] || 'http'
+      hostname = config['api_server_addr']
+      port = config['api_server_port']
+      @base_uri = "#{scheme}://#{hostname}:#{port}"
     end
 
     def node_stats(node_ids=[])

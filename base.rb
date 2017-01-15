@@ -77,11 +77,11 @@ class Base < Sinatra::Base
   protected
 
   def monitoring
-    yaml = etcd.get('/monitoring/config').value
+    yaml = etcd.get('/_tendrl/config/performance_monitoring').value
     config = YAML.load(yaml)
     @monitoring = Tendrl::MonitoringApi.new(config)
   rescue Etcd::KeyNotFound
-    logger.debug 'Monitoring API not enabled.'
+    logger.info 'Monitoring API not enabled.'
     nil
   end
 

@@ -59,7 +59,7 @@ end
 def stub_monitoring_config(status=200, file='monitoring_config.json')
   stub_request(
     :get,
-    "http://127.0.0.1:2379/v2/keys/monitoring/config"
+    "http://127.0.0.1:2379/v2/keys/_tendrl/config/performance_monitoring"
   ).
   to_return(
     :status => status,

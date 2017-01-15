@@ -1,1 +1,1 @@
-{"action":"get","node":{"key":"/monitoring/config","value":"---\n:url: http://127.0.0.1:9000\n"}}
+{"action":"get","node":{"key":"/_tendrl/config/performance_monitoring","value":"--- \napi_server: \n  api_server_addr: \"127.0.0.1\"\n  api_server_port: 9000\ninterval: 600\nmaster_name: dhcp42-142.lab.eng.blr.redhat.com\nthresholds: \n  cpu: \n    Failure: 90\n    Warning: 80\n  memory: \n    Failure: 90\n    Warning: 80\n  mount_point: \n    Failure: 90\n    Warning: 80\n  swap: \n    Failure: 70\n    Warning: 50"}}

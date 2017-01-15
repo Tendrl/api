@@ -1,7 +1,6 @@
 require './base'
 class Node < Base
 
-  
   before do
     definitions = etcd.get('/tendrl_definitions_node_agent/data').value
     Tendrl.node_definitions = YAML.load(definitions)
