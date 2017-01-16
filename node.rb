@@ -32,11 +32,14 @@ class Node < Base
       "/queue/#{job_id}", 
       value: {
         cluster_id: body['Tendrl_context.cluster_id'],
+        job_id: job_id,
         status: 'new',
         parameters: body,
         run: flow.run,
+        flow: flow.flow_name,
         type: 'node',
-        created_from: 'API'
+        created_from: 'API',
+        created_at: Time.now.utc.iso8601
       }.
       to_json
     )
