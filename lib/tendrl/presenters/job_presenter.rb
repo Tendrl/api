@@ -3,7 +3,6 @@ module JobPresenter
   class << self
 
     def single(raw_job)
-      p raw_job
       {
         status: raw_job['status'],
         flow: raw_job['flow'], 
