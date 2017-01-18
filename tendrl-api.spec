@@ -4,7 +4,7 @@ Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
-URL: https://github.com/Tendrl/tendrl-api
+URL: https://github.com/Tendrl/api
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
