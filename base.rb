@@ -54,6 +54,14 @@ class Base < Sinatra::Base
     )
   }
 
+  error Etcd::NotDir do
+    halt 404, { errors: { message: 'Not found.' }}.to_json
+  end
+
+  error Etcd::KeyNotFound do
+    halt 404, { errors: { message: 'Not found.' }}.to_json
+  end
+
   before do
     content_type :json
     response.headers["Access-Control-Allow-Origin"] = 

@@ -2,7 +2,7 @@ require './base'
 class Node < Base
 
   before do
-    definitions = etcd.get('/tendrl_definitions_node_agent/data').value
+    definitions = etcd.get('/_tendrl/definitions/master').value
     Tendrl.node_definitions = YAML.load(definitions)
   end
 
@@ -26,12 +26,12 @@ class Node < Base
     flow = Tendrl::Flow.find_by_external_name_and_type(params[:flow], 'node')
     halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
-    body['Tendrl_context.cluster_id'] = SecureRandom.uuid
-    job_id = SecureRandom.hex
+    body['TendrlContext.integration_id'] = SecureRandom.uuid
+    job_id = SecureRandom.uuid
     job = etcd.set(
       "/queue/#{job_id}", 
       value: {
-        cluster_id: body['Tendrl_context.cluster_id'],
+        integration_id: body['TendrlContext.integration_id'],
         job_id: job_id,
         status: 'new',
         parameters: body,

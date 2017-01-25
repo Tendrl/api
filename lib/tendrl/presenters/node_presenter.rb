@@ -6,18 +6,26 @@ module NodePresenter
       nodes = []
       nodes_list.each do |node|
         node.each do |_, attributes|
-          node_attr = attributes.delete('node')
+          attributes.delete('service')
+          node_attr = attributes.delete('nodecontext')
           nodes << node_attr.merge(attributes) 
         end
       end
       clusters = []
-      nodes.group_by{|k, v| k['tendrl_context']['cluster_id'] }.each do |key,
-        values |
-        cluster = { cluster_id: key, node_ids: [] }
-        values.each do |val|
-          cluster[:node_ids] << val['tendrl_context']['node_id']
+      nodes.each do |node|
+        next if node['detectedcluster'].nil?
+        detected_cluster = node['detectedcluster']
+        detected_cluster_id = detected_cluster['detected_cluster_id']
+        if cluster = clusters.find{|e| e[:cluster_id] == detected_cluster_id }
+          cluster[:node_ids] << node['node_id']
+        else
+          clusters << { 
+            cluster_id: detected_cluster_id,
+            sds_name: detected_cluster['sds_pkg_name'],
+            sds_version: detected_cluster['sds_pkg_version'],
+            node_ids: [node['node_id']] 
+          }
         end
-        clusters << cluster
       end
       [nodes, clusters]
     end
