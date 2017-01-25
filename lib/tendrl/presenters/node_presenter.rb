@@ -2,7 +2,7 @@ module NodePresenter
 
   class << self
 
-    def list(nodes_list)
+    def list(nodes_list, existing_cluster_ids)
       nodes = []
       nodes_list.each do |node|
         node.each do |_, attributes|
@@ -13,9 +13,11 @@ module NodePresenter
       end
       clusters = []
       nodes.each do |node|
-        next if node['detectedcluster'].nil?
         detected_cluster = node['detectedcluster']
+        next if detected_cluster.nil?
         detected_cluster_id = detected_cluster['detected_cluster_id']
+        next if existing_cluster_ids.include?(detected_cluster_id)
+
         if cluster = clusters.find{|e| e[:cluster_id] == detected_cluster_id }
           cluster[:node_ids] << node['node_id']
         else
@@ -26,6 +28,7 @@ module NodePresenter
             node_ids: [node['node_id']] 
           }
         end
+        node.delete('detectedcluster')
       end
       [nodes, clusters]
     end

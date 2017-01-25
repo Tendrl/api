@@ -13,12 +13,19 @@ class Node < Base
 
   get '/GetNodeList' do
     nodes = []
-    node_ids = []
+    existing_cluster_ids = []
+
     etcd.get('/nodes', recursive: true).children.each do |node|
       nodes << recurse(node)
     end
-    nodes, clusters = NodePresenter.list(nodes) 
+
+    etcd.get('/clusters').children.each do |c|
+      existing_cluster_ids << c.key.split('/')[-1]
+    end
+
+    nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids) 
     nodes = load_stats(nodes)
+
     { nodes: nodes, clusters: clusters }.to_json
   end
 
