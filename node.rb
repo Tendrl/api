@@ -29,31 +29,6 @@ class Node < Base
     { nodes: nodes, clusters: clusters }.to_json
   end
 
-  post '/:flow' do
-    flow = Tendrl::Flow.find_by_external_name_and_type(params[:flow], 'node')
-    halt 404 if flow.nil?
-    body = JSON.parse(request.body.read)
-    body['TendrlContext.integration_id'] = SecureRandom.uuid
-    job_id = SecureRandom.uuid
-    job = etcd.set(
-      "/queue/#{job_id}", 
-      value: {
-        integration_id: body['TendrlContext.integration_id'],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'node',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601
-      }.
-      to_json
-    )
-    status 202
-    { job_id: job_id }.to_json
-  end
-
   post '/ImportCluster' do
     flow = Tendrl::Flow.new('namespace.tendrl.node_agent', 'ImportCluster')
     body = JSON.parse(request.body.read)
@@ -100,7 +75,7 @@ class Node < Base
     halt 401, { error: { "missing" => missing_params } } unless missing_params.empty?
 
     node_ids = body['node_ids']
-    halt 401, { error: "'node_ids' must be an array with values" } unless node_id.kind_of?(Array) and not node_id.empty?
+    halt 401, { error: "'node_ids' must be an array with values" } unless node_ids.kind_of?(Array) and not node_ids.empty?
 
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['TendrlContext.integration_id'] = SecureRandom.uuid
@@ -123,6 +98,31 @@ class Node < Base
       }.to_json
     )
 
+    status 202
+    { job_id: job_id }.to_json
+  end
+
+  post '/:flow' do
+    flow = Tendrl::Flow.find_by_external_name_and_type(params[:flow], 'node')
+    halt 404 if flow.nil?
+    body = JSON.parse(request.body.read)
+    body['TendrlContext.integration_id'] = SecureRandom.uuid
+    job_id = SecureRandom.uuid
+    job = etcd.set(
+      "/queue/#{job_id}", 
+      value: {
+        integration_id: body['TendrlContext.integration_id'],
+        job_id: job_id,
+        status: 'new',
+        parameters: body,
+        run: flow.run,
+        flow: flow.flow_name,
+        type: 'node',
+        created_from: 'API',
+        created_at: Time.now.utc.iso8601
+      }.
+      to_json
+    )
     status 202
     { job_id: job_id }.to_json
   end
