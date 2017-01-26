@@ -26,7 +26,7 @@ class Node < Base
     rescue Etcd::KeyNotFound
     end
 
-    nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids) 
+    nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids)
     nodes = load_stats(nodes)
 
     { nodes: nodes, clusters: clusters }.to_json
