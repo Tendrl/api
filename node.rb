@@ -75,10 +75,10 @@ class Node < Base
     ['sds_type', 'node_ids'].each do |param|
       missing_params << param unless body[param] and not body[param].empty?
     end
-    halt 401, { error: { "missing" => missing_params } } unless missing_params.empty?
+    halt 401, { errors: { missing: missing_params } } unless missing_params.empty?
 
     node_ids = body['node_ids']
-    halt 401, { error: "'node_ids' must be an array with values" } unless node_ids.kind_of?(Array) and not node_ids.empty?
+    halt 401, { errors: { message: "'node_ids' must be an array with values" } } unless node_ids.kind_of?(Array) and not node_ids.empty?
 
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['TendrlContext.integration_id'] = SecureRandom.uuid
