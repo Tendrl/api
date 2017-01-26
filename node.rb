@@ -19,8 +19,11 @@ class Node < Base
       nodes << recurse(node)
     end
 
-    etcd.get('/clusters').children.each do |c|
-      existing_cluster_ids << c.key.split('/')[-1]
+    begin
+      etcd.get('/clusters').children.each do |c|
+        existing_cluster_ids << c.key.split('/')[-1]
+      end
+    rescue Etcd::KeyNotFound
     end
 
     nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids) 
