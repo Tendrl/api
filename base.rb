@@ -101,6 +101,57 @@ class Base < Sinatra::Base
     { logs: logs, type: params[:type] }.to_json
   end
 
+  post '/ImportCluster' do
+    flow = Tendrl::Flow.new('namespace.tendrl.node_agent', 'ImportCluster')
+    body = JSON.parse(request.body.read)
+
+    # ImportCluster job structure:
+    #
+    # job = {
+    #   "integration_id": "9a4b84e0-17b3-4543-af9f-e42000c52bfc",
+    #   "run": "tendrl.node_agent.flows.import_cluster.ImportCluster",
+    #   "status": "new",
+    #   "type": "node",
+    #   "node_ids": ["3943fab1-9ed2-4eb6-8121-5a69499c4568"],
+    #   "parameters": {
+    #     "TendrlContext.integration_id": "6b4b84e0-17b3-4543-af9f-e42000c52bfc",
+    #     "Node[]": ["3943fab1-9ed2-4eb6-8121-5a69499c4568"],
+    #     "DetectedCluster.sds_pkg_name": "gluster"
+    #   }
+    # }
+
+    missing_params = []
+    ['DetectedCluster.sds_pkg_name', 'Node[]'].each do |param|
+      missing_params << param unless body[param] and not body[param].empty?
+    end
+    halt 401, "Missing parameters: #{missing_params.join(', ')}" unless missing_params.empty?
+
+    node_ids = body['Node[]']
+    halt 401, "Node[] must be an array with values" unless node_id.kind_of?(Array) and not node_id.empty?
+
+    body['TendrlContext.integration_id'] = SecureRandom.uuid
+    job_id = SecureRandom.uuid
+
+    etcd.set(
+      "/queue/#{job_id}",
+      value: {
+        integration_id: body['TendrlContext.integration_id'],
+        job_id: job_id,
+        status: 'new',
+        parameters: body,
+        run: flow.run,
+        flow: flow.flow_name,
+        type: 'node',
+        created_from: 'API',
+        created_at: Time.now.utc.iso8601,
+        node_ids: node_ids
+      }.to_json
+    )
+
+    status 202
+    { job_id: job_id }.to_json
+  end
+
   protected
 
   def monitoring
