@@ -5,24 +5,25 @@ class Cluster < Base
   get '/GetClusterList' do
     clusters = []
     etcd.get('/clusters', recursive: true).children.each do |cluster|
-      cluster_attrs = {}
-      tendrl_context = "#{cluster.key}/Tendrl_context"
-      clusters << recurse(etcd.get(tendrl_context))
+      clusters << recurse(cluster) 
     end
-    clusters.to_json
+    clusters = ClusterPresenter.list(clusters)
+    clusters = load_stats(clusters)
+    { clusters: clusters }.to_json
   end
 
   get '/:cluster_id/Flows' do
-    halt 404 if cluster(params[:cluster_id]).nil?
+    cluster = cluster(params[:cluster_id])
+    load_definitions(cluster['sds_name'])
     flows = Tendrl::Flow.find_all
     flows.to_json
   end
 
   get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
-    halt 404 if cluster(cluster_id).nil?
+    cluster = cluster(cluster_id)
     objects = []
     etcd.get(
-      "#{@cluster.key}/#{object_name.pluralize}", recursive: true
+      "/clusters/#{cluster['integration_id']}/#{object_name.pluralize}", recursive: true
     ).children.each do |node|
       objects << recurse(node)
     end
@@ -30,23 +31,24 @@ class Cluster < Base
   end
 
   post '/:cluster_id/:flow' do
-    halt 404 if cluster(params[:cluster_id]).nil?
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
     )
-    raise Sinatra::NotFound if flow.nil?
+    halt 404 if flow.nil?
+    cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
-    job_id = SecureRandom.hex
-    tendrl_context = context(params[:cluster_id])
+    job_id = SecureRandom.uuid
     job = etcd.set(
       "/queue/#{job_id}", 
       value: {
-        cluster_id: params[:cluster_id],
+        integration_id: params[:cluster_id],
+        job_id: job_id,
         status: 'new',
-        parameters: body.merge(tendrl_context),
+        parameters: body.merge(cluster),
         run: flow.run,
         type: 'sds',
-        created_from: 'API'
+        created_from: 'API',
+        created_at: Time.now.utc.iso8601
       }.
       to_json
     )
@@ -55,23 +57,24 @@ class Cluster < Base
   end
 
   delete '/:cluster_id/:flow' do
-    halt 404 if cluster(params[:cluster_id]).nil?
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
     )
     halt 404 if flow.nil?
+    cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
-    job_id = SecureRandom.hex
-    tendrl_context = context(params[:cluster_id])
+    job_id = SecureRandom.uuid
     job = etcd.set(
       "/queue/#{job_id}", 
       value: {
-        cluster_id: params[:cluster_id],
+        integration_id: params[:cluster_id],
+        job_id: job_id,
         status: 'new',
-        parameters: body.merge(tendrl_context),
+        parameters: body.merge(cluster),
         run: flow.run,
         type: 'sds',
-        created_from: 'API'
+        created_from: 'API',
+        created_at: Time.now.utc.iso8601
       }.
       to_json
     )
@@ -81,41 +84,31 @@ class Cluster < Base
 
   private
 
-  def recurse(node, attrs={})
-    node.children.each do |child|
-      if child.dir
-        recurse(child, attrs)
-      else
-        attrs[child.key.split('/')[-1]] = child.value
-      end
-    end
-    attrs
-  end
-
-  def context(cluster_id)
-    tendrl_context = "#{@cluster.key}/Tendrl_context"
-    attrs = recurse(etcd.get(tendrl_context))
-    {
-      'Tendrl_context.sds_name' => attrs['sds_name'],
-      'Tendrl_context.sds_version' => attrs['sds_version'],
-      'Tendrl_context.cluster_id' => attrs['cluster_id']
-    }
-  end
-
   def cluster(cluster_id)
-    begin
-      @cluster ||= etcd.get("/clusters/#{cluster_id}")
-      load_definitions(cluster_id)
-    rescue Etcd::KeyNotFound
-      nil
-    end
+    @cluster ||=
+      recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
   end
 
-  def load_definitions(cluster_id)
+  def load_definitions(sds_name)
     definitions = etcd.get(
-      "/clusters/#{cluster_id}/definitions/data"
+      "/_tendrl/definitions/#{sds_name}"
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
   end
+
+  def load_stats(clusters)
+    stats = []
+    unless monitoring.nil?
+      cluster_ids = clusters.map{|e| e['cluster_id'] }
+      stats = @monitoring.cluster_stats(cluster_ids)
+      stats.each do |stat|
+        cluster = clusters.find{|e| e['cluster_id'] == stat['id'] }
+        next if cluster.nil?
+        cluster['stats'] = stat['summary']
+      end
+    end
+    clusters
+  end
+
 
 end

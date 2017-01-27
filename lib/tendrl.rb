@@ -16,6 +16,11 @@ require './lib/tendrl/flow'
 require './lib/tendrl/object'
 require './lib/tendrl/atom'
 require './lib/tendrl/attribute'
+require './lib/tendrl/monitoring_api'
+require './lib/tendrl/monitoring_api'
+require './lib/tendrl/presenters/node_presenter'
+require './lib/tendrl/presenters/cluster_presenter'
+require './lib/tendrl/presenters/job_presenter'
 
 #Errors
 require './lib/tendrl/errors/tendrl_error'
