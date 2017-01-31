@@ -20,7 +20,7 @@ end
 def stub_definitions
   stub_request(
     :get,
-    "http://127.0.0.1:2379/v2/keys/tendrl_definitions_node_agent/data"
+    "http://127.0.0.1:2379/v2/keys/_tendrl/definitions/master"
   ).
   to_return(
     status: 200,
@@ -43,10 +43,10 @@ def stub_nodes
   )
 end
 
-def stub_clusters
+def stub_clusters(recursive=true)
   stub_request(
     :get,
-    "http://127.0.0.1:2379/v2/keys/clusters?recursive=true"
+    "http://127.0.0.1:2379/v2/keys/clusters?recursive=#{recursive}"
   ).
   to_return(
     :status => 200,
@@ -76,10 +76,10 @@ def stub_node_monitoring
     status: 200,
     body: File.read('spec/fixtures/monitoring_node.json')
   )
- end
+end
 
 def stub_cluster_monitoring
- stub_request(
+  stub_request(
     :get,
     /http:\/\/127.0.0.1:9000\/monitoring\/clusters\/summary\?clusters=.*/
   ).
@@ -87,6 +87,67 @@ def stub_cluster_monitoring
     status: 200,
     body: File.read('spec/fixtures/monitoring_cluster.json')
   )
+end
+
+def stub_cluster_context
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:2379\/v2\/keys\/clusters\/.*\/TendrlContext/i
+  ).
+  to_return(
+    :status => 200,
+    body: File.read('spec/fixtures/cluster_context.json')
+  )
+end
+
+def stub_job_creation
+  stub_request(
+    :put,
+    /http:\/\/127.0.0.1:2379\/v2\/keys\/queue\/.*/
+  ).to_return(
+    status: 200,
+    body: File.read('spec/fixtures/job_created.json')
+  )
+end
+
+def stub_pools
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:2379\/v2\/keys\/clusters\/.*\/Pools\?recursive=true/
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read(
+      'spec/fixtures/pools.json'
+    )
+  )
+end
+
+def stub_jobs
+  stub_request(
+    :get,
+    "http://127.0.0.1:2379/v2/keys/queue?recursive=true"
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read(
+      'spec/fixtures/jobs.json'
+    )
+  )
+end
+
+def stub_job
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:2379\/v2\/keys\/queue\/.*/
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read(
+      'spec/fixtures/job.json'
+    )
+  )
+
 end
 
 

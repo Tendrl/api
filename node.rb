@@ -20,7 +20,7 @@ class Node < Base
     end
 
     begin
-      etcd.get('/clusters').children.each do |c|
+      etcd.get('/clusters', recursive: false).children.each do |c|
         existing_cluster_ids << c.key.split('/')[-1]
       end
     rescue Etcd::KeyNotFound

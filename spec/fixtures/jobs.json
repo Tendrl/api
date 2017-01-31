@@ -1,0 +1,25 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/queue",
+		"dir": true,
+		"nodes": [{
+			"key": "/queue/job_6917442c-6087-44f0-a15f-126e260eb97e",
+			"value": "{\"integration_id\": \"9a4b84e0-17b3-4543-af9f-e42000c52bfc\", \"status\": \"finished\", \"run\": \"tendrl.node_agent.flows.import_cluster.ImportCluster\", \"parameters\": {\"integration_id\": \"9a4b84e0-17b3-4543-af9f-e42000c52bfc\", \"DetectedCluster.sds_pkg_name\": \"ceph\", \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"TendrlContext.integration_id\": \"6b4b84e0-17b3-4543-af9f-e42000c52bfc\", \"request_id\": \"nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_f772ba68-e098-4691-976f-9af83bf3aa35\", \"Node[]\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"]}, \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"request_id\": \"nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_f772ba68-e098-4691-976f-9af83bf3aa35\", \"type\": \"node\"}",
+			"modifiedIndex": 6730,
+			"createdIndex": 6730
+		}, {
+			"key": "/queue/165bd201-2bee-44e9-a706-321290db798c",
+			"value": "{\"integration_id\": \"717315a1-2a49-4cb7-826b-d2aa3bc4721a\", \"status\": \"finished\", \"run\": \"tendrl.node_agent.flows.import_cluster.ImportCluster\", \"job_id\": \"165bd201-2bee-44e9-a706-321290db798c\", \"parameters\": {\"integration_id\": \"717315a1-2a49-4cb7-826b-d2aa3bc4721a\", \"DetectedCluster.sds_pkg_name\": \"ceph\", \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"sds_version\": \"10.2.5\", \"sds_name\": \"ceph 10.2.5\", \"sds_type\": \"ceph\", \"hosts\": [{\"release\": \"ceph 10.2.5\", \"role\": \"Monitor\", \"name\": \"dhcp43-203.lab.eng.blr.redhat.com\"}], \"request_id\": \"nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_9c9e5d67-d7e8-472d-9f88-ed613a200f7b\", \"cluster_id\": \"c221ccdb-51d6-4b57-9f10-bcf30c7fa351\", \"TendrlContext.integration_id\": \"717315a1-2a49-4cb7-826b-d2aa3bc4721a\", \"Node[]\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"]}, \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"created_at\": \"2017-01-26T08:04:25Z\", \"flow\": \"ImportCluster\", \"created_from\": \"API\", \"request_id\": \"nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_9c9e5d67-d7e8-472d-9f88-ed613a200f7b\", \"type\": \"node\"}",
+			"modifiedIndex": 166201,
+			"createdIndex": 166201
+		}, {
+			"key": "/queue/job_1cb0694c-8041-4576-95ee-f01f07738ff9",
+			"value": "{\"integration_id\": \"9a4b84e0-17b3-4543-af9f-e42000c52bfc\", \"status\": \"processing\", \"run\": \"tendrl.node_agent.flows.import_cluster.ImportCluster\", \"parameters\": {\"integration_id\": \"9a4b84e0-17b3-4543-af9f-e42000c52bfc\", \"TendrlContext.integration_id\": \"6b4b84e0-17b3-4543-af9f-e42000c52bfc\", \"DetectedCluster.sds_pkg_name\": \"ceph\", \"Node[]\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"]}, \"node_ids\": [\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"], \"request_id\": \"nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_0af25319-d805-416d-8855-76feab9b6b89\", \"type\": \"node\"}",
+			"modifiedIndex": 6542,
+			"createdIndex": 6542
+		}],
+		"modifiedIndex": 2194,
+		"createdIndex": 2194
+	}
+}
