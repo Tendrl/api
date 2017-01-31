@@ -1,0 +1,57 @@
+// vim: tw=79
+= Pools
+:toc:
+
+=== List pools
+
+Sample Request
+
+----------
+curl -XGET
+http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/GetPoolList
+----------
+
+Sample Response
+
+----------
+Status: 200 OK
+[{
+	"0": {
+		"used": "0",
+		"min_size": "2",
+		"percent_used": "0",
+		"pg_num": "64",
+		"pool_id": "0",
+		"pool_name": "rbd"
+	}
+}]----------
+
+=== Create Pool
+
+Sample Request
+----------
+curl -XPOST -d
+'{"Pool.poolname":"testPool","Pool.pg_num":128,"Pool.min_size":1}'
+http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephCreatePool
+----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "ab693a6787ffa5de34975eabd3341c54" }
+----------
+
+=== Delete Pool
+
+Sample Request
+----------
+curl -XDELETE -d '{"Pool.poolname":"testPool","Pool.pool_id":"f2e68a00-71c9
+-4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6
+fd4932afb/CephDeletePool
+----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
