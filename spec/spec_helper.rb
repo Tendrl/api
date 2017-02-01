@@ -59,7 +59,7 @@ end
 def stub_monitoring_config(status=200, file='monitoring_config.json')
   stub_request(
     :get,
-    "http://127.0.0.1:2379/v2/keys/_tendrl/config/performance_monitoring"
+    "http://127.0.0.1:2379/v2/keys/_tendrl/config/performance_monitoring/data"
   ).
   to_return(
     :status => status,
@@ -70,7 +70,7 @@ end
 def stub_node_monitoring
   stub_request(
     :get,
-    /http:\/\/127.0.0.1:9000\/monitoring\/nodes\/summary\?nodes=.*/
+    /http:\/\/127.0.0.1:5000\/monitoring\/nodes\/summary\?node_ids=.*/
   ).
   to_return(
     status: 200,
@@ -81,7 +81,7 @@ end
 def stub_cluster_monitoring
   stub_request(
     :get,
-    /http:\/\/127.0.0.1:9000\/monitoring\/clusters\/summary\?clusters=.*/
+    /http:\/\/127.0.0.1:5000\/monitoring\/clusters\/summary\?cluster_ids=.*/
   ).
   to_return(
     status: 200,
