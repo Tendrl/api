@@ -138,9 +138,9 @@ class Node < Base
       node_ids = nodes.map{|n| n['node_id'] } 
       stats = @monitoring.node_stats(node_ids)
       stats.each do |stat|
-        node = nodes.find{|e| e['node_id'] == stat['id'] }
+        node = nodes.find{|e| e['node_id'] == stat['node_id'] }
         next if node.nil?
-        node[:stats] = stat['summary']
+        node[:stats] = stat
       end
     end
     nodes
