@@ -1,0 +1,66 @@
+// vim: tw=79
+= Nodes
+:toc:
+
+== List Nodes
+
+Sample Request
+
+----------
+curl -XGET http://127.0.0.1/api/1.0/GetNodeList
+----------
+
+Sample Response
+
+----------
+{
+	"nodes": [{
+		"fqdn": "example.tendrl.org",
+		"machine_id": "c7338619019644fdb2e75325647ff882",
+		"node_id": "56f5a816-e85a-4452-a294-d460f52619a1",
+		"status": "UP",
+		"tags": "ceph/mon",
+		"os": {
+			"kernel_version": "3.10.0-123.el7.x86_64",
+			"os": "CentOS Linux",
+			"os_version": "7.3.1611",
+			"selinux_mode": "Permissive"
+		},
+		"cpu": {
+			"cpu_family": "6",
+			"cpu_op_mode": "32-bit, 64-bit",
+			"model": "42",
+			"model_name": "Intel Xeon E312xx (Sandy Bridge)",
+			"vendor_id": "GenuineIntel",
+			"architecture": "x86_64",
+			"cores_per_socket": "1"
+		},
+		"memory": {
+			"swap_total": "8273916 kB",
+			"total_size": "8010636 kB"
+		},
+		"platform": {
+			"os": "CentOS Linux",
+			"os_version": "7.3.1611",
+			"kernel_version": "3.10.0-123.el7.x86_64"
+		},
+		"detectedcluster": {
+			"sds_pkg_version": "10.2.5",
+			"detected_cluster_id": "d4458634-90f8-491b-8aa0-51c62d28e642",
+			"sds_pkg_name": "ceph"
+		},
+		"tendrlcontext": {
+			"integration_id": "",
+			"node_id": "56f5a816-e85a-4452-a294-d460f52619a1"
+		}
+	}],
+	"clusters": [{
+		"cluster_id": "d4458634-90f8-491b-8aa0-51c62d28e642",
+		"sds_name": "ceph",
+		"sds_version": "10.2.5",
+		"node_ids": ["56f5a816-e85a-4452-a294-d460f52619a1"]
+	}]
+}
+----------
+
+

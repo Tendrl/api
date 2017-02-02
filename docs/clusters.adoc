@@ -1,0 +1,68 @@
+// vim: tw=79
+= Clusters
+:toc:
+
+== Import Cluster
+
+Import an existing Gluster or Ceph cluster.
+
+Sample Request
+
+----------
+curl -XPOST -H "Content-Type: application/json" \
+-d '{ "node_ids": ["7026f371-2d8c-4ad7-895f-4d4dcc70ff1c"], \
+"sds_type":"ceph"}' http://127.0.0.1/api/1.0/ImportCluster 
+----------
+
+Sample Response
+
+----------
+Status: 202 Accepted
+
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+The `job_id` can be used to poll the status of the job.
+The import cluster action queued a job in etcd which will be picked up by the
+node agent and processed.
+
+== List Clusters
+
+List available clusters
+
+Sample Request
+
+----------
+curl -XGET -H "Content-Type: application/json" \
+http://127.0.0.1/api/1.0/GetClusterList 
+----------
+
+Sample Response
+
+----------
+Status: 200 OK
+{
+	"clusters": [{
+		"fsid": "c221ccdb-51d6-4b57-9f10-bcf30c7fa351",
+		"integration_id": "c221ccdb-51d6-4b57-9f10-bcf30c7fa353",
+		"name": "ceph",
+		"sds_name": "ceph",
+		"sds_version": "10.2.5",
+		"cluster_id": "c221ccdb-51d6-4b57-9f10-bcf30c7fa353",
+		"pools": {
+			"0": {
+				"percent_used": "0",
+				"pg_num": "64",
+				"pool_id": "0",
+				"pool_name": "rbd",
+				"used": "0",
+				"min_size": "2"
+			}
+		}
+	}]
+}
+----------
+
+
+
+
