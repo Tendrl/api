@@ -3,12 +3,11 @@ require 'spec_helper'
 RSpec.describe Tendrl::MonitoringApi do
 
   let :monitoring do
-    config_json = JSON.parse(
-      File.read(
-        'spec/fixtures/monitoring_config.json'
-      )
-    )
-    config = YAML.load(config_json['node']['value'])
+    config = {
+      "log_level"=>"DEBUG",
+      "api_server_port"=>"5000",
+      "api_server_addr"=>"127.0.0.1"
+    }   
     Tendrl::MonitoringApi.new(config)
   end
 
