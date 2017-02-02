@@ -4,6 +4,8 @@ module JobPresenter
 
     def single(raw_job)
       {
+        job_id: raw_job['job_id'],
+        integration_id: raw_job['integration_id'],
         status: raw_job['status'],
         flow: raw_job['flow'], 
         parameters: raw_job['parameters'],

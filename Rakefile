@@ -5,8 +5,6 @@ require 'json'
 require 'securerandom'
 require 'rspec/core/rake_task'
 
-ENV['RACK_ENV'] ||= 'development'
-
 namespace :etcd do
   desc 'Load etcd with seed data'
   task :seed do

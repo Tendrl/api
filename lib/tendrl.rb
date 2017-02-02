@@ -2,6 +2,8 @@ require 'yaml'
 require 'securerandom'
 require 'bundler'
 
+ENV['RACK_ENV'] ||= 'development'
+
 unless File.exists?('.deploy')
   Bundler.require :default, ENV['RACK_ENV']
 else
