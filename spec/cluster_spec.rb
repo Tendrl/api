@@ -23,29 +23,90 @@ describe Cluster do
 
   end
 
-  context 'pools' do
+  context 'actions' do
 
     before do
       stub_cluster_context
-      stub_pools
+      stub_job_creation
     end
 
-    it 'list' do
-      get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetPoolList',
-        { 'CONTEXT_TYPE' => 'application/json' }
-      expect(last_response.status).to eq 200
+    context 'pools' do
+
+      before do
+        stub_cluster_definitions('ceph')
+        stub_pools
+        stub_node_ids
+      end
+
+      it 'list' do
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetPoolList'
+        expect(last_response.status).to eq 200
+      end
+
+      it 'create' do
+        body = { 
+          "Pool.poolname" => "pool_009",
+          "Pool.pg_num" => 128,
+          "Pool.min_size" => 1
+        }
+
+        post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
+          body.to_json,
+          { 'CONTENT_TYPE' => 'application/json' }
+        expect(last_response.status).to eq 202
+      end
+
+      it 'delete' do
+        body = {
+          "Pool.poolname" => "pool_009",
+          "Pool.pool_id" => "f2e68a00-71c9 -4efc-a28b-7204acf9ecff"
+        }
+
+        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
+          body.to_json
+        expect(last_response.status).to eq 202
+      end
+
     end
 
+    context 'volumes' do
+
+      before do
+        stub_cluster_definitions('gluster')
+        stub_volumes
+        stub_node_ids
+      end
+
+      it 'list' do
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetVolumesList'
+        expect(last_response.status).to eq 200
+      end
+
+      it 'create' do
+        body = { 
+          "Volume.volname" => "Volume_009",
+          "Volume.bricks" => [
+            "dhcp-1.lab.tendrl.example:/root/bricks/vol9_b1"
+          ] 
+        }
+        post '6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
+          body.to_json,
+          { 'CONTEXT_TYPE' => 'application/json' }
+        expect(last_response.status).to eq 202
+      end
+
+      it 'delete' do
+        body = {
+          "Volume.volname" => "Volume_009",
+          "Volume.vol_id" => "f2e68a00-71c9-4efc-a28b-7204acf9ecff"
+        } 
+        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
+          body.to_json
+        expect(last_response.status).to eq 202
+      end
+
+    end
   end
-
-  # context 'volumes' do
-  #
-  #   it 'list' do
-  #     get '/GetPoolsList', { 'CONTEXT_TYPE' => 'application/json' }
-  #     expect(last_response).to eq 200
-  #   end
-  #
-  # end
 
 end
 

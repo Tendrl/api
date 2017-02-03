@@ -13,8 +13,7 @@ class Cluster < Base
   end
 
   get '/:cluster_id/Flows' do
-    cluster = cluster(params[:cluster_id])
-    load_definitions(cluster['sds_name'])
+    load_definitions(params[:cluster_id])
     flows = Tendrl::Flow.find_all
     flows.to_json
   end
@@ -22,10 +21,14 @@ class Cluster < Base
   get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
     cluster = cluster(cluster_id)
     objects = []
-    etcd.get(
-      "/clusters/#{cluster['integration_id']}/#{object_name.pluralize}", recursive: true
-    ).children.each do |node|
-      objects << recurse(node)
+    begin
+      etcd.get(
+        "/clusters/#{cluster['integration_id']}/#{object_name.pluralize}", recursive: true
+      ).children.each do |node|
+        objects << recurse(node)
+      end
+    rescue Etcd::KeyNotFound, Etcd::NotDir
+
     end
     objects.to_json
   end
@@ -37,6 +40,7 @@ class Cluster < Base
     halt 404 if flow.nil?
     cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
+    body['TendrlContext.integration_id'] = cluster.delete('integration_id')
     job_id = SecureRandom.uuid
     job = etcd.set(
       "/queue/#{job_id}", 
@@ -44,11 +48,12 @@ class Cluster < Base
         integration_id: params[:cluster_id],
         job_id: job_id,
         status: 'new',
-        parameters: body.merge(cluster),
+        parameters: body,
         run: flow.run,
         type: 'sds',
         created_from: 'API',
-        created_at: Time.now.utc.iso8601
+        created_at: Time.now.utc.iso8601,
+        node_ids: node_ids(params[:cluster_id])
       }.
       to_json
     )
@@ -63,6 +68,7 @@ class Cluster < Base
     halt 404 if flow.nil?
     cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
+    body['TendrlContext.integration_id'] = cluster.delete('integration_id')
     job_id = SecureRandom.uuid
     job = etcd.set(
       "/queue/#{job_id}", 
@@ -70,11 +76,12 @@ class Cluster < Base
         integration_id: params[:cluster_id],
         job_id: job_id,
         status: 'new',
-        parameters: body.merge(cluster),
+        parameters: body,
         run: flow.run,
         type: 'sds',
         created_from: 'API',
-        created_at: Time.now.utc.iso8601
+        created_at: Time.now.utc.iso8601,
+        node_ids: node_ids(params[:cluster_id])
       }.
       to_json
     )
@@ -85,13 +92,22 @@ class Cluster < Base
   private
 
   def cluster(cluster_id)
+    load_definitions(cluster_id)
     @cluster ||=
       recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
   end
 
-  def load_definitions(sds_name)
+  def node_ids(cluster_id)
+    node_ids = []
+    etcd.get("/clusters/#{cluster_id}/nodes").children.each do |node|
+      node_ids << node.key.split('/')[-1]
+    end
+    node_ids
+  end
+
+  def load_definitions(cluster_id)
     definitions = etcd.get(
-      "/_tendrl/definitions/#{sds_name}"
+      "/clusters/#{cluster_id}/definitions/data"
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
   end

@@ -6,7 +6,6 @@ module Tendrl
     attr_accessor :base_uri
 
     def initialize(config)
-      config = config['api_server']
       scheme = config['api_server_scheme'] || 'http'
       hostname = config['api_server_addr']
       port = config['api_server_port']
@@ -15,7 +14,7 @@ module Tendrl
 
     def node_stats(node_ids=[])
       uri = URI(
-        "#{base_uri}/monitoring/nodes/summary?nodes=#{node_ids.join(',')}"
+        "#{base_uri}/monitoring/nodes/summary?node_ids=#{node_ids.join(',')}"
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
@@ -23,7 +22,7 @@ module Tendrl
 
     def cluster_stats(cluster_ids=[])
       uri = URI(
-        "#{base_uri}/monitoring/clusters/summary?clusters=#{cluster_ids.join(',')}"
+        "#{base_uri}/monitoring/clusters/summary?cluster_ids=#{cluster_ids.join(',')}"
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)

@@ -1,0 +1,15 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/nodes",
+		"dir": true,
+		"nodes": [{
+			"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/nodes/3413aaeb-9103-4586-b8c8-093e96480452",
+			"dir": true,
+			"modifiedIndex": 27,
+			"createdIndex": 27
+		}],
+		"modifiedIndex": 27,
+		"createdIndex": 27
+	}
+}

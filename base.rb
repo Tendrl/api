@@ -9,9 +9,15 @@ class Base < Sinatra::Base
 
   set :logging, ENV['LOG_LEVEL'] || Logger::INFO
 
-  configure :development, :test do
+  configure :development do
     set :etcd_config, Proc.new {
       YAML.load_file('config/etcd.yml')[settings.environment.to_sym] 
+    }
+  end
+
+  configure :test do
+    set :etcd_config, Proc.new {
+      {}
     }
   end
 
@@ -104,9 +110,8 @@ class Base < Sinatra::Base
   protected
 
   def monitoring
-    yaml = etcd.get('/_tendrl/config/performance_monitoring').value
-    config = YAML.load(yaml)
-    @monitoring = Tendrl::MonitoringApi.new(config)
+    config = recurse(etcd.get('/_tendrl/config/performance_monitoring/data'))
+    @monitoring = Tendrl::MonitoringApi.new(config['data'])
   rescue Etcd::KeyNotFound
     logger.info 'Monitoring API not enabled.'
     nil
