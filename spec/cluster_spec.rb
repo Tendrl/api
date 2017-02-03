@@ -53,11 +53,19 @@ describe Cluster do
         post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
           body.to_json,
           { 'CONTENT_TYPE' => 'application/json' }
-        puts last_response.errors
         expect(last_response.status).to eq 202
       end
 
-      it 'delete'
+      it 'delete' do
+        body = {
+          "Pool.poolname" => "pool_009",
+          "Pool.pool_id" => "f2e68a00-71c9 -4efc-a28b-7204acf9ecff"
+        }
+
+        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
+          body.to_json
+        expect(last_response.status).to eq 202
+      end
 
     end
 
@@ -84,11 +92,18 @@ describe Cluster do
         post '6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
           body.to_json,
           { 'CONTEXT_TYPE' => 'application/json' }
-        puts last_response.errors
         expect(last_response.status).to eq 202
       end
 
-      it 'delete'
+      it 'delete' do
+        body = {
+          "Volume.volname" => "Volume_009",
+          "Volume.vol_id" => "f2e68a00-71c9-4efc-a28b-7204acf9ecff"
+        } 
+        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
+          body.to_json
+        expect(last_response.status).to eq 202
+      end
 
     end
   end
