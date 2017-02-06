@@ -13,7 +13,7 @@ class Cluster < Base
   end
 
   get '/:cluster_id/Flows' do
-    cluster = cluster(cluster_id)
+    cluster = cluster(params[:cluster_id])
     flows = Tendrl::Flow.find_all
     flows.to_json
   end
