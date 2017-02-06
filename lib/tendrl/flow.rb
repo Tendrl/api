@@ -112,8 +112,6 @@ module Tendrl
             object_flows = Tendrl.current_definitions[key]['objects'][ok]['flows']
             next if object_flows.nil?
             object_flows.keys.each do |fk|
-              p key
-              p fk
               flow = Tendrl::Flow.new(key, fk, ok)
               flows << { 
                 name: flow.name,

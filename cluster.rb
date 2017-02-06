@@ -13,7 +13,7 @@ class Cluster < Base
   end
 
   get '/:cluster_id/Flows' do
-    load_definitions(params[:cluster_id])
+    cluster = cluster(cluster_id)
     flows = Tendrl::Flow.find_all
     flows.to_json
   end
@@ -34,11 +34,11 @@ class Cluster < Base
   end
 
   post '/:cluster_id/:flow' do
+    cluster = cluster(params[:cluster_id])
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
     )
     halt 404 if flow.nil?
-    cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
     body['TendrlContext.integration_id'] = cluster.delete('integration_id')
     job_id = SecureRandom.uuid
@@ -62,11 +62,11 @@ class Cluster < Base
   end
 
   delete '/:cluster_id/:flow' do
+    cluster = cluster(params[:cluster_id])
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
     )
     halt 404 if flow.nil?
-    cluster = cluster(params[:cluster_id])
     body = JSON.parse(request.body.read)
     body['TendrlContext.integration_id'] = cluster.delete('integration_id')
     job_id = SecureRandom.uuid

@@ -2,7 +2,7 @@
 = Pools
 :toc:
 
-=== List pools
+== List pools
 
 Sample Request
 
@@ -24,9 +24,10 @@ Status: 200 OK
 		"pool_id": "0",
 		"pool_name": "rbd"
 	}
-}]----------
+}]
+----------
 
-=== Create Pool
+== Create Pool
 
 Sample Request
 ----------
@@ -41,7 +42,7 @@ Status: 202 Accepted
 { job_id: "ab693a6787ffa5de34975eabd3341c54" }
 ----------
 
-=== Delete Pool
+== Delete Pool
 
 Sample Request
 ----------
