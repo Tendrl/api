@@ -6,7 +6,6 @@ module ClusterPresenter
       clusters = []
       cluster_list.each do |cluster|
         cluster.each do |cluster_id, attributes|
-          # attributes.slice!('pools', 'volumes')
           context = attributes.delete('tendrlcontext')
           context['cluster_id'] = cluster_id
           attributes.slice!('pools', 'volumes')

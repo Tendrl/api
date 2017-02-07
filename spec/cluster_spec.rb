@@ -56,6 +56,19 @@ describe Cluster do
         expect(last_response.status).to eq 202
       end
 
+      it 'update' do
+        body = { 
+          "Pool.pool_id" => "0",
+          "Pool.poolname" => "pool_009",
+          "Pool.pg_num" => 128,
+          "Pool.min_size" => 1
+        }
+
+        put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephUpdatePool',
+          body.to_json
+        expect(last_response.status).to eq 202
+      end
+
       it 'delete' do
         body = {
           "Pool.poolname" => "pool_009",
@@ -65,6 +78,46 @@ describe Cluster do
         delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
           body.to_json
         expect(last_response.status).to eq 202
+      end
+
+      context 'rbds' do
+
+        it 'create' do
+          body = { 
+            "Rbd.pool_id" => "0",
+            "Rbd.name" => 'RBD_009',
+            "Rbd.size" => 1024
+          }
+
+          post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreateRbd',
+            body.to_json,
+            { 'CONTENT_TYPE' => 'application/json' }
+          expect(last_response.status).to eq 202
+        end
+
+        it 'resize' do
+          body = { 
+            "Rbd.pool_id" => "0",
+            "Rbd.name" => 'RBD_009',
+            "Rbd.size" => 2048
+          }
+
+          put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephResizeRbd',
+            body.to_json
+          expect(last_response.status).to eq 202
+        end
+
+        it 'delete' do
+          body = {
+            "Rbd.pool_id" => "0",
+            "Rbd.name" => 'RBD_009',
+          }
+
+          delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
+            body.to_json
+          expect(last_response.status).to eq 202
+        end
+
       end
 
     end

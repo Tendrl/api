@@ -3,3 +3,4 @@ config/tendrl.yml
 *.log
 .DS_Store
 config/sds
+coverage
