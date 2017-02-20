@@ -1,5 +1,4 @@
-require './base'
-class Node < Base
+class NodesController < AuthenticatedUsersController
 
   before do
     definitions = etcd.get('/_tendrl/definitions/master').value
@@ -145,6 +144,5 @@ class Node < Base
     end
     nodes
   end
-
 
 end

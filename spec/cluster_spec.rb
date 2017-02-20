@@ -1,6 +1,19 @@
 require 'spec_helper'
+require './app/controllers/clusters_controller'
 
-describe Cluster do
+describe ClustersController do
+
+  let(:http_env){
+    {
+      'HTTP_USER_AGENT' => 'dwarner',
+      'HTTP_AUTHORIZATION' => 'Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8',
+      'CONTENT_TYPE' => 'application/json'
+    }
+  }
+
+  before do
+    stub_user('dwarner')
+  end
 
   context 'list' do
 
@@ -10,14 +23,14 @@ describe Cluster do
 
     it 'cluster without monitoring' do
       stub_monitoring_config(404, "monitoring_config_error.json")
-      get "/GetClusterList", { "CONTENT_TYPE" => "application/json" }
+      get "/GetClusterList", {}, http_env
       expect(last_response.status).to eq 200
     end
 
     it 'cluster with monitoring stats' do
       stub_monitoring_config
       stub_cluster_monitoring
-      get "/GetClusterList", { "CONTENT_TYPE" => "application/json" }
+      get "/GetClusterList", {}, http_env
       expect(last_response.status).to eq 200
     end
 
@@ -39,7 +52,7 @@ describe Cluster do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetPoolList'
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetPoolList', {}, http_env
         expect(last_response.status).to eq 200
       end
 
@@ -52,7 +65,7 @@ describe Cluster do
 
         post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
           body.to_json,
-          { 'CONTENT_TYPE' => 'application/json' }
+          http_env
         expect(last_response.status).to eq 202
       end
 
@@ -65,7 +78,8 @@ describe Cluster do
         }
 
         put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephUpdatePool',
-          body.to_json
+          body.to_json,
+          http_env
         expect(last_response.status).to eq 202
       end
 
@@ -76,7 +90,8 @@ describe Cluster do
         }
 
         delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
-          body.to_json
+          body.to_json,
+          http_env
         expect(last_response.status).to eq 202
       end
 
@@ -91,7 +106,7 @@ describe Cluster do
 
           post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreateRbd',
             body.to_json,
-            { 'CONTENT_TYPE' => 'application/json' }
+            http_env
           expect(last_response.status).to eq 202
         end
 
@@ -103,7 +118,8 @@ describe Cluster do
           }
 
           put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephResizeRbd',
-            body.to_json
+            body.to_json,
+            http_env
           expect(last_response.status).to eq 202
         end
 
@@ -114,7 +130,8 @@ describe Cluster do
           }
 
           delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
-            body.to_json
+            body.to_json,
+            http_env
           expect(last_response.status).to eq 202
         end
 
@@ -131,7 +148,8 @@ describe Cluster do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetVolumesList'
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetVolumesList', {},
+          http_env
         expect(last_response.status).to eq 200
       end
 
@@ -144,7 +162,7 @@ describe Cluster do
         }
         post '6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
           body.to_json,
-          { 'CONTEXT_TYPE' => 'application/json' }
+          http_env
         expect(last_response.status).to eq 202
       end
 
@@ -154,7 +172,8 @@ describe Cluster do
           "Volume.vol_id" => "f2e68a00-71c9-4efc-a28b-7204acf9ecff"
         } 
         delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
-          body.to_json
+          body.to_json,
+          http_env
         expect(last_response.status).to eq 202
       end
 

@@ -7,9 +7,8 @@ end
 
 require_relative File.join('..', 'base')
 require './lib/tendrl'
-require './node'
-require './cluster'
-
+require './app/controllers/application_controller'
+require './app/controllers/authenticated_users_controller'
 require 'webmock/rspec'
 
 WebMock.disable_net_connect!(allow_localhost: false)
@@ -190,6 +189,59 @@ def stub_node_ids
     :body => File.read(
       'spec/fixtures/node_ids.json'
     )
+  )
+end
+
+def stub_create_user(username)
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/thardy"
+  ).
+  with(
+    :body => "dir=true"
+  ).
+  to_return(
+    :status => 200,
+    :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":183,\"createdIndex\":183}}"
+  )
+end
+
+def stub_create_user_attributes(attributes)
+  attributes.merge!(
+    password_hash: '$2a$10$d1L8axCcsr5XRMtzbNNuaOM5I6D9dKu0VJqifND/eHCnj8M1QkP1W', 
+    password_salt: '$2a$10$d1L8axCcsr5XRMtzbNNuaO'
+  )
+  attributes.each do |key, value|
+    stub_request(
+      :put,
+      "http://127.0.0.1:4001/v2/keys/_tendrl/users/thardy/#{key}"
+    ).
+    to_return(
+      :status => 200,
+      :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/anivargi/#{key}\",\"value\":\"#{CGI.unescape(value)}\",\"modifiedIndex\":184,\"createdIndex\":184}}"
+    )
+  end
+end
+
+def stub_users
+  stub_request(
+    :get,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users?recursive=true"
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read('spec/fixtures/users.json')
+  )
+end
+
+def stub_user(username)
+  stub_request(
+    :get,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}"
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read('spec/fixtures/user.json')
   )
 end
 

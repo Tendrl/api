@@ -1,13 +1,23 @@
 require 'spec_helper'
+require './app/controllers/nodes_controller'
 
-describe Node do
+describe NodesController do
+
+  let(:http_env){
+    {
+      'HTTP_USER_AGENT' => 'dwarner',
+      'HTTP_AUTHORIZATION' => 'Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8',
+      'CONTENT_TYPE' => 'application/json'
+    }
+  }
 
   before do
+    stub_user('dwarner')
     stub_definitions
   end
 
   it 'Flows' do
-    get "/Flows", { "CONTENT_TYPE" => "application/json" }
+    get "/Flows",{}, http_env
     expect(last_response.status).to eq 200
   end
 
@@ -25,7 +35,7 @@ describe Node do
         'sds_version' => '10.2.5',
         'sds_type' => 'ceph'
       }
-      post '/ImportCluster', body.to_json, { 'CONTENT_TYPE' => 'application/json' }
+      post '/ImportCluster', body.to_json, http_env
       expect(last_response.status).to eq 202
     end
 
@@ -40,14 +50,15 @@ describe Node do
 
     it 'nodes without monitoring' do
       stub_monitoring_config(404, "monitoring_config_error.json")
-      get "/GetNodeList", { "CONTENT_TYPE" => "application/json" }
+      get "/GetNodeList", {}, http_env
+      puts last_response.errors
       expect(last_response.status).to eq 200
     end
 
     it 'nodes with monitoring' do
       stub_monitoring_config
       stub_node_monitoring
-      get "/GetNodeList", { "CONTENT_TYPE" => "application/json" }
+      get "/GetNodeList", {}, http_env
       expect(last_response.status).to eq 200
     end
 

@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.2.6)
+      activesupport (= 4.2.6)
+      builder (~> 3.1)
     activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -11,6 +14,8 @@ GEM
       public_suffix (~> 2.0, >= 2.0.2)
     asciidoctor (1.5.5)
     ast (2.3.0)
+    bcrypt (3.1.11)
+    builder (3.2.3)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
@@ -80,8 +85,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel (= 4.2.6)
   activesupport (= 4.2.6)
   asciidoctor
+  bcrypt (= 3.1.11)
   etcd (= 0.3.0)
   puma (= 3.6.0)
   rack-test

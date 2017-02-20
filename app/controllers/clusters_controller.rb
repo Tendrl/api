@@ -1,6 +1,4 @@
-require './base'
-
-class Cluster < Base
+class ClustersController < AuthenticatedUsersController
 
   get '/GetClusterList' do
     clusters = []

@@ -23,6 +23,8 @@ require './lib/tendrl/monitoring_api'
 require './lib/tendrl/presenters/node_presenter'
 require './lib/tendrl/presenters/cluster_presenter'
 require './lib/tendrl/presenters/job_presenter'
+require './lib/tendrl/user'
+require './lib/tendrl/validators/user_validator'
 
 #Errors
 require './lib/tendrl/errors/tendrl_error'
@@ -51,6 +53,14 @@ module Tendrl
   def self.node_definitions=(definitions)
     @cluster_definitions = nil
     @node_definitions = definitions
+  end
+
+  def self.etcd=(etcd_client)
+    @etcd_client ||= etcd_client
+  end
+
+  def self.etcd
+    @etcd_client
   end
 
 end

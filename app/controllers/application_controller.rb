@@ -1,6 +1,5 @@
 require 'tendrl'
-
-class Base < Sinatra::Base
+class ApplicationController < Sinatra::Base
   set :root, File.dirname(__FILE__)
 
   set :environment, ENV['RACK_ENV'] || 'development'
@@ -51,15 +50,6 @@ class Base < Sinatra::Base
     '*'
   ]
 
-  set :etcd, Proc.new {
-    Etcd.client(
-      host: etcd_config[:host],
-      port: etcd_config[:port],
-      user_name: etcd_config[:user_name],
-      password: etcd_config[:password]
-    )
-  }
-
   error Etcd::NotDir do
     halt 404, { errors: { message: 'Not found.' }}.to_json
   end
@@ -78,47 +68,19 @@ class Base < Sinatra::Base
       settings.http_allow_headers.join(',')
   end
 
-  get '/ping' do
-    { 
-      status: 'Ok'
-    }.to_json
-  end
-
-  get '/jobs' do
-    jobs = []
-    etcd.get('/queue', recursive: true).children.each do |job|
-      job = JSON.parse(job.value)
-      jobs << JobPresenter.single(job) if job['created_from'] == 'API'
-    end
-    jobs.to_json
-  end
-
-  get '/jobs/:job_id' do
-    jobs = []
-    job = JSON.parse(etcd.get("/queue/#{params[:job_id]}").value)
-    JobPresenter.single(job).to_json
-  end
-
-  get '/jobs/:job_id/logs' do
-    params[:type] ||= 'all'
-    job = JSON.parse(etcd.get("/queue/#{params[:job_id]}").value)
-    request_id = job['request_id']
-    logs = etcd.get("/#{request_id}/#{params[:type]}").value
-    { logs: logs, type: params[:type] }.to_json
+  before do
+    Tendrl.etcd = Etcd.client(
+      host: settings.etcd_config[:host],
+      port: settings.etcd_config[:port],
+      user_name: settings.etcd_config[:user_name],
+      password: settings.etcd_config[:password]
+    )
   end
 
   protected
-
-  def monitoring
-    config = recurse(etcd.get('/_tendrl/config/performance_monitoring/data'))
-    @monitoring = Tendrl::MonitoringApi.new(config['data'])
-  rescue Etcd::KeyNotFound
-    logger.info 'Monitoring API not enabled.'
-    nil
-  end
-
+  
   def etcd
-    settings.etcd
+    Tendrl.etcd
   end
 
   def recurse(parent, attrs={})
