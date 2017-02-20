@@ -21,14 +21,14 @@ module Tendrl
 
       validate :uniqueness
 
-      def initialize(action, params)
-        @action = action
-        @name = params[:name]
-        @username = params[:username]
+      def initialize(user, params)
+        @user = user
+        @name = params[:name] || user.name
+        @username = params[:username] || user.username
+        @email = params[:email] || user.email 
+        @role = params[:role] || user.role
         @password = params[:password]
         @password_confirmation = params[:password_confirmation]
-        @email = params[:email]
-        @role = params[:role]
       end
 
       def attributes
@@ -42,16 +42,8 @@ module Tendrl
 
       private
 
-      def create?
-        @action == :create
-      end
-
-      def update?
-        @action == :update
-      end
-
       def password_required?
-        if create?
+        if @user.new_record?
           true
         else
           password.present?
@@ -66,12 +58,12 @@ module Tendrl
             usernames << user.username
             emails << user.email
           end
-
-          if usernames.include?(@username)
+          
+          if usernames.include?(@username) && @username != @user.username
             errors.add(:username, 'is taken')
           end
 
-          if emails.include?(@email)
+          if emails.include?(@email) && @email != @user.email
             errors.add(:email, 'is taken')
           end
         end

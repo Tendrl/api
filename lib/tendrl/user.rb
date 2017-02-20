@@ -10,7 +10,7 @@ module Tendrl
     attr_accessor :name, :email, :username, :role, :password_hash,
       :password_salt, :access_token
 
-    def initialize(name, email, username, role)
+    def initialize(name = nil, email = nil, username = nil, role = nil)
       @name = name
       @email = email
       @username = username
@@ -45,18 +45,29 @@ module Tendrl
       Tendrl.etcd.delete("/_tendrl/users/#{username}/access_token")
     end
 
+    def new_record?
+      password_hash.blank?
+    end
+
+    def delete
+      Tendrl.etcd.delete("/_tendrl/users/#{@username}", recursive: true)
+    end
+
     class << self
 
       def all
-        users = []
-        Tendrl.etcd.get("/_tendrl/users", recursive: true).children.each do
-          |child|
-          attributes = {}
-          child.children.each do |attribute|
-            attributes[attribute.key.split('/')[-1].to_sym] = attribute.value
+        begin
+          users = []
+          Tendrl.etcd.get("/_tendrl/users", recursive: true).children.each do
+            |child|
+            attributes = {}
+            child.children.each do |attribute|
+              attributes[attribute.key.split('/')[-1].to_sym] = attribute.value
+            end
+            users << new(attributes[:name], attributes[:email],
+                         attributes[:username], attributes[:role])
           end
-          users << new(attributes[:name], attributes[:email],
-                       attributes[:username], attributes[:role])
+        rescue Etcd::KeyNotFound
         end
         users
       end
@@ -86,15 +97,18 @@ module Tendrl
             password_hash: password_hash
           )
         end
-        Tendrl.etcd.set(
-          "/_tendrl/users/#{attributes[:username]}",
-          dir: true
-        )
-
+        
+        begin
+          Tendrl.etcd.set(
+            "/_tendrl/users/#{attributes[:username]}",
+            dir: true
+          )
+        rescue Etcd::NotFile
+        end
         attributes.each do |key, value|
           Tendrl.etcd.set("/_tendrl/users/#{attributes[:username]}/#{key}", value: value)
         end
-        true
+        find(attributes[:username])
       end
 
       def authenticate(username, password)
@@ -113,6 +127,8 @@ module Tendrl
         else
           nil
         end
+      rescue Etcd::KeyNotFound
+        nil
       end
 
     end

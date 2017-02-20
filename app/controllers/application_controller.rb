@@ -78,7 +78,19 @@ class ApplicationController < Sinatra::Base
   end
 
   protected
-  
+
+  def username
+    request.user_agent
+  end
+
+  def access_token
+    token = nil
+    if request.env['HTTP_AUTHORIZATION']
+      token = request.env['HTTP_AUTHORIZATION'].split('Bearer ')[-1]
+    end
+    token
+  end
+
   def etcd
     Tendrl.etcd
   end

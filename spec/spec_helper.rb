@@ -5,7 +5,6 @@ SimpleCov.start do
   add_filter "/spec/"
 end
 
-require_relative File.join('..', 'base')
 require './lib/tendrl'
 require './app/controllers/application_controller'
 require './app/controllers/authenticated_users_controller'

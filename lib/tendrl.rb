@@ -23,8 +23,11 @@ require './lib/tendrl/monitoring_api'
 require './lib/tendrl/presenters/node_presenter'
 require './lib/tendrl/presenters/cluster_presenter'
 require './lib/tendrl/presenters/job_presenter'
+require './lib/tendrl/presenters/user_presenter'
+require './lib/tendrl/presenters/alert_setting_presenter'
 require './lib/tendrl/user'
 require './lib/tendrl/validators/user_validator'
+require './lib/tendrl/alert_setting'
 
 #Errors
 require './lib/tendrl/errors/tendrl_error'

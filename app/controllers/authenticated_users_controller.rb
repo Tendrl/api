@@ -25,12 +25,6 @@ class AuthenticatedUsersController < ApplicationController
   protected
     
   def authenticate
-    username = request.user_agent
-    access_token = if request.env['HTTP_AUTHORIZATION']
-                     request.env['HTTP_AUTHORIZATION'].split('Bearer ')[-1]
-                   else
-                     nil
-                   end
     @current_user = Tendrl::User.authenticate_access_token(
       username,
       access_token

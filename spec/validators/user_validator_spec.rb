@@ -11,8 +11,10 @@ RSpec.describe Tendrl::Validator::UserValidator do
 
   context 'create' do
 
+    let(:user){ Tendrl::User.new }
+
     it 'with invalid attributes' do
-      validator = UserValidator.new(:create, {})
+      validator = UserValidator.new(user, {})
       expect(validator.valid?).to eq(false)
       expect(validator.errors[:username].size).to eq(1)
       expect(validator.errors[:email].size).to eq(1)
@@ -23,7 +25,7 @@ RSpec.describe Tendrl::Validator::UserValidator do
     end
 
     it 'with valid attributes' do
-      validator = UserValidator.new(:create, {
+      validator = UserValidator.new(user, {
         name: 'Tom Hardy',
         email: 'tom@tendrl.org',
         username: 'thardy',
@@ -35,7 +37,7 @@ RSpec.describe Tendrl::Validator::UserValidator do
     end
 
     it 'with existing username/email' do
-      validator = UserValidator.new(:create, {
+      validator = UserValidator.new(user, {
         name: 'David Warner',
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
@@ -52,21 +54,20 @@ RSpec.describe Tendrl::Validator::UserValidator do
 
   context 'update' do
 
+    let(:user){
+      stub_user('dwarner')
+      Tendrl::User.find('dwarner')
+    }
+
     it 'with valid attributes and no password' do
-      validator = UserValidator.new(:update, {
-        name: 'Tom Hardy',
-        email: 'tom@tendrl.org',
-        username: 'thardy',
+      validator = UserValidator.new(user, {
         role: Tendrl::User::NORMAL
       })
       expect(validator.valid?).to eq(true)
     end
 
     it 'with valid attributes and invalid password' do
-      validator = UserValidator.new(:update, {
-        name: 'Tom Hardy',
-        email: 'tom@tendrl.org',
-        username: 'thardy',
+      validator = UserValidator.new(user, {
         password: 'temp',
         password_confirmation: 'temp',
         role: Tendrl::User::NORMAL
@@ -76,7 +77,7 @@ RSpec.describe Tendrl::Validator::UserValidator do
     end
 
     it 'with valid attributes and password' do
-      validator = UserValidator.new(:update, {
+      validator = UserValidator.new(user, {
         name: 'Tom Hardy',
         email: 'tom@tendrl.org',
         username: 'thardy',
@@ -88,16 +89,15 @@ RSpec.describe Tendrl::Validator::UserValidator do
     end
 
     it 'with existing username/email' do
-      validator = UserValidator.new(:update, {
+      validator = UserValidator.new(user, {
         name: 'David Warner',
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
         password: 'temp1234',
-        password_confirmation: 'temp1234'
+        password_confirmation: 'temp1234',
+        role: Tendrl::User::LIMITED
       })
-      expect(validator.valid?).to eq(false)
-      expect(validator.errors[:username].size).to eq(1)
-      expect(validator.errors[:email].size).to eq(1)
+      expect(validator.valid?).to eq(true)
     end
 
 
