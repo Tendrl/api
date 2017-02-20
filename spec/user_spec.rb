@@ -16,10 +16,7 @@ RSpec.describe Tendrl::User do
       password: 'temp1234'
     }
     stub_create_user_attributes(attributes)
-    expect(Tendrl::User.save(attributes)).to be_present
-  end
-
-  it 'update' do
+    expect(Tendrl::User.save(attributes)).to eq(true)
   end
 
   context 'authentication' do
@@ -36,7 +33,6 @@ RSpec.describe Tendrl::User do
       user = Tendrl::User.authenticate('dwarner', 'temp123')
       expect(user).to be_nil
     end
-
 
     it 'with valid username and access_token' do
       stub_user('dwarner')
