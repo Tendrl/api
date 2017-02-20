@@ -64,6 +64,14 @@ module Tendrl
       Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
+    def new_record?
+      password_hash.blank?
+    end
+
+    def delete
+      Tendrl.etcd.delete("/_tendrl/users/#{@username}", recursive: true)
+    end
+
     class << self
 
       def all
