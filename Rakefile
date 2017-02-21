@@ -15,7 +15,7 @@ namespace :etcd do
       host: etcd_config[:host],
       port: etcd_config[:port],
       user_name: etcd_config[:user_name],
-      password: password
+      password: etcd_config[:password]
     )
     begin
       user = Tendrl::User.find 'admin'
