@@ -25,10 +25,12 @@ class AuthenticatedUsersController < ApplicationController
   protected
     
   def authenticate
-    @current_user = Tendrl::User.authenticate_access_token(
-      username,
-      access_token
-    )
+    if username.present? && access_token.present?
+      @current_user = Tendrl::User.authenticate_access_token(
+        username,
+        access_token
+      )
+    end
     halt 401 if @current_user.nil?
   end
 
