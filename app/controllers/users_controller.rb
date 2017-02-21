@@ -19,7 +19,7 @@ class UsersController < AuthenticatedUsersController
       user_attributes
     )
     if user_validator.valid?
-      user = Tendrl::User.save(user_attributes)
+      user = Tendrl::User.save(user_validator.attributes)
       status 201
       UserPresenter.single(user).to_json
     else
@@ -34,8 +34,7 @@ class UsersController < AuthenticatedUsersController
       user,
       user_attributes)
     if user_validator.valid?
-      p user_attributes
-      user = Tendrl::User.save(user_attributes)
+      user = Tendrl::User.save(user_validator.attributes)
       UserPresenter.single(user).to_json
     else
       status 400
