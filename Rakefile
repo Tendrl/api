@@ -6,18 +6,33 @@ require 'securerandom'
 require 'rspec/core/rake_task'
 
 namespace :etcd do
-  desc 'Load etcd with seed data'
-  task :seed do
-    etcd_config = YAML.load_file('config/etcd.yml')[ENV['RACK_ENV'].to_sym]
-    etcd = Etcd.client(
+  desc 'Load default Tendrl admin in etcd'
+  task :load_admin do
+    p 'Generating default Tendrl admin'
+    etcd_config = Tendrl.etcd_config(ENV['RACK_ENV'])
+    password = SecureRandom.hex(4)
+    Tendrl.etcd = Etcd.client(
       host: etcd_config[:host],
       port: etcd_config[:port],
       user_name: etcd_config[:user_name],
-      password: etcd_config[:password]
+      password: password
     )
-    cluster_id = SecureRandom.uuid
-    etcd.set("/clusters/#{cluster_id}", dir: false, value: { cluster_id: cluster_id, sds_version: 'gluster-3.8.3' }.to_json)
-    p "Sample cluster id generated #{cluster_id}"
+    
+    begin
+      user = Tendrl::User.find 'admin'
+      p 'User named admin already exists.'
+    rescue Etcd::KeyNotFound
+      Tendrl::User.save({
+        name: 'Admin',
+        username: 'admin',
+        email: 'admin@tendrl.org',
+        role: 'admin',
+        password: password
+      })
+      p 'Generated default admin'
+      p 'Username: admin'
+      p "Password: #{password}"
+    end
   end
 end
 

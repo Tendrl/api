@@ -10,7 +10,7 @@ class ApplicationController < Sinatra::Base
 
   configure :development do
     set :etcd_config, Proc.new {
-      YAML.load_file('config/etcd.yml')[settings.environment.to_sym] 
+      Tendrl.etcd_config(settings.environment)
     }
   end
 
@@ -22,11 +22,7 @@ class ApplicationController < Sinatra::Base
 
   configure :production do
     set :etcd_config, Proc.new {
-      if File.exists?('/etc/tendrl/etcd.yml')
-        YAML.load_file('/etc/tendrl/etcd.yml')[settings.environment.to_sym] 
-      else
-        YAML.load_file('config/etcd.yml')[settings.environment.to_sym] 
-      end
+      Tendrl.etcd_config(settings.environment)
     }
   end
 

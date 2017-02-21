@@ -66,4 +66,12 @@ module Tendrl
     @etcd_client
   end
 
+  def self.etcd_config(env)
+    if File.exists?('/etc/tendrl/etcd.yml')
+      YAML.load_file('/etc/tendrl/etcd.yml')[env.to_sym] 
+    else
+      YAML.load_file('config/etcd.yml')[env.to_sym] 
+    end
+  end
+
 end
