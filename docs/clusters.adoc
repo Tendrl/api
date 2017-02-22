@@ -43,20 +43,44 @@ Sample Response
 Status: 200 OK
 {
 	"clusters": [{
-		"fsid": "c221ccdb-51d6-4b57-9f10-bcf30c7fa351",
-		"integration_id": "c221ccdb-51d6-4b57-9f10-bcf30c7fa353",
+		"fsid": "64d779e6-491e-4998-a805-1252bbd5a899",
+		"integration_id": "64d779e6-491e-4998-a805-1252bbd5a899",
 		"name": "ceph",
 		"sds_name": "ceph",
 		"sds_version": "10.2.5",
-		"cluster_id": "c221ccdb-51d6-4b57-9f10-bcf30c7fa353",
+		"cluster_id": "64d779e6-491e-4998-a805-1252bbd5a899",
 		"pools": {
-			"0": {
-				"percent_used": "0",
-				"pg_num": "64",
-				"pool_id": "0",
-				"pool_name": "rbd",
+			"14": {
+				"pool_name": "dummy",
+				"type": "replicated",
 				"used": "0",
-				"min_size": "2"
+				"erasure_code_profile": "",
+				"min_size": "2",
+				"percent_used": "0",
+				"pg_num": "128",
+				"pool_id": "14"
+			},
+			"4": {
+				"min_size": "2",
+				"percent_used": "0",
+				"type": "replicated",
+				"used": "58",
+				"rbds": {
+					"mmrbd1": {
+						"features": "layering, exclusive-lock, object-map, fast-diff, deep-flatten",
+						"flags": "",
+						"format": "2",
+						"name": "mmrbd1",
+						"order": "22",
+						"pool_id": "4",
+						"size": "128",
+						"block_name_prefix": "rbd_data.1e3f238e1f29"
+					}
+				},
+				"erasure_code_profile": "",
+				"pg_num": "128",
+				"pool_id": "4",
+				"pool_name": "test_pool"
 			}
 		}
 	}]

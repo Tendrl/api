@@ -18,6 +18,8 @@ module Tendrl
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
+    rescue JSON::ParserError
+      []
     end
 
     def cluster_stats(cluster_ids=[])
@@ -26,6 +28,8 @@ module Tendrl
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
+    rescue JSON::ParserError
+      []
     end
 
   end
