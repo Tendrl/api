@@ -8,7 +8,7 @@ class Cluster < Base
       clusters << recurse(cluster) 
     end
     clusters = ClusterPresenter.list(clusters)
-    clusters = load_stats(clusters)
+    #clusters = load_stats(clusters)
     { clusters: clusters }.to_json
   end
 
