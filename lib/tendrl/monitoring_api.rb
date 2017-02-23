@@ -18,7 +18,7 @@ module Tendrl
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
-    rescue JSON::ParserError
+    rescue JSON::ParserError, Errno::ECONNREFUSED
       []
     end
 
@@ -28,7 +28,7 @@ module Tendrl
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
-    rescue JSON::ParserError
+    rescue JSON::ParserError, Errno::ECONNREFUSED
       []
     end
 
