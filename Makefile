@@ -1,7 +1,7 @@
 CWD := $(shell pwd)
 BASEDIR := $(CWD)
 PRINT_STATUS = export EC=$$?; cd $(CWD); if [ "$$EC" -eq "0" ]; then printf "SUCCESS!\n"; else exit $$EC; fi
-VERSION=1.2
+VERSION=1.2.1
 
 BUILDS    := .build
 DEPLOY    := $(BUILDS)/deploy
