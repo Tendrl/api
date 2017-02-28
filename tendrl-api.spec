@@ -1,5 +1,5 @@
 Name: tendrl-api
-Version: 1.2
+Version: 1.2.1
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
