@@ -2,17 +2,24 @@ module JobPresenter
 
   class << self
 
-    def single(raw_job)
+    def single(job)
+      payload = JSON.parse(job['payload'])
       {
-        job_id: raw_job['job_id'],
-        integration_id: raw_job['integration_id'],
-        status: raw_job['status'],
-        flow: raw_job['flow'], 
-        parameters: raw_job['parameters'],
-        created_at: raw_job['created_at'],
-        log: "/jobs/#{raw_job['job_id']}/logs?type=",
-        log_types: ['all', 'info', 'debug', 'warn', 'error']
+        job_id: payload['job_id'],
+        status: job['status'],
+        integration_id: payload['integration_id'],
+        flow: payload['flow'],
+        parameters: payload['parameters'],
+        created_at: payload['created_at'],
+        status_url: "/jobs/#{payload['job_id']}/status",
+        messages_url: "/jobs/#{payload['job_id']}/messages"
       }
+    end
+
+    def list(jobs)
+      jobs.map do |job|
+        single(job)
+      end
     end
 
   end

@@ -83,53 +83,11 @@ class NodesController < AuthenticatedUsersController
     halt 401, { errors: { message: "'node_ids' must be an array with values" } } unless node_ids.kind_of?(Array) and not node_ids.empty?
 
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
-    body['TendrlContext.integration_id'] = SecureRandom.uuid
     body['Node[]'] = node_ids
-    job_id = SecureRandom.uuid
-
-    etcd.set(
-      "/queue/#{job_id}",
-      value: {
-        integration_id: body['TendrlContext.integration_id'],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'node',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601,
-        node_ids: node_ids
-      }.to_json
-    )
-
+    
+    job = Tendrl::Job.new(current_user, flow).create(body, node_ids)
     status 202
-    { job_id: job_id }.to_json
-  end
-
-  post '/:flow' do
-    flow = Tendrl::Flow.find_by_external_name_and_type(params[:flow], 'node')
-    halt 404 if flow.nil?
-    body = JSON.parse(request.body.read)
-    body['TendrlContext.integration_id'] = SecureRandom.uuid
-    job_id = SecureRandom.uuid
-    job = etcd.set(
-      "/queue/#{job_id}",
-      value: {
-        integration_id: body['TendrlContext.integration_id'],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'node',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601
-      }.
-      to_json
-    )
-    status 202
-    { job_id: job_id }.to_json
+    { job_id: job.job_id }.to_json
   end
 
   private
