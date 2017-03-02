@@ -69,7 +69,10 @@ module Tendrl
     end
 
     def delete
-      Tendrl.etcd.delete("/_tendrl/users/#{@username}", recursive: true)
+      if access_token.present?
+        Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
+      end
+      Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
     class << self
