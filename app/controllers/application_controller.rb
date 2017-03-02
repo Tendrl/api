@@ -73,11 +73,11 @@ class ApplicationController < Sinatra::Base
     )
   end
 
-  protected
-
-  def username
-    request.user_agent
+  options '*' do
+    status 200
   end
+
+  protected
 
   def access_token
     token = nil

@@ -6,7 +6,7 @@ class AuthenticatedUsersController < ApplicationController
 
   before do
     if ['POST', 'PUT', 'DELETE'].include? request.request_method
-      halt 403 if limited_user?
+      halt 403, { errors: { message: 'Forbidden' } }.to_json if limited_user?
     end
   end
 
@@ -25,13 +25,10 @@ class AuthenticatedUsersController < ApplicationController
   protected
     
   def authenticate
-    if username.present? && access_token.present?
-      @current_user = Tendrl::User.authenticate_access_token(
-        username,
-        access_token
-      )
+    if access_token.present?
+      @current_user = Tendrl::User.authenticate_access_token(access_token)
     end
-    halt 401 if @current_user.nil?
+    halt 401, { errors: { message: 'Unauthorized'} }.to_json if @current_user.nil?
   end
 
   def current_user

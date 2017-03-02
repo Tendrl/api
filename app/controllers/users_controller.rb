@@ -1,7 +1,7 @@
 class UsersController < AuthenticatedUsersController
 
   before '/users/*'do
-    halt 403 unless admin_user?
+    halt 403, { errors: { message: 'Forbidden' } }.to_json unless admin_user?
   end
 
   get '/users' do

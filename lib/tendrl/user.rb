@@ -38,11 +38,19 @@ module Tendrl
         value: token,
         ttl: 604800 # 1.week
       )
+
+      # Index
+      Tendrl.etcd.set(
+        "/_tendrl/access_tokens/#{token}",
+        value: username,
+        ttl: 604800 # 1.week
+      )
       token
     end
 
     def delete_token(token)
       Tendrl.etcd.delete("/_tendrl/users/#{username}/access_token")
+      Tendrl.etcd.delete("/_tendrl/access_tokens/#{token}")
     end
 
     def new_record?
@@ -50,7 +58,10 @@ module Tendrl
     end
 
     def delete
-      Tendrl.etcd.delete("/_tendrl/users/#{@username}", recursive: true)
+      if access_token.present?
+        Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
+      end
+      Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
     class << self
@@ -83,6 +94,11 @@ module Tendrl
         user.password_salt = attributes[:password_salt]
         user.access_token = attributes[:access_token]
         user
+      end
+
+      def find_user_by_access_token(token)
+        username = Tendrl.etcd.get("/_tendrl/access_tokens/#{token}").value
+        find(username)
       end
 
       def save(attributes)
@@ -120,9 +136,8 @@ module Tendrl
         end
       end
 
-      def authenticate_access_token(username, access_token)
-        user = find(username)
-        if user.access_token == access_token
+      def authenticate_access_token(access_token)
+        if user = find_user_by_access_token(access_token)
           user
         else
           nil
