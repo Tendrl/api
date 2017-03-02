@@ -5,7 +5,6 @@ describe JobsController do
 
   let(:http_env){
     {
-      'HTTP_USER_AGENT' => 'dwarner',
       'HTTP_AUTHORIZATION' => 'Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8',
       'CONTENT_TYPE' => 'application/json'
     }
@@ -13,6 +12,7 @@ describe JobsController do
 
   before do
     stub_user('dwarner')
+    stub_access_token
   end
 
   context 'jobs' do

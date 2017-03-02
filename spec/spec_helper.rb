@@ -244,4 +244,14 @@ def stub_user(username)
   )
 end
 
+def stub_access_token
+  stub_request(
+    :get,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/access_tokens/d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8").
+    to_return(
+      :status => 200,
+      :body => File.read('spec/fixtures/access_token.json')
+  )
+end
+
 
