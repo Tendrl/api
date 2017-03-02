@@ -38,26 +38,15 @@ class ClustersController < AuthenticatedUsersController
     )
     halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
-    body['TendrlContext.integration_id'] = cluster.delete('integration_id')
-    job_id = SecureRandom.uuid
-    job = etcd.set(
-      "/queue/#{job_id}", 
-      value: {
-        integration_id: params[:cluster_id],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'sds',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601,
-        node_ids: node_ids(params[:cluster_id])
-      }.
-      to_json
-    )
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      type: 'sds',
+      integration_id: params[:cluster_id]
+    ).create(body, node_ids(params[:cluster_id]))
+
     status 202
-    { job_id: job_id }.to_json
+    { job_id: job.job_id }.to_json
   end
 
   put '/:cluster_id/:flow' do
@@ -67,26 +56,16 @@ class ClustersController < AuthenticatedUsersController
     )
     halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
-    body['TendrlContext.integration_id'] = cluster.delete('integration_id')
-    job_id = SecureRandom.uuid
-    job = etcd.set(
-      "/queue/#{job_id}", 
-      value: {
-        integration_id: params[:cluster_id],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'sds',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601,
-        node_ids: node_ids(params[:cluster_id])
-      }.
-      to_json
-    )
+
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      type: 'sds',
+      integration_id: params[:cluster_id]
+    ).create(body, node_ids(params[:cluster_id]))
+
     status 202
-    { job_id: job_id }.to_json
+    { job_id: job.job_id }.to_json
   end
 
 
@@ -97,26 +76,16 @@ class ClustersController < AuthenticatedUsersController
     )
     halt 404 if flow.nil?
     body = JSON.parse(request.body.read)
-    body['TendrlContext.integration_id'] = cluster.delete('integration_id')
-    job_id = SecureRandom.uuid
-    job = etcd.set(
-      "/queue/#{job_id}", 
-      value: {
-        integration_id: params[:cluster_id],
-        job_id: job_id,
-        status: 'new',
-        parameters: body,
-        run: flow.run,
-        flow: flow.flow_name,
-        type: 'sds',
-        created_from: 'API',
-        created_at: Time.now.utc.iso8601,
-        node_ids: node_ids(params[:cluster_id])
-      }.
-      to_json
-    )
+
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      type: 'sds',
+      integration_id: params[:cluster_id]
+    ).create(body, node_ids(params[:cluster_id]))
+
     status 202
-    { job_id: job_id }.to_json
+    { job_id: job.job_id }.to_json
   end
 
   private

@@ -26,6 +26,7 @@ require './lib/tendrl/presenters/job_presenter'
 require './lib/tendrl/presenters/user_presenter'
 require './lib/tendrl/presenters/alert_setting_presenter'
 require './lib/tendrl/user'
+require './lib/tendrl/job'
 require './lib/tendrl/validators/user_validator'
 require './lib/tendrl/alert_setting'
 
