@@ -36,11 +36,26 @@ describe ClustersController do
 
   end
 
+  
   context 'actions' do
 
     before do
       stub_cluster_context
       stub_job_creation
+    end
+
+    context 'unknown object' do
+
+      before do
+        stub_cluster_definitions('ceph')
+        stub_node_ids
+      end
+
+      it 'list' do
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetNodeList' 
+        expect(last_response.status).to eq(404)
+      end
+
     end
 
     context 'pools' do
