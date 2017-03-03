@@ -14,9 +14,12 @@ class Node < Base
   get '/GetNodeList' do
     nodes = []
     existing_cluster_ids = []
-
-    etcd.get('/nodes', recursive: true).children.each do |node|
-      nodes << recurse(node)
+    
+    begin
+      etcd.get('/nodes', recursive: true).children.each do |node|
+        nodes << recurse(node)
+      end
+    rescue Etcd::KeyNotFound
     end
 
     begin
