@@ -14,7 +14,7 @@ module Tendrl
     end
 
     def to_hash
-      {  
+      {
         name: "#{@object_type}.#{@name}",
         help: @help,
         type: @type,

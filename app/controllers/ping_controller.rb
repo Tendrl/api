@@ -5,7 +5,7 @@ class PingController < AuthenticatedUsersController
   end
 
   get '/ping' do
-    { 
+    {
       status: 'Ok'
     }.to_json
   end

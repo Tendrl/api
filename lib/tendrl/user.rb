@@ -82,7 +82,7 @@ module Tendrl
         end
         users
       end
-      
+
       def find(username)
         attributes = {}
         Tendrl.etcd.get("/_tendrl/users/#{username}").
@@ -113,7 +113,7 @@ module Tendrl
             password_hash: password_hash
           )
         end
-        
+
         begin
           Tendrl.etcd.set(
             "/_tendrl/users/#{attributes[:username]}",

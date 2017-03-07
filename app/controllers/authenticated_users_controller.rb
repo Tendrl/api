@@ -23,7 +23,7 @@ class AuthenticatedUsersController < ApplicationController
   end
 
   protected
-    
+
   def authenticate
     if access_token.present?
       @current_user = Tendrl::User.authenticate_access_token(access_token)
