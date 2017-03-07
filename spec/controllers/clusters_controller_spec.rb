@@ -52,7 +52,7 @@ describe ClustersController do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetNodeList' 
+        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetNodeList', {}, http_env
         expect(last_response.status).to eq(404)
       end
 
