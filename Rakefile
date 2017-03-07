@@ -24,7 +24,7 @@ namespace :etcd do
       Tendrl::User.save({
         name: 'Admin',
         username: 'admin',
-        email: 'admin@tendrl.org',
+        email: '',
         role: 'admin',
         password: password
       })
