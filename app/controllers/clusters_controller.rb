@@ -3,7 +3,7 @@ class ClustersController < AuthenticatedUsersController
   get '/GetClusterList' do
     clusters = []
     etcd.get('/clusters', recursive: true).children.each do |cluster|
-      clusters << recurse(cluster) 
+      clusters << recurse(cluster)
     end
     clusters = ClusterPresenter.list(clusters)
     #clusters = load_stats(clusters)
@@ -17,6 +17,9 @@ class ClustersController < AuthenticatedUsersController
   end
 
   get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
+    load_definitions(cluster_id)
+    object = Tendrl::Object.find_by_object_name(object_name.singularize.capitalize)
+    halt 404 if object.nil?
     cluster = cluster(cluster_id)
     objects = []
     begin
