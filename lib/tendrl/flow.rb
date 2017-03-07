@@ -81,10 +81,10 @@ module Tendrl
       optional_attributes.each do |ma|
         next if ma.end_with?('cluster_id')
         if ma.end_with?('[]')
-          flow_attributes << { 
+          flow_attributes << {
             name: ma,
             type: 'List',
-            required: false 
+            required: false
           }
         else
           attribute = Object.find_by_attribute(ma)
@@ -102,22 +102,22 @@ module Tendrl
         if key.end_with?('_integration')
           Tendrl.current_definitions[key]['flows'].keys.each do |fk|
             flow = Tendrl::Flow.new(key, fk)
-            flows << { 
+            flows << {
               name: flow.name,
               method: flow.method,
-              attributes: flow.attributes  
-            } 
+              attributes: flow.attributes
+            }
           end
           Tendrl.current_definitions[key]['objects'].keys.each do |ok|
             object_flows = Tendrl.current_definitions[key]['objects'][ok]['flows']
             next if object_flows.nil?
             object_flows.keys.each do |fk|
               flow = Tendrl::Flow.new(key, fk, ok)
-              flows << { 
+              flows << {
                 name: flow.name,
                 method: flow.method,
-                attributes: flow.attributes  
-              } 
+                attributes: flow.attributes
+              }
             end
           end
         end

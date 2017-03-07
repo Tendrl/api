@@ -1,0 +1,53 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/_tendrl/users",
+		"dir": true,
+		"nodes": [{
+			"key": "/_tendrl/users/dwarner",
+			"dir": true,
+			"nodes": [{
+				"key": "/_tendrl/users/dwarner/email",
+				"value": "dwarner@tendrl.org",
+				"modifiedIndex": 190,
+				"createdIndex": 190
+			}, {
+				"key": "/_tendrl/users/dwarner/name",
+				"value": "David Warner",
+				"modifiedIndex": 189,
+				"createdIndex": 189
+			}, {
+				"key": "/_tendrl/users/dwarner/password_hash",
+				"value": "$2a$10$2TEvrFp5cKo9dFvJSRyp6e7g5GzGzic7X4Xu1n.Cf2WCiiOuh3o.u",
+				"modifiedIndex": 193,
+				"createdIndex": 193
+			}, {
+				"key": "/_tendrl/users/dwarner/password_salt",
+				"value": "$2a$10$2TEvrFp5cKo9dFvJSRyp6e",
+				"modifiedIndex": 192,
+				"createdIndex": 192
+			}, {
+				"key": "/_tendrl/users/dwarner/username",
+				"value": "dwarner",
+				"modifiedIndex": 191,
+				"createdIndex": 191
+			}, {
+				"key": "/_tendrl/users/dwarner/role",
+				"value": "admin",
+				"modifiedIndex": 192,
+				"createdIndex": 192
+			}, {
+				"key": "/_tendrl/users/dwarner/access_token",
+				"value": "d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8",
+				"expiration": "2017-02-23T16:37:30.353662562Z",
+				"ttl": 514160,
+				"modifiedIndex": 197,
+				"createdIndex": 197
+			}],
+			"modifiedIndex": 188,
+			"createdIndex": 188
+		}],
+		"modifiedIndex": 188,
+		"createdIndex": 188
+	}
+}

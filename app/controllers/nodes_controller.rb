@@ -1,5 +1,4 @@
-require './base'
-class Node < Base
+class NodesController < AuthenticatedUsersController
 
   before do
     definitions = etcd.get('/_tendrl/definitions/master').value
@@ -115,7 +114,7 @@ class Node < Base
     body['TendrlContext.integration_id'] = SecureRandom.uuid
     job_id = SecureRandom.uuid
     job = etcd.set(
-      "/queue/#{job_id}", 
+      "/queue/#{job_id}",
       value: {
         integration_id: body['TendrlContext.integration_id'],
         job_id: job_id,
@@ -148,6 +147,5 @@ class Node < Base
     end
     nodes
   end
-
 
 end

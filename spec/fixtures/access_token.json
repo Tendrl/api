@@ -1,0 +1,9 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/_tendrl/access_tokens/8d6ff8e9475dcf9815c3adce4aa3f6b999c31d29281d0cb90fe085d589b4a736",
+		"value": "dwarner",
+		"modifiedIndex": 342,
+		"createdIndex": 342
+	}
+}
