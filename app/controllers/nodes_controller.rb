@@ -84,7 +84,6 @@ class NodesController < AuthenticatedUsersController
 
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['Node[]'] = node_ids
-    
     job = Tendrl::Job.new(current_user, flow).create(body, node_ids)
     status 202
     { job_id: job.job_id }.to_json
