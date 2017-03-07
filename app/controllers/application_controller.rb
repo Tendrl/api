@@ -109,6 +109,5 @@ class ApplicationController < Sinatra::Base
     end
     attrs
   end
-  
 
 end

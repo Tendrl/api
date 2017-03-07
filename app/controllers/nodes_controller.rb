@@ -111,7 +111,7 @@ class NodesController < AuthenticatedUsersController
     body['TendrlContext.integration_id'] = SecureRandom.uuid
     job_id = SecureRandom.uuid
     job = etcd.set(
-      "/queue/#{job_id}", 
+      "/queue/#{job_id}",
       value: {
         integration_id: body['TendrlContext.integration_id'],
         job_id: job_id,
