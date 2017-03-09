@@ -90,7 +90,6 @@ class NodesController < AuthenticatedUsersController
   end
 
   post '/CreateCluster' do
-    flow = Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')
     body = JSON.parse(request.body.read)
 
     # Ceph CreateCluster example
@@ -220,12 +219,10 @@ class NodesController < AuthenticatedUsersController
     ['sds_type', 'node_configuration'].each do |param|
       missing_params << param unless body[param] and not body[param].empty?
     end
-    halt 401, { errors: { missing: missing_params } } unless missing_params.empty?
+    halt 401, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
 
-    # Check that the list of nodes is valid
     node_identifier = body['node_identifier']
-
-    halt 401, { errors: { invalid: "'node_identifier', if specified, must be either 'uuid' or 'ip', provided: '#{node_identifier}'." } } \
+    halt 401, { errors: { invalid: "'node_identifier', if specified, must be either 'uuid' or 'ip', provided: '#{node_identifier}'." } }.to_json \
       if node_identifier and \
         not ['uuid','ip'].include? node_identifier
 
@@ -236,7 +233,7 @@ class NodesController < AuthenticatedUsersController
     node_ids.each do |node_id|
       node = case node_identifier
              when 'ip'
-               Tendrl::Node.find_by_ip(node_ip)
+               Tendrl::Node.find_by_ip(node_id)
              when 'uuid'
                Tendrl::Node.new(uuid)
              end
@@ -249,7 +246,7 @@ class NodesController < AuthenticatedUsersController
       nodes[node.uuid] = body['node_configuration'][node_id]
     end
 
-    halt 404, { errors: { missing: "Unavailable nodes: #{unavailable_nodes.join(', ')}." } } unless unavailable_nodes.empty?
+    halt 404, { errors: { missing: "Unavailable nodes: #{unavailable_nodes.join(', ')}." } }.to_json unless unavailable_nodes.empty?
 
     parameters = {}
     parameters.merge! body['sds_parameters']
@@ -259,7 +256,7 @@ class NodesController < AuthenticatedUsersController
     parameters['node_configuration'] = nodes
     parameters['Node[]'] = nodes.keys
 
-    job = Tendrl::Job.new(current_user, Tendrl::Flow.new('tendrl', 'CreateCluster')).create(body, tags: ['provisioner/ceph'])
+    job = Tendrl::Job.new(current_user, Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')).create(parameters, tags: ['provisioner/ceph'])
     status 202
     { job_id: job.job_id }.to_json
   end
