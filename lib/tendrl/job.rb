@@ -2,7 +2,7 @@ module Tendrl
   class Job
 
     attr_reader :job_id, :payload
-    
+
     def initialize(user, flow, options={})
       @user = user
       @flow = flow
@@ -25,11 +25,12 @@ module Tendrl
       }
     end
 
-    def create(body, node_ids)
+    def create(body, routing = {})
       body['TendrlContext.integration_id'] = @integration_id
-      @payload = default_payload.merge!(
+      @payload = default_payload.merge(
         parameters: body,
-        node_ids: node_ids
+        node_ids: routing[:node_ids] || [],
+        tags: routing[:tags] || [],
       )
       Tendrl.etcd.set("/queue/#{@job_id}/status", value: 'new')
       Tendrl.etcd.set("/queue/#{@job_id}/payload", value: @payload.to_json)
