@@ -17,7 +17,6 @@ module Tendrl
         integration_id: @integration_id,
         status: 'new',
         run: @flow.run,
-        flow: @flow.flow_name,
         type: @type,
         created_from: 'API',
         created_at: Time.now.utc.iso8601,
@@ -25,13 +24,12 @@ module Tendrl
       }
     end
 
-    def create(body, routing = {})
-      body['TendrlContext.integration_id'] = @integration_id
-      @payload = default_payload.merge(
-        parameters: body,
-        node_ids: routing[:node_ids] || [],
-        tags: routing[:tags] || [],
-      )
+    def create(parameters, routing = {})
+      parameters['TendrlContext.integration_id'] = @integration_id
+      @payload = default_payload.merge parameters: parameters
+      @payload[:node_ids] = routing[:node_ids] unless routing[:node_ids].empty?
+      @payload[:tags] = routing[:tags] unless routing[:tags].empty?
+
       Tendrl.etcd.set("/queue/#{@job_id}/status", value: 'new')
       Tendrl.etcd.set("/queue/#{@job_id}/payload", value: @payload.to_json)
       self
@@ -42,7 +40,6 @@ module Tendrl
       def all
         jobs = []
         Tendrl.etcd.get('/queue', recursive: true).children.each do |job|
-          job_id = job.key.split('/')[-1]
           attrs = {}
           job.children.each do |child|
             child_attr = child.key.split('/')[-1]
