@@ -1,7 +1,7 @@
 class NodesController < AuthenticatedUsersController
 
   before do
-    definitions = etcd.get('/_tendrl/definitions/master').value
+    definitions = etcd.get('/_NS/node_agent/compiled_definitions/data').value
     Tendrl.node_definitions = YAML.load(definitions)
   end
 
@@ -13,7 +13,7 @@ class NodesController < AuthenticatedUsersController
   get '/GetNodeList' do
     nodes = []
     existing_cluster_ids = []
-    
+
     begin
       etcd.get('/nodes', recursive: true).children.each do |node|
         nodes << recurse(node)
