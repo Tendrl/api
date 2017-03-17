@@ -12,6 +12,8 @@ BuildRequires: ruby
 BuildRequires: systemd-units
 
 Requires: ruby >= 2.0.0
+Requires: rubygem-activemodel >= 4.2.6
+Requires: rubygem-bcrypt >= 3.1.10
 Requires: rubygem-i18n >= 0.7.0
 Requires: rubygem-json
 Requires: rubygem-minitest >= 5.9.1
@@ -53,16 +55,20 @@ Tendrl API httpd configuration.
 %setup
 
 %install
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
-install -Dm 0644 *.ru *.rb Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -Dm 0644 *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
 install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 lib/tendrl/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters/
+install -Dm 0644 lib/tendrl/validators/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators/
 install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
@@ -75,6 +81,8 @@ setsebool -P httpd_can_network_connect 1
 %files
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
+#%{_datadir}/%{name}/lib/*
+#%{_datadir}/%{name}/app/*
 %{_unitdir}/tendrl-apid.service
 %{_sysconfdir}/tendrl/etcd.yml
 
