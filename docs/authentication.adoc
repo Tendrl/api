@@ -1,0 +1,43 @@
+// vim: tw=79
+= Authentication
+:toc:
+
+== Login
+
+Login with a existing username and password.
+
+Sample Request
+
+----------
+curl -H 'Content-Type: application/json' -d '{"username":"admin",
+"password": "pass1234"}' http://127.0.0.1/api/1.0/login
+----------
+
+Sample Response
+
+----------
+Status: 201 Created
+
+{
+  "access_token":"c17891f009a00994a9dcfe7f977b2f244b43a4a920e5"
+}
+----------
+
+The access token can be used as a `Bearer` token in subsequent requests to recognize the current user.
+
+== Logout
+
+Logout with a existing authentication token
+
+Sample Request
+
+----------
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XDELETE http://127.0.0.1/api/1.0/logout
+----------
+
+Sample Response
+
+----------
+Status: 200 OK
+{}
+----------
