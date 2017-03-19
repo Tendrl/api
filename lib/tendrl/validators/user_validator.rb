@@ -36,7 +36,8 @@ module Tendrl
           name: @name,
           username: @username,
           password: @password,
-          email: @email
+          email: @email,
+          role: @role
         }
       end
 
