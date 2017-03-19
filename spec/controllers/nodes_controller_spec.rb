@@ -51,7 +51,6 @@ describe NodesController do
     it 'nodes without monitoring' do
       stub_monitoring_config(404, "monitoring_config_error.json")
       get "/GetNodeList", {}, http_env
-      puts last_response.errors
       expect(last_response.status).to eq 200
     end
 
