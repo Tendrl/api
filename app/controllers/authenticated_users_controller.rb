@@ -36,7 +36,9 @@ class AuthenticatedUsersController < ApplicationController
   end
 
   def monitoring
-    config = recurse(etcd.get('/_tendrl/config/performance_monitoring/data'))
+    config = recurse(etcd.get(
+      '/_NS/performance_monitoring/definitions/data'
+    ))
     @monitoring = Tendrl::MonitoringApi.new(config['data'])
   rescue Etcd::KeyNotFound
     logger.info 'Monitoring API not enabled.'

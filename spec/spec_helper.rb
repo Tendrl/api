@@ -23,7 +23,7 @@ end
 def stub_definitions
   stub_request(
     :get,
-    "http://127.0.0.1:4001/v2/keys/_tendrl/definitions/master"
+    "http://127.0.0.1:4001/v2/keys/_NS/node_agent/compiled_definitions/data"
   ).
   to_return(
     status: 200,
@@ -36,7 +36,7 @@ end
 def stub_cluster_definitions(type='gluster')
   stub_request(
     :get,
-    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/definitions/data"
+    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/_NS/definitions/data"
   ).
   to_return(
     status: 200,
@@ -75,7 +75,7 @@ end
 def stub_monitoring_config(status=200, file='monitoring_config.json')
   stub_request(
     :get,
-    "http://127.0.0.1:4001/v2/keys/_tendrl/config/performance_monitoring/data"
+    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/definitions/data"
   ).
   to_return(
     :status => status,

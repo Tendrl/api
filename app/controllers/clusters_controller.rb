@@ -109,7 +109,7 @@ class ClustersController < AuthenticatedUsersController
 
   def load_definitions(cluster_id)
     definitions = etcd.get(
-      "/clusters/#{cluster_id}/definitions/data"
+      "/clusters/#{cluster_id}/_NS/definitions/data"
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
   end
