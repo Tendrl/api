@@ -48,20 +48,9 @@ module Tendrl
       token
     end
 
-    def delete_token(token)
+    def delete_token
       Tendrl.etcd.delete("/_tendrl/users/#{username}/access_token")
-      Tendrl.etcd.delete("/_tendrl/access_tokens/#{token}")
-    end
-
-    def new_record?
-      password_hash.blank?
-    end
-
-    def delete
-      if access_token.present?
-        Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
-      end
-      Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
+      Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
     end
 
     def new_record?
@@ -105,11 +94,15 @@ module Tendrl
         user.password_salt = attributes[:password_salt]
         user.access_token = attributes[:access_token]
         user
+      rescue Etcd::KeyNotFound
+        nil
       end
 
       def find_user_by_access_token(token)
         username = Tendrl.etcd.get("/_tendrl/access_tokens/#{token}").value
         find(username)
+      rescue Etcd::KeyNotFound
+        nil
       end
 
       def save(attributes)
@@ -140,7 +133,7 @@ module Tendrl
 
       def authenticate(username, password)
         user = find(username)
-        if user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+        if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
           user
         else
           nil

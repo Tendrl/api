@@ -5,7 +5,7 @@ class UsersController < AuthenticatedUsersController
   end
 
   get '/users' do
-    { users: UserPresenter.list(Tendrl::User.all) }.to_json
+    UserPresenter.list(Tendrl::User.all).to_json
   end
 
   get '/users/:username' do
@@ -42,7 +42,7 @@ class UsersController < AuthenticatedUsersController
     end
   end
 
-  delete '/users/:id' do
+  delete '/users/:username' do
     Tendrl::User.find(params[:username]).delete
     {}.to_json
   end

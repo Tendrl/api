@@ -15,10 +15,7 @@ class SessionsController < ApplicationController
   end
 
   delete '/logout' do
-    user = Tendrl::User.authenticate_access_token(
-      username,
-      access_token
-    )
+    user = Tendrl::User.authenticate_access_token(access_token)
     user.delete_token
     {}.to_json
   end

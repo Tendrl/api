@@ -17,10 +17,10 @@ namespace :etcd do
       user_name: etcd_config[:user_name],
       password: etcd_config[:password]
     )
-    begin
-      user = Tendrl::User.find 'admin'
+    user = Tendrl::User.find 'admin'
+    if user
       p 'User named admin already exists.'
-    rescue Etcd::KeyNotFound
+    else
       Tendrl::User.save({
         name: 'Admin',
         username: 'admin',
