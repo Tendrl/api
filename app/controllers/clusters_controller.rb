@@ -6,7 +6,6 @@ class ClustersController < AuthenticatedUsersController
       clusters << recurse(cluster)
     end
     clusters = ClusterPresenter.list(clusters)
-    #clusters = load_stats(clusters)
     { clusters: clusters }.to_json
   end
 
@@ -97,6 +96,11 @@ class ClustersController < AuthenticatedUsersController
     load_definitions(cluster_id)
     @cluster ||=
       recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
+  rescue Etcd::KeyNotFound => e
+    exception =  Tendrl::HttpResponseErrorHandler.new(
+      e, cause: '/clusters/id', object_id: cluster_id
+    )
+    halt exception.status, exception.body.to_json
   end
 
   def load_definitions(cluster_id)
@@ -104,6 +108,11 @@ class ClustersController < AuthenticatedUsersController
       "/clusters/#{cluster_id}/_NS/definitions/data"
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
+  rescue Etcd::KeyNotFound => e
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      e, cause: '/clusters/definitions', object_id: cluster_id
+    )
+    halt exception.status, exception.body.to_json
   end
 
   def load_stats(clusters)
