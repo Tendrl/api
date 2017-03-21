@@ -1,8 +1,4 @@
-class PingController < AuthenticatedUsersController
-
-  before do
-    authenticate
-  end
+class PingController < ApplicationController
 
   get '/ping' do
     {

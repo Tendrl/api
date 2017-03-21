@@ -51,8 +51,15 @@ class ApplicationController < Sinatra::Base
   end
 
   error Etcd::KeyNotFound do
-    halt 404, { errors: { message: 'Not found.' }}.to_json
+    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'])
+    halt exception.status, exception.body.to_json
   end
+
+  error JSON::ParserError do
+    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'invalid_json')
+    halt exception.status, exception.body.to_json
+  end
+
 
   before do
     content_type :json
