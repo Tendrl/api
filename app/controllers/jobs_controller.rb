@@ -1,7 +1,7 @@
 class JobsController < AuthenticatedUsersController
 
   get '/jobs' do
-    JobPresenter.list(Tendrl::Job.all).to_json
+    { jobs: JobPresenter.list(Tendrl::Job.all) }.to_json
   end
 
   get '/jobs/:job_id' do
