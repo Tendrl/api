@@ -62,7 +62,7 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/valid
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
-install -Dm 0644 *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
 install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
