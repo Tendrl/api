@@ -3,7 +3,6 @@ require 'etcd'
 require 'yaml'
 require 'json'
 require 'securerandom'
-require 'rspec/core/rake_task'
 
 namespace :etcd do
   desc 'Load default Tendrl admin in etcd'
@@ -35,8 +34,10 @@ namespace :etcd do
   end
 end
 
-RSpec::Core::RakeTask.new :specs do |task|
-  task.pattern = Dir['spec/**/*_spec.rb']
+if ENV['RACK_ENV'] != 'production'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new :specs do |task|
+    task.pattern = Dir['spec/**/*_spec.rb']
+  end
+  task :default => ['specs']
 end
-
-task :default => ['specs']
