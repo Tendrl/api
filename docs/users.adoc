@@ -9,7 +9,8 @@ Generate a default Tendrl admin user.
 Run the following command from the root of the project.
 
 ----------
-bundle exec rake etcd:load_admin
+cd /usr/share/tendrl-api
+RACK_ENV=production rake etcd:load_admin
 ----------
 
 The command will generate a admin user with a password.
