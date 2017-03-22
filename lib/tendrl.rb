@@ -9,6 +9,9 @@ unless File.exists?('.deploy')
 else
   require 'sinatra/base'
   require 'etcd'
+  require 'active_model'
+  require 'active_support'
+  require 'bcrypt'
 end
 
 require 'active_support/core_ext/hash'
