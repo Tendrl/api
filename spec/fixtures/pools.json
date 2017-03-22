@@ -1,0 +1,46 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools",
+		"dir": true,
+		"nodes": [{
+			"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0",
+			"dir": true,
+			"nodes": [{
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/min_size",
+				"value": "2",
+				"modifiedIndex": 7098,
+				"createdIndex": 7098
+			}, {
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/percent_used",
+				"value": "0",
+				"modifiedIndex": 7099,
+				"createdIndex": 7099
+			}, {
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/pg_num",
+				"value": "64",
+				"modifiedIndex": 7100,
+				"createdIndex": 7100
+			}, {
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/pool_id",
+				"value": "0",
+				"modifiedIndex": 7101,
+				"createdIndex": 7101
+			}, {
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/pool_name",
+				"value": "rbd",
+				"modifiedIndex": 7102,
+				"createdIndex": 7102
+			}, {
+				"key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/Pools/0/used",
+				"value": "0",
+				"modifiedIndex": 7103,
+				"createdIndex": 7103
+			}],
+			"modifiedIndex": 3559,
+			"createdIndex": 3559
+		}],
+		"modifiedIndex": 3559,
+		"createdIndex": 3559
+	}
+}

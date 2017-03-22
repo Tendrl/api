@@ -1,0 +1,20 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/queue/dd4e2ec4-5c0a-4248-93b2-1112892bd4bf",
+		"dir": true,
+		"nodes": [{
+			"key": "/queue/dd4e2ec4-5c0a-4248-93b2-1112892bd4bf/status",
+			"value": "new",
+			"modifiedIndex": 343,
+			"createdIndex": 343
+		}, {
+			"key": "/queue/dd4e2ec4-5c0a-4248-93b2-1112892bd4bf/payload",
+			"value": "{\"job_id\":\"dd4e2ec4-5c0a-4248-93b2-1112892bd4bf\",\"integration_id\":\"360ddf03-dc60-4d56-814d-41e37d678e15\",\"status\":\"new\",\"run\":\"tendrl.node_agent.flows.import_cluster.ImportCluster\",\"flow\":\"ImportCluster\",\"type\":\"node\",\"created_from\":\"API\",\"created_at\":\"2017-03-02T15:19:26Z\",\"username\":\"dwarner\",\"parameters\":{\"node_ids\":[\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"],\"sds_name\":\"ceph 10.2.5\",\"sds_version\":\"10.2.5\",\"sds_type\":\"ceph\",\"DetectedCluster.sds_pkg_name\":\"ceph\",\"Node[]\":[\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"],\"TendrlContext.integration_id\":\"360ddf03-dc60-4d56-814d-41e37d678e15\"},\"node_ids\":[\"3b6eb27f-3e83-4751-9d45-85a989ae2b25\"]}",
+			"modifiedIndex": 344,
+			"createdIndex": 344
+		}],
+		"modifiedIndex": 343,
+		"createdIndex": 343
+	}
+}

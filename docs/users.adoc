@@ -1,0 +1,123 @@
+// vim: tw=79
+= Users
+:toc:
+
+== Create Admin User
+
+Generate a default Tendrl admin user.
+
+Run the following command from the root of the project.
+
+----------
+cd /usr/share/tendrl-api
+RACK_ENV=production rake etcd:load_admin
+----------
+
+The command will generate a admin user with a password.
+
+== Create User
+
+Create a new user.
+
+Sample Request
+
+----------
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer
+d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' 
+-XPOST -d '{"name":"Tom Hardy", "username":"thardy", "email":"thardy@tendrl.org", "role":"admin", "password":"pass1234", "password_confirmation":"pass1234"}'
+http://127.0.0.1/api/1.0/users
+----------
+
+Sample Response
+
+----------
+Status: 201 Created
+
+{
+	"email": "thardy@tendrl.org",
+	"username": "thardy",
+	"name": "Tom Hardy",
+	"role": "admin"
+}
+----------
+
+== Update User
+
+Update a existing user.
+
+Sample Request
+
+----------
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XPUT -d '{"name":"Tom Hardee", "username":"thardy", "email":"thardy@tendrl.org", "role":"normal"}' http://127.0.0.1/api/1.0/users/thardy
+----------
+
+Sample Response
+
+----------
+Status: 200 OK
+{
+	"email": "thardy@tendrl.org",
+	"username": "thardy",
+	"name": "Tom Hardee",
+	"role": "normal"
+}
+----------
+
+== Delete User
+
+Delete a existing user.
+
+Sample Request
+----------
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XDELETE http://127.0.0.1/api/1.0/users/thardy
+----------
+
+Sample Response
+----------
+Status: 200 OK
+{}
+----------
+
+== List Users
+
+List existing users
+
+Sample Request
+----------
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET http://127.0.0.1/api/1.0/users
+----------
+
+Sample Response
+----------
+Status: 200 OK
+[{
+	"email": "admin@tendrl.org",
+	"username": "admin",
+	"name": "Admin",
+	"role": "admin"
+}, {
+	"email": "thardy@tendrl.org",
+	"username": "thardy",
+	"name": "Tom Hardy",
+	"role": "admin"
+}]
+----------
+
+== Single User
+
+Retrieve single user
+
+Sample Request
+----------
+curl -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET http://127.0.0.1/api/1.0/users/thardy
+----------
+Sample Response
+----------
+Status: 200 OK
+{
+	"email": "thardy@tendrl.org",
+	"username": "thardy",
+	"name": "Tom Hardy",
+	"role": "admin"
+}
+----------

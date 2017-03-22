@@ -1,17 +1,28 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activemodel (4.2.6)
+      activesupport (= 4.2.6)
+      builder (~> 3.1)
     activesupport (4.2.6)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     asciidoctor (1.5.5)
     ast (2.3.0)
+    bcrypt (3.1.11)
+    builder (3.2.3)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     etcd (0.3.0)
       mixlib-log
+    hashdiff (0.3.1)
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.9.1)
@@ -19,6 +30,7 @@ GEM
     parser (2.3.1.4)
       ast (~> 2.2)
     powerpack (0.1.1)
+    public_suffix (2.0.4)
     puma (3.6.0)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -47,8 +59,14 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
+    safe_yaml (1.0.4)
     shotgun (0.9.2)
       rack (>= 1.0)
+    simplecov (0.13.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -58,13 +76,19 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.1.1)
+    webmock (2.3.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel (= 4.2.6)
   activesupport (= 4.2.6)
   asciidoctor
+  bcrypt (= 3.1.11)
   etcd (= 0.3.0)
   puma (= 3.6.0)
   rack-test
@@ -72,7 +96,9 @@ DEPENDENCIES
   rspec
   rubocop
   shotgun
+  simplecov
   sinatra (= 1.4.5)
+  webmock
 
 RUBY VERSION
    ruby 2.0.0p598

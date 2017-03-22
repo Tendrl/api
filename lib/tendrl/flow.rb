@@ -6,11 +6,13 @@ module Tendrl
 
     attr_reader :namespace, :flow_name
 
-    def initialize(namespace, flow_name)
+    def initialize(namespace, flow_name, object=nil)
       @instance = Tendrl.current_definitions
       @namespace = namespace
       @flow_name = flow_name
-      @flow = @instance[namespace]['flows'][flow_name]
+      @object = object
+      @flow = @instance[namespace]['flows'][flow_name] ||
+        @instance[namespace]['objects'][object]['flows'][flow_name]
     end
 
     def objects
@@ -53,7 +55,7 @@ module Tendrl
     end
 
     def method
-      METHOD_MAPPING[type]
+      METHOD_MAPPING[type] || 'POST'
     end
 
     def mandatory_attributes
@@ -79,10 +81,10 @@ module Tendrl
       optional_attributes.each do |ma|
         next if ma.end_with?('cluster_id')
         if ma.end_with?('[]')
-          flow_attributes << { 
+          flow_attributes << {
             name: ma,
             type: 'List',
-            required: false 
+            required: false
           }
         else
           attribute = Object.find_by_attribute(ma)
@@ -100,11 +102,23 @@ module Tendrl
         if key.end_with?('_integration')
           Tendrl.current_definitions[key]['flows'].keys.each do |fk|
             flow = Tendrl::Flow.new(key, fk)
-            flows << { 
+            flows << {
               name: flow.name,
               method: flow.method,
-              attributes: flow.attributes  
+              attributes: flow.attributes
             }
+          end
+          Tendrl.current_definitions[key]['objects'].keys.each do |ok|
+            object_flows = Tendrl.current_definitions[key]['objects'][ok]['flows']
+            next if object_flows.nil?
+            object_flows.keys.each do |fk|
+              flow = Tendrl::Flow.new(key, fk, ok)
+              flows << {
+                name: flow.name,
+                method: flow.method,
+                attributes: flow.attributes
+              }
+            end
           end
         end
       end
@@ -120,7 +134,7 @@ module Tendrl
       sds_name, operation, object = external_name.underscore.split('_')
       namespace = "#{partial_namespace}.#{sds_name}_integration"
       flow = "#{operation}_#{object}".camelize
-      new(namespace, flow)
+      new(namespace, flow, object.capitalize)
     end
 
   end
