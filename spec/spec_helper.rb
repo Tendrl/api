@@ -75,7 +75,7 @@ end
 def stub_monitoring_config(status=200, file='monitoring_config.json')
   stub_request(
     :get,
-    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/definitions/data"
+    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/config/data"
   ).
   to_return(
     :status => status,

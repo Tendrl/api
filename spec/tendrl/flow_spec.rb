@@ -13,12 +13,23 @@ RSpec.describe Tendrl::Flow do
 
     it 'initialize' do
       flow = Tendrl::Flow.new(
-        'namespace.tendrl.node_agent.gluster_integration',
+        'namespace.tendrl',
         'ImportCluster'
       )
-      expect(flow.objects.length).to eq(4)
+      expect(flow.objects.length).to eq(14)
       expect(flow.type).to eq('create')
       expect(flow.method).to eq('POST')
+    end
+
+  end
+
+  context 'cluster' do
+
+    it 'initialize' do
+      flow = Tendrl::Flow.new(
+        'namespace.tendrl',
+        'ImportCluster'
+      )
     end
 
   end

@@ -35,7 +35,7 @@ class NodesController < AuthenticatedUsersController
   end
 
   post '/ImportCluster' do
-    flow = Tendrl::Flow.new('namespace.tendrl.node_agent', 'ImportCluster')
+    flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
 
     # ImportCluster job structure:
