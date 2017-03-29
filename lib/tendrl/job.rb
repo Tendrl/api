@@ -62,11 +62,13 @@ module Tendrl
         attrs
       end
 
-      def messages(job_id)
+      def messages(job_ids)
         messages = []
-        Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
+        job_ids.each do |job_id|
+          Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
           children do |child|
-          messages << JSON.parse(child.value)
+            messages << JSON.parse(child.value)
+          end
         end
         messages
       end
