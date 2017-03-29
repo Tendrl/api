@@ -16,7 +16,7 @@ RSpec.describe Tendrl::Flow do
         'namespace.tendrl',
         'ImportCluster'
       )
-      expect(flow.objects.length).to eq(14)
+      expect(flow.objects.length).to eq(15)
       expect(flow.type).to eq('create')
       expect(flow.method).to eq('POST')
     end
