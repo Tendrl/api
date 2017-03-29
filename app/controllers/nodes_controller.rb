@@ -84,7 +84,7 @@ class NodesController < AuthenticatedUsersController
 
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['Node[]'] = node_ids
-    job = Tendrl::Job.new(current_user, flow).create(body, node_ids)
+    job = Tendrl::Job.new(current_user, flow).create(body, node_ids: node_ids)
     status 202
     { job_id: job.job_id }.to_json
   end
@@ -95,14 +95,14 @@ class NodesController < AuthenticatedUsersController
     # Ceph CreateCluster example
     #
     # {
-    #   "sds_type": "ceph",
+    #   "sds_name": "ceph",
     #   "sds_version": "10.2.5",
     #   "sds_parameters": {
     #     "name": "MyCluster",
     #     "fsid": "140cd3d5-58e4-4935-a954-d946ceff371d",
     #     "public_network": "192.168.128.0/24",
     #     "cluster_network": "192.168.220.0/24",
-    #     "ceph_conf_overrides": {
+    #     "conf_overrides": {
     #       "global": {
     #         "osd_pool_default_pg_num": 128,
     #         "pool_default_pgp_num": 1
@@ -158,9 +158,9 @@ class NodesController < AuthenticatedUsersController
     #   "node_ids": [],
     #   "tags": ["provisioner/ceph"],
     #   "parameters": {
-    #     "sds_type": "ceph",
-    #     "sds_version": "10.2.5",
-    #     "name": "MyCluster",
+    #     "TendrlContext.sds_name": "ceph",
+    #     "TendrlContext.sds_version": "10.2.5",
+    #     "TendrlContext.cluster_name": "MyCluster",
     #     "TendrlContext.integration_id": "9a4b84e0-17b3-4543-af9f-e42000c52bfc",
     #     "Node[]": [
     #       "3a95fd96-876d-439a-a64d-70332c069aaa",
@@ -168,15 +168,15 @@ class NodesController < AuthenticatedUsersController
     #       "b10e00e9-e444-41c2-9517-df2118b42731"
     #     ],
     #     "fsid": "140cd3d5-58e4-4935-a954-d946ceff371d",
-    #     "public_network": "192.168.128.0/24",
-    #     "cluster_network": "192.168.220.0/24",
-    #     "ceph_conf_overrides": {
+    #     "Cluster.public_network": "192.168.128.0/24",
+    #     "Cluster.cluster_network": "192.168.220.0/24",
+    #     "Cluster.conf_overrides": {
     #       "global": {
     #         "osd_pool_default_pg_num": 128,
     #         "pool_default_pgp_num": 1
     #       }
     #     },
-    #     "node_configuration": {
+    #     "Cluster.node_configuration": {
     #       "3a95fd96-876d-439a-a64d-70332c069aaa": {
     #         "role": "ceph/mon",
     #         "provisioning_ip": "10.0.0.24",
@@ -216,7 +216,7 @@ class NodesController < AuthenticatedUsersController
     # }
 
     missing_params = []
-    ['sds_type', 'node_configuration'].each do |param|
+    ['sds_name', 'node_configuration'].each do |param|
       missing_params << param unless body[param] and not body[param].empty?
     end
     halt 401, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
@@ -249,14 +249,27 @@ class NodesController < AuthenticatedUsersController
     halt 404, { errors: { missing: "Unavailable nodes: #{unavailable_nodes.join(', ')}." } }.to_json unless unavailable_nodes.empty?
 
     parameters = {}
-    parameters.merge! body['sds_parameters']
-    ['sds_type','sds_version','name'].each do |param|
-      parameters[param] = body[param] unless body[param].nil?
+    ['sds_name', 'sds_version'].each do |param|
+      parameters["TendrlContext.#{param}"] = body[param]
     end
-    parameters['node_configuration'] = nodes
+    parameters['TendrlContext.cluster_name'] = body['sds_parameters']['name']
+    parameters['TendrlContext.cluster_id'] =  body['sds_parameters']['fsid']
+
     parameters['Node[]'] = nodes.keys
 
-    job = Tendrl::Job.new(current_user, Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')).create(parameters, tags: ['provisioner/ceph'])
+    ['public_network', 'cluster_network', 'conf_overrides'].each do |param|
+      parameters["Cluster.#{param}"] =body['sds_parameters']["#{param}"]
+    end
+
+    parameters['Cluster.node_configuration'] = nodes
+
+    if body['sds_name'] == 'glusterfs'
+      tags = ['provisioner/gluster']
+    else
+      tags = ["provisioner/#{body['sds_name']}"]
+    end
+
+    job = Tendrl::Job.new(current_user, Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')).create(parameters, tags: tags)
     status 202
     { job_id: job.job_id }.to_json
   end

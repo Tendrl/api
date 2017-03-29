@@ -254,4 +254,26 @@ def stub_access_token
   )
 end
 
+def stub_ip
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/indexes\/ip\/.*/i
+  ).
+  to_return(
+    :status => 200, 
+    :body => File.read('spec/fixtures/ip.json'),
+  )
+end
+
+def stub_node
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/nodes\/.*/i
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read('spec/fixtures/node.json')
+    )
+end
+
 
