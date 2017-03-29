@@ -9,7 +9,10 @@ class JobsController < AuthenticatedUsersController
   end
 
   get '/jobs/:job_id/messages' do
-    Tendrl::Job.messages(params[:job_id]).to_json
+    job = Tendrl::Job.find(params[:job_id])
+    job_ids = [params[:job_id]]
+    job_ids << JSON.parse(job['children'])
+    Tendrl::Job.messages(job_ids.flatten).to_json
   end
 
   get '/jobs/:job_id/status' do
