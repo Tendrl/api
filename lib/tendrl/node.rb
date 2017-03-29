@@ -6,7 +6,7 @@ module Tendrl
     def self.find_by_ip(ip)
       begin
         uuid = Tendrl.etcd.get("/indexes/ip/#{ip}").value
-      rescue Etcd::KeyNotFound
+      rescue ::Etcd::KeyNotFound
         return nil
       end
       new(uuid)
@@ -19,7 +19,7 @@ module Tendrl
       @exists = true
       begin
         @path = Tendrl.etcd.get("/nodes/#{uuid}")
-      rescue Ectd::KeyNotFound
+      rescue ::Etcd::KeyNotFound
         @exists = false
       end
     end

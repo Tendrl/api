@@ -27,9 +27,8 @@ module Tendrl
     def create(parameters, routing = {})
       parameters['TendrlContext.integration_id'] = @integration_id
       @payload = default_payload.merge parameters: parameters
-      @payload[:node_ids] = routing[:node_ids] unless routing[:node_ids].empty?
-      @payload[:tags] = routing[:tags] unless routing[:tags].empty?
-
+      @payload[:node_ids] = routing[:node_ids] || []
+      @payload[:tags] = routing[:tags] || []
       Tendrl.etcd.set("/queue/#{@job_id}/status", value: 'new')
       Tendrl.etcd.set("/queue/#{@job_id}/payload", value: @payload.to_json)
       self

@@ -1,0 +1,10 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/_tendrl/users/dwarner",
+		"dir": false,
+    "value": "3a95fd96-876d-439a-a64d-70332c069aaa",
+		"modifiedIndex": 188,
+		"createdIndex": 188
+	}
+}
