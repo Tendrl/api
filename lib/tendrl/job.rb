@@ -14,7 +14,6 @@ module Tendrl
     def default_payload
       {
         job_id: @job_id,
-        integration_id: @integration_id,
         status: 'new',
         name: @flow.flow_name,
         run: @flow.run,
