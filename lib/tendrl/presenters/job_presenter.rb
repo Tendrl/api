@@ -8,7 +8,6 @@ module JobPresenter
         {
           job_id: payload['job_id'],
           status: job['status'],
-          integration_id: payload['integration_id'],
           flow: payload['name'],
           parameters: payload['parameters'],
           created_at: payload['created_at'],
