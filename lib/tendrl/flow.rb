@@ -34,6 +34,16 @@ module Tendrl
       "#{sds_name.to_s.capitalize}#{@flow_name}"
     end
 
+    def sds_tags
+      if sds_name == 'gluster'
+        ['gluster/server']
+      elsif sds_name == 'ceph'
+        ["ceph/mon"]
+      else
+        []
+      end
+    end
+
     def reference_attributes
       attributes = []
       objects.each do |obj|

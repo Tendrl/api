@@ -46,7 +46,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids: node_ids(params[:cluster_id]))
+    ).create(body, tags: flow.sds_tags)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -65,7 +65,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids: node_ids(params[:cluster_id]))
+    ).create(body, tags: flow.sds_tags)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -85,7 +85,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids: node_ids(params[:cluster_id]))
+    ).create(body, sds_tags: flow.sds_tags)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -97,14 +97,6 @@ class ClustersController < AuthenticatedUsersController
     load_definitions(cluster_id)
     @cluster ||=
       recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
-  end
-
-  def node_ids(cluster_id)
-    node_ids = []
-    etcd.get("/clusters/#{cluster_id}/nodes").children.each do |node|
-      node_ids << node.key.split('/')[-1]
-    end
-    node_ids
   end
 
   def load_definitions(cluster_id)
