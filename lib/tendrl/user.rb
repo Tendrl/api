@@ -8,7 +8,7 @@ module Tendrl
     ROLES = [ADMIN, NORMAL, LIMITED]
 
     attr_accessor :name, :email, :username, :role, :password_hash,
-      :password_salt, :access_token
+      :password_salt
 
     def initialize(name = nil, email = nil, username = nil, role = nil)
       @name = name
@@ -34,13 +34,6 @@ module Tendrl
     def generate_token
       token = SecureRandom.hex(32)
       Tendrl.etcd.set(
-        "/_tendrl/users/#{username}/access_token",
-        value: token,
-        ttl: 604800 # 1.week
-      )
-
-      # Index
-      Tendrl.etcd.set(
         "/_tendrl/access_tokens/#{token}",
         value: username,
         ttl: 604800 # 1.week
@@ -49,7 +42,6 @@ module Tendrl
     end
 
     def delete_token
-      Tendrl.etcd.delete("/_tendrl/users/#{username}/access_token")
       Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
     end
 
@@ -58,9 +50,6 @@ module Tendrl
     end
 
     def delete
-      if access_token.present?
-        Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
-      end
       Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
@@ -92,7 +81,6 @@ module Tendrl
         user = new(attributes[:name], attributes[:email], attributes[:username], attributes[:role])
         user.password_hash = attributes[:password_hash]
         user.password_salt = attributes[:password_salt]
-        user.access_token = attributes[:access_token]
         user
       rescue Etcd::KeyNotFound
         nil
