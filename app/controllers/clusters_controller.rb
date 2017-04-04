@@ -2,8 +2,11 @@ class ClustersController < AuthenticatedUsersController
 
   get '/GetClusterList' do
     clusters = []
-    etcd.get('/clusters', recursive: true).children.each do |cluster|
-      clusters << recurse(cluster)
+    begin
+      etcd.get('/clusters', recursive: true).children.each do |cluster|
+        clusters << recurse(cluster)
+      end
+    rescue Etcd::KeyNotFound
     end
     clusters = ClusterPresenter.list(clusters)
     { clusters: clusters }.to_json
