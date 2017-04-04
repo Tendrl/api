@@ -12,7 +12,10 @@ class JobsController < AuthenticatedUsersController
     job = Tendrl::Job.find(params[:job_id])
     parent_job_messages = Tendrl::Job.messages(params[:job_id])
     child_job_messages = Tendrl::Job.children_messages(params[:job_id])
-    (parent_job_messages + child_job_messages.flatten).to_json
+    jobs = (parent_job_messages + child_job_messages.flatten).sort do |a, b|
+      Time.parse(a['timestamp']) <=> Time.parse(b['timestamp'])
+    end
+    jobs.to_json
   end
 
   get '/jobs/:job_id/status' do
