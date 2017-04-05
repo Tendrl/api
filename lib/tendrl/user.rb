@@ -41,7 +41,7 @@ module Tendrl
       token
     end
 
-    def delete_token
+    def delete_token(access_token)
       Tendrl.etcd.delete("/_tendrl/access_tokens/#{access_token}")
     end
 
