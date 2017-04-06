@@ -7,6 +7,7 @@ module NodePresenter
       nodes_list.each do |node|
         node.each do |_, attributes|
           attributes.delete('service')
+          attributes.delete('messages')
           node_attr = attributes.delete('nodecontext')
           nodes << node_attr.merge(attributes)
         end
