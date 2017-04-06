@@ -1,7 +1,12 @@
 class JobsController < AuthenticatedUsersController
 
   get '/jobs' do
-    { jobs: JobPresenter.list(Tendrl::Job.all) }.to_json
+    begin
+      jobs = Tendrl::Job.all
+    rescue Etcd::KeyNotFound
+      jobs = []
+    end
+    { jobs: JobPresenter.list(jobs) }.to_json
   end
 
   get '/jobs/:job_id' do
