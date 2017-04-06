@@ -3,6 +3,7 @@ module JobPresenter
   class << self
 
     def single(job)
+      return if job['payload'].nil?
       payload = JSON.parse(job['payload'])
       if payload['created_from'] == 'API'
         {
