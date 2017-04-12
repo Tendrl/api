@@ -34,14 +34,22 @@ module Tendrl
       "#{sds_name.to_s.capitalize}#{@flow_name}"
     end
 
-    def sds_tags
-      if sds_name == 'gluster'
-        ['gluster/server']
-      elsif sds_name == 'ceph'
-        ["ceph/mon"]
-      else
-        []
+    def tags(context)
+      tags = []
+      return tags unless @flow['tags']
+      @flow['tags'].each do |tag|
+        finalized_tag = []
+        placeholders = tag.split('/')
+        placeholders.each do |placeholder|
+          if placeholder.start_with?('$')
+            finalized_tag << context[placeholder[1..-1]]
+          else
+            finalized_tag << placeholder
+          end
+        end
+        tags << finalized_tag.join('/')
       end
+      tags
     end
 
     def reference_attributes
