@@ -48,7 +48,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, tags: flow.sds_tags)
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -67,7 +67,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, tags: flow.sds_tags)
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -87,7 +87,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, sds_tags: flow.sds_tags)
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json

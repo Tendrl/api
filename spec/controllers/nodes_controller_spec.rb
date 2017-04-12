@@ -24,6 +24,7 @@ describe NodesController do
   context 'import' do
 
     before do
+      stub_detected_cluster
       stub_definitions
       stub_job_creation
     end
@@ -105,7 +106,6 @@ describe NodesController do
         }
       }
       post '/CreateCluster', body.to_json, http_env
-      puts last_response.errors
       expect(last_response.status).to eq 202
     end
 
