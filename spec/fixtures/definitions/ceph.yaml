@@ -1,0 +1,477 @@
+namespace.ceph:
+  flows:
+    CreatePool:
+      tags:
+       - "tendrl/integration/$TendrlContext.integration_id"
+      atoms:
+        - ceph.objects.Pool.atoms.Create
+      help: "Create Ceph Pool"
+      enabled: true
+      inputs:
+        mandatory:
+          - Pool.poolname
+          - Pool.pg_num
+          - Pool.min_size
+          - Pool.size
+        optional:
+          - Pool.type
+          - Pool.erasure_code_profile
+          - Pool.quota_enabled
+          - Pool.quota_max_objects
+          - Pool.quota_max_bytes
+      pre_run:
+        - ceph.objects.Pool.atoms.NamedPoolNotExists
+      run: ceph.flows.CreatePool
+      type: Create
+      uuid: faeab231-69e9-4c9d-b5ef-a67ed057f98b
+    CreateECProfile:
+      tags:
+       - "tendrl/integration/$TendrlContext.integration_id"
+      atoms:
+        - ceph.objects.ECProfile.atoms.Create
+      help: "Create EC Profile"
+      enabled: true
+      inputs:
+        mandatory:
+          - ECProfile.name
+          - ECProfile.k
+          - ECProfile.m
+        optional:
+          - ECProfile.plugin
+          - ECProfile.directory
+          - ECProfile.ruleset_failure_domain
+      run: ceph.flows.CreateECProfile
+      type: Create
+      uuid: faeab231-69e9-4c9d-b5ef-a67ed057f98d
+  objects:
+    GlobalDetails:
+      attrs:
+        status:
+          help: Cluster status
+          type: String
+      enabled: true
+      list: clusters/$TendrlContext.integration_id/GlobalDetails
+      value: clusters/$TendrlContext.integration_id/GlobalDetails
+      help: Cluster global details
+
+    SyncObject:
+      attrs:
+        updated:
+          help: "Updated"
+          type: String
+        sync_type:
+          help: "Sync Type eg: Mon Map, OSD Map etc"
+          type: String
+        version:
+          help: "version of sync type eg: 1.2.3"
+          type: String
+        when:
+          help: "time of data collection"
+          type: String
+        data:
+          help: "Sync data"
+          type: String
+      help: "Cluster sync data "
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/maps/$SyncObject.sync_type
+
+    ECProfile:
+      atoms:
+        Create:
+          enabled: true
+          help: "Create ec profile"
+          inputs:
+            mandatory:
+              - ECProfile.name
+              - ECProfile.k
+              - ECProfile.m
+            optional:
+              - ECProfile.plugin
+              - ECProfile.directory
+          name: "Create ec profile"
+          run: ceph.objects.ECProfile.atoms.Create
+          type: Create
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3730
+        Delete:
+          enabled: true
+          help: "Delete ec profile"
+          inputs:
+            mandatory:
+              - ECProfile.name
+          name: "Delete ec profile"
+          run: ceph.objects.ECProfile.atoms.Delete
+          type: Delete
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3740
+      flows:
+        DeleteECProfile:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.ECProfile.atoms.Delete
+          help: "Delete ec profile"
+          enabled: true
+          inputs:
+            mandatory:
+              - ECProfile.name
+          run: ceph.objects.ECProfile.flows.DeleteECProfile
+          type: Delete
+          uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3b9
+      attrs:
+        name:
+          help: Name of the ec profile
+          type: String
+        k:
+          help: k value for ec profile
+          type: int
+        m:
+          help: m value for ec profile
+          type: int
+        plugin:
+          help: ec profile plugin
+          type: String
+        directory:
+          help: directory for ec profile
+          type: String
+        ruleset_failure_domain:
+          help: rule set failure domain for ec profile
+          type: String
+
+      enabled: true
+      list: clusters/$TendrlContext.integration_id/ECProfiles
+      value: clusters/$TendrlContext.integration_id/ECProfiles/$ECProfile.name
+      help: EC profile
+
+    Rbd:
+      atoms:
+        Create:
+          enabled: true
+          help: "Create rbd"
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+              - Rbd.size
+          name: "Create Rbd"
+          run: ceph.objects.Rbd.atoms.Create
+          type: Create
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3720
+        Delete:
+          enabled: true
+          help: "Delete rbd"
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+          name: "Delete Rbd"
+          run: ceph_integration.objects.Rbd.atoms.Delete
+          type: Delete
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3721
+        Resize:
+          enabled: true
+          help: "Resize Rbd"
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+              - Rbd.size
+          name: "Resize Rbd"
+          run: ceph.objects.Rbd.atoms.Resize
+          type: Update
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3722
+        RbdNotExists:
+          enabled: true
+          help: Check if rbd doesnt not exists
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+          name: Rbd not exists
+          run: ceph.objects.Rbd.atoms.RbdNotExists
+          type: Get
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3922
+        RbdExists:
+          enabled: true
+          help: Check if rbd exists
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+          name: Rbd exists
+          run: ceph.objects.Rbd.atoms.RbdExists
+          type: Get
+          uuid: 7a2df258-9b24-4fd3-a66f-ee346e2e3922
+      flows:
+        CreateRbd:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.Rbd.atoms.Create
+          help: "Create Rbd"
+          enabled: true
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+              - Rbd.size
+          pre_run:
+            - ceph.objects.Rbd.atoms.RbdNotExists
+          run: ceph.objects.Rbd.flows.CreateRbd
+          type: Create
+          uuid: 9bc41d8f-a0cf-420a-b2fe-18761e07f3d2
+        DeleteRbd:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.Rbd.atoms.Delete
+          help: "Delete Rbd"
+          enabled: true
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+          pre_run:
+            - ceph.objects.Rbd.atoms.RbdExists
+          run: ceph.objects.Rbd.flows.DeleteRbd
+          post_run:
+            - ceph.objects.Rbd.atoms.RbdNotExists
+          type: Delete
+          uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3a7
+        ResizeRbd:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.Rbd.atoms.Resize
+          help: "Resize Rbd"
+          enabled: true
+          inputs:
+            mandatory:
+              - Rbd.pool_id
+              - Rbd.name
+              - Rbd.size
+          pre_run:
+            - ceph.objects.Rbd.atoms.RbdExists
+          run: ceph.objects.Rbd.flows.ResizeRbd
+          type: Update
+          uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3c9
+      attrs:
+        name:
+          help: Name of the rbd
+          type: String
+        size:
+          help: Size of the rbd (MB)
+          type: int
+        pool_id:
+          help: Id of the pool
+          type: String
+        flags:
+          help: flags for rbd
+          type: list
+        provisioned:
+          help: provisioned size
+          type: int
+        used:
+          help: used size
+          type: int
+      help: "Rbd"
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Pools/$Pool.pool_id/Rbds/$Rbd.name
+      list: clusters/$TendrlContext.integration_id/Pools/$Pool.pool_id/Rbds
+
+    Pool:
+      atoms:
+        Create:
+          enabled: true
+          help: "Pool create Atom"
+          inputs:
+            mandatory:
+              - Pool.poolname
+              - Pool.pg_num
+              - Pool.min_size
+              - Pool.size
+            optional:
+              - Pool.type
+              - Pool.erasure_code_profile
+              - Pool.quota_enabled
+              - Pool.quota_max_objects
+              - Pool.quota_max_bytes
+          name: "Create Pool"
+          run: ceph.objects.Pool.atoms.Create
+          type: Create
+          uuid: bd0155a8-ff15-42ff-9c76-5176f53c13e0
+        Delete:
+          enabled: true
+          help: "Pool delete Atom"
+          inputs:
+            mandatory:
+              - Pool.pool_id
+          name: "Delete Pool"
+          run: ceph.objects.Pool.atoms.Delete
+          type: Delete
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3720
+        Update:
+          enabled: true
+          help: "Pool update Atom"
+          inputs:
+            mandatory:
+              - Pool.pool_id
+            optional:
+              - Pool.poolname
+              - Pool.size
+              - Pool.min_size
+              - Pool.pg_num
+              - Pool.quota_enabled
+              - Pool.quota_max_objects
+              - Pool.quota_max_bytes
+          name: "Update Pool"
+          run: ceph.objects.Pool.atoms.Update
+          type: Update
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3721
+        ValidUpdateParameters:
+          enabled: true
+          help: if update parametsr are valid
+          inputs:
+            mandatory:
+              - Pool.pool_id
+            optional:
+              - Pool.poolname
+              - Pool.size
+              - Pool.min_size
+              - Pool.pg_num
+              - Pool.quota_enabled
+              - Pool.quota_max_objects
+              - Pool.quota_max_bytes
+          name: Valid update parameters
+          run: ceph.objects.Pool.atoms.ValidUpdateParameters
+          type: Get
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3791
+        NamedPoolNotExists:
+          enabled: true
+          help: check if named pool does not exist
+          inputs:
+            mandatory:
+              - Pool.poolname
+          name: Named pool not exists
+          run: ceph.objects.Pool.atoms.NamedPoolNotExists
+          type: Get
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3891
+        PoolExists:
+          enabled: true
+          help: check if pool exists
+          inputs:
+            mandatory:
+              - Pool.pool_id
+          name: pool exists
+          run: ceph.objects.Pool.atoms.PoolExists
+          type: Get
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3832
+        PoolNotExists:
+          enabled: true
+          help: check if pool does not exist
+          inputs:
+            mandatory:
+              - Pool.pool_id
+          name: pool not exists
+          run: ceph.objects.Pool.atoms.PoolNotExists
+          type: Get
+          uuid: 9a2df258-9b24-4fd3-a66f-ee346e2e3832
+      flows:
+        DeletePool:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.Pool.atoms.Delete
+          help: "Delete Ceph Pool"
+          enabled: true
+          inputs:
+            mandatory:
+              - Pool.pool_id
+          pre_run:
+            - ceph.objects.Pool.atoms.PoolExists
+          run: ceph.objects.Pool.flows.DeletePool
+          post_run:
+            - ceph.objects.Pool.atoms.PoolNotExists
+          type: Delete
+          uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3b9
+        UpdatePool:
+          tags:
+            - "tendrl/integration/$TendrlContext.integration_id"
+          atoms:
+            - ceph.objects.Pool.atoms.Update
+          help: "Update Ceph Pool"
+          enabled: true
+          inputs:
+            mandatory:
+              - Pool.pool_id
+            optional:
+              - Pool.poolname
+              - Pool.size
+              - Pool.min_size
+              - Pool.pg_num
+              - Pool.quota_enabled
+              - Pool.quota_max_objects
+              - Pool.quota_max_bytes
+          pre_run:
+            - ceph.objects.Pool.atoms.PoolExists
+            - ceph.objects.Pool.atoms.ValidUpdateParameters
+          run: ceph.objects.Pool.flows.UpdatePool
+          type: Update
+          uuid: 4ac41d8f-a0cf-420a-b2fe-18761e07f3b2
+      attrs:
+        crush_ruleset:
+          help: "The ID of a CRUSH ruleset to use for this pool. The specified ruleset must exist."
+          type: Integer
+        erasure_code_profile:
+          help: "For erasure pools only.It must be an existing profile "
+          type: String
+        min_size:
+          help: "Sets the minimum number of replicas required for I/O in degraded state"
+          type: Integer
+        pg_num:
+          help: "The total number of placement groups for placement purposes."
+          type: Integer
+        pgp_num:
+          help: "The total number of placement groups for the pool."
+          type: Integer
+        pool_id:
+          help: "id of the pool"
+          type: Integer
+        poolname:
+          help: "Name of the Ceph pool"
+          type: String
+        type:
+          help: "Type of the Ceph pool(ec or replicated)"
+          type: String
+        size:
+          help: "Sets the minimum number of replicas required for I/O"
+          type: Integer
+        quota_enabled:
+          help: if quota enabled for the pool
+          type: bool
+        quota_max_objects:
+          help: maximum no of object
+          type: int
+        quota_max_bytes:
+          help: maximum no of bytes
+          type: int
+      help: "Pool"
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Pools/$Pool.pool_id
+      list: clusters/$TendrlContext.integration_id/Pools
+    Utilization:
+      attrs:
+        total:
+          help: Total available size
+          type: int
+        used:
+          help: Used size
+          type: int
+        available:
+          help: Available size
+          type: int
+        pcnt_used:
+          help: Percent usage
+          type: int
+      help: "Overall utilization of cluster"
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Utilization
+tendrl_schema_version: 0.3

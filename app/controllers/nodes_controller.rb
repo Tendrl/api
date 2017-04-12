@@ -81,15 +81,19 @@ class NodesController < AuthenticatedUsersController
 
     node_ids = body['node_ids']
     halt 401, { errors: { message: "'node_ids' must be an array with values" } } unless node_ids.kind_of?(Array) and not node_ids.empty?
+    detected_cluster_id = detected_cluster_id(node_ids.first)
+    halt 401, { errors: { message: "Node #{node_ids.first} not found" } } if detected_cluster_id.nil?
 
+    body['DetectedCluster.detected_cluster_id'] = detected_cluster_id
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['Node[]'] = node_ids
-    job = Tendrl::Job.new(current_user, flow).create(body, node_ids: node_ids)
+    job = Tendrl::Job.new(current_user, flow).create(body)
     status 202
     { job_id: job.job_id }.to_json
   end
 
   post '/CreateCluster' do
+    flow = Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')
     body = JSON.parse(request.body.read)
 
     # Ceph CreateCluster example
@@ -260,21 +264,20 @@ class NodesController < AuthenticatedUsersController
     ['public_network', 'cluster_network', 'conf_overrides'].each do |param|
       parameters["Cluster.#{param}"] =body['sds_parameters']["#{param}"]
     end
-
     parameters['Cluster.node_configuration'] = nodes
-
-    if body['sds_name'] == 'glusterfs'
-      tags = ['provisioner/gluster']
-    else
-      tags = ["provisioner/#{body['sds_name']}"]
-    end
-
-    job = Tendrl::Job.new(current_user, Tendrl::Flow.new('namespace.tendrl', 'CreateCluster')).create(parameters, tags: tags)
+    
+    job = Tendrl::Job.new(current_user, flow).create(parameters)
     status 202
     { job_id: job.job_id }.to_json
   end
 
   private
+
+  def detected_cluster_id(node_id)
+    Tendrl.etcd.get("/nodes/#{node_id}/DetectedCluster/detected_cluster_id").value
+  rescue Etcd::KeyNotFound
+    nil
+  end
 
   def load_stats(nodes)
     stats = []

@@ -59,6 +59,18 @@ def stub_nodes
   )
 end
 
+def stub_detected_cluster
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/nodes\/.*\/DetectedCluster\/detected_cluster_id/).
+  to_return(
+    status: 200,
+    body: File.read(
+      'spec/fixtures/detected_cluster.json'  
+    )
+  )
+end
+
 def stub_clusters(recursive=true)
   stub_request(
     :get,
