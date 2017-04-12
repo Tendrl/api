@@ -14,10 +14,15 @@ class SessionsController < ApplicationController
     end
   end
 
+  # TODO move to different controller under AuthenticatedUsersController
   delete '/logout' do
     user = Tendrl::User.authenticate_access_token(access_token)
-    user.delete_token(access_token) if user
-    {}.to_json
+    if user
+      user.delete_token(access_token)
+      {}.to_json
+    else
+      halt 401, { errors: { message: 'Unauthorized'} }.to_json
+    end
   end
 
 end
