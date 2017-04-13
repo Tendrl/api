@@ -103,7 +103,7 @@ class NodesController < AuthenticatedUsersController
     #   "sds_version": "10.2.5",
     #   "sds_parameters": {
     #     "name": "MyCluster",
-    #     "fsid": "140cd3d5-58e4-4935-a954-d946ceff371d",
+    #     "cluster_id": "140cd3d5-58e4-4935-a954-d946ceff371d",
     #     "public_network": "192.168.128.0/24",
     #     "cluster_network": "192.168.220.0/24",
     #     "conf_overrides": {
@@ -165,13 +165,12 @@ class NodesController < AuthenticatedUsersController
     #     "TendrlContext.sds_name": "ceph",
     #     "TendrlContext.sds_version": "10.2.5",
     #     "TendrlContext.cluster_name": "MyCluster",
-    #     "TendrlContext.integration_id": "9a4b84e0-17b3-4543-af9f-e42000c52bfc",
+    #     "TendrlContext.cluster_id": "9a4b84e0-17b3-4543-af9f-e42000c52bfc",
     #     "Node[]": [
     #       "3a95fd96-876d-439a-a64d-70332c069aaa",
     #       "3943fab1-9ed2-4eb6-8121-5a69499c4568",
     #       "b10e00e9-e444-41c2-9517-df2118b42731"
     #     ],
-    #     "fsid": "140cd3d5-58e4-4935-a954-d946ceff371d",
     #     "Cluster.public_network": "192.168.128.0/24",
     #     "Cluster.cluster_network": "192.168.220.0/24",
     #     "Cluster.conf_overrides": {
@@ -257,12 +256,14 @@ class NodesController < AuthenticatedUsersController
       parameters["TendrlContext.#{param}"] = body[param]
     end
     parameters['TendrlContext.cluster_name'] = body['sds_parameters']['name']
-    parameters['TendrlContext.cluster_id'] =  body['sds_parameters']['fsid']
+    parameters['TendrlContext.cluster_id'] =  body['sds_parameters']['cluster_id']
 
     parameters['Node[]'] = nodes.keys
 
     ['public_network', 'cluster_network', 'conf_overrides'].each do |param|
-      parameters["Cluster.#{param}"] =body['sds_parameters']["#{param}"]
+      if body['sds_parameters']["#{param}"].present?
+        parameters["Cluster.#{param}"] = body['sds_parameters']["#{param}"]
+      end
     end
     parameters['Cluster.node_configuration'] = nodes
     
