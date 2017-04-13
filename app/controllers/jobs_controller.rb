@@ -10,9 +10,11 @@ class JobsController < AuthenticatedUsersController
   end
 
   get '/jobs/:job_id' do
-    JobPresenter.single(Tendrl::Job.find(params[:job_id])).to_json
-  rescue Etcd::KeyNotFound
-    {}.to_json
+    begin
+      JobPresenter.single(Tendrl::Job.find(params[:job_id])).to_json
+    rescue Etcd::KeyNotFound
+      {}.to_json
+    end
   end
 
   get '/jobs/:job_id/messages' do
