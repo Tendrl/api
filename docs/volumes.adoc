@@ -7,8 +7,7 @@
 Sample Request
 
 ----------
-curl -XGET http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GetVol
-umeList
+curl -XGET  -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GetVolumeList
 ----------
 
 Sample Response
@@ -51,9 +50,51 @@ Assuming you have pre-existing bricks, we can create a new volume in a specific 
 
 Sample Request
 ----------
-curl -XPOST -d '{"Volume.volname":"Volume_009","Volume.bricks":["dhcp-1.lab.ten
-drl.example:/root/bricks/vol9_b1"]}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
+curl -XPOST -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
+'{"Volume.volname":"Volume_009","Volume.bricks":[[{"exampl.hostname":"/mnt/api_test/rep_vol_b1/b1"},{"example.hostname": "/mnt/api_test/rep_vol_b3/b3"}]],"Volume.replica_count":"2","Volume.force":true}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
 ----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+== Create EC Volume
+Assuming you have pre-existing bricks, we can create a new EC volume in a specific cluster.
+
+Sample Request
+----------
+curl -XPOST -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
+'{"Volume.volname":"Volume_009","Volume.bricks":[[{"exampl.hostname":"/mnt/api_test/ec_vol_b1/b1"},{"example.hostname":
+"/mnt/api_test/ec_vol_b3/b3"}]],"Volume.disperse_count":"2","Volume.force":true,"Volume.redundancy_count":"2"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
+----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+== Start Volume
+
+Sample Request
+----------
+curl -XPOST -H 'Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a'
+http://127.0.0.1/api/1.0/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStartVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
+----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+== Stop Volume
+curl -XPOST -H 'Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a'
+http://127.0.0.1/api/1.0/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStopVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
 
 Sample Response
 ----------
@@ -65,9 +106,8 @@ Status: 202 Accepted
 
 Sample Request
 ----------
-curl -XDELETE -d '{"Volume.volname":"Volume_009","Volume.vol_id":"f2e68a00-71c9
--4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6
-fd4932afb/GlusterDeleteVolume
+curl -XDELETE  -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Volume.volname":"Volume_009","Volume.vol_id":"f2e68a00-71c9
+-4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterDeleteVolume
 ----------
 
 Sample Response

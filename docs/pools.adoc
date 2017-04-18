@@ -9,7 +9,8 @@
 Sample Request
 
 ----------
-curl -XGET
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/GetPoolList
 ----------
 
@@ -64,8 +65,8 @@ Status: 200 OK
 
 Sample Request
 ----------
-curl -XPOST -d
-'{"Pool.poolname":"testPool","Pool.pg_num":128,"Pool.min_size":1}'
+curl -XPOST -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Pool.poolname":"testPool","Pool.pg_num":128,"Pool.min_size":1}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephCreatePool
 ----------
 
@@ -79,8 +80,8 @@ Status: 202 Accepted
 Sample Request
 
 ----------
-curl -XPUT -d
-'{"Pool.pool_id","Pool.poolname":"testPool","Pool.pg_num":200,"Pool.min_size"
+curl -XPUT -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Pool.pool_id","Pool.poolname":"testPool","Pool.pg_num":200,"Pool.min_size"
 :2}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephUpdatePool
 ----------
@@ -91,8 +92,8 @@ Sample Response
 
 Sample Request
 ----------
-curl -XDELETE -d '{"Pool.poolname":"testPool","Pool.pool_id":"f2e68a00-71c9
--4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6
+curl -XDELETE -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Pool.poolname":"testPool","Pool.pool_id":"f2e68a00-71c9-4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6
 fd4932afb/CephDeletePool
 ----------
 
@@ -108,8 +109,8 @@ Status: 202 Accepted
 
 Sample Request
 ----------
-curl -XPOST -d
-'{"Rbd.pool_id":"10","Rbd.name":"rbd_001","Rbd.size":1024}'
+curl -XPOST -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Rbd.pool_id":"10","Rbd.name":"rbd_001","Rbd.size":1024}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephCreateRbd
 ----------
 
@@ -125,8 +126,8 @@ Status: 202 Accepted
 Sample Request
 
 ----------
-curl -XPUT -d
-'{"Rbd.pool_id":"10","Rbd.name":"rbd_001","Rbd.size":2048}'
+curl -XPUT -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Rbd.pool_id":"10","Rbd.name":"rbd_001","Rbd.size":2048}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephResizeRbd
 ----------
 
@@ -141,8 +142,8 @@ Status: 202 Accepted
 Sample Request
 
 ----------
-curl -XDELETE -d
-'{"Rbd.pool_id":"10","Rbd.name":"rbd_001"}'
+curl -XDELETE -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Rbd.pool_id":"10","Rbd.name":"rbd_001"}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephDeleteRbd
 ----------
 
