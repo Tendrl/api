@@ -284,7 +284,7 @@ class NodesController < AuthenticatedUsersController
     stats = []
     unless monitoring.nil?
       node_ids = nodes.map{|n| n['node_id'] } 
-      stats = @monitoring.node_stats(node_ids)
+      stats = @monitoring.nodes(node_ids)
       stats.each do |stat|
         node = nodes.find{|e| e['node_id'] == stat['node_id'] }
         next if node.nil?
