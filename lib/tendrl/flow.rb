@@ -117,14 +117,17 @@ module Tendrl
     def self.find_all
       flows = []
       Tendrl.current_definitions.keys.map do |key|
-        if ['namespace.tendrl', 'namespace.gluster', 'namespace.ceph'].include?(key)
-          Tendrl.current_definitions[key]['flows'].keys.each do |fk|
-            flow = Tendrl::Flow.new(key, fk)
-            flows << {
-              name: flow.name,
-              method: flow.method,
-              attributes: flow.attributes
-            }
+        if ['namespace.tendrl', 'namespace.gluster', 'namespace.ceph',
+            'namespace.node_agent'].include?(key)
+          if Tendrl.current_definitions[key]['flows']
+            Tendrl.current_definitions[key]['flows'].keys.each do |fk|
+              flow = Tendrl::Flow.new(key, fk)
+              flows << {
+                name: flow.name,
+                method: flow.method,
+                attributes: flow.attributes
+              }
+            end
           end
           Tendrl.current_definitions[key]['objects'].keys.each do |ok|
             object_flows = Tendrl.current_definitions[key]['objects'][ok]['flows']
@@ -145,14 +148,19 @@ module Tendrl
 
     def self.find_by_external_name_and_type(external_name, type)
       if type == 'node'
-        partial_namespace = 'namespace.tendrl'
+        namespace = 'namespace.tendrl'
+        flow = external_name
       elsif type == 'cluster'
         partial_namespace = 'namespace'
+        sds_name, operation, object = external_name.underscore.split('_')
+        namespace = "#{partial_namespace}.#{sds_name.downcase}"
+        flow = "#{operation}_#{object}".camelize
+        object = object.capitalize
+      elsif type == 'node_agent'
+        namespace = 'namespace.node_agent'
+        flow = external_name
       end
-      sds_name, operation, object = external_name.underscore.split('_')
-      namespace = "#{partial_namespace}.#{sds_name.downcase}"
-      flow = "#{operation}_#{object}".camelize
-      new(namespace, flow, object.capitalize)
+      new(namespace, flow, object)
     end
 
   end

@@ -26,8 +26,6 @@ RSpec.describe Tendrl::Flow do
       )
       expect(flow.flow_name).to eq('CreateCluster')
       expect(flow.tags({ 'TendrlContext.sds_name' => 'ceph'})).to eq(['provisioner/ceph'])
-
-
     end
 
 
@@ -72,6 +70,25 @@ RSpec.describe Tendrl::Flow do
       end
 
     end
+
+  end
+
+  context 'node agent' do
+
+    before do
+      Tendrl.node_definitions = YAML.load_file(
+        'spec/fixtures/definitions/master.yaml'
+      )
+    end
+
+    it 'GenerateJournalMapping' do
+      flow = Tendrl::Flow.new(
+        'namespace.node_agent',
+        'GenerateJournalMapping'
+      )
+      expect(flow.flow_name).to eq('GenerateJournalMapping')
+    end
+
 
   end
 

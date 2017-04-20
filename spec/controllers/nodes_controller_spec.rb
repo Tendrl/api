@@ -109,7 +109,6 @@ describe NodesController do
       expect(last_response.status).to eq 202
     end
 
-
   end
 
   context 'list' do
@@ -134,6 +133,34 @@ describe NodesController do
 
 
   end
+
+  context 'node agent' do
+
+    before do
+      stub_nodes
+      stub_job_creation
+    end
+
+    it 'generate journal mapping' do
+      body = { 
+        "Cluster.node_configuration" => {
+          "c573b8b8-2488-4db7-8033-27b9a468bce3" => {
+            "storage_disks" => [
+              {"device" => "/dev/vdb", "size" => 189372825600, "ssd" => false},
+              {"device" => "/dev/vdc", "size" => 80530636800, "ssd" => false},
+              {"device" => "/dev/vdd", "size" => 107374182400, "ssd" => false},
+              {"device" => "/dev/vde", "size" => 21474836480, "ssd" => false},
+              {"device" => "/dev/vdf", "size" => 26843545600, "ssd" => false }
+            ]
+          }
+        }
+      }
+      post '/GenerateJournalMapping', body.to_json, http_env
+      expect(last_response.status). to eq 202
+    end
+    
+  end
+
 
 end
 
