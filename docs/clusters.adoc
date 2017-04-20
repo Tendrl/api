@@ -27,6 +27,68 @@ The `job_id` can be used to poll the status of the job.
 The import cluster action queued a job in etcd which will be picked up by the
 node agent and processed.
 
+== Create Cluster
+
+Create Gluster or Ceph cluster.
+
+Sample Create Ceph Cluster Request
+
+----------
+curl -X POST -H 'Authorization: Bearer e3a2785d3d72351a2fa5973e3ef3e3be95ed1578
+b2d988ef90ddee54fd2fa4d1' -d '{"sds_name":"ceph","sds_version":"10.2.5","sds_pa
+rameters":{"name":"MyCluster","cluster_id":"140cd3d5-58e4-4935-a954-d946ceff371d", 
+"public_network":"10.0.0.0/22","cluster_network":"10.0.0.0/22", 
+"conf_overrides": {"global": {"osd_pool_default_pg_num": 128,
+"pool_default_pgp_num": 1}}}, "node_identifier":"ip",
+"node_configuration":{"10.0.0.1":{"role": "ceph/mon","provisioning_ip":
+"10.0.0.1","monitor_interface":"eth0"},"10.0.0.2":{"role":"ceph/mon",
+"provisioning_ip":"10.0.0.2","monitor_interface":"eth0"},
+"10.0.0.3":{"role":"ceph/mon","provisioning_ip":"10.0.0.3",
+"monitor_interface":"eth0"},"10.0.0.4":{"role":"ceph/osd",
+"provisioning_ip":"10.0.0.4","journal_size":5192,"journal_colocation":false,
+"storage_disks":[{"device": "/dev/vdb","journal":"/dev/vdc"}]},
+"10.0.0.5":{"role":"ceph/osd","provisioning_ip":"10.0.0.5",
+"journal_size": 5192,"journal_colocation":false,
+"storage_disks":[{"device":"/dev/vdb","journal":"/dev/vdc"}]}}}'
+http://127.0.0.1/api/1.0/CreateCluster
+----------
+
+Sample Response
+
+----------
+Status: 202 Accepted
+
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+Sample Gluster Cluster Create Request
+
+----------
+curl -X POST -H 'Authorization: Bearer db3adc3b3c1c21c59a0ab38ff16d0ee091c7c3c2
+b586404e96f46c41ed2eeb52' -d '{"sds_name":"gluster","sds_version":"3.9.1",
+"sds_parameters":{"name":"MyCluster","cluster_id":"4654ac00-e67b-4b74-86a3-e740b1b8cee5",
+"public_network":"10.0.0.0/22","cluster_network":"10.0.0.0/22"},
+"node_identifier":"ip","node_configuration":{"10.0.0.1":{"role": "glusterfs/node",
+"provisioning_ip":"10.0.0.1"},"10.0.0.2":{"role":"glusterfs/node",
+"provisioning_ip":"10.0.0.2"},"10.0.0.3":{"role":"glusterfs/node",
+"provisioning_ip":"10.0.0.3"}}}'
+http://127.0.0.1/api/1.0/CreateCluster
+----------
+
+Sample Response
+
+----------
+Status: 202 Accepted
+
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+
+The `job_id` can be used to poll the status of the job.
+The import cluster action queued a job in etcd which will be picked up by the
+node agent and processed.
+
+
 == List Clusters
 
 List available clusters
