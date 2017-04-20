@@ -77,12 +77,12 @@ class NodesController < AuthenticatedUsersController
     ['sds_type', 'node_ids'].each do |param|
       missing_params << param unless body[param] and not body[param].empty?
     end
-    halt 401, { errors: { missing: missing_params } } unless missing_params.empty?
+    halt 422, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
 
     node_ids = body['node_ids']
-    halt 401, { errors: { message: "'node_ids' must be an array with values" } } unless node_ids.kind_of?(Array) and not node_ids.empty?
+    halt 422, { errors: { message: "'node_ids' must be an array with values" } }.to_json unless node_ids.kind_of?(Array) and not node_ids.empty?
     detected_cluster_id = detected_cluster_id(node_ids.first)
-    halt 401, { errors: { message: "Node #{node_ids.first} not found" } } if detected_cluster_id.nil?
+    halt 422, { errors: { message: "Node #{node_ids.first} not found" } }.to_json if detected_cluster_id.nil?
 
     body['DetectedCluster.detected_cluster_id'] = detected_cluster_id
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
@@ -222,10 +222,10 @@ class NodesController < AuthenticatedUsersController
     ['sds_name', 'node_configuration'].each do |param|
       missing_params << param unless body[param] and not body[param].empty?
     end
-    halt 401, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
+    halt 422, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
 
     node_identifier = body['node_identifier']
-    halt 401, { errors: { invalid: "'node_identifier', if specified, must be either 'uuid' or 'ip', provided: '#{node_identifier}'." } }.to_json \
+    halt 422, { errors: { invalid: "'node_identifier', if specified, must be either 'uuid' or 'ip', provided: '#{node_identifier}'." } }.to_json \
       if node_identifier and \
         not ['uuid','ip'].include? node_identifier
 
@@ -249,7 +249,7 @@ class NodesController < AuthenticatedUsersController
       nodes[node.uuid] = body['node_configuration'][node_id]
     end
 
-    halt 404, { errors: { missing: "Unavailable nodes: #{unavailable_nodes.join(', ')}." } }.to_json unless unavailable_nodes.empty?
+    halt 422, { errors: { missing: "Unavailable nodes: #{unavailable_nodes.join(', ')}." } }.to_json unless unavailable_nodes.empty?
 
     parameters = {}
     ['sds_name', 'sds_version'].each do |param|
