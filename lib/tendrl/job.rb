@@ -81,6 +81,15 @@ module Tendrl
         { status: Tendrl.etcd.get("/queue/#{job_id}/status").value }
       end
 
+      def output(job_id)
+        output = []
+        Tendrl.etcd.get("/queue/#{job_id}/output", recursive:
+                        true).children.each do |o|
+          output << { o.key.split('/')[-1] => JSON.parse(o.value) }
+        end
+        output
+      end
+
     end
 
   end
