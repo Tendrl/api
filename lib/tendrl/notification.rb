@@ -9,7 +9,7 @@ module Tendrl
           notification = {}
           children.children.each do |child|
             key = child.key.split('/')[-1]
-            next unless ['timestamp','payload', 'priority'].include? key
+            next unless ['timestamp','payload', 'priority', 'message_id'].include? key
             if child.dir
               child.children.each do |cchild|
                 ckey = cchild.key.split('/')[-1]
