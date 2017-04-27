@@ -61,18 +61,24 @@ module Tendrl
 
       def messages(job_id)
         messages = []
-        Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
-        children.each do |child|
-          messages << JSON.parse(child.value)
+        begin
+          Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
+            children.each do |child|
+            messages << JSON.parse(child.value)
+          end
+        rescue Etcd::KeyNotFound
         end
         messages
       end
 
       def children_messages(job_id)
         messages = []
-        JSON.parse(Tendrl.etcd.get("/queue/#{job_id}/children").value).each do
-          |job_id|
-          messages << self.messages(job_id)
+        begin
+          JSON.parse(Tendrl.etcd.get("/queue/#{job_id}/children").value).each do
+            |job_id|
+            messages << self.messages(job_id)
+          end
+        rescue Etcd::KeyNotFound
         end
         messages
       end
