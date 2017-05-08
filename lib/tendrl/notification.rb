@@ -22,7 +22,7 @@ module Tendrl
           end
           notifications << notification unless notification.blank?
         end
-        notifications.select{|e| e['priority'] == 'error' }.sort do |a,b|
+        notifications.select{|e| e['priority'] == 'notice' }.sort do |a,b|
           Time.parse(a['timestamp']) <=> Time.parse(b['timestamp'])
         end
       end
