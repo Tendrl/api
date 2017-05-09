@@ -52,6 +52,36 @@ module Tendrl
       []
     end
 
+    def node_iops(node_id)
+      uri = URI(
+        "#{base_uri}/monitoring/nodes/#{node_id}/iops/stats"
+      )
+      response = Net::HTTP.get(uri)
+      JSON.parse(response)
+    rescue JSON::ParserError, Errno::ECONNREFUSED
+      []
+    end
+
+    def node_cpu(node_id)
+      uri = URI(
+        "#{base_uri}/monitoring/nodes/#{node_id}/cpu.cpu_system_user.percent-used/stats"
+      )
+      response = Net::HTTP.get(uri)
+      JSON.parse(response)
+    rescue JSON::ParserError, Errno::ECONNREFUSED
+      []
+    end
+
+    def node_storage(node_id)
+      uri = URI(
+        "#{base_uri}/monitoring/nodes/#{node_id}/storage.percent-used/stats"
+      )
+      response = Net::HTTP.get(uri)
+      JSON.parse(response)
+    rescue JSON::ParserError, Errno::ECONNREFUSED
+      []
+    end
+
     def cluster(cluster_id)
       uri = URI(
         "#{base_uri}/monitoring/clusters/#{cluster_id}/summary"
@@ -92,7 +122,7 @@ module Tendrl
       []
     end
 
-    def cluster_latency
+    def cluster_latency(cluster_id)
       uri = URI(
         "#{base_uri}/monitoring/clusters/#{cluster_id}/latency/stats"
       )

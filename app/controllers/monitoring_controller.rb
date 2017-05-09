@@ -28,6 +28,21 @@ class MonitoringController < AuthenticatedUsersController
     { stats: response }.to_json
   end
 
+  get '/monitoring/node/:node_id/iops' do
+    response = @monitoring.node_iops(params[:node_id])
+    { stats: response }.to_json
+  end
+
+  get '/monitoring/node/:node_id/cpu' do
+    response = @monitoring.node_cpu(params[:node_id])
+    { stats: response }.to_json
+  end
+
+  get '/monitoring/node/:node_id/storage' do
+    response = @monitoring.node_storage(params[:node_id])
+    { stats: response }.to_json
+  end
+
   get '/monitoring/cluster/:cluster_id' do
     response = @monitoring.cluster(params[:cluster_id])
     { stats: response }.to_json
