@@ -17,8 +17,14 @@ module ClusterPresenter
           nodes = attributes.delete('nodes')
           cluster_nodes = {}
           if nodes.present?
-            nodes.each do |node_id, nodecontext|
-              cluster_nodes[node_id] = nodecontext['nodecontext']
+            nodes.each do |node_id, values|
+              cluster_nodes[node_id] = values['nodecontext']
+              glusterbricks = values['glusterbricks']
+              if glusterbricks
+                cluster_nodes[node_id]['bricks'] = {}
+                cluster_nodes[node_id]['bricks']['free'] = glusterbricks['free'].keys if glusterbricks['free']
+                cluster_nodes[node_id]['bricks']['used'] = glusterbricks['used'].keys if glusterbricks['used']
+              end
             end
           end
           clusters << context.merge(attributes).merge(nodes: cluster_nodes)
