@@ -6,9 +6,27 @@ module NodePresenter
       nodes = []
       nodes_list.each do |node|
         node.each do |_, attributes|
-          attributes.delete('service')
+          attributes.delete('services')
           attributes.delete('messages')
+          attributes.delete('blockdevice')
           node_attr = attributes.delete('nodecontext')
+          disks = attributes.delete('disks')
+          if disks
+            disks.each do |device, attributes|
+              disks[device]['partitions'] = JSON.parse(attributes['partitions'])
+            end
+            attributes.merge!(disks: disks)
+          end
+
+          blockdevices = attributes.delete('blockdevices')
+          if blockdevices
+            blockdevices_attr = {
+              used: blockdevices['used'].values,
+              free: blockdevices['free'].values
+            }
+            attributes.merge!(blockdevices: blockdevices_attr)
+          end
+
           nodes << node_attr.merge(attributes)
         end
       end
