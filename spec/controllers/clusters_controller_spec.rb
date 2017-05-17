@@ -191,9 +191,38 @@ describe ClustersController do
           http_env
         expect(last_response.status).to eq 202
       end
+    end
+
+    context 'bricks' do
+
+      before do
+        stub_cluster_definitions('gluster')
+        stub_node_ids
+      end
+
+      it 'create' do
+        body = {
+          "Cluster.node_configuration" => {
+            "3e062731-81e4-4b5d-99d0-69f4a7133da0" => {
+              "vdb" => {
+                "brick_name" => "brick_1",
+              },
+            },
+            "e267a3e6-ad7e-482e-a9f9-43a7e8e2c2f5" => {
+              "vdb" => {
+                "brick_name" => "brick_2",
+              },
+            },
+          },
+        }
+        post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateBrick',
+          body.to_json,
+          http_env
+        expect(last_response.status).to eq 202
+      end
 
     end
-  end
 
+  end
 end
 
