@@ -13,18 +13,23 @@ module NodePresenter
           disks = attributes.delete('disks')
           if disks
             disks.each do |device, disk_attributes|
-              if disk_attributes['partitions']
-                disks[device]['partitions'] = JSON.parse(disk_attributes['partitions'])
+              if disk_attributes['partitions'].present?
+                begin
+                  disks[device]['partitions'] = JSON.parse(disk_attributes['partitions'])
+                rescue JSON::ParserError
+                  disks[device]['partitions'] = {}
+                end
               end
             end
+            disks.delete('rawreference')
             attributes.merge!(disks: disks)
           end
 
           blockdevices = attributes.delete('blockdevices')
-          if blockdevices
+          if blockdevices.present?
             blockdevices_attr = {
-              used: blockdevices['used'].values,
-              free: blockdevices['free'].values
+              used: blockdevices['used'].present? ? blockdevices['used'].values : [],
+              free: blockdevices['free'].present? ? blockdevices['free'].values : []
             }
             attributes.merge!(blockdevices: blockdevices_attr)
           end
