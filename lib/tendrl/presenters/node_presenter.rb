@@ -13,7 +13,9 @@ module NodePresenter
           disks = attributes.delete('disks')
           if disks
             disks.each do |device, disk_attributes|
-              disks[device]['partitions'] = JSON.parse(disk_attributes['partitions'])
+              if disk_attributes['partitions']
+                disks[device]['partitions'] = JSON.parse(disk_attributes['partitions'])
+              end
             end
             attributes.merge!(disks: disks)
           end
