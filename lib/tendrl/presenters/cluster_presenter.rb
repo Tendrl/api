@@ -7,6 +7,7 @@ module ClusterPresenter
       cluster_list.each do |cluster|
         cluster.each do |cluster_id, attributes|
           context = attributes.delete('tendrlcontext')
+          next if context.blank?
           context['cluster_id'] = cluster_id
           attributes.slice!('pools',
                             'volumes',
@@ -18,6 +19,7 @@ module ClusterPresenter
           cluster_nodes = {}
           if nodes.present?
             nodes.each do |node_id, values|
+              next if values['nodecontext'].blank?
               cluster_nodes[node_id] = values['nodecontext']
               glusterbricks = values['glusterbricks']
               if glusterbricks

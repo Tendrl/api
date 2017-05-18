@@ -60,6 +60,22 @@ class ApplicationController < Sinatra::Base
     halt exception.status, exception.body.to_json
   end
 
+  error Errno::ETIMEDOUT do
+    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'etcd_timeout')
+    halt exception.status, exception.body.to_json
+  end
+  
+  error Errno::ECONNREFUSED do
+    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'etcd_not_reachable')
+    halt exception.status, exception.body.to_json
+  end
+
+  error do
+    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'],
+                                                     cause: 'uncaught_exception')
+    halt exception.status, exception.body.to_json
+  end
+
 
   before do
     content_type :json

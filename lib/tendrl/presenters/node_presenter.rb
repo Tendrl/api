@@ -10,6 +10,7 @@ module NodePresenter
           attributes.delete('messages')
           attributes.delete('blockdevice')
           node_attr = attributes.delete('nodecontext')
+          next if node_attr.blank?
           disks = attributes.delete('disks')
           if disks
             disks.each do |device, disk_attributes|
