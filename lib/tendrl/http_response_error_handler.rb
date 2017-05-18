@@ -43,7 +43,32 @@ module Tendrl
             message: 'Invalid JSON received.'
           }
         }
+      },
+      'etcd_timeout' => {
+        status: 408,
+        body: {
+          errors: {
+            message: 'Service timeout'
+          }
+        }
+      },
+      'etcd_not_reachable' => {
+        status: 503,
+        body: {
+          errors: {
+            message: 'Service unavailable'
+          }
+        }
+      },
+      'uncaught_exception' => {
+        status: 500,
+        body: {
+          errors: {
+            message: 'Internal server error'
+          }
+        }
       }
+
     }
 
     def initialize(error, cause: nil, object_id: nil)
