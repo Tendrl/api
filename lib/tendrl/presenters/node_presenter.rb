@@ -43,15 +43,13 @@ module NodePresenter
         detected_cluster = node['detectedcluster']
         next if detected_cluster.nil?
         detected_cluster_id = detected_cluster['detected_cluster_id']
+        next if detected_cluster_id.nil?
 
         # If the node is part of an imported cluster, don't allow it to be
         # imported again
         imported_cluster_id = node['tendrlcontext']['integration_id'] if \
           node.has_key? 'tendrlcontext'
-        if existing_cluster_ids.include?(imported_cluster_id)
-          node.delete('detectedcluster')
-          next
-        end
+        next if existing_cluster_ids.include?(imported_cluster_id)
 
         if cluster = clusters.find{|e| e[:cluster_id] == detected_cluster_id }
           cluster[:node_ids] << node['node_id']
