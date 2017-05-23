@@ -66,9 +66,22 @@ Status: 200 OK
 Sample Request
 ----------
 curl -XPOST -H "Authorization: Bearer
-4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Pool.poolname":"testPool","Pool.pg_num":128,"Pool.min_size":1}'
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
+'{"Pool.poolname":"testPool","Pool.pg_num":128,"Pool.min_size":1,"Pool.size":1}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephCreatePool
 ----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "ab693a6787ffa5de34975eabd3341c54" }
+----------
+
+=== Create EC Pool
+curl -XPOST -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
+'{"Pool.poolname":"ECPool_1","Pool.pg_num":128,"Pool.min_size":1,"Pool.type":"erasure","Pool.erasure_code_profile":"default"}'
+http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephCreatePool
 
 Sample Response
 ----------
@@ -82,7 +95,7 @@ Sample Request
 ----------
 curl -XPUT -H "Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Pool.pool_id","Pool.poolname":"testPool","Pool.pg_num":200,"Pool.min_size"
-:2}'
+:2,"Pool.size":1}'
 http://127.0.0.1/api/1.0/8b0c637d-f5f7-40f6-acd9-50d5feb5f4b3/CephUpdatePool
 ----------
 
