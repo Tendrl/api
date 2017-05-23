@@ -43,7 +43,7 @@ module NodePresenter
         detected_cluster = node['detectedcluster']
         next if detected_cluster.nil?
         detected_cluster_id = detected_cluster['detected_cluster_id']
-        next if detected_cluster_id.nil?
+        next if detected_cluster_id.blank?
 
         # If the node is part of an imported cluster, don't allow it to be
         # imported again
