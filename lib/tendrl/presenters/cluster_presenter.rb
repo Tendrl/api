@@ -22,10 +22,21 @@ module ClusterPresenter
               next if values['nodecontext'].blank?
               cluster_nodes[node_id] = values['nodecontext']
               glusterbricks = values['glusterbricks']
-              if glusterbricks
+              if glusterbricks && glusterbricks['all'].present?
                 cluster_nodes[node_id]['bricks'] = {}
-                cluster_nodes[node_id]['bricks']['free'] = glusterbricks['free'].keys if glusterbricks['free']
-                cluster_nodes[node_id]['bricks']['used'] = glusterbricks['used'].keys if glusterbricks['used']
+                cluster_nodes[node_id]['bricks']['free'] = []
+                cluster_nodes[node_id]['bricks']['used'] = []
+                free = glusterbricks['free'] ? glusterbricks['free'].keys : []
+                used = glusterbricks['used'] ? glusterbricks['used'].keys : []
+                glusterbricks['all'].each do |name, attributes|
+                  if free.include?(name)
+                    cluster_nodes[node_id]['bricks']['free'] <<
+                    attributes['brick_path']
+                  else
+                    cluster_nodes[node_id]['bricks']['used'] <<
+                    attributes['brick_path']
+                  end
+                end
               end
             end
           end
