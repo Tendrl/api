@@ -20,9 +20,16 @@ module Tendrl
               notification[key] = child.value
             end
           end
-          notifications << notification unless notification.blank?
+          if notification.present? && notification['priority'] == 'notice'
+            begin
+              message = JSON.parse(notification['message'])['tags']['message']
+              notification['message'] = message
+              notifications << notification
+            rescue JSON::ParserError
+            end
+          end
         end
-        notifications.select{|e| e['priority'] == 'notice' }.sort do |a,b|
+        notifications.sort do |a,b|
           Time.parse(a['timestamp']) <=> Time.parse(b['timestamp'])
         end
       end
