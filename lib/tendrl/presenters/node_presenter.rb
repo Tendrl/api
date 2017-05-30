@@ -8,33 +8,16 @@ module NodePresenter
         node.each do |_, attributes|
           attributes.delete('services')
           attributes.delete('messages')
-          attributes.delete('blockdevice')
           node_attr = attributes.delete('nodecontext')
           next if node_attr.blank?
-          disks = attributes.delete('disks')
-          if disks
-            disks.each do |device, disk_attributes|
-              if disk_attributes['partitions'].present?
-                begin
-                  disks[device]['partitions'] = JSON.parse(disk_attributes['partitions'])
-                rescue JSON::ParserError
-                  disks[device]['partitions'] = {}
-                end
-              end
-            end
-            disks.delete('rawreference')
-            attributes.merge!(disks: disks)
+          localstorage = attributes.delete('localstorage')
+          if localstorage.present?
+            attributes.merge!(localstorage: {
+              virtio: virtio(localstorage),
+              disks: disks(localstorage),
+              blockdevices: blockdevices(localstorage)
+            })
           end
-
-          blockdevices = attributes.delete('blockdevices')
-          if blockdevices.present?
-            blockdevices_attr = {
-              used: blockdevices['used'].present? ? blockdevices['used'].values : [],
-              free: blockdevices['free'].present? ? blockdevices['free'].values : []
-            }
-            attributes.merge!(blockdevices: blockdevices_attr)
-          end
-
           nodes << node_attr.merge(attributes)
         end
       end
@@ -63,6 +46,53 @@ module NodePresenter
         end
       end
       [nodes, clusters]
+    end
+
+
+    def virtio(data)
+      virtio = data.delete('virtio') || {}
+      virtio.each do |device, attributes|
+        if attributes['partitions']
+          attributes['partitions'] = JSON.parse(attributes['partitions']) rescue
+          {}
+        end
+      end
+      virtio
+    end
+
+    def disks(data)
+      disks = data.delete('disks') || {}
+      disks.delete('rawreference')
+      disks.each do |device, attributes|
+        if attributes['partitions']
+          attributes['partitions'] = JSON.parse(attributes['partitions']) rescue
+          {}
+        end
+      end
+      disks
+    end
+
+    def blockdevices(data)
+      blkd = data.delete('blockdevices') || {}
+      all = blkd['all']
+      used = {}
+      free = {}
+      if all.present?
+        all.each do |device, attributes|
+          if attributes['partitions']
+            attributes['partitions'] = JSON.parse(attributes['partitions']) rescue
+            {}
+          end
+
+          if blkd['used'].keys.include?(device)
+            used[device] = attributes
+          elsif blkd['free'].keys.include?(device)
+            free[device] = attributes
+          end
+
+        end
+      end
+      { all: all, used: used, free: free }
     end
 
   end
