@@ -98,7 +98,7 @@ end
 def stub_node_monitoring
   stub_request(
     :get,
-    /http:\/\/127.0.0.1:5000\/monitoring\/nodes\/summary\?node_ids=.*/
+    /http:\/\/127.0.0.1:5000\/monitoring\/nodes\/summary/
   ).
   to_return(
     status: 200,

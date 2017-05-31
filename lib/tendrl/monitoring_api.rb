@@ -12,9 +12,11 @@ module Tendrl
       @base_uri = "#{scheme}://#{hostname}:#{port}"
     end
 
-    def nodes(node_ids=[])
+    def nodes(node_ids="")
+      path = "/monitoring/nodes/summary"
+      path += "?node_ids=#{node_ids.split(',').compact.join(',')}" if node_ids.present?
       uri = URI(
-        "#{base_uri}/monitoring/nodes/summary?node_ids=#{node_ids.join(',')}"
+        "#{base_uri}#{path}"
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)
@@ -125,6 +127,18 @@ module Tendrl
     def cluster_latency(cluster_id)
       uri = URI(
         "#{base_uri}/monitoring/clusters/#{cluster_id}/latency/stats"
+      )
+      response = Net::HTTP.get(uri)
+      JSON.parse(response)
+    rescue JSON::ParserError, Errno::ECONNREFUSED
+      []
+    end
+
+    def clusters_iops(cluster_ids="")
+      path = "/monitoring/clusters/iops"
+      path += "?cluster_ids=#{cluster_ids.split(',').compact.join(',')}" if cluster_ids.present?
+      uri = URI(
+        "#{base_uri}#{path}"
       )
       response = Net::HTTP.get(uri)
       JSON.parse(response)

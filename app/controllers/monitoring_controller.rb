@@ -9,7 +9,7 @@ class MonitoringController < AuthenticatedUsersController
   end
 
   get '/monitoring/nodes' do
-    response = @monitoring.nodes(params[:node_ids].to_s.split(',').compact)
+    response = @monitoring.nodes(params[:node_ids])
     { stats: response }.to_json
   end
 
@@ -67,6 +67,11 @@ class MonitoringController < AuthenticatedUsersController
   get '/monitoring/cluster/:cluster_id/latency' do
     response = @monitoring.cluster_latency(params[:cluster_id])
     { stats: response }.to_json
+  end
+
+  get '/monitoring/clusters/iops' do
+    response = @monitoring.clusters_iops(params[:cluster_ids])
+    { stats: response }.to_json  
   end
 
   get '/monitoring/system/:sds_name' do

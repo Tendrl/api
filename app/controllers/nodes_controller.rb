@@ -296,7 +296,7 @@ class NodesController < AuthenticatedUsersController
   def load_stats(nodes)
     stats = []
     unless monitoring.nil?
-      node_ids = nodes.map{|n| n['node_id'] } 
+      node_ids = nodes.map{|n| n['node_id'] }.join(',')
       stats = @monitoring.nodes(node_ids)
       stats.each do |stat|
         node = nodes.find{|e| e['node_id'] == stat['node_id'] }
