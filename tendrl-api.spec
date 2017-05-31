@@ -4,7 +4,7 @@ Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
-URL: https://github.com/Tendrl/tendrl-api
+URL: https://github.com/Tendrl/api
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
@@ -69,7 +69,7 @@ install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 lib/tendrl/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters/
 install -Dm 0644 lib/tendrl/validators/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators/
-install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
+install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
@@ -81,7 +81,7 @@ setsebool -P httpd_can_network_connect 1
 %files
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
-%{_unitdir}/tendrl-apid.service
+%{_unitdir}/tendrl-api.service
 %config(noreplace) %{_sysconfdir}/tendrl/etcd.yml
 
 %files doc
