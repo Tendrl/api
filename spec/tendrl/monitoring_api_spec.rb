@@ -15,16 +15,7 @@ RSpec.describe Tendrl::MonitoringApi do
 
     it 'stats' do
       stub_node_monitoring
-      monitoring.node_stats
-    end
-
-  end
-
-  context 'cluster' do
-
-    it 'stats' do
-      stub_cluster_monitoring
-      monitoring.cluster_stats
+      monitoring.nodes
     end
 
   end

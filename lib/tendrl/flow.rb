@@ -11,27 +11,45 @@ module Tendrl
       @namespace = namespace
       @flow_name = flow_name
       @object = object
+      @objects =  @instance[namespace]['objects']
       @flow = @instance[namespace]['flows'][flow_name] ||
         @instance[namespace]['objects'][object]['flows'][flow_name]
     end
 
     def objects
-      @flow['atoms'].map do |atom|
-        atom = "namespace.#{atom}"
-        namespace, object = atom.split('.objects.')
-        object_type = object.split('.atoms.').first
-        Object.new(namespace, object_type)
+      @objects.keys.map do |object_name|
+        Object.new(namespace, object_name)
       end
     end
 
     def sds_name
-      if @namespace.end_with?('_integration')
-        @namespace.split('.').last.split('_')[0].camelize
+      if @namespace.end_with?('gluster') 
+        'gluster'
+      elsif @namespace.end_with?('ceph')
+        'ceph'
       end
     end
 
     def name
-      "#{sds_name}#{@flow_name}"
+      "#{sds_name.to_s.capitalize}#{@flow_name}"
+    end
+
+    def tags(context)
+      tags = []
+      return tags unless @flow['tags']
+      @flow['tags'].each do |tag|
+        finalized_tag = []
+        placeholders = tag.split('/')
+        placeholders.each do |placeholder|
+          if placeholder.start_with?('$')
+            finalized_tag << context[placeholder[1..-1]]
+          else
+            finalized_tag << placeholder
+          end
+        end
+        tags << finalized_tag.join('/')
+      end
+      tags
     end
 
     def reference_attributes
@@ -99,14 +117,17 @@ module Tendrl
     def self.find_all
       flows = []
       Tendrl.current_definitions.keys.map do |key|
-        if key.end_with?('_integration')
-          Tendrl.current_definitions[key]['flows'].keys.each do |fk|
-            flow = Tendrl::Flow.new(key, fk)
-            flows << {
-              name: flow.name,
-              method: flow.method,
-              attributes: flow.attributes
-            }
+        if ['namespace.tendrl', 'namespace.gluster', 'namespace.ceph',
+            'namespace.node_agent'].include?(key)
+          if Tendrl.current_definitions[key]['flows']
+            Tendrl.current_definitions[key]['flows'].keys.each do |fk|
+              flow = Tendrl::Flow.new(key, fk)
+              flows << {
+                name: flow.name,
+                method: flow.method,
+                attributes: flow.attributes
+              }
+            end
           end
           Tendrl.current_definitions[key]['objects'].keys.each do |ok|
             object_flows = Tendrl.current_definitions[key]['objects'][ok]['flows']
@@ -127,14 +148,19 @@ module Tendrl
 
     def self.find_by_external_name_and_type(external_name, type)
       if type == 'node'
-        partial_namespace = 'namespace.tendrl.node_agent'
+        namespace = 'namespace.tendrl'
+        flow = external_name
       elsif type == 'cluster'
-        partial_namespace = 'namespace.tendrl'
+        partial_namespace = 'namespace'
+        sds_name, operation, object = external_name.underscore.split('_')
+        namespace = "#{partial_namespace}.#{sds_name.downcase}"
+        flow = "#{operation}_#{object}".camelize
+        object = object.capitalize
+      elsif type == 'node_agent'
+        namespace = 'namespace.node_agent'
+        flow = external_name
       end
-      sds_name, operation, object = external_name.underscore.split('_')
-      namespace = "#{partial_namespace}.#{sds_name}_integration"
-      flow = "#{operation}_#{object}".camelize
-      new(namespace, flow, object.capitalize)
+      new(namespace, flow, object)
     end
 
   end

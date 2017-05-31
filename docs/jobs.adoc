@@ -9,7 +9,8 @@ List all jobs created.
 Sample Request
 
 ----------
-curl -XGET
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
 http://127.0.0.1/api/1.0/jobs
 ----------
 
@@ -18,7 +19,7 @@ Sample Response
 ----------
 Status: 200 OK
 [{
-	"integration_id": "717315a1-2a49-4cb7-826b-d2aa3bc4721a",
+	"job_id": "165bd201-2bee-44e9-a706-321290db798c",
 	"status": "finished",
 	"flow": "ImportCluster",
 	"parameters": {
@@ -33,14 +34,14 @@ Status: 200 OK
 			"role": "Monitor",
 			"name": "dhcp43-203.lab.eng.blr.redhat.com"
 		}],
-		"request_id": "nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/_jobs/tendrl.node_agent.flows.import_cluster.ImportCluster_9c9e5d67-d7e8-472d-9f88-ed613a200f7b",
 		"cluster_id": "c221ccdb-51d6-4b57-9f10-bcf30c7fa351",
 		"TendrlContext.integration_id": "717315a1-2a49-4cb7-826b-d2aa3bc4721a",
 		"Node[]": ["3b6eb27f-3e83-4751-9d45-85a989ae2b25"]
 	},
 	"created_at": "2017-01-26T08:04:25Z",
-	"log": "/jobs/165bd201-2bee-44e9-a706-321290db798c/logs?type=",
-	"log_types": ["all", "info", "debug", "warn", "error"]
+	"status_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/status",
+	"messages_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/messages"
+	"output_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/output"
 }]
 ----------
 
@@ -51,7 +52,8 @@ Individual job detail.
 Sample Request
 
 ----------
-curl -XGET
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
 http://127.0.0.1/api/1.0/jobs/1cb0694c-8041-4576-95ee-f01f07738ff9
 ----------
 
@@ -60,7 +62,7 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"integration_id": "717315a1-2a49-4cb7-826b-d2aa3bc4721a",
+	"job_id": "165bd201-2bee-44e9-a706-321290db798c",
 	"status": "finished",
 	"flow": "ImportCluster",
 	"parameters": {
@@ -81,8 +83,9 @@ Status: 200 OK
 		"Node[]": ["3b6eb27f-3e83-4751-9d45-85a989ae2b25"]
 	},
 	"created_at": "2017-01-26T08:04:25Z",
-	"log": "/jobs/165bd201-2bee-44e9-a706-321290db798c/logs?type=",
-	"log_types": ["all", "info", "debug", "warn", "error"]
+  "status_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/status",
+	"messages_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/messages"
+
 }
 ----------
 

@@ -2,7 +2,7 @@ module Tendrl
   class Job
 
     attr_reader :job_id, :payload
-    
+
     def initialize(user, flow, options={})
       @user = user
       @flow = flow
@@ -14,10 +14,9 @@ module Tendrl
     def default_payload
       {
         job_id: @job_id,
-        integration_id: @integration_id,
         status: 'new',
+        name: @flow.flow_name,
         run: @flow.run,
-        flow: @flow.flow_name,
         type: @type,
         created_from: 'API',
         created_at: Time.now.utc.iso8601,
@@ -25,12 +24,11 @@ module Tendrl
       }
     end
 
-    def create(body, node_ids)
-      body['TendrlContext.integration_id'] = @integration_id
-      @payload = default_payload.merge!(
-        parameters: body,
-        node_ids: node_ids
-      )
+    def create(parameters, routing = {})
+      parameters['TendrlContext.integration_id'] = @integration_id
+      @payload = default_payload.merge parameters: parameters
+      @payload[:node_ids] = routing[:node_ids] if routing[:node_ids].present?
+      @payload[:tags] = @flow.tags(parameters)
       Tendrl.etcd.set("/queue/#{@job_id}/status", value: 'new')
       Tendrl.etcd.set("/queue/#{@job_id}/payload", value: @payload.to_json)
       self
@@ -41,7 +39,6 @@ module Tendrl
       def all
         jobs = []
         Tendrl.etcd.get('/queue', recursive: true).children.each do |job|
-          job_id = job.key.split('/')[-1]
           attrs = {}
           job.children.each do |child|
             child_attr = child.key.split('/')[-1]
@@ -64,9 +61,26 @@ module Tendrl
 
       def messages(job_id)
         messages = []
-        Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
-          children do |child|
-          messages << JSON.parse(child.value)
+        begin
+          Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
+            children.each do |child|
+            if child.value.present?
+              messages << JSON.parse(child.value)
+            end
+          end
+        rescue Etcd::KeyNotFound, JSON::ParserError
+        end
+        messages
+      end
+
+      def children_messages(job_id)
+        messages = []
+        begin
+          JSON.parse(Tendrl.etcd.get("/queue/#{job_id}/children").value).each do
+            |job_id|
+            messages << self.messages(job_id)
+          end
+        rescue Etcd::KeyNotFound, JSON::ParserError
         end
         messages
       end
@@ -75,8 +89,21 @@ module Tendrl
         { status: Tendrl.etcd.get("/queue/#{job_id}/status").value }
       end
 
-    end
+      def output(job_id)
+        output = []
+        begin
+          Tendrl.etcd.get("/queue/#{job_id}/output", recursive:
+                          true).children.each do |o|
+            if o.value.present?
+              output << { o.key.split('/')[-1] => JSON.parse(o.value) }
+            end
+          end
+        rescue Etcd::KeyNotFound, JSON::ParserError
+        end
+        output
+      end
 
+    end
   end
 end
 

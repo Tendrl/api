@@ -7,16 +7,20 @@ require './app/controllers/clusters_controller'
 require './app/controllers/jobs_controller'
 require './app/controllers/users_controller'
 require './app/controllers/sessions_controller'
-require './app/controllers/alert_settings_controller'
+require './app/controllers/monitoring_controller'
+require './app/controllers/alerting_controller'
+require './app/controllers/notifications_controller'
 
 map('/1.0') { 
+  use PingController
   use SessionsController
-  use AlertSettingsController
+  use MonitoringController
+  use AlertingController
+  use NotificationsController
   use JobsController
   use UsersController
   use ClustersController
   use NodesController
-  use PingController
   use AuthenticatedUsersController
   run ApplicationController
 }

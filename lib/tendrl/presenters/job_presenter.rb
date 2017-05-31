@@ -3,23 +3,26 @@ module JobPresenter
   class << self
 
     def single(job)
+      return if job['payload'].nil?
       payload = JSON.parse(job['payload'])
-      {
-        job_id: payload['job_id'],
-        status: job['status'],
-        integration_id: payload['integration_id'],
-        flow: payload['flow'],
-        parameters: payload['parameters'],
-        created_at: payload['created_at'],
-        status_url: "/jobs/#{payload['job_id']}/status",
-        messages_url: "/jobs/#{payload['job_id']}/messages"
-      }
+      if payload['created_from'] == 'API'
+        {
+          job_id: payload['job_id'],
+          status: job['status'],
+          flow: payload['name'],
+          parameters: payload['parameters'],
+          created_at: payload['created_at'],
+          status_url: "/jobs/#{payload['job_id']}/status",
+          messages_url: "/jobs/#{payload['job_id']}/messages",
+          output_url: "/jobs/#{payload['job_id']}/output"
+        }
+      end
     end
 
     def list(jobs)
       jobs.map do |job|
         single(job)
-      end
+      end.compact
     end
 
   end

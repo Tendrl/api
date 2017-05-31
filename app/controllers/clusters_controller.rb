@@ -2,11 +2,13 @@ class ClustersController < AuthenticatedUsersController
 
   get '/GetClusterList' do
     clusters = []
-    etcd.get('/clusters', recursive: true).children.each do |cluster|
-      clusters << recurse(cluster)
+    begin
+      etcd.get('/clusters', recursive: true).children.each do |cluster|
+        clusters << recurse(cluster)
+      end
+    rescue Etcd::KeyNotFound
     end
     clusters = ClusterPresenter.list(clusters)
-    #clusters = load_stats(clusters)
     { clusters: clusters }.to_json
   end
 
@@ -46,7 +48,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids(params[:cluster_id]))
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -65,7 +67,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids(params[:cluster_id]))
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -85,7 +87,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       type: 'sds',
       integration_id: params[:cluster_id]
-    ).create(body, node_ids(params[:cluster_id]))
+    ).create(body)
 
     status 202
     { job_id: job.job_id }.to_json
@@ -97,14 +99,11 @@ class ClustersController < AuthenticatedUsersController
     load_definitions(cluster_id)
     @cluster ||=
       recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
-  end
-
-  def node_ids(cluster_id)
-    node_ids = []
-    etcd.get("/clusters/#{cluster_id}/nodes").children.each do |node|
-      node_ids << node.key.split('/')[-1]
-    end
-    node_ids
+  rescue Etcd::KeyNotFound => e
+    exception =  Tendrl::HttpResponseErrorHandler.new(
+      e, cause: '/clusters/id', object_id: cluster_id
+    )
+    halt exception.status, exception.body.to_json
   end
 
   def load_definitions(cluster_id)
@@ -112,6 +111,11 @@ class ClustersController < AuthenticatedUsersController
       "/clusters/#{cluster_id}/_NS/definitions/data"
     ).value
     Tendrl.cluster_definitions = YAML.load(definitions)
+  rescue Etcd::KeyNotFound => e
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      e, cause: '/clusters/definitions', object_id: cluster_id
+    )
+    halt exception.status, exception.body.to_json
   end
 
   def load_stats(clusters)

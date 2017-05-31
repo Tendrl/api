@@ -59,6 +59,18 @@ def stub_nodes
   )
 end
 
+def stub_detected_cluster
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/nodes\/.*\/DetectedCluster\/detected_cluster_id/).
+  to_return(
+    status: 200,
+    body: File.read(
+      'spec/fixtures/detected_cluster.json'  
+    )
+  )
+end
+
 def stub_clusters(recursive=true)
   stub_request(
     :get,
@@ -75,7 +87,7 @@ end
 def stub_monitoring_config(status=200, file='monitoring_config.json')
   stub_request(
     :get,
-    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/definitions/data"
+    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/config/data"
   ).
   to_return(
     :status => status,
@@ -252,6 +264,28 @@ def stub_access_token
       :status => 200,
       :body => File.read('spec/fixtures/access_token.json')
   )
+end
+
+def stub_ip
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/indexes\/ip\/.*/i
+  ).
+  to_return(
+    :status => 200, 
+    :body => File.read('spec/fixtures/ip.json'),
+  )
+end
+
+def stub_node
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/nodes\/.*/i
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read('spec/fixtures/node.json')
+    )
 end
 
 

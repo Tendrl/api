@@ -1,5 +1,5 @@
 Name: tendrl-api
-Version: 1.2.1
+Version: 1.3.0
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -81,10 +81,8 @@ setsebool -P httpd_can_network_connect 1
 %files
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
-#%{_datadir}/%{name}/lib/*
-#%{_datadir}/%{name}/app/*
 %{_unitdir}/tendrl-api.service
-%{_sysconfdir}/tendrl/etcd.yml
+%config(noreplace) %{_sysconfdir}/tendrl/etcd.yml
 
 %files doc
 %dir %{_datadir}/doc/tendrl/config
@@ -93,9 +91,15 @@ setsebool -P httpd_can_network_connect 1
 %{_datadir}/doc/tendrl/Rakefile
 
 %files httpd
-%{_sysconfdir}/httpd/conf.d/tendrl.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Apr 18 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-3
+- Version bump to the 1.2.3 release.
+
+* Fri Apr 5 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-2
+- Version bump to the 1.2.2 release.
+
 * Fri Jan 27 2017 Mrugesh Karnik <mkarnik@redhat.com> - 1.2-1
 - Version bump to the 1.2 release.
 

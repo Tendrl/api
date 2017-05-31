@@ -1,0 +1,9 @@
+{
+	"action": "get",
+	"node": {
+		"key": "/nodes/3a6cdc47-83b1-49cd-861c-5746066d8fb0/DetectedCluster/detected_cluster_id",
+		"value": "442a8d12-4790-498c-967c-a6ba4692a54d",
+		"modifiedIndex": 2173167,
+		"createdIndex": 2173167
+	}
+}
