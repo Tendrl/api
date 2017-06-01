@@ -1,5 +1,5 @@
 Name: tendrl-api
-Version: 1.3.0
+Version: 1.4.0
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -94,6 +94,9 @@ setsebool -P httpd_can_network_connect 1
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Jun 02 2017 Rohan Kanade <rkanade@redhat.com> - 1.4.0-1
+- Release tendrl-api v1.4.0
+
 * Fri Apr 18 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-3
 - Version bump to the 1.2.3 release.
 
