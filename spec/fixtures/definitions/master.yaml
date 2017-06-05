@@ -584,7 +584,7 @@ namespace.tendrl:
     etcd: tendrl/central-store
     gluster-provisioner: provisioner/gluster
     glusterd: gluster/server
-    tendrl-apid: tendrl/server
+    tendrl-api: tendrl/server
     tendrl-ceph-integration: tendrl/integration/ceph
     tendrl-gluster-integration: tendrl/integration/gluster
     tendrl-monitor: tendrl/monitor
@@ -601,7 +601,7 @@ namespace.tendrl:
   tags:
     tendrl-node-agent: "tendrl/node"
     etcd: "tendrl/central-store"
-    tendrl-apid: "tendrl/server"
+    tendrl-api: "tendrl/server"
     tendrl-monitor: "tendrl/monitor"
     tendrl-gluster-integration: "tendrl/integration/gluster"
     tendrl-ceph-integration: "tendrl/integration/ceph"
