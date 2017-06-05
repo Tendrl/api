@@ -125,21 +125,21 @@
 				"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service",
 				"dir": true,
 				"nodes": [{
-					"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-apid",
+					"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-api",
 					"dir": true,
 					"nodes": [{
-						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-apid/exists",
+						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-api/exists",
 						"value": "False",
 						"modifiedIndex": 577796,
 						"createdIndex": 577796
 					}, {
-						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-apid/running",
+						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-api/running",
 						"value": "False",
 						"modifiedIndex": 577797,
 						"createdIndex": 577797
 					}, {
-						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-apid/service",
-						"value": "tendrl-apid",
+						"key": "/nodes/3b6eb27f-3e83-4751-9d45-85a989ae2b25/Service/tendrl-api/service",
+						"value": "tendrl-api",
 						"modifiedIndex": 577798,
 						"createdIndex": 577798
 					}],
