@@ -13,7 +13,8 @@ module ClusterPresenter
                             'volumes',
                             'utilization',
                             'globaldetails',
-                            'nodes'
+                            'nodes',
+                            'bricks'
                            )
           nodes = attributes.delete('nodes')
           cluster_nodes = {}
@@ -21,31 +22,34 @@ module ClusterPresenter
             nodes.each do |node_id, values|
               next if values['nodecontext'].blank?
               cluster_nodes[node_id] = values['nodecontext']
-              glusterbricks = values['glusterbricks']
-              if glusterbricks && glusterbricks['all'].present?
-                cluster_nodes[node_id]['bricks'] = {}
-                cluster_nodes[node_id]['bricks']['free'] = []
-                cluster_nodes[node_id]['bricks']['used'] = []
-                free = glusterbricks['free'] ? glusterbricks['free'].keys : []
-                used = glusterbricks['used'] ? glusterbricks['used'].keys : []
-                glusterbricks['all'].each do |name, attributes|
-                  if free.include?(name)
-                    cluster_nodes[node_id]['bricks']['free'] <<
-                    attributes['brick_path']
-                  else
-                    cluster_nodes[node_id]['bricks']['used'] <<
-                    attributes['brick_path']
-                  end
-                end
-              end
             end
           end
+
+          if bricks = attributes.delete('bricks')
+            attributes.merge!(bricks: bricks(bricks))
+          end
+
           clusters << context.merge(attributes).merge(nodes: cluster_nodes)
         end
       end
       clusters
     end
 
-  end
+    def bricks(bricks)
+      all = bricks.delete('all') || {}
+      free = {}
+      used = {}
+      if all.present?
+        all.each do |device, attributes|
+          if bricks['free'].keys.include?(device)
+            free[device] = attributes
+          elsif bricks['used'].keys.include?(device)
+            used[device] = attributes
+          end
+        end
+      end
+      { all: all, used: used, free: free }
+    end
 
+  end
 end
