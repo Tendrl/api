@@ -98,7 +98,6 @@ systemctl enable tendrl-api
 %changelog
 * Mon Jun 19 2017 Rohan Kanade <rkanade@redhat.com> - 1.4.2-1
 - Release tendrl-api v1.4.2
-
 * Thu Jun 08 2017 Anup Nivargi <anivargi@redhat.com> - 1.4.1-1
 - Release tendrl-api v1.4.1
 
