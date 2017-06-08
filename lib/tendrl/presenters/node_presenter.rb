@@ -84,9 +84,9 @@ module NodePresenter
             {}
           end
 
-          if blkd['used'].keys.include?(device)
+          if blkd['used'].present? && blkd['used'].keys.include?(device)
             used[device] = attributes
-          elsif blkd['free'].keys.include?(device)
+          elsif blkd['free'].present? && blkd['free'].keys.include?(device)
             free[device] = attributes
           end
 
