@@ -9,7 +9,7 @@ namespace :etcd do
   task :load_admin do
     p 'Generating default Tendrl admin'
     etcd_config = Tendrl.etcd_config(ENV['RACK_ENV'])
-    password = 'admin'
+    password = 'adminuser'
     Tendrl.etcd = Etcd.client(
       host: etcd_config[:host],
       port: etcd_config[:port],
