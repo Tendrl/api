@@ -41,6 +41,7 @@ Status: 200 OK
 	"created_at": "2017-01-26T08:04:25Z",
 	"status_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/status",
 	"messages_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/messages"
+	"output_url": "/jobs/165bd201-2bee-44e9-a706-321290db798c/output"
 }]
 ----------
 

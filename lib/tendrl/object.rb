@@ -23,10 +23,12 @@ module Tendrl
       object = nil
       Tendrl.current_definitions.keys.each do |key|
         next if key == 'tendrl_schema_version'
-        objects = Tendrl.current_definitions[key]['objects'].keys
-        if objects.include?(object_name)
-          object = Object.new(key, object_name)
-          break
+        if objects = Tendrl.current_definitions[key]['objects']
+          objects = objects.keys
+          if objects.include?(object_name)
+            object = Object.new(key, object_name)
+            break
+          end
         end
       end
       object
