@@ -10,7 +10,11 @@ class UsersController < AuthenticatedUsersController
 
   get '/users/:username' do
     user = Tendrl::User.find(params[:username])
-    UserPresenter.single(user).to_json
+    if user
+      UserPresenter.single(user).to_json
+    else
+      halt 404, { errors: { message: 'Not found.' }}.to_json
+    end
   end
 
   post '/users' do
