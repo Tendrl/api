@@ -18,3 +18,43 @@ Sample Response
 Status: 202 Accepted
 { job_id: "3784922e33e8bec939be5e626e21a174" }
 ----------
+
+== Bricks Mapping
+
+Create Bricks Mapping for a cluster
+
+Sample Request
+----------
+curl -XPOST -H 'Authorization: Bearer
+be57e8c6d24c38e9f0e283ee8e8dae999bea1e6790e60562455638f8c12da08a' -d
+'{"Cluster.node_configuration":{"67afa32d-883b-45f3-b331-bc96ecd010ba":null},"Volume.brick_count":2,"Volume.subvol_size":2}'
+http://127.0.0.1/api/1.0/89604c6b-2eff-4221-96b4-e41319240240/GlusterBrickMapping
+----------
+
+Sample Response
+----------
+Status: 202 Accepted
+{ job_id: "8ae776be-b34f-4d85-9a0a-db8572fbcdb9" }
+----------
+
+Retrieve Bricks Mapping
+
+Sample Request
+----------
+curl -XGET -H 'Authorization: Bearer be57e8c6d24c38e9f0e283ee8e8dae999bea1e6790e60562455638f8c12da08a' 
+http://127.0.0.1/api/1.0/jobs/8ae776be-b34f-4d85-9a0a-db8572fbcdb9/output
+----------
+
+Sample Response
+----------
+[{
+	"BrickMapping": {
+		"optimal": false,
+		"message": "",
+		"result": [
+			["hostname:_tendrl_gluster_bricks_brick_1_mount_brick_1", "hostname:_tendrl_gluster_bricks_brick_2_mount_brick_2"]
+		]
+	}
+}]
+----------
+
