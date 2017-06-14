@@ -77,6 +77,7 @@ install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
+systemctl enable tendrl-api
 
 %files
 %dir %{_sysconfdir}/tendrl
