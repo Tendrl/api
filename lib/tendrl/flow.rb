@@ -152,10 +152,10 @@ module Tendrl
         flow = external_name
       elsif type == 'cluster'
         partial_namespace = 'namespace'
-        sds_name, operation, object = external_name.underscore.split('_')
-        namespace = "#{partial_namespace}.#{sds_name.downcase}"
-        flow = "#{operation}_#{object}".camelize
-        object = object.capitalize
+        sds_parameters = external_name.underscore.split('_')
+        namespace = "#{partial_namespace}.#{sds_parameters[0].downcase}"
+        flow = "#{sds_parameters[1..-1].join('_')}".camelize
+        object = sds_parameters[2].capitalize
       elsif type == 'node_agent'
         namespace = 'namespace.node_agent'
         flow = external_name
