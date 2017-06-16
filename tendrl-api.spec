@@ -29,6 +29,7 @@ Requires: rubygem-etcd
 Requires: rubygem-rack-protection >= 1.5.3
 Requires: rubygem-activesupport >= 4.2.6
 Requires: rubygem-sinatra >= 1.4.5
+Requires: tendrl-node-agent
 
 %description
 Collection of tendrl api.
