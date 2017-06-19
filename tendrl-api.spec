@@ -1,5 +1,5 @@
 Name: tendrl-api
-Version: 1.4.0
+Version: 1.4.1
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -29,6 +29,7 @@ Requires: rubygem-etcd
 Requires: rubygem-rack-protection >= 1.5.3
 Requires: rubygem-activesupport >= 4.2.6
 Requires: rubygem-sinatra >= 1.4.5
+Requires: tendrl-node-agent
 
 %description
 Collection of tendrl api.
@@ -77,6 +78,7 @@ install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
+systemctl enable tendrl-api
 
 %files
 %dir %{_sysconfdir}/tendrl
@@ -94,6 +96,9 @@ setsebool -P httpd_can_network_connect 1
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Thu Jun 08 2017 Anup Nivargi <anivargi@redhat.com> - 1.4.1-1
+- Release tendrl-api v1.4.1
+
 * Fri Jun 02 2017 Rohan Kanade <rkanade@redhat.com> - 1.4.0-1
 - Release tendrl-api v1.4.0
 
