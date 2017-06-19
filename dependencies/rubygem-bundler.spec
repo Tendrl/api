@@ -54,17 +54,22 @@ gem build %{gem_name}.gemspec
 
 %install
 mkdir -p %{buildroot}%{gem_dir}
+
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
-
 
 mkdir -p %{buildroot}%{_bindir}
 cp -pa .%{_bindir}/* \
         %{buildroot}%{_bindir}/
 
+rm -fr %{buildroot}%{gem_instdir}/.rspec
+rm -fr %{buildroot}%{gem_instdir}/lib/bundler/ssl_certs
+rm -fr %{buildroot}%{gem_instdir}/lib/bundler/templates/newgem/.travis.yml.tt
+
 find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 find %{buildroot}%{gem_instdir}/lib/bundler/templates/newgem/bin -type f | xargs chmod 755
 chmod 755 %{buildroot}%{gem_instdir}/lib/bundler/templates/Executable*
+chmod 755 %{buildroot}%{gem_instdir}/lib/bundler/templates/newgem/exe/newgem.tt
 
 # Man pages are used by Bundler internally, do not remove them!
 mkdir -p %{buildroot}%{_mandir}/man5
@@ -87,7 +92,6 @@ popd
 %{_bindir}/bundler
 %{gem_instdir}/.codeclimate.yml
 %exclude %{gem_instdir}/.gitignore
-%{gem_instdir}/.rspec
 %exclude %{gem_instdir}/.rubocop.yml
 %{gem_instdir}/.rubocop_todo.yml
 %exclude %{gem_instdir}/.travis.yml
@@ -115,3 +119,6 @@ popd
 %changelog
 * Mon Nov 21 2016 Tim <tim.gluster@gmail.com> - 1.13.6-1
 - Initial package
+
+rubygem-bundler.noarch: W: hidden-file-or-dir /usr/share/gems/gems/bundler-1.13.6/
+rubygem-bundler.noarch: W: hidden-file-or-dir /usr/share/gems/gems/bundler-1.13.6/.rubocop_todo.yml
