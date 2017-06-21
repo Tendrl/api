@@ -92,14 +92,50 @@ Status: 202 Accepted
 ----------
 
 == Stop Volume
+
+Sample Request
+----------
 curl -XPOST -H 'Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a'
 http://127.0.0.1/api/1.0/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStopVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
+----------
 
 Sample Response
 ----------
 Status: 202 Accepted
 { job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+== Start Volume Rebalance
+
+Sample request
+----------
+curl -H 'Authorization: Bearer
+07266dc540499d8e7c49ddb3f7dbc4921db83e98b8f9009bde28045c4b5b4064' -XPUT -d
+'{"Volume.vol_id":"5c4839ab-1997-47a1-8fe8-fa3684c28f16","Volume.volname":"Volume_009","Volume.force":true,"Volume.fix_layout":true}'
+http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStartVolumeRebalance
+----------
+
+Sample response
+----------
+Status: 202 Accepted
+{"job_id":"8b3533e3-4f6e-4eb9-a094-d7bf8dde6cbb"}
+----------
+
+== Stop Volume Rebalance
+
+Sample request
+----------
+curl -H 'Authorization: Bearer
+07266dc540499d8e7c49ddb3f7dbc4921db83e98b8f9009bde28045c4b5b4064' -XPUT -d
+'{"Volume.vol_id":"5c4839ab-1997-47a1-8fe8-fa3684c28f16","Volume.volname":"Volume_009","Volume.force":true}' 
+http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStopVolumeRebalance
+----------
+
+Sample response
+----------
+Status: 202 Accepted
+{"job_id":"696e1c8b-0c97-499b-b101-9bdd7c1ef7b2"}
 ----------
 
 == Delete Volume
