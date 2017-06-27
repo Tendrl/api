@@ -161,6 +161,53 @@ describe NodesController do
     
   end
 
+  context 'expand' do
+
+    before do
+      stub_definitions
+      stub_job_creation
+    end
+
+    it 'gluster cluster' do
+      body = {
+        'sds_name' => 'gluster',
+        'Cluster.node_configuration' => {
+          '867d6aae-fb98-4060-9f6a-1da4e4988db8' => {
+            'role' => 'glusterfs/node',
+            'provisioning_ip' => '0.0.0.0'
+          }
+        }
+      }
+      put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/ExpandCluster', body.to_json, http_env
+      expect(last_response.status).to eq 202
+    end
+
+    it 'ceph cluster' do
+      body = {
+        'sds_name' => 'ceph',
+        'Cluster.node_configuration' => {
+          '867d6aae-fb98-4060-9f6a-1da4e4988db8' => {
+            'role' => 'ceph/mon',
+            'provisioning_ip' => '0.0.0.0',
+            'monitor_interface' => 'eth0'
+          },
+          "d41d073f-db4e-4abf-8018-02b30254b912" => {
+            "role" => "ceph/osd",
+            "provisioning_ip" => "0.0.0.0",
+            "journal_size" => 5120,
+            "journal_colocation" => false,
+            "storage_disks" => [
+              {"device" => "/dev/vdb", "journal" => "/dev/vdc"},
+              {"device" => "/dev/vdd", "journal" => "/dev/vde"}
+            ]
+          }
+        }
+      }
+      put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/ExpandCluster', body.to_json, http_env
+      expect(last_response.status).to eq 202
+    end
+  end
+
 
 end
 

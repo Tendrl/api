@@ -14,7 +14,10 @@ module ClusterPresenter
                             'utilization',
                             'globaldetails',
                             'nodes',
-                            'bricks'
+                            'bricks',
+                            'public_network',
+                            'cluster_network',
+                            'osds'
                            )
           nodes = attributes.delete('nodes')
           cluster_nodes = {}
@@ -41,9 +44,9 @@ module ClusterPresenter
       used = {}
       if all.present?
         all.each do |device, attributes|
-          if bricks['free'].keys.include?(device)
+          if bricks['free'].present? && bricks['free'].keys.include?(device)
             free[device] = attributes
-          elsif bricks['used'].keys.include?(device)
+          elsif bricks['used'].present? && bricks['used'].keys.include?(device)
             used[device] = attributes
           end
         end
