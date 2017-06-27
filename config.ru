@@ -19,8 +19,8 @@ map('/1.0') {
   use NotificationsController
   use JobsController
   use UsersController
-  use ClustersController
   use NodesController
+  use ClustersController
   use AuthenticatedUsersController
   run ApplicationController
 }

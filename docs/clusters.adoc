@@ -151,6 +151,23 @@ Status: 200 OK
 }
 ----------
 
+== Expand Cluster
 
+Sample Request
+
+----------
+curl -H 'Authorization: Bearer
+d029298ff1b33190461b8e0f1c3efe110c6f82a902ed8b2830311d0b4be1d4c0' -XPUT -d
+'{"sds_name":"gluster","Cluster.node_configuration":{"867d6aae-fb98-4060-9f6a-1da4e4988db8":{"role":"glusterfs/node","provisioning_ip":"10.0.0.1"}}}'
+http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/ExpandCluster
+----------
+
+Sample Response
+
+----------
+Status: 202 Accepted
+
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
 
 
