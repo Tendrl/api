@@ -14,7 +14,10 @@ module ClusterPresenter
                             'utilization',
                             'globaldetails',
                             'nodes',
-                            'bricks'
+                            'bricks',
+                            'public_network',
+                            'cluster_network',
+                            'osds'
                            )
           nodes = attributes.delete('nodes')
           cluster_nodes = {}
