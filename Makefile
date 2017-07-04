@@ -21,6 +21,10 @@ dist:
 	rm -fr $(HOME)/$(BUILDS)
 
 
+srpm:
+	rpmbuild -bs tendrl-api.spec
+	cp $(RPMBUILD)/SRPMS/tendrl-api-$(VERSION)*src.rpm .
+
 rpm:
 	@echo "target: rpm"
 	@echo  "  ...building rpm $(V_ARCH)..."
