@@ -15,7 +15,8 @@ dist:
 	cp -fr $(BASEDIR) $(HOME)/$(BUILDS)/$(TARDIR)
 	cd $(HOME)/$(BUILDS); \
 	tar --exclude-vcs --exclude=.* -zcf tendrl-api-$(VERSION).tar.gz $(TARDIR); \
-	cp tendrl-api-$(VERSION).tar.gz $(RPMBUILD)/SOURCES
+	cp tendrl-api-$(VERSION).tar.gz $(RPMBUILD)/SOURCES; \
+	cp tendrl-api-$(VERSION).tar.gz $(BASEDIR)/.
         # Cleaning the work directory
 	rm -fr $(HOME)/$(BUILDS)
 
@@ -36,3 +37,19 @@ rpm:
 		printf "\nThe tendrl-api RPMs are located at:\n\n"; \
 		printf "   $(DEPLOY)/latest\n\n\n\n"; \
 	fi
+
+srpm:
+	@echo "target: rpm"
+	@echo  "  ...building rpm $(V_ARCH)..."
+	rm -fr $(BUILDS)
+	mkdir -p $(DEPLOY)/latest
+	mkdir -p $(RPMBUILD)/SPECS
+	sed -e "s/@VERSION@/$(VERSION)/" tendrl-api.spec \
+	        > $(RPMBUILD)/SPECS/tendrl-api.spec
+	rpmbuild  --define "_sourcedir ." --define "_srcrpmdir ." --nodeps -bs tendrl-api.spec
+
+update-release:
+	sed -i tendrl-api.spec \
+	  -e "/^Release:/cRelease: $(shell date +"%m_%d_%Y_%H_%M_%S")"
+
+snapshot: update-release srpm
