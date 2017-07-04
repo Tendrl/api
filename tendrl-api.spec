@@ -1,6 +1,6 @@
 Name: tendrl-api
 Version: 1.4.1
-Release: 07_04_2017_19_04_17
+Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
