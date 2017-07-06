@@ -20,10 +20,14 @@ dist:
         # Cleaning the work directory
 	rm -fr $(HOME)/$(BUILDS)
 
-
 srpm:
-	rpmbuild -bs tendrl-api.spec
-	cp $(RPMBUILD)/SRPMS/tendrl-api-$(VERSION)*src.rpm .
+	@echo "target: srpm"
+	rm -fr $(BUILDS)
+	mkdir -p $(DEPLOY)/latest
+	mkdir -p $(RPMBUILD)/SPECS
+	sed -e "s/@VERSION@/$(VERSION)/" tendrl-api.spec \
+	        > $(RPMBUILD)/SPECS/tendrl-api.spec
+	rpmbuild  --define "_sourcedir ." --define "_srcrpmdir ." --nodeps -bs tendrl-api.spec
 
 rpm:
 	@echo "target: rpm"
@@ -41,16 +45,6 @@ rpm:
 		printf "\nThe tendrl-api RPMs are located at:\n\n"; \
 		printf "   $(DEPLOY)/latest\n\n\n\n"; \
 	fi
-
-srpm:
-	@echo "target: rpm"
-	@echo  "  ...building rpm $(V_ARCH)..."
-	rm -fr $(BUILDS)
-	mkdir -p $(DEPLOY)/latest
-	mkdir -p $(RPMBUILD)/SPECS
-	sed -e "s/@VERSION@/$(VERSION)/" tendrl-api.spec \
-	        > $(RPMBUILD)/SPECS/tendrl-api.spec
-	rpmbuild  --define "_sourcedir ." --define "_srcrpmdir ." --nodeps -bs tendrl-api.spec
 
 update-release:
 	sed -i tendrl-api.spec \
