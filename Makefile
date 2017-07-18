@@ -1,7 +1,7 @@
 CWD := $(shell pwd)
 BASEDIR := $(CWD)
 PRINT_STATUS = export EC=$$?; cd $(CWD); if [ "$$EC" -eq "0" ]; then printf "SUCCESS!\n"; else exit $$EC; fi
-VERSION=1.3.0
+VERSION=1.4.1
 
 BUILDS    := .build
 DEPLOY    := $(BUILDS)/deploy
@@ -19,6 +19,10 @@ dist:
         # Cleaning the work directory
 	rm -fr $(HOME)/$(BUILDS)
 
+
+srpm:
+	rpmbuild -bs tendrl-api.spec
+	cp $(RPMBUILD)/SRPMS/tendrl-api-$(VERSION)*src.rpm .
 
 rpm:
 	@echo "target: rpm"

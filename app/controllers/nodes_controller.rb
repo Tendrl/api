@@ -88,6 +88,7 @@ class NodesController < AuthenticatedUsersController
     body['DetectedCluster.sds_pkg_name'] = body['sds_type']
     body['Node[]'] = node_ids
     job = Tendrl::Job.new(current_user, flow).create(body)
+
     status 202
     { job_id: job.job_id }.to_json
   end
@@ -266,45 +267,94 @@ class NodesController < AuthenticatedUsersController
       end
     end
     parameters['Cluster.node_configuration'] = nodes
-    
+
     job = Tendrl::Job.new(current_user, flow).create(parameters)
     status 202
     { job_id: job.job_id }.to_json
-  end
-
-  post '/:flow' do
-    flow = Tendrl::Flow.find_by_external_name_and_type(
-      params[:flow], 'node_agent'
-    )
-    halt 404 if flow.nil?
-    body = JSON.parse(request.body.read)
-    job = Tendrl::Job.new(current_user, flow).create(body)
-
-    status 202
-    { job_id: job.job_id }.to_json
-  end
-
-
-  private
-
-  def detected_cluster_id(node_id)
-    Tendrl.etcd.get("/nodes/#{node_id}/DetectedCluster/detected_cluster_id").value
-  rescue Etcd::KeyNotFound
-    nil
-  end
-
-  def load_stats(nodes)
-    stats = []
-    unless monitoring.nil?
-      node_ids = nodes.map{|n| n['node_id'] } 
-      stats = @monitoring.nodes(node_ids)
-      stats.each do |stat|
-        node = nodes.find{|e| e['node_id'] == stat['node_id'] }
-        next if node.nil?
-        node[:stats] = stat
-      end
     end
-    nodes
-  end
 
-end
+    # Sample job structure
+
+    # {
+    #   "run": "tendrl.flows.ExpandCluster",
+    #   "type": "node",
+    #   "created_from": "API",
+    #   "created_at": "2017-03-09T14:15:14Z",
+    #   "username": "admin",
+    #   "parameters": {
+    #     "Node[]": ["867d6aae-fb98-4060-9f6a-1da4e4988db8"],
+    #     "Cluster.node_configuration": {
+    #       "867d6aae-fb98-4060-9f6a-1da4e4988db8": {
+    #         "role": "glusterfs/node",
+    #         "provisioning_ip": "10.70.43.222",
+    #       },
+    #     },
+    #     "TendrlContext.sds_name": "gluster",
+    #     "TendrlContext.integration_id": "d3c644f1-0f94-43e1-946f-e40c4694d703"
+    #   },
+    #   "tags":["provisioner/d3c644f1-0f94-43e1-946f-e40c4694d703"],
+    # }
+
+    put '/:cluster_id/ExpandCluster' do
+      flow = Tendrl::Flow.new('namespace.tendrl', 'ExpandCluster')
+      halt 404 if flow.nil?
+      body = JSON.parse(request.body.read)
+      missing_params = []
+
+      ['sds_name', 'Cluster.node_configuration'].each do |param|
+        missing_params << param unless body[param] and not body[param].empty?
+      end
+      halt 422, { errors: { missing: missing_params } }.to_json unless missing_params.empty?
+
+      ['sds_name'].each do |param|
+        body["TendrlContext.#{param}"] = body.delete('sds_name')
+      end
+
+      body['Node[]'] = body['Cluster.node_configuration'].keys
+
+      job = Tendrl::Job.new(
+        current_user,
+        flow, 
+        integration_id: params[:cluster_id]
+      ).create(body)
+
+      status 202
+      { job_id: job.job_id }.to_json
+    end
+
+    post '/:flow' do
+      flow = Tendrl::Flow.find_by_external_name_and_type(
+        params[:flow], 'node_agent'
+      )
+      halt 404 if flow.nil?
+      body = JSON.parse(request.body.read)
+      job = Tendrl::Job.new(current_user, flow).create(body)
+
+      status 202
+      { job_id: job.job_id }.to_json
+    end
+
+
+    private
+
+    def detected_cluster_id(node_id)
+      Tendrl.etcd.get("/nodes/#{node_id}/DetectedCluster/detected_cluster_id").value
+    rescue Etcd::KeyNotFound
+      nil
+    end
+
+    def load_stats(nodes)
+      stats = []
+      unless monitoring.nil?
+        node_ids = nodes.map{|n| n['node_id'] }.join(',')
+        stats = @monitoring.nodes(node_ids)
+        stats.each do |stat|
+          node = nodes.find{|e| e['node_id'] == stat['node_id'] }
+          next if node.nil?
+          node[:stats] = stat
+        end
+      end
+      nodes
+    end
+
+  end

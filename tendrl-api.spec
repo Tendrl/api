@@ -1,10 +1,10 @@
 Name: tendrl-api
-Version: 1.3.0
+Version: 1.4.1
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
-URL: https://github.com/Tendrl/tendrl-api
+URL: https://github.com/Tendrl/api
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
@@ -29,6 +29,7 @@ Requires: rubygem-etcd
 Requires: rubygem-rack-protection >= 1.5.3
 Requires: rubygem-activesupport >= 4.2.6
 Requires: rubygem-sinatra >= 1.4.5
+Requires: tendrl-node-agent
 
 %description
 Collection of tendrl api.
@@ -69,7 +70,7 @@ install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 lib/tendrl/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters/
 install -Dm 0644 lib/tendrl/validators/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators/
-install -Dm 0644 tendrl-apid.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-apid.service
+install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
@@ -80,11 +81,12 @@ install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
+systemctl enable tendrl-api
 
 %files
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
-%{_unitdir}/tendrl-apid.service
+%{_unitdir}/tendrl-api.service
 %config(noreplace) %{_sysconfdir}/tendrl/etcd.yml
 
 %files doc
@@ -97,10 +99,16 @@ setsebool -P httpd_can_network_connect 1
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
-* Fri Apr 18 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-3
+* Thu Jun 08 2017 Anup Nivargi <anivargi@redhat.com> - 1.4.1-1
+- Release tendrl-api v1.4.1
+
+* Fri Jun 02 2017 Rohan Kanade <rkanade@redhat.com> - 1.4.0-1
+- Release tendrl-api v1.4.0
+
+* Tue Apr 18 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-3
 - Version bump to the 1.2.3 release.
 
-* Fri Apr 5 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-2
+* Wed Apr 05 2017 Anup Nivargi <anivargi@redhat.com> - 1.2-2
 - Version bump to the 1.2.2 release.
 
 * Fri Jan 27 2017 Mrugesh Karnik <mkarnik@redhat.com> - 1.2-1

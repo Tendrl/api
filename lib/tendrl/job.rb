@@ -64,11 +64,14 @@ module Tendrl
         begin
           Tendrl.etcd.get("/messages/jobs/#{job_id}", recursive: true).
             children.each do |child|
-            if child.value.present?
-              messages << JSON.parse(child.value)
+            begin
+              if child.value.present?
+                messages << JSON.parse(child.value)
+              end
+            rescue JSON::ParserError
             end
           end
-        rescue Etcd::KeyNotFound, JSON::ParserError
+        rescue Etcd::KeyNotFound
         end
         messages
       end
@@ -92,13 +95,16 @@ module Tendrl
       def output(job_id)
         output = []
         begin
-          Tendrl.etcd.get("/queue/#{job_id}/output", recursive:
-                          true).children.each do |o|
-            if o.value.present?
-              output << { o.key.split('/')[-1] => JSON.parse(o.value) }
+          Tendrl.etcd.get("/queue/#{job_id}/output", recursive: true).
+            children.each do |o|
+            begin
+              if o.value.present?
+                output << { o.key.split('/')[-1] => JSON.parse(o.value) }
+              end
+            rescue JSON::ParserError
             end
           end
-        rescue Etcd::KeyNotFound, JSON::ParserError
+        rescue Etcd::KeyNotFound
         end
         output
       end

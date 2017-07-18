@@ -1,5 +1,7 @@
 [Unit]
 Description=Tendrl Api Daemon
+After=network.target
+Requires=tendrl-node-agent.service
 
 [Service]
 Type=simple
