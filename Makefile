@@ -2,6 +2,8 @@ CWD := $(shell pwd)
 BASEDIR := $(CWD)
 PRINT_STATUS = export EC=$$?; cd $(CWD); if [ "$$EC" -eq "0" ]; then printf "SUCCESS!\n"; else exit $$EC; fi
 VERSION=1.4.1
+COMMIT := $(shell git rev-parse HEAD)
+SHORTCOMMIT := $(shell echo $(COMMIT) | cut -c1-7)
 
 BUILDS    := .build
 DEPLOY    := $(BUILDS)/deploy
@@ -48,6 +50,6 @@ rpm:
 
 update-release:
 	sed -i tendrl-api.spec \
-	  -e "/^Release:/cRelease: $(shell date +"%m_%d_%Y_%H_%M_%S")"
+	  -e "/^Release:/cRelease: $(shell date +"%Y%m%dT%H%M%S").$(SHORTCOMMIT)"
 
 snapshot: update-release srpm
