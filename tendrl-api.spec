@@ -76,6 +76,9 @@ install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
 
+%post
+/usr/bin/systemctl daemon-reload >/dev/null 2>&1 ||:
+
 %post httpd
 setsebool -P httpd_can_network_connect 1
 systemctl enable tendrl-api
