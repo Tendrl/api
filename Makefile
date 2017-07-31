@@ -1,57 +1,33 @@
-CWD := $(shell pwd)
-BASEDIR := $(CWD)
-PRINT_STATUS = export EC=$$?; cd $(CWD); if [ "$$EC" -eq "0" ]; then printf "SUCCESS!\n"; else exit $$EC; fi
-VERSION=1.4.2
+NAME      := tendrl-api
+VERSION   := 1.4.2
+RELEASE   := 1
 COMMIT := $(shell git rev-parse HEAD)
 SHORTCOMMIT := $(shell echo $(COMMIT) | cut -c1-7)
 
-BUILDS    := .build
-DEPLOY    := $(BUILDS)/deploy
-TARDIR    := tendrl-api-$(VERSION)
-RPMBUILD  := $(HOME)/rpmbuild
-
+all: srpm
 
 dist:
-	rm -fr $(HOME)/$(BUILDS)
-	mkdir -p $(HOME)/$(BUILDS) $(RPMBUILD)/SOURCES
-	cp -fr $(BASEDIR) $(HOME)/$(BUILDS)/$(TARDIR)
-	cd $(HOME)/$(BUILDS); \
-	tar --exclude-vcs --exclude=.* -zcf tendrl-api-$(VERSION).tar.gz $(TARDIR); \
-	cp tendrl-api-$(VERSION).tar.gz $(RPMBUILD)/SOURCES; \
-	cp tendrl-api-$(VERSION).tar.gz $(BASEDIR)/.
-        # Cleaning the work directory
-	rm -fr $(HOME)/$(BUILDS)
+	mkdir -p $(NAME)-$(VERSION)
+	cp -r app config docs lib public spec $(NAME)-$(VERSION)/
+	cp config.ru Gemfile* Makefile Rakefile README* tendrl-api.* $(NAME)-$(VERSION)/
+	tar -zcf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
+	rm -rf $(NAME)-$(VERSION)
 
+clean:
+	rm -f $(NAME)-$(VERSION).tar.gz
+	rm -f $(NAME)-$(VERSION)*.rpm
+	rm -f *.log
 
-rpm:
-	@echo "target: rpm"
-	@echo  "  ...building rpm $(V_ARCH)..."
-	rm -fr $(BUILDS)
-	mkdir -p $(DEPLOY)/latest
-	mkdir -p $(RPMBUILD)/SPECS
-	sed -e "s/@VERSION@/$(VERSION)/" tendrl-api.spec \
-	        > $(RPMBUILD)/SPECS/tendrl-api.spec
-	rpmbuild -ba $(RPMBUILD)/SPECS/tendrl-api.spec
-	$(PRINT_STATUS); \
-	if [ "$$EC" -eq "0" ]; then \
-		FILE=$$(readlink -f $$(find $(RPMBUILD)/RPMS -name tendrl-api*.rpm)); \
-		cp -f $$FILE $(DEPLOY)/latest/; \
-		printf "\nThe tendrl-api RPMs are located at:\n\n"; \
-		printf "   $(DEPLOY)/latest\n\n\n\n"; \
-	fi
+srpm: dist
+	fedpkg --dist epel7 srpm
 
-srpm:
-	@echo "target: rpm"
-	@echo  "  ...building rpm $(V_ARCH)..."
-	rm -fr $(BUILDS)
-	mkdir -p $(DEPLOY)/latest
-	mkdir -p $(RPMBUILD)/SPECS
-	sed -e "s/@VERSION@/$(VERSION)/" tendrl-api.spec \
-	        > $(RPMBUILD)/SPECS/tendrl-api.spec
-	rpmbuild  --define "_sourcedir ." --define "_srcrpmdir ." --nodeps -bs tendrl-api.spec
+rpm: srpm
+	mock -r epel-7-x86_64 rebuild $(NAME)-$(VERSION)-$(RELEASE).el7.src.rpm --resultdir=. --define "dist .el7"
 
 update-release:
-	sed -i tendrl-api.spec \
+	sed -i $(NAME).spec \
 	  -e "/^Release:/cRelease: $(shell date +"%Y%m%dT%H%M%S").$(SHORTCOMMIT)"
 
 snapshot: update-release srpm
+
+.PHONY: dist rpm srpm update-release snapshot
