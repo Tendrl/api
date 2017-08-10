@@ -118,19 +118,10 @@ describe NodesController do
       stub_clusters(false)
     end
 
-    it 'nodes without monitoring' do
-      stub_monitoring_config(404, "monitoring_config_error.json")
+    it 'nodes' do
       get "/GetNodeList", {}, http_env
       expect(last_response.status).to eq 200
     end
-
-    it 'nodes with monitoring' do
-      stub_monitoring_config
-      stub_node_monitoring
-      get "/GetNodeList", {}, http_env
-      expect(last_response.status).to eq 200
-    end
-
 
   end
 

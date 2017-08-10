@@ -84,39 +84,6 @@ def stub_clusters(recursive=true)
   )
 end
 
-def stub_monitoring_config(status=200, file='monitoring_config.json')
-  stub_request(
-    :get,
-    "http://127.0.0.1:4001/v2/keys/_NS/performance_monitoring/config/data"
-  ).
-  to_return(
-    :status => status,
-    :body => File.read("spec/fixtures/#{file}")
-  )
-end
-
-def stub_node_monitoring
-  stub_request(
-    :get,
-    /http:\/\/127.0.0.1:5000\/monitoring\/nodes\/summary/
-  ).
-  to_return(
-    status: 200,
-    body: File.read('spec/fixtures/monitoring_node.json')
-  )
-end
-
-def stub_cluster_monitoring
-  stub_request(
-    :get,
-    /http:\/\/127.0.0.1:5000\/monitoring\/clusters\/summary\?cluster_ids=.*/
-  ).
-  to_return(
-    status: 200,
-    body: File.read('spec/fixtures/monitoring_cluster.json')
-  )
-end
-
 def stub_cluster_context
   stub_request(
     :get,

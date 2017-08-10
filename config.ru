@@ -7,7 +7,6 @@ require './app/controllers/clusters_controller'
 require './app/controllers/jobs_controller'
 require './app/controllers/users_controller'
 require './app/controllers/sessions_controller'
-require './app/controllers/monitoring_controller'
 require './app/controllers/alerting_controller'
 require './app/controllers/notifications_controller'
 

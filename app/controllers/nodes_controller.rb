@@ -29,7 +29,6 @@ class NodesController < AuthenticatedUsersController
     end
 
     nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids)
-    nodes = load_stats(nodes)
 
     { nodes: nodes, clusters: clusters }.to_json
   end
@@ -341,20 +340,6 @@ class NodesController < AuthenticatedUsersController
       Tendrl.etcd.get("/nodes/#{node_id}/DetectedCluster/detected_cluster_id").value
     rescue Etcd::KeyNotFound
       nil
-    end
-
-    def load_stats(nodes)
-      stats = []
-      unless monitoring.nil?
-        node_ids = nodes.map{|n| n['node_id'] }.join(',')
-        stats = @monitoring.nodes(node_ids)
-        stats.each do |stat|
-          node = nodes.find{|e| e['node_id'] == stat['node_id'] }
-          next if node.nil?
-          node[:stats] = stat
-        end
-      end
-      nodes
     end
 
   end

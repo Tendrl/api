@@ -118,19 +118,4 @@ class ClustersController < AuthenticatedUsersController
     halt exception.status, exception.body.to_json
   end
 
-  def load_stats(clusters)
-    stats = []
-    unless monitoring.nil?
-      cluster_ids = clusters.map{|e| e['cluster_id'] }
-      stats = @monitoring.cluster_stats(cluster_ids)
-      stats.each do |stat|
-        cluster = clusters.find{|e| e['cluster_id'] == stat['id'] }
-        next if cluster.nil?
-        cluster['stats'] = stat['summary']
-      end
-    end
-    clusters
-  end
-
-
 end
