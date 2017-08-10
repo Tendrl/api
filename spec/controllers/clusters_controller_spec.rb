@@ -21,15 +21,7 @@ describe ClustersController do
       stub_clusters
     end
 
-    it 'cluster without monitoring' do
-      stub_monitoring_config(404, "monitoring_config_error.json")
-      get "/GetClusterList", {}, http_env
-      expect(last_response.status).to eq 200
-    end
-
-    it 'cluster with monitoring stats' do
-      stub_monitoring_config
-      stub_cluster_monitoring
+    it 'clusters' do
       get "/GetClusterList", {}, http_env
       expect(last_response.status).to eq 200
     end
