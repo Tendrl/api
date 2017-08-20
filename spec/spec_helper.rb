@@ -170,20 +170,6 @@ def stub_node_ids
   )
 end
 
-def stub_create_user(username)
-  stub_request(
-    :put,
-    "http://127.0.0.1:4001/v2/keys/_tendrl/users/thardy"
-  ).
-  with(
-    :body => "dir=true"
-  ).
-  to_return(
-    :status => 200,
-    :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":183,\"createdIndex\":183}}"
-  )
-end
-
 def stub_create_user_attributes(attributes)
   attributes.merge!(
     password_hash: '$2a$10$d1L8axCcsr5XRMtzbNNuaOM5I6D9dKu0VJqifND/eHCnj8M1QkP1W', 
@@ -220,6 +206,20 @@ def stub_user(username)
   to_return(
     :status => 200,
     :body => File.read('spec/fixtures/user.json')
+  )
+end
+
+def stub_user_create(username)
+ stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}").
+    with(
+      :body => "dir=true"
+  ).
+  to_return(
+    :status => 201,
+    :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":437,\"createdIndex\":437}}",
+    :headers => {}
   )
 end
 

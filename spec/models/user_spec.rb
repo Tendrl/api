@@ -8,7 +8,7 @@ RSpec.describe Tendrl::User do
   
   it 'create' do
     stub_user('thardy')
-    stub_create_user('thardy')
+    stub_user_create('thardy')
     attributes = {
       email: 'thardy@tendrl.org',
       name: 'Tom Hardy',

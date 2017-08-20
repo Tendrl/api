@@ -1,4 +1,3 @@
-require 'tendrl'
 class ApplicationController < Sinatra::Base
   set :root, File.dirname(__FILE__)
 

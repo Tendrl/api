@@ -4,42 +4,62 @@ require 'bundler'
 
 ENV['RACK_ENV'] ||= 'development'
 
-unless File.exists?('.deploy')
-  Bundler.require :default, ENV['RACK_ENV']
-else
+if File.exist?('.deploy')
   require 'sinatra/base'
   require 'etcd'
   require 'active_model'
   require 'active_support'
   require 'bcrypt'
+else
+  Bundler.require :default, ENV['RACK_ENV']
 end
 
 require 'active_support/core_ext/hash'
 require 'active_support/inflector'
+
+# Tendrl core
 require './lib/tendrl/version'
 require './lib/tendrl/flow'
-require './lib/tendrl/node'
 require './lib/tendrl/object'
 require './lib/tendrl/atom'
 require './lib/tendrl/attribute'
-require './lib/tendrl/alert'
-require './lib/tendrl/notification'
 require './lib/tendrl/http_response_error_handler'
-require './lib/tendrl/presenters/node_presenter'
-require './lib/tendrl/presenters/cluster_presenter'
-require './lib/tendrl/presenters/job_presenter'
-require './lib/tendrl/presenters/user_presenter'
-require './lib/tendrl/user'
-require './lib/tendrl/job'
-require './lib/tendrl/validators/user_validator'
 
-#Errors
+# Models
+require './app/models/user'
+require './app/models/node'
+require './app/models/cluster'
+require './app/models/alert'
+require './app/models/notification'
+require './app/models/job'
+
+# Forms
+require './app/forms/user_form'
+
+# Presenters
+require './app/presenters/node_presenter'
+require './app/presenters/cluster_presenter'
+require './app/presenters/job_presenter'
+require './app/presenters/user_presenter'
+
+# Errors
 require './lib/tendrl/errors/tendrl_error'
 require './lib/tendrl/errors/invalid_object_error'
 
+# Contollers
+require './app/controllers/application_controller'
+require './app/controllers/ping_controller'
+require './app/controllers/authenticated_users_controller'
+require './app/controllers/nodes_controller'
+require './app/controllers/clusters_controller'
+require './app/controllers/jobs_controller'
+require './app/controllers/users_controller'
+require './app/controllers/sessions_controller'
+require './app/controllers/alerting_controller'
+require './app/controllers/notifications_controller'
 
+# Global Tendrl module
 module Tendrl
-
   def self.current_definitions
     @cluster_definitions || @node_definitions
   end
@@ -71,11 +91,10 @@ module Tendrl
   end
 
   def self.etcd_config(env)
-    if File.exists?('/etc/tendrl/etcd.yml')
-      YAML.load_file('/etc/tendrl/etcd.yml')[env.to_sym] 
+    if File.exist?('/etc/tendrl/etcd.yml')
+      YAML.load_file('/etc/tendrl/etcd.yml')[env.to_sym]
     else
-      YAML.load_file('config/etcd.yml')[env.to_sym] 
+      YAML.load_file('config/etcd.yml')[env.to_sym]
     end
   end
-
 end

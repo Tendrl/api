@@ -1,6 +1,5 @@
 module Tendrl
   class Attribute
-
     attr_reader :name, :help, :type, :default, :required
 
     def initialize(object_type, name, attributes)
@@ -22,6 +21,5 @@ module Tendrl
         required: @required
       }
     end
-
   end
 end

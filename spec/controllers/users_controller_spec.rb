@@ -12,24 +12,50 @@ RSpec.describe UsersController do
   }
 
   before do
+    stub_users
     stub_user('dwarner')
+    stub_access_token
   end
 
-  it 'create' do
+  context 'create' do
+
+    let(:body){
+      {
+        email: 'thardy@tendrl.org',
+        username: 'thardy',
+        name: 'Tom Hardy',
+        password: 'temp1234',
+        password_confirmation: 'temp1234',
+        role: 'normal'
+      }
+    }
+
+    before do
+      stub_user_create(body[:username])
+      stub_create_user_attributes(body)
+      stub_user('thardy')
+    end
+
+    it 'invalid attributes' do
+      post "/users", { username: body[:username] }.to_json, http_env
+      expect(last_response.status).to eq(400)
+    end
+
+    it 'valid attributes' do
+      post "/users", body.to_json, http_env
+      expect(last_response.status).to eq(201)
+    end
+
   end
 
-  it 'update' do
-  end
+  it 'update'
 
-  it 'delete' do
-  end
+  it 'delete'
 
-  it 'lists' do
-  end
+  it 'lists'
 
-  it 'single' do
+  it 'single'
 
-  end
-
+  it 'current'
 
 end

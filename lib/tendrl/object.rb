@@ -37,9 +37,8 @@ module Tendrl
     def self.find_by_attribute(attribute)
       object_name, attribute = attribute.split('.')
       object = find_by_object_name(object_name)
-      attribute = object.attributes.find{|a| a.name == attribute }
+      attribute = object.attributes.find{ |a| a.name == attribute }
       attribute.to_hash
     end
-
   end
 end
