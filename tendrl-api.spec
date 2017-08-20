@@ -57,19 +57,21 @@ Tendrl API httpd configuration.
 
 %install
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/models
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
+install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
+install -Dm 0644 app/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters/
+install -Dm 0644 app/models/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/models/
 install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
 install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
-install -Dm 0644 lib/tendrl/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/presenters/
-install -Dm 0644 lib/tendrl/validators/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/validators/
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl

@@ -1,16 +1,15 @@
 module Tendrl
   class HttpResponseErrorHandler
-
     attr_reader :status, :body
 
     EXCEPTION_MAPPING = {
-      '/_tendrl/definitions' => { 
-        body: { 
-          errors: { 
-            message: 'Node definitions file not found.' 
-          } 
+      '/_tendrl/definitions' => {
+        body: {
+          errors: {
+            message: 'Node definitions file not found.'
+          }
         },
-        status: 404 
+        status: 404
       },
       '/clusters' => {
         status: 200,
@@ -24,16 +23,16 @@ module Tendrl
         status: 404,
         body: {
           errors: {
-            message: "Cluster definitions for cluster_id %s not found." 
-          } 
+            message: 'Cluster definitions for cluster_id %s not found.'
+          }
         }
       },
       '/clusters/id' => {
         status: 404,
         body: {
           errors: {
-            message: "Cluster with cluster_id %s not found." 
-          } 
+            message: 'Cluster with cluster_id %s not found.'
+          }
         }
       },
       'invalid_json' => {
@@ -68,8 +67,7 @@ module Tendrl
           }
         }
       }
-
-    }
+    }.freeze
 
     def initialize(error, cause: nil, object_id: nil)
       @error = error
@@ -87,12 +85,11 @@ module Tendrl
       {
         body: {
           errors: {
-            message: "#{@error.message}"
+            message: @error.message.to_s
           }
         },
         status: 404
       }
     end
-
   end
 end

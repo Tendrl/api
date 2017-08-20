@@ -18,31 +18,29 @@ class UsersController < AuthenticatedUsersController
   end
 
   post '/users' do
-    user_validator = Tendrl::Validator::UserValidator.new(
+    user_form = Tendrl::UserForm.new(
       Tendrl::User.new,
       user_attributes
     )
-    if user_validator.valid?
-      user = Tendrl::User.save(user_validator.attributes)
+    if user_form.valid?
+      user = Tendrl::User.save(user_form.attributes)
       status 201
       UserPresenter.single(user).to_json
     else
       status 400
-      { errors: user_validator.errors.full_messages }.to_json
+      { errors: user_form.errors.messages }.to_json
     end
   end
 
   put '/users/:username' do
     user = Tendrl::User.find(params[:username])
-    user_validator = Tendrl::Validator::UserValidator.new(
-      user,
-      user_attributes)
-    if user_validator.valid?
-      user = Tendrl::User.save(user_validator.attributes)
+    user_form = Tendrl::UserForm.new(user, user_attributes)
+    if user_form.valid?
+      user = Tendrl::User.save(user_form.attributes)
       UserPresenter.single(user).to_json
     else
       status 400
-      { errors: user_validator.errors.full_messages }.to_json
+      { errors: user_form.errors.messages }.to_json
     end
   end
 
