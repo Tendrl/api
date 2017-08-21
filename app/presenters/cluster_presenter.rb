@@ -5,37 +5,40 @@ module ClusterPresenter
     def list(cluster_list)
       clusters = []
       cluster_list.each do |cluster|
-        cluster.each do |cluster_id, attributes|
-          context = attributes.delete('tendrlcontext')
-          next if context.blank?
-          context['cluster_id'] = cluster_id
-          attributes.slice!('pools',
-                            'volumes',
-                            'utilization',
-                            'globaldetails',
-                            'nodes',
-                            'bricks',
-                            'public_network',
-                            'cluster_network',
-                            'osds'
-                           )
-          nodes = attributes.delete('nodes')
-          cluster_nodes = {}
-          if nodes.present?
-            nodes.each do |node_id, values|
-              next if values['nodecontext'].blank?
-              cluster_nodes[node_id] = values['nodecontext']
-            end
-          end
-
-          if bricks = attributes.delete('bricks')
-            attributes.merge!(bricks: bricks(bricks))
-          end
-
-          clusters << context.merge(attributes).merge(nodes: cluster_nodes)
-        end
+        clusters << single(cluster)
       end
       clusters
+    end
+
+    def single(cluster)
+      cluster.each do |cluster_id, attributes|
+        context = attributes.delete('tendrlcontext')
+        context['cluster_id'] = cluster_id
+        attributes.slice!(
+          'globaldetails',
+          'nodes',
+          'public_network',
+          'cluster_network',
+          'is_managed',
+          'enable_volume_profiling'
+        )
+        nodes = attributes.delete('nodes')
+        cluster_nodes = []
+        if nodes.present?
+          nodes.each do |node_id, values|
+            next if values['nodecontext'].blank?
+            values['nodecontext'].delete('tags')
+            cluster_nodes << values['nodecontext'].merge({ node_id: node_id })
+          end
+        end
+
+        if bricks = attributes.delete('bricks')
+          attributes.merge!(bricks: bricks(bricks))
+        end
+
+        cluster = context.merge(attributes).merge(nodes: cluster_nodes)
+      end
+      cluster
     end
 
     def bricks(bricks)

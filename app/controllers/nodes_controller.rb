@@ -10,27 +10,17 @@ class NodesController < AuthenticatedUsersController
     { flows: flows }.to_json
   end
 
-  get '/GetNodeList' do
-    nodes = []
-    existing_cluster_ids = []
-
+  get '/nodes' do
     begin
-      etcd.get('/nodes', recursive: true).children.each do |node|
-        nodes << recurse(node)
+      nodes = etcd.get('/nodes', recursive: true).children.map do |node|
+        Tendrl.recurse(node)
       end
     rescue Etcd::KeyNotFound
     end
 
-    begin
-      etcd.get('/clusters', recursive: false).children.each do |c|
-        existing_cluster_ids << c.key.split('/')[-1]
-      end
-    rescue Etcd::KeyNotFound
-    end
+    nodes = NodePresenter.list(nodes)
 
-    nodes, clusters = NodePresenter.list(nodes, existing_cluster_ids)
-
-    { nodes: nodes, clusters: clusters }.to_json
+    { nodes: nodes }.to_json
   end
 
   post '/ImportCluster' do

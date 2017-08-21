@@ -59,18 +59,6 @@ def stub_nodes
   )
 end
 
-def stub_detected_cluster
-  stub_request(
-    :get,
-    /http:\/\/127.0.0.1:4001\/v2\/keys\/nodes\/.*\/DetectedCluster\/detected_cluster_id/).
-  to_return(
-    status: 200,
-    body: File.read(
-      'spec/fixtures/detected_cluster.json'  
-    )
-  )
-end
-
 def stub_clusters(recursive=true)
   stub_request(
     :get,
@@ -94,6 +82,36 @@ def stub_cluster_context
     body: File.read('spec/fixtures/cluster_context.json')
   )
 end
+
+def stub_cluster
+  stub_request(
+    :get,
+    'http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc?recursive=true'
+  ).
+  to_return(
+    :status => 200,
+    :body => File.read('spec/fixtures/cluster.json')
+  )
+end
+
+def stub_unmanaged_cluster
+  stub_request(
+    :get,
+    'http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc'
+  ).
+  to_return(
+    :status => 200,
+    body: File.read('spec/fixtures/unmanaged_clusters.json')
+  )
+end
+
+def stub_cluster_profiling
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/enable_volume_profiling").
+    with(:body => "value=true").
+    to_return(:status => 200, :body => "{\"action\":\"set\",\"node\":{\"key\":\"/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/enable_volume_profiling\",\"value\":\"true\",\"modifiedIndex\":441,\"createdIndex\":441}}")
+  end
 
 def stub_job_creation
   stub_request(

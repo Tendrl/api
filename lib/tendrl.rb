@@ -41,6 +41,7 @@ require './app/presenters/node_presenter'
 require './app/presenters/cluster_presenter'
 require './app/presenters/job_presenter'
 require './app/presenters/user_presenter'
+require './app/presenters/volume_presenter'
 
 # Errors
 require './lib/tendrl/errors/tendrl_error'
@@ -60,41 +61,62 @@ require './app/controllers/notifications_controller'
 
 # Global Tendrl module
 module Tendrl
-  def self.current_definitions
-    @cluster_definitions || @node_definitions
-  end
+  class << self
+    def current_definitions
+      @cluster_definitions || @node_definitions
+    end
 
-  def self.cluster_definitions
-    @cluster_definitions
-  end
+    def cluster_definitions
+      @cluster_definitions
+    end
 
-  def self.cluster_definitions=(definitions)
-    @node_definitions = nil
-    @cluster_definitions = definitions
-  end
+    def cluster_definitions=(definitions)
+      @node_definitions = nil
+      @cluster_definitions = definitions
+    end
 
-  def self.node_definitions
-    @node_definitions
-  end
+    def node_definitions
+      @node_definitions
+    end
 
-  def self.node_definitions=(definitions)
-    @cluster_definitions = nil
-    @node_definitions = definitions
-  end
+    def node_definitions=(definitions)
+      @cluster_definitions = nil
+      @node_definitions = definitions
+    end
 
-  def self.etcd=(etcd_client)
-    @etcd_client ||= etcd_client
-  end
+    def etcd=(etcd_client)
+      @etcd_client ||= etcd_client
+    end
 
-  def self.etcd
-    @etcd_client
-  end
+    def etcd
+      @etcd_client
+    end
 
-  def self.etcd_config(env)
-    if File.exist?('/etc/tendrl/etcd.yml')
-      YAML.load_file('/etc/tendrl/etcd.yml')[env.to_sym]
-    else
-      YAML.load_file('config/etcd.yml')[env.to_sym]
+    def etcd_config(env)
+      if File.exist?('/etc/tendrl/etcd.yml')
+        YAML.load_file('/etc/tendrl/etcd.yml')[env.to_sym]
+      else
+        YAML.load_file('config/etcd.yml')[env.to_sym]
+      end
+    end
+
+    def recurse(parent, attrs={})
+      parent_key = parent.key.split('/')[-1].downcase
+      return attrs if ['definitions', 'raw_map'].include?(parent_key)
+      parent.children.each do |child|
+        child_key = child.key.split('/')[-1].downcase
+        attrs[parent_key] ||= {}
+        if child.dir
+          recurse(child, attrs[parent_key])
+        else
+          if attrs[parent_key]
+            attrs[parent_key][child_key] = child.value
+          else
+            attrs[child_key] = child.value
+          end
+        end
+      end
+      attrs
     end
   end
 end

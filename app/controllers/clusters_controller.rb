@@ -1,24 +1,17 @@
 class ClustersController < AuthenticatedUsersController
 
-  get '/GetClusterList' do
-    clusters = []
-    begin
-      etcd.get('/clusters', recursive: true).children.each do |cluster|
-        clusters << recurse(cluster)
-      end
-    rescue Etcd::KeyNotFound
-    end
-    clusters = ClusterPresenter.list(clusters)
-    { clusters: clusters }.to_json
+  get '/clusters' do
+    clusters = Tendrl::Cluster.all
+    { clusters: ClusterPresenter.list(clusters) }.to_json
   end
 
-  get '/:cluster_id/Flows' do
+  get '/clusters/:cluster_id/flows' do
     cluster = cluster(params[:cluster_id])
     flows = Tendrl::Flow.find_all
     flows.to_json
   end
 
-  get %r{\/([a-zA-Z0-9-]+)\/Get(\w+)List} do |cluster_id, object_name|
+  get %r{\/clusters\/([a-zA-Z0-9-]+)\/(\w+)} do |cluster_id, object_name|
     load_definitions(cluster_id)
     object = Tendrl::Object.find_by_object_name(object_name.singularize.capitalize)
     halt 404 if object.nil?
@@ -26,17 +19,36 @@ class ClustersController < AuthenticatedUsersController
     objects = []
     begin
       etcd.get(
-        "/clusters/#{cluster['integration_id']}/#{object_name.pluralize}", recursive: true
+        "/clusters/#{cluster['integration_id']}/#{object_name.capitalize}",
+        recursive: true
       ).children.each do |node|
-        objects << recurse(node)
+        objects << Tendrl.recurse(node)
       end
     rescue Etcd::KeyNotFound, Etcd::NotDir
 
     end
-    objects.to_json
+    presenter = "#{object_name.singularize.downcase}_presenter"
+      .classify
+    if Object.const_defined?(presenter)
+      presenter.constantize.list(objects).to_json
+    else
+      objects.to_json
+    end
   end
 
-  post '/:cluster_id/:flow' do
+  post '/clusters/:cluster_id/import' do
+    load_node_definitions
+    flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
+    body = JSON.parse(request.body.read)
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      integration_id: params[:cluster_id]).create(body)
+    status 202
+    { job_id: job.job_id }.to_json
+  end
+
+  post '/clusters/:cluster_id/:flow' do
     cluster = cluster(params[:cluster_id])
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
@@ -54,7 +66,17 @@ class ClustersController < AuthenticatedUsersController
     { job_id: job.job_id }.to_json
   end
 
-  put '/:cluster_id/:flow' do
+  put '/clusters/:cluster_id/profiling' do
+    cluster = Tendrl::Cluster.find(params[:cluster_id])
+    body = JSON.parse(request.body.read)
+    cluster.update_attributes(
+      enable_volume_profiling: body['enable_volume_profiling']
+    )
+    status 200
+    ClusterPresenter.single({ params[:cluster_id] => cluster.attributes })
+  end
+
+  put '/clusters/:cluster_id/:flow' do
     cluster = cluster(params[:cluster_id])
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
@@ -73,8 +95,7 @@ class ClustersController < AuthenticatedUsersController
     { job_id: job.job_id }.to_json
   end
 
-
-  delete '/:cluster_id/:flow' do
+  delete '/clusters/:cluster_id/:flow' do
     cluster = cluster(params[:cluster_id])
     flow = Tendrl::Flow.find_by_external_name_and_type(
       params[:flow], 'cluster'
@@ -97,8 +118,9 @@ class ClustersController < AuthenticatedUsersController
 
   def cluster(cluster_id)
     load_definitions(cluster_id)
-    @cluster ||=
-      recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
+    @cluster ||= Tendrl.recurse(
+      etcd.get("/clusters/#{cluster_id}/TendrlContext")
+    )['tendrlcontext']
   rescue Etcd::KeyNotFound => e
     exception =  Tendrl::HttpResponseErrorHandler.new(
       e, cause: '/clusters/id', object_id: cluster_id
@@ -116,6 +138,11 @@ class ClustersController < AuthenticatedUsersController
       e, cause: '/clusters/definitions', object_id: cluster_id
     )
     halt exception.status, exception.body.to_json
+  end
+
+  def load_node_definitions
+    definitions = etcd.get('/_NS/node_agent/compiled_definitions/data').value
+    Tendrl.node_definitions = YAML.load(definitions)
   end
 
 end

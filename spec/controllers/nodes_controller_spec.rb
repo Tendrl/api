@@ -21,26 +21,7 @@ describe NodesController do
     expect(last_response.status).to eq 200
   end
 
-  context 'import' do
-
-    before do
-      stub_detected_cluster
-      stub_definitions
-      stub_job_creation
-    end
-
-    it 'clusters' do
-      body = {
-        'node_ids' => ['3b6eb27f-3e83-4751-9d45-85a989ae2b25'],
-        'sds_name' => 'ceph 10.2.5',
-        'sds_version' => '10.2.5',
-        'sds_type' => 'ceph'
-      }
-      post '/ImportCluster', body.to_json, http_env
-      expect(last_response.status).to eq 202
-    end
-
-  end
+  
 
   context 'create' do
 
@@ -119,7 +100,7 @@ describe NodesController do
     end
 
     it 'nodes' do
-      get "/GetNodeList", {}, http_env
+      get "/nodes", {}, http_env
       expect(last_response.status).to eq 200
     end
 
