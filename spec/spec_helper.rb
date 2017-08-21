@@ -178,11 +178,11 @@ def stub_create_user_attributes(attributes)
   attributes.each do |key, value|
     stub_request(
       :put,
-      "http://127.0.0.1:4001/v2/keys/_tendrl/users/thardy/#{key}"
+      "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{attributes[:username]}/#{key}"
     ).
     to_return(
       :status => 200,
-      :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/anivargi/#{key}\",\"value\":\"#{CGI.unescape(value)}\",\"modifiedIndex\":184,\"createdIndex\":184}}"
+      :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{attributes[:username]}/#{key}\",\"value\":\"#{CGI.unescape(value.to_s)}\",\"modifiedIndex\":184,\"createdIndex\":184}}"
     )
   end
 end

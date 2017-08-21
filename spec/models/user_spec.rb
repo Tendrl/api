@@ -7,12 +7,12 @@ RSpec.describe Tendrl::User do
   end
   
   it 'create' do
-    stub_user('thardy')
-    stub_user_create('thardy')
+    stub_user('dwarner')
+    stub_user_create('dwarner')
     attributes = {
-      email: 'thardy@tendrl.org',
-      name: 'Tom Hardy',
-      username: 'thardy',
+      email: 'dwarner@tendrl.org',
+      name: 'David Warner',
+      username: 'dwarner',
       password: 'temp1234'
     }
     stub_create_user_attributes(attributes)

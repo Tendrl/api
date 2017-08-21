@@ -3,7 +3,7 @@ module Tendrl
     include ActiveModel::Validations
 
     attr_accessor :name, :username, :email, :password,
-      :password_confirmation, :role
+      :password_confirmation, :role, :email_notifications
 
     validates :name, :username, presence: true, length: { minimum: 4, maximum: 100 }
 
@@ -15,6 +15,8 @@ module Tendrl
     validates :email, format: { 
       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
     }
+
+    validates :email_notifications, inclusion: { in: [true, false, "true", "false"] }
 
     validates :role, inclusion: { in: Tendrl::User::ROLES }
 
@@ -28,6 +30,11 @@ module Tendrl
       @role = params[:role] || user.role
       @password = params[:password]
       @password_confirmation = params[:password_confirmation]
+      @email_notifications = if params[:email_notifications].nil?
+                               user.email_notifications
+                             else
+                               params[:email_notifications]
+                             end
     end
 
     def attributes
@@ -36,7 +43,8 @@ module Tendrl
         username: @username,
         password: @password,
         email: @email,
-        role: @role
+        role: @role,
+        email_notifications: @email_notifications
       }
     end
 

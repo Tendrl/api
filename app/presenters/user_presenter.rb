@@ -7,7 +7,8 @@ module UserPresenter
         email: user.email,
         username: user.username,
         name: user.name,
-        role: user.role
+        role: user.role,
+        email_notifications: user.email_notifications
       }
     end
 
