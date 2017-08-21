@@ -8,7 +8,8 @@ Sample Request
 
 ----------
 curl -XGET -H "Authorization: Bearer
-4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" http://127.0.0.1/api/1.0/GetNodeList
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
+http://127.0.0.1/api/1.0/nodes
 ----------
 
 Sample Response
@@ -54,12 +55,6 @@ Sample Response
 			"integration_id": "",
 			"node_id": "56f5a816-e85a-4452-a294-d460f52619a1"
 		}
-	}],
-	"clusters": [{
-		"cluster_id": "d4458634-90f8-491b-8aa0-51c62d28e642",
-		"sds_name": "ceph",
-		"sds_version": "10.2.5",
-		"node_ids": ["56f5a816-e85a-4452-a294-d460f52619a1"]
 	}]
 }
 ----------

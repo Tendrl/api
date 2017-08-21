@@ -7,7 +7,9 @@
 Sample Request
 
 ----------
-curl -XGET  -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GetVolumeList
+curl -XGET  -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
+http://127.0.0.1/api/1.0/clusters/5291c055-70d3-4450-9769-2f6fd4932afb/volumes
 ----------
 
 Sample Response
@@ -52,7 +54,9 @@ Sample Request
 
 ----------
 curl -XPOST -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
-'{"Volume.volname":"Volume_009","Volume.bricks":[[{"exampl.hostname":"/mnt/api_test/rep_vol_b1/b1"},{"example.hostname": "/mnt/api_test/rep_vol_b3/b3"}]],"Volume.replica_count":"2","Volume.force":true}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
+'{"Volume.volname":"Volume_009","Volume.bricks":[[{"exampl.hostname":"/mnt/api_test/rep_vol_b1/b1"},{"example.hostname":
+"/mnt/api_test/rep_vol_b3/b3"}]],"Volume.replica_count":"2","Volume.force":true}'
+http://127.0.0.1/api/1.0/clusters/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
 ----------
 
 Sample Response
@@ -70,7 +74,8 @@ Sample Request
 ----------
 curl -XPOST -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d
 '{"Volume.volname":"Volume_009","Volume.bricks":[[{"exampl.hostname":"/mnt/api_test/ec_vol_b1/b1"},{"example.hostname":
-"/mnt/api_test/ec_vol_b3/b3"}]],"Volume.disperse_count":"2","Volume.force":true,"Volume.redundancy_count":"2"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
+"/mnt/api_test/ec_vol_b3/b3"}]],"Volume.disperse_count":"2","Volume.force":true,"Volume.redundancy_count":"2"}'
+http://127.0.0.1/api/1.0/clusters/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterCreateVolume
 ----------
 
 Sample Response
@@ -87,7 +92,7 @@ Sample Request
 ----------
 curl -XPOST -H 'Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a'
-http://127.0.0.1/api/1.0/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStartVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
+http://127.0.0.1/api/1.0/clusters/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStartVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
 ----------
 
 Sample Response
@@ -104,7 +109,7 @@ Sample Request
 ----------
 curl -XPOST -H 'Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a'
-http://127.0.0.1/api/1.0/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStopVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
+http://127.0.0.1/api/1.0/clusters/d45e498b-9cb1-4f68-8e18-9275d0c8b96c/GlusterStopVolume -d '{"Volume.vol_id":"abeddda1-5563-4240-b509-acc4bb8039d1","Volume.volname":"Volume_009"}'
 ----------
 
 Sample Response
@@ -122,7 +127,7 @@ Sample request
 curl -H 'Authorization: Bearer
 07266dc540499d8e7c49ddb3f7dbc4921db83e98b8f9009bde28045c4b5b4064' -XPUT -d
 '{"Volume.vol_id":"5c4839ab-1997-47a1-8fe8-fa3684c28f16","Volume.volname":"Volume_009","Volume.force":true,"Volume.fix_layout":true}'
-http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStartVolumeRebalance
+http://127.0.0.1/api/1.0/clusters/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStartVolumeRebalance
 ----------
 
 Sample response
@@ -140,7 +145,7 @@ Sample request
 curl -H 'Authorization: Bearer
 07266dc540499d8e7c49ddb3f7dbc4921db83e98b8f9009bde28045c4b5b4064' -XPUT -d
 '{"Volume.vol_id":"5c4839ab-1997-47a1-8fe8-fa3684c28f16","Volume.volname":"Volume_009","Volume.force":true}' 
-http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStopVolumeRebalance
+http://127.0.0.1/api/1.0/clusters/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterStopVolumeRebalance
 ----------
 
 Sample response
@@ -161,7 +166,8 @@ curl -H 'Authorization: Bearer
 "Volume.bricks":[[{"10.0.0.1":"/mnt/test/b101"}, {"10.0.0.1":"/mnt/test/b102"},
 {"10.0.0.1":"/mnt/test/b103"}],[ {"10.0.0.1":"/mnt/test/b104"},
 {"10.0.0.1":"/mnt/test/b105"},
-{"10.0.0.1":"/mnt/test/b106"}]],"Volume.force":true}' http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterExpandVolume
+{"10.0.0.1":"/mnt/test/b106"}]],"Volume.force":true}'
+http://127.0.0.1/api/1.0/clusters/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterExpandVolume
 ----------
 
 Sample Response
@@ -181,7 +187,7 @@ curl -H 'Authorization: Bearer
 '{"Volume.volname":"ec","Volume.vol_id":"4a91718a-2434-4ad7-bff5-b0c109e92cf1",
 "Volume.bricks":[[{"10.0.0.1":"/mnt/ec/b201"}, {"10.0.0.1":"/mnt/ec/b202"},
 {"10.0.0.1":"/mnt/ec/b203"},{"10.0.0.2":"/mnt/ec/b204"},{"10.0.0.2":"/mnt/ec/b205"},{"10.0.0.2":"/mnt/ec/b206"}]],"Volume.force":true}'
-http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterExpandVolume
+http://127.0.0.1/api/1.0/clusters/d3c644f1-0f94-43e1-946f-e40c4694d703/GlusterExpandVolume
 ----------
 
 Sample Response
@@ -197,7 +203,7 @@ Sample Request
 
 ----------
 curl -XDELETE  -H "Authorization: Bearer 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -d '{"Volume.volname":"Volume_009","Volume.vol_id":"f2e68a00-71c9
--4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterDeleteVolume
+-4efc-a28b-7204acf9ecff"}' http://127.0.0.1/api/1.0/clusters/5291c055-70d3-4450-9769-2f6fd4932afb/GlusterDeleteVolume
 ----------
 
 Sample Response

@@ -22,13 +22,51 @@ describe ClustersController do
     end
 
     it 'clusters' do
-      get "/GetClusterList", {}, http_env
+      get "/clusters", {}, http_env
       expect(last_response.status).to eq 200
     end
 
   end
 
-  
+  context 'import' do
+
+    before do
+      stub_definitions
+      stub_unmanaged_cluster
+      stub_job_creation
+    end
+
+    it 'unmanaged' do
+      body = {
+        enable_volume_profiling: true
+      }
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/import',
+        body.to_json,
+        http_env
+      expect(last_response.status).to eq 202
+    end
+
+  end
+
+  context 'profiling' do
+
+    before do
+      stub_cluster
+      stub_cluster_profiling
+    end
+
+    it 'enable' do
+      body = {
+        enable_volume_profiling: true
+      }
+      put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
+        body.to_json,
+        http_env
+      expect(last_response.status).to eq 200
+    end
+
+  end
+
   context 'actions' do
 
     before do
@@ -44,7 +82,9 @@ describe ClustersController do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetNodeList', {}, http_env
+        get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetNodeList',
+          {},
+          http_env
         expect(last_response.status).to eq(404)
       end
 
@@ -59,7 +99,7 @@ describe ClustersController do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetPoolList', {}, http_env
+        get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/pools', {}, http_env
         expect(last_response.status).to eq 200
       end
 
@@ -70,7 +110,7 @@ describe ClustersController do
           "Pool.min_size" => 1
         }
 
-        post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
+        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202
@@ -84,7 +124,7 @@ describe ClustersController do
           "Pool.min_size" => 1
         }
 
-        put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephUpdatePool',
+        put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephUpdatePool',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202
@@ -96,7 +136,7 @@ describe ClustersController do
           "Pool.pool_id" => "f2e68a00-71c9 -4efc-a28b-7204acf9ecff"
         }
 
-        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
+        delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202
@@ -111,7 +151,7 @@ describe ClustersController do
             "Rbd.size" => 1024
           }
 
-          post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreateRbd',
+          post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreateRbd',
             body.to_json,
             http_env
           expect(last_response.status).to eq 202
@@ -124,7 +164,7 @@ describe ClustersController do
             "Rbd.size" => 2048
           }
 
-          put '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephResizeRbd',
+          put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephResizeRbd',
             body.to_json,
             http_env
           expect(last_response.status).to eq 202
@@ -136,7 +176,7 @@ describe ClustersController do
             "Rbd.name" => 'RBD_009',
           }
 
-          delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
+          delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
             body.to_json,
             http_env
           expect(last_response.status).to eq 202
@@ -155,7 +195,7 @@ describe ClustersController do
       end
 
       it 'list' do
-        get '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GetVolumesList', {},
+        get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/volumes', {},
           http_env
         expect(last_response.status).to eq 200
       end
@@ -167,7 +207,7 @@ describe ClustersController do
             "dhcp-1.lab.tendrl.example:/root/bricks/vol9_b1"
           ] 
         }
-        post '6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
+        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202
@@ -178,7 +218,7 @@ describe ClustersController do
           "Volume.volname" => "Volume_009",
           "Volume.vol_id" => "f2e68a00-71c9-4efc-a28b-7204acf9ecff"
         } 
-        delete '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
+        delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202
@@ -207,7 +247,7 @@ describe ClustersController do
             },
           },
         }
-        post '/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateBrick',
+        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateBrick',
           body.to_json,
           http_env
         expect(last_response.status).to eq 202

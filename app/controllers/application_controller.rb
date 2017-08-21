@@ -113,23 +113,4 @@ class ApplicationController < Sinatra::Base
     Tendrl.etcd
   end
 
-  def recurse(parent, attrs={})
-    parent_key = parent.key.split('/')[-1].downcase
-    return attrs if ['definitions', 'raw_map'].include?(parent_key)
-    parent.children.each do |child|
-      child_key = child.key.split('/')[-1].downcase
-      attrs[parent_key] ||= {}
-      if child.dir
-        recurse(child, attrs[parent_key])
-      else
-        if attrs[parent_key]
-          attrs[parent_key][child_key] = child.value
-        else
-          attrs[child_key] = child.value
-        end
-      end
-    end
-    attrs
-  end
-
 end

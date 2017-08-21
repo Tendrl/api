@@ -43,7 +43,7 @@ class AuthenticatedUsersController < ApplicationController
   def cluster(cluster_id)
     load_definitions(cluster_id)
     @cluster ||=
-      recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
+      Tendrl.recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
   rescue Etcd::KeyNotFound => e
     exception =  Tendrl::HttpResponseErrorHandler.new(
       e, cause: '/clusters/id', object_id: cluster_id

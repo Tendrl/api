@@ -12,7 +12,8 @@ Sample Request
 curl -XPOST -H "Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
 -d '{ "node_ids": ["7026f371-2d8c-4ad7-895f-4d4dcc70ff1c"], \
-"sds_type":"ceph"}' http://127.0.0.1/api/1.0/ImportCluster 
+"sds_type":"ceph"}'
+http://127.0.0.1/api/1.0/clusters/9a4b84e0-17b3-4543-af9f-e42000c52bfc/import
 ----------
 
 Sample Response
@@ -98,7 +99,7 @@ Sample Request
 ----------
 curl -XGET -H "Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
-http://127.0.0.1/api/1.0/GetClusterList 
+http://127.0.0.1/api/1.0/clusters
 ----------
 
 Sample Response
@@ -113,6 +114,8 @@ Status: 200 OK
 		"sds_name": "ceph",
 		"sds_version": "10.2.5",
 		"cluster_id": "64d779e6-491e-4998-a805-1252bbd5a899",
+    "is_managed": "yes",
+    "enable_volume_profiling": "true",
 		"pools": {
 			"14": {
 				"pool_name": "dummy",
