@@ -8,13 +8,14 @@ module Tendrl
     ROLES = [ADMIN, NORMAL, LIMITED]
 
     attr_accessor :name, :email, :username, :role, :password_hash,
-      :password_salt
+      :password_salt, :email_notifications
 
-    def initialize(name = nil, email = nil, username = nil, role = nil)
-      @name = name
-      @email = email
-      @username = username
-      @role = role
+    def initialize(attributes={})
+      @name = attributes[:name]
+      @email = attributes[:email]
+      @username = attributes[:username]
+      @email_notifications = attributes[:email_notifications]
+      @role = attributes[:role]
       @password_hash = nil
       @password_salt = nil
     end
@@ -64,8 +65,7 @@ module Tendrl
             child.children.each do |attribute|
               attributes[attribute.key.split('/')[-1].to_sym] = attribute.value
             end
-            users << new(attributes[:name], attributes[:email],
-                         attributes[:username], attributes[:role])
+            users << new(attributes)
           end
         rescue Etcd::KeyNotFound
         end
@@ -78,7 +78,7 @@ module Tendrl
           children.each do |child|
           attributes[child.key.split('/')[-1].to_sym] = child.value
         end
-        user = new(attributes[:name], attributes[:email], attributes[:username], attributes[:role])
+        user = new(attributes)
         user.password_hash = attributes[:password_hash]
         user.password_salt = attributes[:password_salt]
         user
@@ -111,6 +111,7 @@ module Tendrl
             dir: true
           )
         rescue Etcd::NotFile
+          # Exception for existing username, so update
         end
         attributes.each do |key, value|
           Tendrl.etcd.set("/_tendrl/users/#{attributes[:username]}/#{key}", value: value)

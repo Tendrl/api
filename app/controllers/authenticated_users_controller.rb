@@ -10,6 +10,10 @@ class AuthenticatedUsersController < ApplicationController
     end
   end
 
+  get '/current_user' do
+    UserPresenter.single(current_user).to_json
+  end
+
   def admin_user?
     current_user.admin?
   end

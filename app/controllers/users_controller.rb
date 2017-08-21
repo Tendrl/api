@@ -59,7 +59,8 @@ class UsersController < AuthenticatedUsersController
       :username,
       :role,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :email_notifications
     )
   end
 

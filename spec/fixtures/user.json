@@ -35,7 +35,17 @@
 			"value": "$2a$10$2TEvrFp5cKo9dFvJSRyp6e",
 			"modifiedIndex": 192,
 			"createdIndex": 192
-		}],
+		},{
+			"key": "/_tendrl/users/dwarner/email_notifications",
+			"value": "true",
+			"modifiedIndex": 192,
+			"createdIndex": 192
+    },{
+			"key": "/_tendrl/users/dwarner/role",
+			"value": "normal",
+			"modifiedIndex": 192,
+			"createdIndex": 192
+    }],
 		"modifiedIndex": 188,
 		"createdIndex": 188
 	}
