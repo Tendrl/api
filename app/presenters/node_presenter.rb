@@ -4,11 +4,14 @@ module NodePresenter
       nodes = []
       nodes_list.each do |node|
         node.each do |_, attributes|
-          attributes.slice!('nodecontext')
+          attributes.slice!('nodecontext','tendrlcontext')
           node_attr = attributes.delete('nodecontext')
-          node_attr.delete('tags')
           next if node_attr.blank?
-          nodes << node_attr.merge(attributes)
+          if cluster = attributes.delete('tendrlcontext')
+            cluster.delete('node_id')
+          end
+          node_attr.delete('tags')
+          nodes << node_attr.merge(attributes).merge(cluster: (cluster || {}))
         end
       end
       nodes
