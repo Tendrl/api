@@ -13,7 +13,7 @@
         "createdIndex": 7101
         }, {
         "key": "/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/enable_volume_profiling",
-        "value": "false",
+        "value": "no",
         "modifiedIndex": 7101,
         "createdIndex": 7101
         }, {

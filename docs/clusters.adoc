@@ -11,7 +11,7 @@ Sample Request
 ----------
 curl -XPOST -H "Authorization: Bearer
 4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
--d '{ "enable_volume_profiling": true }'
+-d '{ "enable_volume_profiling": "yes" }'
 http://127.0.0.1/api/1.0/clusters/9a4b84e0-17b3-4543-af9f-e42000c52bfc/import
 ----------
 
