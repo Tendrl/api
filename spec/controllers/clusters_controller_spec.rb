@@ -38,7 +38,7 @@ describe ClustersController do
 
     it 'unmanaged' do
       body = {
-        enable_volume_profiling: true
+        enable_volume_profiling: "yes"
       }
       post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/import',
         body.to_json,
@@ -57,7 +57,7 @@ describe ClustersController do
 
     it 'enable' do
       body = {
-        enable_volume_profiling: true
+        enable_volume_profiling: "yes"
       }
       put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
         body.to_json,
