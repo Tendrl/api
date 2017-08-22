@@ -15,6 +15,7 @@ module ClusterPresenter
         context = attributes.delete('tendrlcontext')
         context['cluster_id'] = cluster_id
         attributes.slice!(
+          'errors',
           'globaldetails',
           'nodes',
           'public_network',
@@ -22,6 +23,7 @@ module ClusterPresenter
           'is_managed',
           'enable_volume_profiling'
         )
+        attributes['errors'] = JSON.parse(attributes['errors']) rescue []
         nodes = attributes.delete('nodes')
         cluster_nodes = []
         if nodes.present?
