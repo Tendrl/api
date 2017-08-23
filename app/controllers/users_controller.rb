@@ -27,7 +27,7 @@ class UsersController < AuthenticatedUsersController
       status 201
       UserPresenter.single(user).to_json
     else
-      status 400
+      status 422
       { errors: user_form.errors.messages }.to_json
     end
   end
@@ -39,7 +39,7 @@ class UsersController < AuthenticatedUsersController
       user = Tendrl::User.save(user_form.attributes)
       UserPresenter.single(user).to_json
     else
-      status 400
+      status 422
       { errors: user_form.errors.messages }.to_json
     end
   end
