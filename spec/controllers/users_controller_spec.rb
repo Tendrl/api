@@ -39,7 +39,7 @@ RSpec.describe UsersController do
 
     it 'invalid attributes' do
       post "/users", { username: body[:username] }.to_json, http_env
-      expect(last_response.status).to eq(400)
+      expect(last_response.status).to eq(422)
     end
 
     it 'valid attributes' do
