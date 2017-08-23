@@ -73,7 +73,9 @@ class ClustersController < AuthenticatedUsersController
       enable_volume_profiling: body['enable_volume_profiling']
     )
     status 200
-    ClusterPresenter.single({ params[:cluster_id] => cluster.attributes })
+    ClusterPresenter.single(
+      { params[:cluster_id] => cluster.attributes }
+    ).to_json
   end
 
   put '/clusters/:cluster_id/:flow' do

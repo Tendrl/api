@@ -7,10 +7,10 @@ module NodePresenter
           attributes.slice!('nodecontext','tendrlcontext')
           node_attr = attributes.delete('nodecontext')
           next if node_attr.blank?
+          node_attr['tags'] = JSON.parse(node_attr['tags']) rescue []
           if cluster = attributes.delete('tendrlcontext')
             cluster.delete('node_id')
           end
-          node_attr.delete('tags')
           nodes << node_attr.merge(attributes).merge(cluster: (cluster || {}))
         end
       end

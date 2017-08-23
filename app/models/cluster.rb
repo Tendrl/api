@@ -10,7 +10,7 @@ module Tendrl
     def update_attributes(attributes)
       attributes.each do |key, value|
         Tendrl.etcd.set("/clusters/#{@attributes['integration_id']}/#{key}", value: value)
-        @attributes[key] = value
+        @attributes[key.to_s] = value
       end
       self
     end
