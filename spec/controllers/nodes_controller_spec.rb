@@ -12,7 +12,7 @@ describe NodesController do
 
   before do
     stub_user('dwarner')
-    stub_access_token
+    stub_access_token('dwarner')
     stub_definitions
   end
 

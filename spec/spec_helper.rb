@@ -205,6 +205,19 @@ def stub_create_user_attributes(attributes)
   end
 end
 
+def stub_update_user_attributes(username, attributes)
+  attributes.each do |key, value|
+    stub_request(
+      :put,
+      /http:\/\/127.0.0.1:4001\/v2\/keys\/_tendrl\/users\/#{username}\/.*/i
+    ).
+    to_return(
+      :status => 200,
+      :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}/#{key}\",\"value\":\"#{CGI.unescape(value.to_s)}\",\"modifiedIndex\":184,\"createdIndex\":184}}"
+    )
+  end
+end
+
 def stub_users
   stub_request(
     :get,
@@ -223,7 +236,7 @@ def stub_user(username)
   ).
   to_return(
     :status => 200,
-    :body => File.read('spec/fixtures/user.json')
+    :body => File.read("spec/fixtures/#{username}.json")
   )
 end
 
@@ -233,21 +246,71 @@ def stub_user_create(username)
     "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}").
     with(
       :body => "dir=true"
-  ).
+ ).
   to_return(
     :status => 201,
     :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":437,\"createdIndex\":437}}",
+  )
+end
+
+def stub_create_existing_user(username)
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}").
+    with(
+      :body => "dir=true"
+  ).
+  to_return(
+    :status => 200,
+    :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":454,\"createdIndex\":454}}",
     :headers => {}
   )
 end
 
-def stub_access_token
+def stub_failed_create_existing_user(username)
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}").
+    with(
+      :body => "dir=true"
+  ).
+  to_return(
+    :status => 403,
+    :body => "{\"errorCode\":102,\"message\":\"Not a file\",\"cause\":\"/_tendrl/users/meh\",\"index\":453}",
+    :headers => {}
+  )
+end
+
+def stub_access_token(username)
   stub_request(
     :get,
     "http://127.0.0.1:4001/v2/keys/_tendrl/access_tokens/d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8").
     to_return(
       :status => 200,
-      :body => File.read('spec/fixtures/access_token.json')
+      :body => "{\"action\": \"get\",\"node\": {\"key\": \"/_tendrl/access_tokens/8d6ff8e9475dcf9815c3adce4aa3f6b999c31d29281d0cb90fe085d589b4a736\",\"value\": \"#{username}\",\"modifiedIndex\": 342,\"createdIndex\": 342}}"
+  )
+end
+
+def stub_delete_user(username)
+  stub_request(
+    :delete,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{username}?recursive=true").
+  to_return(
+    :status => 200,
+    :body => "{\"action\":\"delete\",\"node\":{\"key\":\"/_tendrl/users/#{username}\",\"dir\":true,\"modifiedIndex\":455,\"createdIndex\":454},\"prevNode\":{\"key\":\"/_tendrl/users/fff\",\"dir\":true,\"modifiedIndex\":454,\"createdIndex\":454}}"
+  )
+end
+
+def stub_email_notifications_index(username, email)
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/indexes/notifications/email_notifications/#{username}").
+  with(
+    :body => "value=#{CGI.escape(email)}"
+  ).
+  to_return(
+    :status => 200,
+    :body => "{\"action\":\"get\",\"node\":{\"key\":\"/_tendrl/indexes/notifications/email_notifications\",\"dir\":true,\"nodes\":[{\"key\":\"/_tendrl/indexes/notifications/email_notifications/#{username}\",\"value\":\"#{email}\",\"modifiedIndex\":456,\"createdIndex\":456}],\"modifiedIndex\":456,\"createdIndex\":456}}"
   )
 end
 
@@ -272,5 +335,3 @@ def stub_node
     :body => File.read('spec/fixtures/node.json')
     )
 end
-
-
