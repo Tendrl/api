@@ -7,6 +7,7 @@ RSpec.describe Tendrl::User do
   end
   
   it 'create' do
+    stub_email_notifications_index('dwarner', 'dwarner@tendrl.org')
     stub_user('dwarner')
     stub_user_create('dwarner')
     attributes = {
@@ -24,7 +25,7 @@ RSpec.describe Tendrl::User do
 
     before do
       stub_user('dwarner')
-      stub_access_token
+      stub_access_token('dwarner')
     end
 
     it 'with valid username and password' do

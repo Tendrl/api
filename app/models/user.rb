@@ -20,6 +20,16 @@ module Tendrl
       @password_salt = nil
     end
 
+    def attributes
+      {
+        name: name,
+        email: email,
+        username: username,
+        email_notifications: email_notifications,
+        role: role
+      }
+    end
+
     def admin?
       @role == ADMIN
     end
@@ -116,7 +126,20 @@ module Tendrl
         attributes.each do |key, value|
           Tendrl.etcd.set("/_tendrl/users/#{attributes[:username]}/#{key}", value: value)
         end
-        find(attributes[:username])
+        user = find(attributes[:username])
+        post_save_hooks(user)
+        user
+      end
+
+      def post_save_hooks(user)
+        update_email_notification_indexes(user)
+      end
+
+      def update_email_notification_indexes(user)
+        if user.email_notifications == "true"
+          Tendrl.etcd.set("/_tendrl/indexes/notifications/email_notifications/#{user.username}",
+                        value: user.email)
+        end
       end
 
       def authenticate(username, password)

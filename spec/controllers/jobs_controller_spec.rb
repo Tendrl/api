@@ -12,7 +12,7 @@ describe JobsController do
 
   before do
     stub_user('dwarner')
-    stub_access_token
+    stub_access_token('dwarner')
   end
 
   context 'jobs' do

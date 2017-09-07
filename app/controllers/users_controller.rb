@@ -1,14 +1,12 @@
 class UsersController < AuthenticatedUsersController
 
-  before '/users/*'do
-    halt 403, { errors: { message: 'Forbidden' } }.to_json unless admin_user?
-  end
-
   get '/users' do
+    authorized?
     UserPresenter.list(Tendrl::User.all).to_json
   end
 
   get '/users/:username' do
+    authorized? unless current_user.username == params[:username]
     user = Tendrl::User.find(params[:username])
     if user
       UserPresenter.single(user).to_json
@@ -18,6 +16,7 @@ class UsersController < AuthenticatedUsersController
   end
 
   post '/users' do
+    authorized?
     user_form = Tendrl::UserForm.new(
       Tendrl::User.new,
       user_attributes
@@ -33,10 +32,13 @@ class UsersController < AuthenticatedUsersController
   end
 
   put '/users/:username' do
+    authorized? unless current_user.username == params[:username]
     user = Tendrl::User.find(params[:username])
     user_form = Tendrl::UserForm.new(user, user_attributes)
     if user_form.valid?
-      user = Tendrl::User.save(user_form.attributes)
+      attributes = user_form.attributes
+      attributes.delete(:role) # Disallow updating role
+      user = Tendrl::User.save(attributes)
       UserPresenter.single(user).to_json
     else
       status 422
@@ -45,11 +47,21 @@ class UsersController < AuthenticatedUsersController
   end
 
   delete '/users/:username' do
-    Tendrl::User.find(params[:username]).delete
-    {}.to_json
+    authorized?
+    user = Tendrl::User.find(params[:username])
+    if user.admin?
+      halt 403, { errors: { message: 'Forbidden' } }.to_json
+    else
+      user.delete
+      {}.to_json
+    end
   end
 
   private
+
+  def authorized?
+    halt 403, { errors: { message: 'Forbidden' } }.to_json unless admin_user?
+  end
 
   def user_attributes
     body = request.body.read
