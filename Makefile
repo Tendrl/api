@@ -8,10 +8,17 @@ all: srpm
 
 dist:
 	mkdir -p $(NAME)-$(VERSION)
-	cp -r app config docs lib public spec $(NAME)-$(VERSION)/
+	cp -r app config docs lib public spec selinux $(NAME)-$(VERSION)/
 	cp config.ru Gemfile* Makefile Rakefile README* tendrl-api.* $(NAME)-$(VERSION)/
 	tar -zcf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
 	rm -rf $(NAME)-$(VERSION)
+
+bzip-selinux-policy:
+	@cd selinux; \
+	rm -f *.pp.bz2 tmp; \
+	make -f /usr/share/selinux/devel/Makefile; \
+	bzip2 -9 tendrl.pp; \
+        bzip2 -9 carbon.pp
 
 clean:
 	rm -f $(NAME)-$(VERSION).tar.gz
