@@ -117,18 +117,13 @@ install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/
 install -Dm 0644 config/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/
 
 # Install SELinux interfaces and policy modules
-install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 install -d %{buildroot}%{_datadir}/selinux/packages
 
 # tendrl
-install -p -m 644 selinux/tendrl.if \
-        %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 install -m 0644 selinux/tendrl.pp.bz2 \
 	%{buildroot}%{_datadir}/selinux/packages
 
 # carbon
-install -p -m 644 selinux/carbon.if \
-        %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 install -m 0644 selinux/carbon.pp.bz2 \
         %{buildroot}%{_datadir}/selinux/packages
 
@@ -173,12 +168,10 @@ fi
 %files -n tendrl-server-selinux
 %defattr(-,root,root,0755)
 %attr(0644,root,root) %{_datadir}/selinux/packages/tendrl.pp.bz2
-%attr(0644,root,root) %{_datadir}/selinux/devel/include/%{moduletype}/tendrl.if
 
 %files -n carbon-selinux
 %defattr(-,root,root,0755)
 %attr(0644,root,root) %{_datadir}/selinux/packages/carbon.pp.bz2
-%attr(0644,root,root) %{_datadir}/selinux/devel/include/%{moduletype}/carbon.if
 
 %files
 %dir %{_var}/log/tendrl/api
