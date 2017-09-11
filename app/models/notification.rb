@@ -20,7 +20,8 @@ module Tendrl
               notification[key] = child.value
             end
           end
-          if notification.present? && notification['priority'] == 'notice'
+          if notification.present? && notification['priority'] == 'notice' &&
+              notification['notify_only_ui'] == 'true'
             begin
               message = JSON.parse(notification['message'])['tags']['message']
               notification['message'] = message
