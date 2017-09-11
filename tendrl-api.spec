@@ -1,10 +1,8 @@
 %global selinuxtype targeted
 %global moduletype  services
-%global modulenames tendrl
 
 # todo relable should be enhanced later to specific things
 %global relabel_files() %{_sbindir}/restorecon -Rv /
-%global _format() export %1=""; for x in %{modulenames}; do %1+=%2; %1+=" "; done;
 
 Name: tendrl-api
 Version: 1.5.1
@@ -52,6 +50,17 @@ BuildRequires: selinux-policy selinux-policy-devel
 
 %description -n tendrl-server-selinux
 SELinux Policies for Tendrl Server
+
+%package -n tendrl-grafana-selinux
+License: GPLv2
+Group: System Environment/Base
+Summary: SELinux Policies for Tendrl Grafana
+BuildArch: noarch
+Requires(post): selinux-policy-base, selinux-policy-targeted, policycoreutils, policycoreutils-python libselinux-utils
+BuildRequires: selinux-policy selinux-policy-devel
+
+%description -n tendrl-grafana-selinux
+SELinux Policies for Tendrl Grafana
 
 %package doc
 Summary: Documentation for %{name}
@@ -127,20 +136,30 @@ install -m 0644 selinux/tendrl.pp.bz2 \
 install -m 0644 selinux/carbon.pp.bz2 \
         %{buildroot}%{_datadir}/selinux/packages
 
+# grafana
+install -m 0644 selinux/grafana.pp.bz2 \
+        %{buildroot}%{_datadir}/selinux/packages
+
+
 %post -n tendrl-server-selinux
-%_format MODULE %{_datadir}/selinux/packages/tendrl.pp.bz2
-%{_sbindir}/semodule -n -s %{selinuxtype} -i $MODULE
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/tendrl.pp.bz2
 if %{_sbindir}/selinuxenabled ; then
     %{_sbindir}/load_policy
     %relabel_files
 fi
 
 %post -n carbon-selinux
-%_format MODULE %{_datadir}/selinux/packages/carbon.pp.bz2
-%{_sbindir}/semodule -n -s %{selinuxtype} -i $MODULE
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/carbon.pp.bz2
 if %{_sbindir}/selinuxenabled ; then
     %{_sbindir}/load_policy
-    %carbon_relabel_files
+    %relabel_files
+fi
+
+%post -n tendrl-grafana-selinux
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/grafana.pp.bz2
+if %{_sbindir}/selinuxenabled ; then
+    %{_sbindir}/load_policy
+    %relabel_files
 fi
 
 %post httpd
@@ -149,7 +168,7 @@ systemctl enable tendrl-api
 
 %postun -n tendrl-server-selinux
 if [ $1 -eq 0 ]; then
-    %{_sbindir}/semodule -n -r %{modulenames} &> /dev/null || :
+    %selinux_modules_uninstall -s %{selinuxtype} tendrl &> /dev/null || :
     if %{_sbindir}/selinuxenabled ; then
 	%{_sbindir}/load_policy
 	%relabel_files
@@ -158,7 +177,16 @@ fi
 
 %postun -n carbon-selinux
 if [ $1 -eq 0 ]; then
-    %{_sbindir}/semodule -n -r %{modulenames} &> /dev/null || :
+    %selinux_modules_uninstall -s %{selinuxtype} carbon &> /dev/null || :
+    if %{_sbindir}/selinuxenabled ; then
+        %{_sbindir}/load_policy
+        %carbon_relabel_files
+    fi
+fi
+
+%postun -n tendrl-grafana-selinux
+if [ $1 -eq 0 ]; then
+        %selinux_modules_uninstall -s %{selinuxtype} grafana &> /dev/null || :
     if %{_sbindir}/selinuxenabled ; then
         %{_sbindir}/load_policy
         %carbon_relabel_files
@@ -172,6 +200,10 @@ fi
 %files -n carbon-selinux
 %defattr(-,root,root,0755)
 %attr(0644,root,root) %{_datadir}/selinux/packages/carbon.pp.bz2
+
+%files -n tendrl-grafana-selinux
+%defattr(-,root,root,0755)
+%attr(0644,root,root) %{_datadir}/selinux/packages/grafana.pp.bz2
 
 %files
 %dir %{_var}/log/tendrl/api

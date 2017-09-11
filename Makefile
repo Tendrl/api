@@ -18,7 +18,8 @@ bzip-selinux-policy:
 	rm -f *.pp.bz2 tmp; \
 	make -f /usr/share/selinux/devel/Makefile; \
 	bzip2 -9 tendrl.pp; \
-        bzip2 -9 carbon.pp
+        bzip2 -9 carbon.pp; \
+        bzip2 -9 grafana.pp
 
 clean:
 	rm -f $(NAME)-$(VERSION).tar.gz
