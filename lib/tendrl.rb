@@ -32,6 +32,8 @@ require './app/models/cluster'
 require './app/models/alert'
 require './app/models/notification'
 require './app/models/job'
+require './app/models/volume'
+require './app/models/brick'
 
 # Forms
 require './app/forms/user_form'
@@ -42,6 +44,7 @@ require './app/presenters/cluster_presenter'
 require './app/presenters/job_presenter'
 require './app/presenters/user_presenter'
 require './app/presenters/volume_presenter'
+require './app/presenters/brick_presenter'
 
 # Errors
 require './lib/tendrl/errors/tendrl_error'

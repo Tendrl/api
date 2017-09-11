@@ -90,102 +90,6 @@ describe ClustersController do
 
     end
 
-    context 'pools' do
-
-      before do
-        stub_cluster_definitions('ceph')
-        stub_pools
-        stub_node_ids
-      end
-
-      it 'list' do
-        get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/pools', {}, http_env
-        expect(last_response.status).to eq 200
-      end
-
-      it 'create' do
-        body = { 
-          "Pool.poolname" => "pool_009",
-          "Pool.pg_num" => 128,
-          "Pool.min_size" => 1
-        }
-
-        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreatePool',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
-
-      it 'update' do
-        body = { 
-          "Pool.pool_id" => "0",
-          "Pool.poolname" => "pool_009",
-          "Pool.pg_num" => 128,
-          "Pool.min_size" => 1
-        }
-
-        put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephUpdatePool',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
-
-      it 'delete' do
-        body = {
-          "Pool.poolname" => "pool_009",
-          "Pool.pool_id" => "f2e68a00-71c9 -4efc-a28b-7204acf9ecff"
-        }
-
-        delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
-
-      context 'rbds' do
-
-        it 'create' do
-          body = { 
-            "Rbd.pool_id" => "0",
-            "Rbd.name" => 'RBD_009',
-            "Rbd.size" => 1024
-          }
-
-          post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephCreateRbd',
-            body.to_json,
-            http_env
-          expect(last_response.status).to eq 202
-        end
-
-        it 'resize' do
-          body = { 
-            "Rbd.pool_id" => "0",
-            "Rbd.name" => 'RBD_009',
-            "Rbd.size" => 2048
-          }
-
-          put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephResizeRbd',
-            body.to_json,
-            http_env
-          expect(last_response.status).to eq 202
-        end
-
-        it 'delete' do
-          body = {
-            "Rbd.pool_id" => "0",
-            "Rbd.name" => 'RBD_009',
-          }
-
-          delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/CephDeletePool',
-            body.to_json,
-            http_env
-          expect(last_response.status).to eq 202
-        end
-
-      end
-
-    end
-
     context 'volumes' do
 
       before do
@@ -200,58 +104,9 @@ describe ClustersController do
         expect(last_response.status).to eq 200
       end
 
-      it 'create' do
-        body = { 
-          "Volume.volname" => "Volume_009",
-          "Volume.bricks" => [
-            "dhcp-1.lab.tendrl.example:/root/bricks/vol9_b1"
-          ] 
-        }
-        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateVolume',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
-
-      it 'delete' do
-        body = {
-          "Volume.volname" => "Volume_009",
-          "Volume.vol_id" => "f2e68a00-71c9-4efc-a28b-7204acf9ecff"
-        } 
-        delete '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterDeleteVolume',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
     end
 
     context 'bricks' do
-
-      before do
-        stub_cluster_definitions('gluster')
-        stub_node_ids
-      end
-
-      it 'create' do
-        body = {
-          "Cluster.node_configuration" => {
-            "3e062731-81e4-4b5d-99d0-69f4a7133da0" => {
-              "vdb" => {
-                "brick_name" => "brick_1",
-              },
-            },
-            "e267a3e6-ad7e-482e-a9f9-43a7e8e2c2f5" => {
-              "vdb" => {
-                "brick_name" => "brick_2",
-              },
-            },
-          },
-        }
-        post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/GlusterCreateBrick',
-          body.to_json,
-          http_env
-        expect(last_response.status).to eq 202
-      end
 
     end
 

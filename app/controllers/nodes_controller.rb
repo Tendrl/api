@@ -5,22 +5,9 @@ class NodesController < AuthenticatedUsersController
     Tendrl.node_definitions = YAML.load(definitions)
   end
 
-  get '/Flows' do
-    flows = Tendrl::Flow.find_all
-    { flows: flows }.to_json
-  end
-
   get '/nodes' do
-    begin
-      nodes = etcd.get('/nodes', recursive: true).children.map do |node|
-        Tendrl.recurse(node)
-      end
-    rescue Etcd::KeyNotFound
-    end
-
-    nodes = NodePresenter.list(nodes)
-
-    { nodes: nodes }.to_json
+    nodes = Tendrl::Node.all
+    { nodes: NodePresenter.list(nodes) }.to_json
   end
 
   post '/ImportCluster' do
