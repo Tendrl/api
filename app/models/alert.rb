@@ -18,6 +18,7 @@ module Tendrl
               alert[key] = child.value
             end
           end
+          alert['tags'] = JSON.parse(alert['tags']) || []
           alerts << alert
         end
         alerts.sort do |a, b|

@@ -1,16 +1,16 @@
 module VolumePresenter
   class << self
-    def list(volumes)
-      vols = []
-      volumes.each do |volume|
+    def list(raw_volumes)
+      volumes = []
+      raw_volumes.each do |volume|
         volume.each do |vol_id, attributes|
           attributes['vol_id'] = vol_id
-          attributes['bricks'] = attributes['bricks'].values
-
-          vols << attributes
+          attributes.delete('bricks')
+          attributes.delete('options')
+          volumes << attributes
         end
       end
-      vols
+      volumes
     end
   end
 end
