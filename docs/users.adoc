@@ -116,7 +116,33 @@ Sample Request
 ----------
 curl -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET http://127.0.0.1/api/1.0/users/thardy
 ----------
+
 Sample Response
+
+----------
+Status: 200 OK
+{
+	"email": "thardy@tendrl.org",
+	"username": "thardy",
+	"name": "Tom Hardy",
+	"role": "admin",
+  "email_notifications": true
+}
+----------
+
+== Current User
+
+Retrieve the current logged in user details
+
+Sample Request
+----------
+curl -H 'Authorization: Bearer
+d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET
+http://127.0.0.1/api/1.0/current_user
+----------
+
+Sample Response
+
 ----------
 Status: 200 OK
 {

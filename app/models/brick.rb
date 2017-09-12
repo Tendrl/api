@@ -22,11 +22,15 @@ module Tendrl
             parsed = Tendrl.recurse(node)
             parsed = [parsed] if parsed.is_a? Hash
             parsed.each do |ref|
-              ref.each do |_, attrs|
-                next if attrs.nil?
+              detail = {}
+              ref.each do |sub_volume, attrs|
+                next if attrs.blank?
+                next if sub_volume.blank?
+                detail[sub_volume] = [] 
                 attrs.each do |path, _|
-                  refs << path
+                  detail[sub_volume] << path
                 end
+                refs << detail
               end
             end
           end
@@ -35,24 +39,30 @@ module Tendrl
         refs
       end
 
-      def find_by_cluster_id_and_refs(cluster_id, brick_paths)
+      def find_by_cluster_id_and_refs(cluster_id, sub_volumes)
         bricks = []
-        brick_paths.each do |path|
-          path = path.sub(":_","/")
-          begin
-            bricks << Tendrl.recurse(
-              Tendrl.etcd.get(
-                "/clusters/#{cluster_id}/Bricks/all/#{path}",
-                recursive: true
-              )
-            )
-          rescue Etcd::KeyNotFound, Etcd::NotDir
+        sub_volumes.each do |sub_volume|
+          sub_volume.each do |sv, paths|
+            sub_volume_bricks = []
+            paths.each do |path|
+              path = path.sub(":_","/")
+              begin
+                brick = Tendrl.recurse(
+                  Tendrl.etcd.get(
+                    "/clusters/#{cluster_id}/Bricks/all/#{path}",
+                    recursive: true
+                  )
+                )
+                brick.each{|_, attrs| attrs[:subvolume] = sv }
+                bricks << brick
+              rescue Etcd::KeyNotFound, Etcd::NotDir
+              end
+            end
           end
         end
         bricks
       end
 
     end
-
   end
 end
