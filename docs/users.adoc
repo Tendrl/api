@@ -36,10 +36,10 @@ Sample Response
 Status: 201 Created
 
 {
-	"email": "thardy@tendrl.org",
-	"username": "thardy",
-	"name": "Tom Hardy",
-	"role": "admin",
+  "email": "thardy@tendrl.org",
+  "username": "thardy",
+  "name": "Tom Hardy",
+  "role": "admin",
   "email_notifications": true
 }
 ----------
@@ -59,10 +59,11 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"email": "thardy@tendrl.org",
-	"username": "thardy",
-	"name": "Tom Hardee",
-	"role": "normal"
+  "email": "thardy@tendrl.org",
+  "username": "thardy",
+  "name": "Tom Hardee",
+  "role": "normal",
+  "email_notifications": true
 }
 ----------
 
@@ -71,11 +72,13 @@ Status: 200 OK
 Delete a existing user.
 
 Sample Request
+
 ----------
 curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XDELETE http://127.0.0.1/api/1.0/users/thardy
 ----------
 
 Sample Response
+
 ----------
 Status: 200 OK
 {}
@@ -86,24 +89,26 @@ Status: 200 OK
 List existing users
 
 Sample Request
+
 ----------
 curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET http://127.0.0.1/api/1.0/users
 ----------
 
 Sample Response
+
 ----------
 Status: 200 OK
 [{
-	"email": "admin@tendrl.org",
-	"username": "admin",
-	"name": "Admin",
-	"role": "admin",
+  "email": "admin@tendrl.org",
+  "username": "admin",
+  "name": "Admin",
+  "role": "admin",
   "email_notitifications": true
 }, {
-	"email": "thardy@tendrl.org",
-	"username": "thardy",
-	"name": "Tom Hardy",
-	"role": "admin",
+  "email": "thardy@tendrl.org",
+  "username": "thardy",
+  "name": "Tom Hardy",
+  "role": "admin",
   "email_notifications": false
 }]
 ----------
@@ -113,6 +118,7 @@ Status: 200 OK
 Retrieve single user
 
 Sample Request
+
 ----------
 curl -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET http://127.0.0.1/api/1.0/users/thardy
 ----------
@@ -122,10 +128,10 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"email": "thardy@tendrl.org",
-	"username": "thardy",
-	"name": "Tom Hardy",
-	"role": "admin",
+  "email": "thardy@tendrl.org",
+  "username": "thardy",
+  "name": "Tom Hardy",
+  "role": "admin",
   "email_notifications": true
 }
 ----------
@@ -135,6 +141,7 @@ Status: 200 OK
 Retrieve the current logged in user details
 
 Sample Request
+
 ----------
 curl -H 'Authorization: Bearer
 d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XGET
@@ -146,10 +153,10 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"email": "thardy@tendrl.org",
-	"username": "thardy",
-	"name": "Tom Hardy",
-	"role": "admin",
+  "email": "thardy@tendrl.org",
+  "username": "thardy",
+  "name": "Tom Hardy",
+  "role": "admin",
   "email_notifications": true
 }
 ----------

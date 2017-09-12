@@ -44,76 +44,76 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"clusters": [{
-		"hash": "2dfd3d4a691a44f24d419fea8e6cbf4f",
-		"sds_version": "4.0dev",
-		"updated_at": "2017-09-11 11:20:59.934003+00:00",
-		"sds_name": "gluster",
-		"cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
-		"cluster_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
-		"integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
-		"errors": [],
-		"globaldetails": {
-			"vol_count": "3",
-			"hash": "ec3a8b607f87595d8aed945e2d10c879",
-			"connection_count": "0",
-			"status": "healthy",
-			"connection_active": "0",
-			"volume_up_degraded": "0",
-			"peer_count": "3",
-			"updated_at": "2017-09-11 12:00:00.730036+00:00"
-		},
-		"public_network": "",
-		"cluster_network": "",
-		"is_managed": "yes",
-		"enable_volume_profiling": "yes",
-		"import_status": "None",
-		"import_job_id": "None",
-		"nodes": [{
-			"node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
-			"last_sync": "2017-09-12 05:44:08.064276+00:00",
-			"status": "UP",
-			"hash": "4caa6f742f21c3297972620ab8c35fb4",
-			"tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+  "clusters": [{
+    "hash": "2dfd3d4a691a44f24d419fea8e6cbf4f",
+    "sds_version": "4.0dev",
+    "updated_at": "2017-09-11 11:20:59.934003+00:00",
+    "sds_name": "gluster",
+    "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+    "cluster_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "errors": [],
+    "globaldetails": {
+      "vol_count": "3",
+      "hash": "ec3a8b607f87595d8aed945e2d10c879",
+      "connection_count": "0",
+      "status": "healthy",
+      "connection_active": "0",
+      "volume_up_degraded": "0",
+      "peer_count": "3",
+      "updated_at": "2017-09-11 12:00:00.730036+00:00"
+    },
+    "public_network": "",
+    "cluster_network": "",
+    "is_managed": "yes",
+    "enable_volume_profiling": "yes",
+    "import_status": "None",
+    "import_job_id": "None",
+    "nodes": [{
+      "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+      "last_sync": "2017-09-12 05:44:08.064276+00:00",
+      "status": "UP",
+      "hash": "4caa6f742f21c3297972620ab8c35fb4",
+      "tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
                "tendrl/integration/gluster",
                "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
                "tendrl/node_35b27276-9058-4c09-b64b-9d239ed262cb",
                "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
                "tendrl/node"
               ],
-			"sync_status": "done",
-			"fqdn": "dhcp-3.lab.tendrl",
-			"updated_at": "2017-09-12 05:44:08.260542+00:00",
-			"node_id": "35b27276-9058-4c09-b64b-9d239ed262cb"
-		}, {
-			"node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
-			"last_sync": "2017-09-12 05:43:57.209714+00:00",
-			"status": "UP",
-			"hash": "b70543f9efd1d028da5225df009d263f",
-			"tags": ["tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077",
+      "sync_status": "done",
+      "fqdn": "dhcp-3.lab.tendrl",
+      "updated_at": "2017-09-12 05:44:08.260542+00:00",
+      "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb"
+    }, {
+      "node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
+      "last_sync": "2017-09-12 05:43:57.209714+00:00",
+      "status": "UP",
+      "hash": "b70543f9efd1d028da5225df009d263f",
+      "tags": ["tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077",
                "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
                "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
                "tendrl/integration/gluster",
                "tendrl/node"
               ],
-			"sync_status": "done",
-			"fqdn": "dhcp-2.lab.tendrl",
-			"updated_at": "2017-09-12 05:43:57.439075+00:00",
-			"node_id": "66898e03-4db2-4898-b21e-6f034ba10077"
-		}, {
-			"hash": "220511140ddf9cecb9a31073bdcb45af",
-			"tags": ["detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+      "sync_status": "done",
+      "fqdn": "dhcp-2.lab.tendrl",
+      "updated_at": "2017-09-12 05:43:57.439075+00:00",
+      "node_id": "66898e03-4db2-4898-b21e-6f034ba10077"
+    }, {
+      "hash": "220511140ddf9cecb9a31073bdcb45af",
+      "tags": ["detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
                "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
                "tendrl/integration/gluster",
                "tendrl/node_2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3", "tendrl/node"],
-			"sync_status": "done",
-			"fqdn": "dhcp-1.lab.tendrl",
-			"updated_at": "2017-09-12 05:43:49.697954+00:00",
-			"node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
-			"last_sync": "2017-09-12 05:43:49.359143+00:00",
-			"status": "UP",
-			"node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3"
-		}]
-	}]
+      "sync_status": "done",
+      "fqdn": "dhcp-1.lab.tendrl",
+      "updated_at": "2017-09-12 05:43:49.697954+00:00",
+      "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
+      "last_sync": "2017-09-12 05:43:49.359143+00:00",
+      "status": "UP",
+      "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3"
+    }]
+  }]
 }
 ----------
