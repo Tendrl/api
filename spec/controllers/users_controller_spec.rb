@@ -60,7 +60,9 @@ RSpec.describe UsersController do
       it 'other non admin user succssfully' do
         stub_user('quentin')
         stub_delete_user('quentin')
+        stub_delete_email_notifications_index('quentin')
         delete "/users/quentin", {}, http_env
+        puts last_response.errors
         expect(last_response.status).to eq(200)
       end
 

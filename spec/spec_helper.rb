@@ -314,6 +314,16 @@ def stub_email_notifications_index(username, email)
   )
 end
 
+def stub_delete_email_notifications_index(username)
+  stub_request(
+    :delete,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/indexes/notifications/email_notifications/#{username}").
+  to_return(
+    :status => 200,
+    :body => ""
+  )
+end
+
 def stub_ip
   stub_request(
     :get,
