@@ -39,6 +39,7 @@ module Tendrl
             alert[key] = children.value
           end
         end
+        alert['tags'] = JSON.parse(alert['tags']) rescue []
         alert
       end
 

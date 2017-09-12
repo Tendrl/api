@@ -61,6 +61,7 @@ module Tendrl
     end
 
     def delete
+      Tendrl.etcd.delete("/_tendrl/indexes/notifications/email_notifications/#{username}") rescue Etcd::KeyNotFound
       Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
