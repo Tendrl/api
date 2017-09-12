@@ -38,3 +38,12 @@ allow tendrl_t self:tcp_socket { accept listen };
 allow tendrl_t self:netlink_route_socket nlmsg_write;
 corecmd_exec_shell(tendrl_t)
 corecmd_exec_bin(tendrl_t)
+
+optional_policy(`
+
+    gen_require(`
+	type httpd_t;
+    ')
+    corenet_tcp_bind_amanda_port(httpd_t)
+    tendrl_read_config(httpd_t)
+')
