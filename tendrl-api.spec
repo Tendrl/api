@@ -64,6 +64,8 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/error
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/tmp
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
