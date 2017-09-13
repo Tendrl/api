@@ -1,0 +1,41 @@
+// vim: tw=79
+= Notifications
+:toc:
+
+== List notifications
+
+Retrieve list of notifications
+
+Sample Request
+
+----------
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H
+"Content-Type: application/json" http://127.0.0.1/api/v1/notifications
+----------
+
+Sample Response
+
+----------
+[{
+  "priority": "notice",
+  "timestamp": "2017-09-12T08:06:48.281640+00:00",
+  "message_id": "3e533a8a-ad7a-4e08-b7af-cf3662df77a5",
+  "message": "Job finished successfully (job_id: a5a29169-36ee-4097-940d-b4cbb1fbfb45)"
+}, {
+  "message_id": "51da6900-67c6-406f-b547-042f21cf3d3f",
+  "message": "Job failed (job_id: 03069e37-3326-40cc-9e78-f168175228a7)",
+  "timestamp": "2017-09-12T12:52:27.653265+00:00",
+  "priority": "notice"
+}, {
+  "message_id": "4cd9a212-da90-4bbd-9218-6f645fffe632",
+  "priority": "notice",
+  "message": "Status of brick: dhcp-1.lab.tendrl:/root/bricks/v3 under volume test-v3 changed from Stopped to Started",
+  "timestamp": "2017-09-12T12:53:19.973138+00:00"
+}, {
+  "timestamp": "2017-09-12T12:54:01.571057+00:00",
+  "message": "Job failed (job_id: 9dffc4a7-59b8-4936-8aff-99c7423325dc)",
+  "message_id": "f7768473-6f71-475e-bd27-7fbe8f5f59eb",
+  "priority": "notice"
+}]
+----------
