@@ -30,3 +30,10 @@ permissive carbon_t;
 allow carbon_t self:capability { dac_override fowner fsetid setgid setuid };
 allow carbon_t self:unix_stream_socket create_stream_socket_perms;
 allow carbon_t self:tcp_socket { listen accept create_socket_perms };
+
+optional_policy(`
+        carbon_stub_httpd()
+	manage_dirs_pattern(httpd_t, carbon_var_lib_t, carbon_var_lib_t)
+	manage_files_pattern(httpd_t, carbon_var_lib_t, carbon_var_lib_t)
+	corenet_tcp_bind_amanda_port(httpd_t)
+')
