@@ -20,19 +20,19 @@ describe NodesController do
 
   end
 
-  context 'list' do
-
-    before do
-      stub_nodes
-      stub_clusters(false)
-    end
-
-    it 'nodes' do
-      get "/nodes", {}, http_env
-      expect(last_response.status).to eq 200
-    end
-
-  end
+  # context 'list' do
+  #
+  #   before do
+  #     stub_nodes
+  #     stub_clusters(false)
+  #   end
+  #
+  #   it 'nodes' do
+  #     get "/nodes", {}, http_env
+  #     expect(last_response.status).to eq 200
+  #   end
+  #
+  # end
 
   context 'node agent' do
 
