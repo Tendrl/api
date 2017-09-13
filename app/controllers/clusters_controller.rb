@@ -36,6 +36,11 @@ class ClustersController < AuthenticatedUsersController
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
+    body['Cluster.enable_volume_profiling'] = if ['yes', 'no'].include?(body['enable_volume_profiling'])
+                                                body['enable_volume_profiling']
+                                              else
+                                                'no'
+                                              end
     job = Tendrl::Job.new(
       current_user,
       flow,
