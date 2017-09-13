@@ -1,0 +1,117 @@
+// vim: tw=79
+= Alerts
+:toc:
+
+== List alerts
+
+Retrieve list of alerts
+
+Sample Request
+
+----------
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" http://127.0.0.1/api/v1/alerts
+----------
+
+Sample Response
+
+----------
+[{
+  "source": "node_agent",
+  "time_stamp": "2017-09-11T11:24:41.273828+00:00",
+  "ackedby": "",
+  "classification": "cluster",
+  "hash": "2eca2bfd76f4db0412618bf8ed95da07",
+  "resource": "job_status",
+  "updated_at": "2017-09-11 11:24:42.811869+00:00",
+  "ack_comment": "",
+  "acked": "False",
+  "pid": "20850",
+  "severity": "INFO",
+  "delivered": "False",
+  "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+  "significance": "",
+  "tags": {
+    "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+    "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "message": "Job finished successfully (job_id: d8f72e0b-bd94-4166-9614-2b95a8db5841)",
+    "fqdn": "dhcp41-173.lab.eng.blr.redhat.com",
+    "sds_name": "gluster"
+  },
+  "acked_at": "",
+  "alert_id": "fd47f3fb-ca49-4bb4-a590-3e70330cd9d3",
+  "alert_type": "STATUS",
+  "current_value": "finished"
+}, {
+  "current_value": "failed",
+  "tags": {
+    "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+    "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "message": "Job failed (job_id: 0b81e204-01eb-4db3-b73d-93f33b55a0fa)",
+    "fqdn": "dhcp42-54.lab.eng.blr.redhat.com",
+    "sds_name": null
+  },
+  "delivered": "False",
+  "hash": "8aab0b98d1469f2886b0cacdd98b37ff",
+  "source": "monitoring_integration",
+  "updated_at": "2017-09-11 11:55:33.806011+00:00",
+  "ack_comment": "",
+  "ackedby": "",
+  "classification": "cluster",
+  "node_id": "e8334ec7-9b02-42d0-b298-4f2b836fbcd6",
+  "resource": "job_status",
+  "severity": "WARNING",
+  "significance": "",
+  "time_stamp": "2017-09-11T11:55:30.623566+00:00",
+  "acked": "False",
+  "alert_id": "b970e945-0c77-4111-b8cc-3c41cab7cc24",
+  "alert_type": "STATUS",
+  "acked_at": "",
+  "pid": "32266"
+}]
+----------
+
+== Single alert
+
+Retrieve single alert
+
+Sample Request
+
+----------
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
+http://127.0.0.1/api/1.0/alerts/fd47f3fb-ca49-4bb4-a590-3e70330cd9d3
+----------
+
+Sample Response
+
+----------
+{
+  "source": "node_agent",
+  "time_stamp": "2017-09-11T11:24:41.273828+00:00",
+  "ackedby": "",
+  "classification": "cluster",
+  "hash": "2eca2bfd76f4db0412618bf8ed95da07",
+  "resource": "job_status",
+  "updated_at": "2017-09-11 11:24:42.811869+00:00",
+  "ack_comment": "",
+  "acked": "False",
+  "pid": "20850",
+  "severity": "INFO",
+  "delivered": "False",
+  "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+  "significance": "",
+  "tags": {
+    "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+    "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "message": "Job finished successfully (job_id: d8f72e0b-bd94-4166-9614-2b95a8db5841)",
+    "fqdn": "dhcp41-173.lab.eng.blr.redhat.com",
+    "sds_name": "gluster"
+  },
+  "acked_at": "",
+  "alert_id": "fd47f3fb-ca49-4bb4-a590-3e70330cd9d3",
+  "alert_type": "STATUS",
+  "current_value": "finished"
+}
+----------
+
