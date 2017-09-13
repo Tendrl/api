@@ -56,6 +56,7 @@ Tendrl API httpd configuration.
 %setup
 
 %install
+install -m  0755  --directory $RPM_BUILD_ROOT%{_var}/log/tendrl/api
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters
@@ -66,6 +67,8 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/tmp
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config
+
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
@@ -78,13 +81,14 @@ install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.servic
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
-install -Dm 0644 config/*.* $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config/
+install -Dm 0644 config/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
 systemctl enable tendrl-api
 
 %files
+%dir %{_var}/log/tendrl/api
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
 %{_unitdir}/tendrl-api.service
