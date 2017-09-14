@@ -1,0 +1,56 @@
+# vim: ft=apache
+## Sample apache configuration file for tendrl over https. Replace the
+## placeholder in the VirtualHost tag with the correct IP.
+
+## This configuration file assumes that mod_ssl package is installed on
+## RHEL/CentOS hosts and it's configuration has not been modified.
+
+<VirtualHost %ssl_virtualhost_ip%:443>
+  # Adjust the ServerName directive to reflect the FQDN for your host. Add
+  # additional ServerAlias directives if required.
+  ServerName tendrl
+
+  # This is where the tendrl frontend assets will be installed.
+  DocumentRoot /var/www/tendrl
+
+  # SSL Engine Switch:
+  # Enable/Disable SSL for this virtual host.
+  SSLEngine on
+
+  # SSL Protocol support:
+  # List the enable protocol levels with which clients will be able to
+  # connect.  Disable SSLv2 access by default:
+  SSLProtocol all -SSLv2
+
+  # SSL Cipher Suite:
+  # List the ciphers that the client is permitted to negotiate.
+  # See the mod_ssl documentation for a complete list.
+  SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5:!SEED:!IDEA
+
+  # Server Certificate:
+  # Point SSLCertificateFile at a PEM encoded certificate.  If
+  # the certificate is encrypted, then you will be prompted for a
+  # pass phrase.  Note that a kill -HUP will prompt again.  A new
+  # certificate can be generated using the genkey(1) command.
+  SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+
+  # Server Private Key:
+  # If the key is not combined with the certificate, use this
+  # directive to point at the key file.  Keep in mind that if
+  # you've both a RSA and a DSA private key you can configure
+  # both in parallel (to also allow the use of DSA ciphers, etc.)
+  SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+
+  # Adjust the logging configuration as required.
+  ErrorLog "logs/tendrl-error_log"
+
+  # Per-Server Logging:
+  # The home of a custom SSL log file. Use this when you want a
+  # compact non-error SSL logfile on a virtual host basis.
+  CustomLog logs/tendrl-ssl-access_log \
+            "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+  # The requests to /api/ will all be forwarded to the tendrl-api application.
+  ProxyPass "/api" http://127.0.0.1:9292/
+  ProxyPassReverse "/api" http://127.0.0.1:9292/
+</VirtualHost>

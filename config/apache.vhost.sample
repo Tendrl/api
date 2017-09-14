@@ -16,4 +16,11 @@
   # The requests to /api/ will all be forwarded to the tendrl-api application.
   ProxyPass "/api" http://127.0.0.1:9292/
   ProxyPassReverse "/api" http://127.0.0.1:9292/
+
+  # When SSL is enabled, the following rule will redirect all http requests to
+  # https. Ensure that the same IP used by the SSL VirtualHost is used.
+  #
+  # IMPORTANT: Be sure to comment out the DocumentRoot, ProxyPass and
+  # ProxyPassReverse directives above.
+  #Redirect permanent / https://%ssl_virtualhost_ip%/
 </VirtualHost>
