@@ -6,10 +6,6 @@ directory app_dir
 
 environment 'production'
 
-daemonize true
-
-pidfile "#{app_dir}/tmp/tendrl.pid"
-
 stdout_redirect "#{app_dir}/log/puma.stdout.log", "/var/log/tendrl/api/error.log", true
 
 threads_count = Integer(ENV['PUMA_MAX_THREADS'] || 8)
