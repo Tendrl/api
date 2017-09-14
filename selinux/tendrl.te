@@ -1,0 +1,49 @@
+policy_module(tendrl, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type tendrl_t;
+type tendrl_exec_t;
+init_daemon_domain(tendrl_t, tendrl_exec_t)
+
+type tendrl_conf_t;
+files_config_file(tendrl_conf_t)
+
+type tendrl_log_t;
+logging_log_file(tendrl_log_t)
+
+type tendrl_var_lib_t;
+files_type(tendrl_var_lib_t)
+
+type tendrl_var_run_t;
+files_pid_file(tendrl_var_run_t)
+
+type tendrl_unit_file_t;
+systemd_unit_file(tendrl_unit_file_t)
+
+permissive tendrl_t;
+
+########################################
+#
+# tendrl local policy
+#
+allow tendrl_t self:capability { sys_rawio sys_admin net_admin };
+allow tendrl_t self:capability2 block_suspend;
+allow tendrl_t self:fifo_file rw_fifo_file_perms;
+allow tendrl_t self:unix_stream_socket create_stream_socket_perms;
+allow tendrl_t self:tcp_socket { accept listen };
+allow tendrl_t self:netlink_route_socket nlmsg_write;
+corecmd_exec_shell(tendrl_t)
+corecmd_exec_bin(tendrl_t)
+
+optional_policy(`
+
+    gen_require(`
+	type httpd_t;
+    ')
+    corenet_tcp_bind_amanda_port(httpd_t)
+    tendrl_read_config(httpd_t)
+')
