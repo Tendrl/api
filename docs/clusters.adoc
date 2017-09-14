@@ -27,68 +27,6 @@ The `job_id` can be used to poll the status of the job.
 The import cluster action queued a job in etcd which will be picked up by the
 node agent and processed.
 
-== Create Cluster
-
-Create Gluster or Ceph cluster.
-
-Sample Create Ceph Cluster Request
-
-----------
-curl -X POST -H 'Authorization: Bearer e3a2785d3d72351a2fa5973e3ef3e3be95ed1578
-b2d988ef90ddee54fd2fa4d1' -d '{"sds_name":"ceph","sds_version":"10.2.5","sds_pa
-rameters":{"name":"MyCluster","cluster_id":"140cd3d5-58e4-4935-a954-d946ceff371d", 
-"public_network":"10.0.0.0/22","cluster_network":"10.0.0.0/22", 
-"conf_overrides": {"global": {"osd_pool_default_pg_num": 128,
-"pool_default_pgp_num": 1}}}, "node_identifier":"ip",
-"node_configuration":{"10.0.0.1":{"role": "ceph/mon","provisioning_ip":
-"10.0.0.1","monitor_interface":"eth0"},"10.0.0.2":{"role":"ceph/mon",
-"provisioning_ip":"10.0.0.2","monitor_interface":"eth0"},
-"10.0.0.3":{"role":"ceph/mon","provisioning_ip":"10.0.0.3",
-"monitor_interface":"eth0"},"10.0.0.4":{"role":"ceph/osd",
-"provisioning_ip":"10.0.0.4","journal_size":5192,"journal_colocation":false,
-"storage_disks":[{"device": "/dev/vdb","journal":"/dev/vdc"}]},
-"10.0.0.5":{"role":"ceph/osd","provisioning_ip":"10.0.0.5",
-"journal_size": 5192,"journal_colocation":false,
-"storage_disks":[{"device":"/dev/vdb","journal":"/dev/vdc"}]}}}'
-http://127.0.0.1/api/1.0/CreateCluster
-----------
-
-Sample Response
-
-----------
-Status: 202 Accepted
-
-{ job_id: "3784922e33e8bec939be5e626e21a174" }
-----------
-
-Sample Gluster Cluster Create Request
-
-----------
-curl -X POST -H 'Authorization: Bearer db3adc3b3c1c21c59a0ab38ff16d0ee091c7c3c2
-b586404e96f46c41ed2eeb52' -d '{"sds_name":"gluster","sds_version":"3.9.1",
-"sds_parameters":{"name":"MyCluster","cluster_id":"4654ac00-e67b-4b74-86a3-e740b1b8cee5",
-"public_network":"10.0.0.0/22","cluster_network":"10.0.0.0/22"},
-"node_identifier":"ip","node_configuration":{"10.0.0.1":{"role": "glusterfs/node",
-"provisioning_ip":"10.0.0.1"},"10.0.0.2":{"role":"glusterfs/node",
-"provisioning_ip":"10.0.0.2"},"10.0.0.3":{"role":"glusterfs/node",
-"provisioning_ip":"10.0.0.3"}}}'
-http://127.0.0.1/api/1.0/CreateCluster
-----------
-
-Sample Response
-
-----------
-Status: 202 Accepted
-
-{ job_id: "3784922e33e8bec939be5e626e21a174" }
-----------
-
-
-The `job_id` can be used to poll the status of the job.
-The import cluster action queued a job in etcd which will be picked up by the
-node agent and processed.
-
-
 == List Clusters
 
 List available clusters
@@ -106,70 +44,165 @@ Sample Response
 ----------
 Status: 200 OK
 {
-	"clusters": [{
-		"fsid": "64d779e6-491e-4998-a805-1252bbd5a899",
-		"integration_id": "64d779e6-491e-4998-a805-1252bbd5a899",
-		"name": "ceph",
-		"sds_name": "ceph",
-		"sds_version": "10.2.5",
-		"cluster_id": "64d779e6-491e-4998-a805-1252bbd5a899",
+  "clusters": [{
+    "hash": "2dfd3d4a691a44f24d419fea8e6cbf4f",
+    "sds_version": "4.0dev",
+    "updated_at": "2017-09-11 11:20:59.934003+00:00",
+    "sds_name": "gluster",
+    "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+    "cluster_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+    "errors": [],
+    "globaldetails": {
+      "vol_count": "3",
+      "hash": "ec3a8b607f87595d8aed945e2d10c879",
+      "connection_count": "0",
+      "status": "healthy",
+      "connection_active": "0",
+      "volume_up_degraded": "0",
+      "peer_count": "3",
+      "updated_at": "2017-09-11 12:00:00.730036+00:00"
+    },
+    "public_network": "",
+    "cluster_network": "",
     "is_managed": "yes",
-    "enable_volume_profiling": "true",
-		"pools": {
-			"14": {
-				"pool_name": "dummy",
-				"type": "replicated",
-				"used": "0",
-				"erasure_code_profile": "",
-				"min_size": "2",
-				"percent_used": "0",
-				"pg_num": "128",
-				"pool_id": "14"
-			},
-			"4": {
-				"min_size": "2",
-				"percent_used": "0",
-				"type": "replicated",
-				"used": "58",
-				"rbds": {
-					"mmrbd1": {
-						"features": "layering, exclusive-lock, object-map, fast-diff, deep-flatten",
-						"flags": "",
-						"format": "2",
-						"name": "mmrbd1",
-						"order": "22",
-						"pool_id": "4",
-						"size": "128",
-						"block_name_prefix": "rbd_data.1e3f238e1f29"
-					}
-				},
-				"erasure_code_profile": "",
-				"pg_num": "128",
-				"pool_id": "4",
-				"pool_name": "test_pool"
-			}
-		}
-	}]
+    "enable_volume_profiling": "yes",
+    "import_status": "None",
+    "import_job_id": "None",
+    "nodes": [{
+      "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+      "last_sync": "2017-09-12 05:44:08.064276+00:00",
+      "status": "UP",
+      "hash": "4caa6f742f21c3297972620ab8c35fb4",
+      "tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+               "tendrl/integration/gluster",
+               "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+               "tendrl/node_35b27276-9058-4c09-b64b-9d239ed262cb",
+               "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+               "tendrl/node"
+              ],
+      "sync_status": "done",
+      "fqdn": "dhcp-3.lab.tendrl",
+      "updated_at": "2017-09-12 05:44:08.260542+00:00",
+      "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb"
+    }, {
+      "node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
+      "last_sync": "2017-09-12 05:43:57.209714+00:00",
+      "status": "UP",
+      "hash": "b70543f9efd1d028da5225df009d263f",
+      "tags": ["tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077",
+               "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+               "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+               "tendrl/integration/gluster",
+               "tendrl/node"
+              ],
+      "sync_status": "done",
+      "fqdn": "dhcp-2.lab.tendrl",
+      "updated_at": "2017-09-12 05:43:57.439075+00:00",
+      "node_id": "66898e03-4db2-4898-b21e-6f034ba10077"
+    }, {
+      "hash": "220511140ddf9cecb9a31073bdcb45af",
+      "tags": ["detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+               "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+               "tendrl/integration/gluster",
+               "tendrl/node_2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3", "tendrl/node"],
+      "sync_status": "done",
+      "fqdn": "dhcp-1.lab.tendrl",
+      "updated_at": "2017-09-12 05:43:49.697954+00:00",
+      "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
+      "last_sync": "2017-09-12 05:43:49.359143+00:00",
+      "status": "UP",
+      "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3"
+    }]
+  }]
 }
 ----------
 
-== Expand Cluster
+== Enable / Disable profiling
+
+Enable or disable volume profiling per cluster
 
 Sample Request
 
 ----------
-curl -H 'Authorization: Bearer
-d029298ff1b33190461b8e0f1c3efe110c6f82a902ed8b2830311d0b4be1d4c0' -XPUT -d
-'{"sds_name":"gluster","Cluster.node_configuration":{"867d6aae-fb98-4060-9f6a-1da4e4988db8":{"role":"glusterfs/node","provisioning_ip":"10.0.0.1"}}}'
-http://127.0.0.1/api/1.0/d3c644f1-0f94-43e1-946f-e40c4694d703/ExpandCluster
+curl -XPUT -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
+-d '{"enable_volume_profiling": "yes"}'
+http://127.0.0.1/api/1.0/clusters/9a4b84e0-17b3-4543-af9f-e42000c52bfc/profiling
 ----------
 
 Sample Response
 
 ----------
-Status: 202 Accepted
-
-{ job_id: "3784922e33e8bec939be5e626e21a174" }
+{
+  "hash": "2dfd3d4a691a44f24d419fea8e6cbf4f",
+  "sds_version": "4.0dev",
+  "updated_at": "2017-09-11 11:20:59.934003+00:00",
+  "sds_name": "gluster",
+  "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+  "cluster_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+  "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+  "errors": [],
+  "globaldetails": {
+    "vol_count": "3",
+    "hash": "ec3a8b607f87595d8aed945e2d10c879",
+    "connection_count": "0",
+    "status": "healthy",
+    "connection_active": "0",
+    "volume_up_degraded": "0",
+    "peer_count": "3",
+    "updated_at": "2017-09-11 12:00:00.730036+00:00"
+  },
+  "public_network": "",
+  "cluster_network": "",
+  "is_managed": "yes",
+  "enable_volume_profiling": "yes",
+  "import_status": "None",
+  "import_job_id": "None",
+  "nodes": [{
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+    "last_sync": "2017-09-12 05:44:08.064276+00:00",
+    "status": "UP",
+    "hash": "4caa6f742f21c3297972620ab8c35fb4",
+    "tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+             "tendrl/integration/gluster",
+             "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+             "tendrl/node_35b27276-9058-4c09-b64b-9d239ed262cb",
+             "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+             "tendrl/node"
+            ],
+    "sync_status": "done",
+    "fqdn": "dhcp-3.lab.tendrl",
+    "updated_at": "2017-09-12 05:44:08.260542+00:00",
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb"
+  }, {
+    "node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
+    "last_sync": "2017-09-12 05:43:57.209714+00:00",
+    "status": "UP",
+    "hash": "b70543f9efd1d028da5225df009d263f",
+    "tags": ["tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077",
+             "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+             "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+             "tendrl/integration/gluster",
+             "tendrl/node"
+            ],
+    "sync_status": "done",
+    "fqdn": "dhcp-2.lab.tendrl",
+    "updated_at": "2017-09-12 05:43:57.439075+00:00",
+    "node_id": "66898e03-4db2-4898-b21e-6f034ba10077"
+  }, {
+    "hash": "220511140ddf9cecb9a31073bdcb45af",
+    "tags": ["detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+             "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+             "tendrl/integration/gluster",
+             "tendrl/node_2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3", "tendrl/node"],
+    "sync_status": "done",
+    "fqdn": "dhcp-1.lab.tendrl",
+    "updated_at": "2017-09-12 05:43:49.697954+00:00",
+    "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
+    "last_sync": "2017-09-12 05:43:49.359143+00:00",
+    "status": "UP",
+    "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3"
+  }]
+}
 ----------
-
-

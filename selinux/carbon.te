@@ -1,0 +1,39 @@
+policy_module(carbon, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type carbon_t;
+type carbon_exec_t;
+init_daemon_domain(carbon_t, carbon_exec_t)
+
+type carbon_var_lib_t;
+files_type(carbon_var_lib_t)
+
+type carbon_log_t;
+logging_log_file(carbon_log_t)
+
+type carbon_var_run_t;
+files_pid_file(carbon_var_run_t)
+
+type carbon_unit_file_t;
+systemd_unit_file(carbon_unit_file_t)
+
+permissive carbon_t;
+
+########################################
+#
+# carbon local policy
+#
+allow carbon_t self:capability { dac_override fowner fsetid setgid setuid };
+allow carbon_t self:unix_stream_socket create_stream_socket_perms;
+allow carbon_t self:tcp_socket { listen accept create_socket_perms };
+
+optional_policy(`
+        carbon_stub_httpd()
+	manage_dirs_pattern(httpd_t, carbon_var_lib_t, carbon_var_lib_t)
+	manage_files_pattern(httpd_t, carbon_var_lib_t, carbon_var_lib_t)
+	corenet_tcp_bind_amanda_port(httpd_t)
+')

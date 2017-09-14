@@ -1,0 +1,13 @@
+/etc/tendrl(/.*)?         gen_context(system_u:object_r:tendrl_conf_t,s0)
+
+/usr/bin/tendrl-monitoring-integration		--	gen_context(system_u:object_r:tendrl_exec_t,s0)
+/usr/bin/tendrl-node-agent			--	gen_context(system_u:object_r:tendrl_exec_t,s0)
+/usr/bin/puma			--	gen_context(system_u:object_r:tendrl_exec_t,s0)
+
+/usr/lib/systemd/system/tendrl-monitoring-integration.*		--	gen_context(system_u:object_r:tendrl_unit_file_t,s0)
+/usr/lib/systemd/system/tendrl-node-agent.*		--	gen_context(system_u:object_r:tendrl_unit_file_t,s0)
+/usr/lib/systemd/system/tendrl-api.*		--	gen_context(system_u:object_r:tendrl_unit_file_t,s0)
+
+/var/lib/tendrl(/.*)?		gen_context(system_u:object_r:tendrl_var_lib_t,s0)
+
+/var/log/tendrl(/.*)?		gen_context(system_u:object_r:tendrl_log_t,s0)

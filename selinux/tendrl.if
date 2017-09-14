@@ -1,0 +1,19 @@
+########################################
+## <summary>
+##	Allow the specified domain to read
+##	tendrl configuration files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`tendrl_read_config',`
+	gen_require(`
+		type tendrl_conf_t;
+	')
+
+	read_files_pattern($1, tendrl_conf_t, tendrl_conf_t)
+')

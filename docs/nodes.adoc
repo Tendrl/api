@@ -16,47 +16,244 @@ Sample Response
 
 ----------
 {
-	"nodes": [{
-		"fqdn": "example.tendrl.org",
-		"machine_id": "c7338619019644fdb2e75325647ff882",
-		"node_id": "56f5a816-e85a-4452-a294-d460f52619a1",
-		"status": "UP",
-		"tags": "ceph/mon",
-		"os": {
-			"kernel_version": "3.10.0-123.el7.x86_64",
-			"os": "CentOS Linux",
-			"os_version": "7.3.1611",
-			"selinux_mode": "Permissive"
-		},
-		"cpu": {
-			"cpu_family": "6",
-			"cpu_op_mode": "32-bit, 64-bit",
-			"model": "42",
-			"model_name": "Intel Xeon E312xx (Sandy Bridge)",
-			"vendor_id": "GenuineIntel",
-			"architecture": "x86_64",
-			"cores_per_socket": "1"
-		},
-		"memory": {
-			"swap_total": "8273916 kB",
-			"total_size": "8010636 kB"
-		},
-		"platform": {
-			"os": "CentOS Linux",
-			"os_version": "7.3.1611",
-			"kernel_version": "3.10.0-123.el7.x86_64"
-		},
-		"detectedcluster": {
-			"sds_pkg_version": "10.2.5",
-			"detected_cluster_id": "d4458634-90f8-491b-8aa0-51c62d28e642",
-			"sds_pkg_name": "ceph"
-		},
-		"tendrlcontext": {
-			"integration_id": "",
-			"node_id": "56f5a816-e85a-4452-a294-d460f52619a1"
-		}
-	}]
+  "nodes": [{
+    "hash": "ac36daa7f4c5d46aee1aeb88b7867505",
+    "tags": ["tendrl/integration/monitoring", "tendrl/central-store", "tendrl/node_e8334ec7-9b02-42d0-b298-4f2b836fbcd6", "tendrl/server", "tendrl/monitor", "tendrl/node"],
+    "sync_status": "done",
+    "fqdn": "dhcp-1.lab.tendrl",
+    "updated_at": "2017-09-12 08:07:32.846995+00:00",
+    "node_id": "e8334ec7-9b02-42d0-b298-4f2b836fbcd6",
+    "last_sync": "2017-09-12 08:07:32.796142+00:00",
+    "status": "UP",
+    "cluster": {
+      "cluster_name": "",
+      "cluster_id": "",
+      "integration_id": "",
+      "hash": "f8952d244ec9d84e80f4bb993e409d85",
+      "sds_version": "",
+      "updated_at": "2017-09-11 11:20:24.776424+00:00",
+      "sds_name": ""
+    }
+  }, {
+    "hash": "26145a8f76e6d93cf7f4732397a6f7e9",
+    "tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_35b27276-9058-4c09-b64b-9d239ed262cb", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "sync_status": "done",
+    "fqdn": "dhcp-2.lab.tendrl",
+    "updated_at": "2017-09-12 08:07:24.759475+00:00",
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+    "last_sync": "2017-09-12 08:07:24.523445+00:00",
+    "status": "UP",
+    "cluster": {
+      "cluster_id": "4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+      "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+      "hash": "a816b24b564c64e91243764447b93521",
+      "sds_version": "4.0dev",
+      "updated_at": "2017-09-12 05:46:29.138406+00:00",
+      "sds_name": "gluster",
+      "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8"
+    }
+  }, {
+    "status": "UP",
+    "hash": "5193c3ca1277fd5d31ff83c2d2d8b10b",
+    "tags": ["tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "sync_status": "in_progress",
+    "fqdn": "dhcp-3.lab.tendrl",
+    "updated_at": "2017-09-12 08:07:26.887490+00:00",
+    "node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
+    "last_sync": "2017-09-12 08:07:16.364497+00:00",
+    "cluster": {
+      "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+      "hash": "a816b24b564c64e91243764447b93521",
+      "sds_version": "4.0dev",
+      "updated_at": "2017-09-12 05:46:36.804847+00:00",
+      "sds_name": "gluster",
+      "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+      "cluster_id": "4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8"
+    }
+  }, {
+    "sync_status": "done",
+    "fqdn": "dhcp-4.lab.tendrl",
+    "updated_at": "2017-09-12 08:07:32.896069+00:00",
+    "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
+    "last_sync": "2017-09-12 08:07:32.861939+00:00",
+    "status": "UP",
+    "hash": "54a60ef75240462009e4f99514953fd9",
+    "tags": ["tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "cluster": {
+      "cluster_id": "4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8",
+      "integration_id": "d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5",
+      "hash": "a816b24b564c64e91243764447b93521",
+      "sds_version": "4.0dev",
+      "updated_at": "2017-09-12 05:46:42.791807+00:00",
+      "sds_name": "gluster",
+      "cluster_name": "gluster-4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8"
+    }
+  }]
 }
 ----------
 
+== List Nodes per Cluster
+
+Sample Request
+
+----------
+curl -XGET -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
+http://127.0.0.1/api/1.0/clusters/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5/nodes
+----------
+
+Sample Response
+
+----------
+{
+  "nodes": [{
+    "last_sync": "2017-09-12 08:12:00.237635+00:00",
+    "status": "UP",
+    "hash": "55af3ebe7246f61590d788856dfb40f4",
+    "tags": ["provisioner/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_35b27276-9058-4c09-b64b-9d239ed262cb", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "sync_status": "done",
+    "fqdn": "dhcp-0.lab.tendrl",
+    "updated_at": "2017-09-12 08:12:00.507571+00:00",
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+    "cluster": {}
+  }, {
+    "fqdn": "dhcp-2.lab.tendrl",
+    "updated_at": "2017-09-12 08:11:58.143902+00:00",
+    "node_id": "66898e03-4db2-4898-b21e-6f034ba10077",
+    "last_sync": "2017-09-12 08:11:57.845365+00:00",
+    "status": "UP",
+    "hash": "fed897d2c36cdca58fd4daea0e6b1fff",
+    "tags": ["tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_66898e03-4db2-4898-b21e-6f034ba10077", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "sync_status": "done",
+    "cluster": {}
+  }, {
+    "node_id": "2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3",
+    "last_sync": "2017-09-12 08:11:52.715507+00:00",
+    "status": "UP",
+    "hash": "1940162a29e1ea6edca6b84b095fc1f5",
+    "tags": ["tendrl/integration/gluster", "tendrl/integration/d9c4b7de-25d9-43f4-8bdd-0ebf4effe9e5", "tendrl/node_2f8dcb72-43d8-4ee6-8a12-dfa93a8edbf3", "gluster/server", "detected_cluster/4994728774f7dc9b895a77342e55afd2617587d1c8233af365101923fd02c6f8", "tendrl/node"],
+    "sync_status": "done",
+    "fqdn": "dhcp-1.lab.tendrl",
+    "updated_at": "2017-09-12 08:11:53.254564+00:00",
+    "cluster": {}
+  }]
+}
+----------
+
+== List Bricks per Nodes
+
+Sample Request
+
+----------
+curl -XGET  -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a"
+http://127.0.0.1/api/1.0/clusters/5291c055-70d3-4450-9769-2f6fd4932afb/nodes/35b27276-9058-4c09-b64b-9d239ed262cb/bricks
+----------
+
+Sample Response
+
+----------
+Status: 200 OK
+{
+  "bricks": [{
+    "vg": "cl_dhcp41-173",
+    "disk_count": "",
+    "hash": "4c1da7597edf8a4edc6b669d8d9c4d41",
+    "name": "dhcp-3.lab.tendrl:_root_gluster_bricks_vol1_b1",
+    "utilization": {
+      "metadata_used": null,
+      "used_percent": 10.175191615829817,
+      "thinpool_used_percent": null,
+      "used": 1364197376,
+      "free_inode": 6513087,
+      "used_inode": 38465,
+      "used_percent_inode": 0.5871127940371963,
+      "free": 12042895360,
+      "total_inode": 6551552,
+      "mount_point": "/",
+      "metadata_used_percent": null,
+      "metadata_free": null,
+      "thinpool_used": null,
+      "total": 13407092736,
+      "thinpool_size": null,
+      "thinpool_free": null,
+      "metadata_size": null
+    },
+    "is_arbiter": "",
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+    "size": "13417578496",
+    "hostname": "dhcp-3.lab.tendrl",
+    "lv": "cl_dhcp41-173-root",
+    "pv": [],
+    "used": "True",
+    "vol_id": "2f99fd35-957b-4fe5-b13c-0255722a8c80",
+    "brick_path": "dhcp-3.lab.tendrl:/root/gluster_bricks/vol1_b1",
+    "client_count": "",
+    "mount_path": "/",
+    "updated_at": "2017-09-12 08:05:35.945477+00:00",
+    "brick_dir": "root_gluster_bricks_vol1_b1",
+    "sequence_number": "1",
+    "port": "49152",
+    "stripe_size": "",
+    "vol_name": "vol1",
+    "devices": [],
+    "fqdn": "dhcp-3.lab.tendrl",
+    "mount_opts": "",
+    "pool": "",
+    "disk_type": "",
+    "filesystem_type": "",
+    "status": "Started",
+    "brick_id": "root_gluster_bricks_vol1_b1"
+  }, {
+    "brick_dir": "root_gluster_bricks_vol3_b1",
+    "sequence_number": "1",
+    "vg": "cl_dhcp41-173",
+    "mount_opts": "",
+    "status": "Stopped",
+    "vol_name": "vol3",
+    "hash": "1d4c2a52b57ca49928ecbcf150f704a9",
+    "hostname": "dhcp-2.lab.tendrl",
+    "is_arbiter": "",
+    "used": "True",
+    "devices": [],
+    "disk_count": "",
+    "node_id": "35b27276-9058-4c09-b64b-9d239ed262cb",
+    "pool": "",
+    "pv": [],
+    "updated_at": "2017-09-12 08:06:16.114556+00:00",
+    "filesystem_type": "",
+    "lv": "cl_dhcp41-173-root",
+    "port": "0",
+    "brick_path": "dhcp-2.lab.tendrl:/root/gluster_bricks/vol3_b1",
+    "client_count": "",
+    "disk_type": "",
+    "size": "13417578496",
+    "stripe_size": "",
+    "vol_id": "3ea3d010-c6ca-41f5-ab5e-9c244e244a4e",
+    "fqdn": "dhcp-2.lab.tendrl",
+    "mount_path": "/",
+    "name": "dhcp-2.lab.tendrl:_root_gluster_bricks_vol3_b1",
+    "utilization": {
+      "metadata_used": null,
+      "used_percent": 10.175191615829817,
+      "thinpool_used_percent": null,
+      "used": 1364197376,
+      "free_inode": 6513087,
+      "used_inode": 38465,
+      "used_percent_inode": 0.5871127940371963,
+      "free": 12042895360,
+      "total_inode": 6551552,
+      "mount_point": "/",
+      "metadata_used_percent": null,
+      "metadata_free": null,
+      "thinpool_used": null,
+      "total": 13407092736,
+      "thinpool_size": null,
+      "thinpool_free": null,
+      "metadata_size": null
+    },
+    "brick_id": "root_gluster_bricks_vol3_b1"
+  }]
+}
+----------
 

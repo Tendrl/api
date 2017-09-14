@@ -1,0 +1,29 @@
+policy_module(grafana, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type grafana_t;
+type grafana_exec_t;
+init_daemon_domain(grafana_t, grafana_exec_t)
+
+type grafana_conf_t;
+files_config_file(grafana_conf_t)
+
+type grafana_log_t;
+logging_log_file(grafana_log_t)
+
+type grafana_var_lib_t;
+files_type(grafana_var_lib_t)
+
+type grafana_var_run_t;
+files_pid_file(grafana_var_run_t)
+
+type grafana_unit_file_t;
+systemd_unit_file(grafana_unit_file_t)
+
+permissive grafana_t;
+
+########################################

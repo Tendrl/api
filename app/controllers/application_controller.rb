@@ -5,7 +5,7 @@ class ApplicationController < Sinatra::Base
 
   set :logging, true
 
-  set :logging, ENV['LOG_LEVEL'] || Logger::INFO
+  set :logging, ENV['LOG_LEVEL'] || Logger::DEBUG
 
   configure :development do
     set :etcd_config, Proc.new {
