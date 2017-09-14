@@ -218,7 +218,7 @@ fi
 %{_datadir}/doc/tendrl/Rakefile
 
 %files httpd
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 
 %changelog
 * Fri Aug 25 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.1-1
