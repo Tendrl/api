@@ -110,7 +110,6 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/tmp
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config
-
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
@@ -122,7 +121,7 @@ install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/t
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
-install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
+install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/
 
 # Install SELinux interfaces and policy modules
