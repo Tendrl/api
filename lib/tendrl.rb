@@ -45,6 +45,7 @@ require './app/presenters/job_presenter'
 require './app/presenters/user_presenter'
 require './app/presenters/volume_presenter'
 require './app/presenters/brick_presenter'
+require './app/presenters/notification_presenter'
 
 # Errors
 require './lib/tendrl/errors/tendrl_error'
