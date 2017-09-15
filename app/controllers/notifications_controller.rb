@@ -1,12 +1,8 @@
 class NotificationsController < AuthenticatedUsersController
 
   get '/notifications' do
-    begin
-      notifications = Tendrl::Notification.all
-      notifications.to_json
-    rescue Etcd::KeyNotFound
-      [].to_json
-    end
+    notifications = Tendrl::Notification.all
+    NotificationPresenter.list(notifications).to_json
   end
 
 end
