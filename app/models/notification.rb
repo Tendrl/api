@@ -4,7 +4,7 @@ module Tendrl
     class << self
 
       def all
-        Tendrl.etcd.get('/_tendrl/notifications', recursive:
+        Tendrl.etcd.get('/notifications', recursive:
                         true).children.map do |children|
           Tendrl.recurse(children)
         end
