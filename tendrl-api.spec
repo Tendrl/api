@@ -5,7 +5,7 @@
 %global relabel_files() %{_sbindir}/restorecon -Rv /
 
 Name: tendrl-api
-Version: 1.5.1
+Version: 1.5.2
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -223,6 +223,9 @@ fi
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Sep 15 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.2-1
+- Release tendrl-api v1.5.2
+
 * Fri Aug 25 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.1-1
 - Release tendrl-api v1.5.1
 
