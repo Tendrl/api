@@ -6,12 +6,18 @@ class AuthenticatedUsersController < ApplicationController
 
   before do
     if ['POST', 'PUT', 'DELETE'].include? request.request_method
-      halt 403, { errors: { message: 'Forbidden' } }.to_json if limited_user?
+      unless users_path?
+        halt 403, { errors: { message: 'Forbidden' } }.to_json if limited_user?
+      end
     end
   end
 
   get '/current_user' do
     UserPresenter.single(current_user).to_json
+  end
+
+  def users_path?
+    request.path_info.match(/\/users\/.+/).present?
   end
 
   def admin_user?
