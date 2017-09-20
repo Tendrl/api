@@ -3,21 +3,21 @@
   :base_key: ''
   :host: '127.0.0.1'
   :port: 2379
-  :user_name: 'username'
-  :password: 'password'
+  :user_name: ''
+  :password: ''
 
 :test:
   :base_key: ''
   :host: '127.0.0.1'
   :port: 2379
-  :user_name: 'username'
-  :password: 'password'
+  :user_name: ''
+  :password: ''
 
 :production:
   :base_key: ''
   :host: '127.0.0.1'
   :port: 2379
-  :user_name: 'username'
-  :password: 'password'
+  :user_name: ''
+  :password: ''
 
 
