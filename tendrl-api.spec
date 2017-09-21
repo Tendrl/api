@@ -206,6 +206,7 @@ fi
 %attr(0644,root,root) %{_datadir}/selinux/packages/grafana.pp.bz2
 
 %files
+%license LICENSE
 %dir %{_var}/log/tendrl/api
 %dir %{_sysconfdir}/tendrl
 %{_datadir}/%{name}/
