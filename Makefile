@@ -9,7 +9,7 @@ all: srpm
 dist:
 	mkdir -p $(NAME)-$(VERSION)
 	cp -r app config docs lib public spec selinux $(NAME)-$(VERSION)/
-	cp config.ru Gemfile* Makefile Rakefile README* tendrl-api.* $(NAME)-$(VERSION)/
+	cp config.ru LICENSE Gemfile* Makefile Rakefile README* tendrl-api.* $(NAME)-$(VERSION)/
 	tar -zcf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
 	rm -rf $(NAME)-$(VERSION)
 
