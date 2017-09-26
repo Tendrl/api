@@ -14,7 +14,8 @@ module JobPresenter
           created_at: payload['created_at'],
           status_url: "/jobs/#{payload['job_id']}/status",
           messages_url: "/jobs/#{payload['job_id']}/messages",
-          output_url: "/jobs/#{payload['job_id']}/output"
+          output_url: "/jobs/#{payload['job_id']}/output",
+          errors: job['errors']
         }
       end
     end
