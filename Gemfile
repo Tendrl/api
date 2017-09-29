@@ -27,3 +27,5 @@ end
 group :documentation do
   gem 'asciidoctor'
 end
+
+gem 'ruby-prof', require: false
