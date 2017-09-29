@@ -110,6 +110,7 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/tmp
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config
+install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config/puma
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
@@ -124,6 +125,7 @@ install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/
+install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/puma/
 
 # Install SELinux interfaces and policy modules
 install -d %{buildroot}%{_datadir}/selinux/packages

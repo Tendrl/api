@@ -5,7 +5,7 @@ Requires=tendrl-node-agent.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/puma -C /usr/share/tendrl-api/config/puma.rb
+ExecStart=/usr/bin/puma -C /usr/share/tendrl-api/config/puma/production.rb
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure

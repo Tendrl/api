@@ -4,3 +4,5 @@ config/tendrl.yml
 .DS_Store
 config/sds
 coverage
+tmp
+log
