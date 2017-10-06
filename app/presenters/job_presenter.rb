@@ -12,6 +12,7 @@ module JobPresenter
           flow: payload['name'],
           parameters: payload['parameters'],
           created_at: payload['created_at'],
+          updated_at: job['updated_at'],
           status_url: "/jobs/#{payload['job_id']}/status",
           messages_url: "/jobs/#{payload['job_id']}/messages",
           output_url: "/jobs/#{payload['job_id']}/output",
