@@ -20,7 +20,6 @@ RSpec.describe AuthenticatedUsersController do
     it 'current' do
       get "/current_user",{}, http_env
       expect(last_response.status).to eq 200
-      puts last_response.body
     end
   end
 end

@@ -13,6 +13,7 @@ gem 'bcrypt', '3.1.11'
 group :development do
   gem 'rubocop', require: false
   gem 'shotgun'
+  gem 'rb-readline'
 end
 
 group :test do
