@@ -1,29 +1,11 @@
 class ApplicationController < Sinatra::Base
   set :root, File.dirname(__FILE__)
 
-  set :environment, ENV['RACK_ENV'] || 'development'
+  set :environment, ENV['RACK_ENV']
 
   set :logging, true
 
   set :logging, ENV['LOG_LEVEL'] || Logger::DEBUG
-
-  configure :development do
-    set :etcd_config, Proc.new {
-      Tendrl.etcd_config(settings.environment)
-    }
-  end
-
-  configure :test do
-    set :etcd_config, Proc.new {
-      {}
-    }
-  end
-
-  configure :production do
-    set :etcd_config, Proc.new {
-      Tendrl.etcd_config(settings.environment)
-    }
-  end
 
   set :http_allow_methods, [
     'POST',
@@ -55,23 +37,34 @@ class ApplicationController < Sinatra::Base
   end
 
   error JSON::ParserError do
-    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'invalid_json')
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      env['sinatra.error'],
+      cause: 'invalid_json'
+    )
     halt exception.status, exception.body.to_json
   end
 
   error Errno::ETIMEDOUT do
-    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'etcd_timeout')
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      env['sinatra.error'],
+      cause: 'etcd_timeout'
+    )
     halt exception.status, exception.body.to_json
   end
   
   error Errno::ECONNREFUSED do
-    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'], cause: 'etcd_not_reachable')
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      env['sinatra.error'],
+      cause: 'etcd_not_reachable'
+    )
     halt exception.status, exception.body.to_json
   end
 
   error do
-    exception = Tendrl::HttpResponseErrorHandler.new(env['sinatra.error'],
-                                                     cause: 'uncaught_exception')
+    exception = Tendrl::HttpResponseErrorHandler.new(
+      env['sinatra.error'],
+      cause: 'uncaught_exception'
+    )
     halt exception.status, exception.body.to_json
   end
 
@@ -84,15 +77,6 @@ class ApplicationController < Sinatra::Base
       settings.http_allow_methods.join(',')
     response.headers["Access-Control-Allow-Headers"] = 
       settings.http_allow_headers.join(',')
-  end
-
-  before do
-    Tendrl.etcd = Etcd.client(
-      host: settings.etcd_config[:host],
-      port: settings.etcd_config[:port],
-      user_name: settings.etcd_config[:user_name],
-      password: settings.etcd_config[:password]
-    )
   end
 
   options '*' do

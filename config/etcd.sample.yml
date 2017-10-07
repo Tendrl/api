@@ -1,23 +1,18 @@
 ---
 :development:
-  :base_key: ''
   :host: '127.0.0.1'
   :port: 2379
-  :user_name: ''
-  :password: ''
-
-:test:
-  :base_key: ''
-  :host: '127.0.0.1'
-  :port: 2379
-  :user_name: ''
-  :password: ''
+  :ca_cert_file: ''
+  :client_cert_file: ''
+  :client_key_file: ''
+  :passphrase: ''
 
 :production:
-  :base_key: ''
   :host: '127.0.0.1'
   :port: 2379
-  :user_name: ''
-  :password: ''
+  :ca_cert_file: ''
+  :client_cert_file: ''
+  :client_key_file: ''
+  :passphrase: ''
 
 
