@@ -10,7 +10,7 @@ Sample Request
 
 ----------
 curl -XGET -H "Authorization: Bearer
-4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" http://127.0.0.1/api/v1/alerts
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" http://127.0.0.1/api/1.0/alerts
 ----------
 
 Sample Response
