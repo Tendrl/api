@@ -8,11 +8,8 @@ class UsersController < AuthenticatedUsersController
   get '/users/:username' do
     authorized? unless current_user.username == params[:username]
     user = Tendrl::User.find(params[:username])
-    if user
-      UserPresenter.single(user).to_json
-    else
-      halt 404, { errors: { message: 'Not found.' }}.to_json
-    end
+    not_found if user.nil?
+    UserPresenter.single(user).to_json
   end
 
   post '/users' do
@@ -34,6 +31,7 @@ class UsersController < AuthenticatedUsersController
   put '/users/:username' do
     authorized? unless current_user.username == params[:username]
     user = Tendrl::User.find(params[:username])
+    not_found if user.nil?
     user_form = Tendrl::UserForm.new(user, user_attributes)
     if user_form.valid?
       attributes = user_form.attributes
@@ -49,6 +47,7 @@ class UsersController < AuthenticatedUsersController
   delete '/users/:username' do
     authorized?
     user = Tendrl::User.find(params[:username])
+    not_found if user.nil?
     if user.admin?
       halt 403, { errors: { message: 'Forbidden' } }.to_json
     else
@@ -58,6 +57,10 @@ class UsersController < AuthenticatedUsersController
   end
 
   private
+
+  def not_found
+    halt 404, { errors: { message: 'Not found.' }}.to_json
+  end
 
   def authorized?
     halt 403, { errors: { message: 'Forbidden' } }.to_json unless admin_user?
