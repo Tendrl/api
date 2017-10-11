@@ -121,7 +121,7 @@ install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
 install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
-install -Dm 0644 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
+install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
