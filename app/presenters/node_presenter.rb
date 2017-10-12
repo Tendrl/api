@@ -8,6 +8,7 @@ module NodePresenter
           node_attr = attributes.delete('nodecontext')
           next if node_attr.blank?
           node_attr['tags'] = JSON.parse(node_attr['tags']) rescue []
+          node_attr['status'] ||= 'DOWN'
           if cluster = attributes.delete('tendrlcontext')
             cluster.delete('node_id')
           end

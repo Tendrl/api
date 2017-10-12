@@ -32,6 +32,7 @@ module ClusterPresenter
           nodes.each do |node_id, values|
             next if values['nodecontext'].blank?
             values['nodecontext']['tags'] = JSON.parse(values['nodecontext']['tags']) rescue []
+            values['nodecontext']['status'] ||= 'DOWN'
             cluster_nodes << values['nodecontext'].merge({ node_id: node_id })
           end
         end
