@@ -68,6 +68,23 @@ module Tendrl
       end
     end
 
+    def load_cert_config(config)
+      {
+        use_ssl:  true,
+        ca_file:  config[:ca_cert_file],
+        ssl_cert: load_client_cert(config[:client_cert_file]),
+        ssl_key:  load_client_key(config[:client_key_file], config[:passphrase])
+      }
+    end
+
+    def load_client_cert(path)
+      OpenSSL::X509::Certificate.new(File.read(path))
+    end
+
+    def load_client_key(path, passphrase)
+      OpenSSL::PKey::RSA.new(File.read(path), passphrase)
+    end
+
     def recurse(parent, attrs={})
       parent_key = parent.key.split('/')[-1].downcase
       return attrs if ['definitions', 'raw_map'].include?(parent_key)
