@@ -1,6 +1,6 @@
 Name: tendrl-api
 Version: 1.5.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -113,6 +113,9 @@ systemctl enable tendrl-api
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Oct 13 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.3-2
+- Release tendrl-api v1.5.3
+
 * Thu Oct 12 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.3-1
 - Release tendrl-api v1.5.3
 
