@@ -24,6 +24,7 @@ Requires: rubygem-rake >= 0.9.6
 Requires: rubygem-rack >= 1.6.4
 Requires: rubygem-tilt >= 1.4.1
 Requires: rubygem-bundler >= 1.13.6
+Requires: rubygem-builder >= 3.1.0
 Requires: rubygem-tzinfo >= 1.2.2
 Requires: rubygem-etcd
 Requires: rubygem-rack-protection >= 1.5.3
