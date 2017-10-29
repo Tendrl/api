@@ -2,8 +2,7 @@ class SessionsController < ApplicationController
 
   post '/login' do
     body = request.body.read
-    attributes = JSON.parse(body).symbolize_keys
-
+    attributes = body.present? ? JSON.parse(body).symbolize_keys : {}
     user = Tendrl::User.authenticate(attributes[:username],
                                      attributes[:password])
     if user.present?

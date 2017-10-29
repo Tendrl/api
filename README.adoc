@@ -32,7 +32,7 @@ development setups, both etcd and tendrl-api would reside on the same host.
 
 . Clone tendrl-api.
 
- $ git clone https://github.com/Tendrl/tendrl-api.git
+ $ git clone https://github.com/Tendrl/api.git
 
 . Install the gem dependencies, either..
 
@@ -84,7 +84,7 @@ fixtures to explore the API.
 The script will seed the etcd instance with mock cluster data and print a
 cluster uuid which can be used to make API requests.
 
- [tendrl-api] $ vendor/bin/rake etcd:seed # Seed the local store with cluster
+ [tendrl-api] $ vendor/bin/rake etcd:load_admin # Load default Tendrl admin in etcd
 
 . Start the development server:
 +

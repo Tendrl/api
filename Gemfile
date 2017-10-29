@@ -17,11 +17,14 @@ group :development do
 end
 
 group :test do
-  gem 'rspec'
   gem 'rack-test'
   gem 'webmock'
   gem 'simplecov', :require => false
   gem 'rest-client'
+end
+
+group :test, :development do
+  gem 'rspec'
 end
 
 
