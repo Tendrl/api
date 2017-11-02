@@ -19,8 +19,9 @@ module Tendrl
           Tendrl.etcd.get('/nodes').children.map do |node|
             nodecontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/NodeContext"))
             tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/TendrlContext"))
+            counters = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/alert_counters"))
             node_key = node.key.split('/')[-1]
-            { node_key => nodecontext.merge(tendrlcontext) }
+            { node_key => nodecontext.merge(tendrlcontext).merge(counters) }
           end
         rescue Etcd::KeyNotFound, Etcd::NotDir
           []

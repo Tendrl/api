@@ -4,7 +4,7 @@ module NodePresenter
       nodes = []
       nodes_list.each do |node|
         node.each do |_, attributes|
-          attributes.slice!('nodecontext','tendrlcontext')
+          attributes.slice!('nodecontext','tendrlcontext','alert_counters')
           node_attr = attributes.delete('nodecontext')
           next if node_attr.blank?
           node_attr['tags'] = JSON.parse(node_attr['tags']) rescue []
