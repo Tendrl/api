@@ -85,14 +85,17 @@ module Tendrl
       OpenSSL::PKey::RSA.new(File.read(path), passphrase)
     end
 
-    def recurse(parent, attrs={})
-      parent_key = parent.key.split('/')[-1].downcase
+    def recurse(parent, attrs = {}, options = {})
+      downcase_keys = options[:downcase_keys].nil? || options[:downcase_keys]
+      parent_key = parent.key.split('/')[-1]
+      parent_key = parent_key.downcase if downcase_keys
       return attrs if ['definitions', 'raw_map'].include?(parent_key)
       parent.children.each do |child|
-        child_key = child.key.split('/')[-1].downcase
+        child_key = child.key.split('/')[-1]
+        child_key = child_key.downcase if downcase_keys
         attrs[parent_key] ||= {}
         if child.dir
-          recurse(child, attrs[parent_key])
+          recurse(child, attrs[parent_key], options)
         else
           if attrs[parent_key]
             attrs[parent_key][child_key] = child.value

@@ -15,17 +15,18 @@ module Tendrl
       end
 
       def all
-        begin
-          Tendrl.etcd.get('/nodes').children.map do |node|
+        Tendrl.etcd.get('/nodes').children.map do |node|
+          begin
             nodecontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/NodeContext"))
             tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/TendrlContext"))
             counters = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/alert_counters"))
             node_key = node.key.split('/')[-1]
             { node_key => nodecontext.merge(tendrlcontext).merge(counters) }
+          rescue Etcd::KeyNotFound, Etcd::NotDir
           end
-        rescue Etcd::KeyNotFound, Etcd::NotDir
-          []
-        end
+        end.compact
+      rescue Etcd::KeyNotFound, Etcd::NotDir
+        []
       end
 
       def find_all_by_cluster_id(cluster_id)
