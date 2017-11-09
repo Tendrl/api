@@ -7,12 +7,14 @@ module ClusterPresenter
       cluster_list.each do |cluster|
         clusters << single(cluster)
       end
-      clusters
+      clusters.compact
     end
 
-    def single(cluster)
-      cluster.each do |cluster_id, attributes|
+    def single(cluster_attributes)
+      cluster = nil
+      cluster_attributes.each do |cluster_id, attributes|
         context = attributes.delete('tendrlcontext')
+        break if context.nil?
         context['cluster_id'] = cluster_id
         attributes.slice!(
           'errors',
