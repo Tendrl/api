@@ -1,4 +1,11 @@
-Name: tendrl-api
+%global name tendrl-api
+%global app_group %{name}
+%global app_user %{name}
+%global install_dir %{_datadir}/%{name}
+%global config_dir %{_sysconfdir}/tendrl
+%global config_file %{config_dir}/etcd.yml
+
+Name: %{name}
 Version: 1.5.4
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
@@ -60,35 +67,42 @@ Tendrl API httpd configuration.
 
 %install
 install -m  0755  --directory $RPM_BUILD_ROOT%{_var}/log/tendrl/api
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/models
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/controllers
+
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/forms
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/presenters
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/models
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/tmp
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config/puma
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/config/initializers
-install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{_datadir}/%{name}
-install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/controllers/
-install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms/
-install -Dm 0644 app/presenters/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters/
-install -Dm 0644 app/models/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/app/models/
-install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/
-install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
-install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/public
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/.deploy
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/log
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
+install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
+install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{install_dir}
+install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{install_dir}/app/controllers/
+install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{install_dir}/app/forms/
+install -Dm 0644 app/presenters/*.rb $RPM_BUILD_ROOT%{install_dir}/app/presenters/
+install -Dm 0644 app/models/*.rb $RPM_BUILD_ROOT%{install_dir}/app/models/
+install -Dm 0644 lib/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/
+install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/
+install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors/
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
-install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
+install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{config_file}
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
-install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/puma/
-install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/initializers/
+install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
+install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{install_dir}/config/initializers/
 
+%pre
+getent group %{app_group} > /dev/null || \
+    groupadd -r %{app_group}
+getent passwd %{app_user} > /dev/null || \
+    useradd -r -d %{install_dir} -M -g %{app_group} \
+	    -s /sbin/nologin %{app_user}
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
@@ -97,10 +111,10 @@ systemctl enable tendrl-api
 %files
 %license LICENSE
 %dir %{_var}/log/tendrl/api
-%dir %{_sysconfdir}/tendrl
-%{_datadir}/%{name}/
+%dir %{config_dir}
+%{install_dir}/
 %{_unitdir}/tendrl-api.service
-%config(noreplace) %{_sysconfdir}/tendrl/etcd.yml
+%config(noreplace) %attr(0640, root, %{app_group}) %{config_file}
 
 %files doc
 %dir %{_datadir}/doc/tendrl/config
