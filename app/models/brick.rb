@@ -19,7 +19,7 @@ module Tendrl
         begin
           Tendrl.etcd.get("/clusters/#{cluster_id}/Volumes/#{volume_id}/Bricks", recursive: true)
             .children.map do |node|
-            parsed = Tendrl.recurse(node)
+            parsed = Tendrl.recurse(node, {}, { downcase_keys: false })
             parsed = [parsed] if parsed.is_a? Hash
             parsed.each do |ref|
               detail = {}

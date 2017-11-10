@@ -1,6 +1,6 @@
 Name: tendrl-api
 Version: 1.5.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -35,15 +35,6 @@ Requires: tendrl-node-agent
 %description
 Collection of tendrl api.
 
-%package doc
-Summary: Documentation for %{name}
-Group: Documentation
-Requires: %{name} = %{version}-%{release}
-BuildArch: noarch
-
-%description doc
-Documentation for %{name}.
-
 %package httpd
 Summary: Tendrl api httpd
 Requires: %{name} = %{version}-%{release}
@@ -65,7 +56,6 @@ install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/forms
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/presenters
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/app/models
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/public
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/.deploy
 install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/%{name}/log
@@ -83,7 +73,6 @@ install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/lib/tendrl/errors/
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{_sysconfdir}/tendrl/etcd.yml
-install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
 install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/config/puma/
@@ -102,17 +91,14 @@ systemctl enable tendrl-api
 %{_unitdir}/tendrl-api.service
 %config(noreplace) %{_sysconfdir}/tendrl/etcd.yml
 
-%files doc
-%dir %{_datadir}/doc/tendrl/config
-%doc %{_datadir}/doc/tendrl/README.adoc
-%{_datadir}/doc/tendrl/config/
-%{_datadir}/doc/tendrl/Rakefile
-
 %files httpd
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Nov 10 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-2
+- Bugfixes tendrl-api v1.5.4
+
 * Thu Nov 02 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-1
 - Release tendrl-api v1.5.4
 
