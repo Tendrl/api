@@ -81,7 +81,7 @@ install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{_datadir}/%{name}/con
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
-systemctl enable tendrl-api
+systemctl enable tendrl-api >/dev/null 2>&1 || :
 
 %files
 %license LICENSE
