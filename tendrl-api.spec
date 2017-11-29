@@ -4,6 +4,7 @@
 %global install_dir %{_datadir}/%{name}
 %global config_dir %{_sysconfdir}/tendrl
 %global doc_dir %{_docdir}/%{name}
+%global log_dir %{_var}/log/tendrl/api
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
@@ -58,7 +59,7 @@ Tendrl API httpd configuration.
 %build
 
 %install
-install -m 0755 --directory $RPM_BUILD_ROOT%{_var}/log/tendrl/api
+install -m 0755 --directory $RPM_BUILD_ROOT%{log_dir}
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/controllers
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/forms
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/presenters
@@ -66,8 +67,6 @@ install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/models
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors
 install -m 0755 --directory $RPM_BUILD_ROOT%{doc_dir}/config
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/public
-install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/log
-install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
@@ -88,6 +87,10 @@ install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
 install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{install_dir}/config/initializers/
 
+# Symlink writable directories onto /var
+ln -s %{log_dir} $RPM_BUILD_ROOT%{install_dir}/log
+ln -s %{tmp_dir} $RPM_BUILD_ROOT%{install_dir}/tmp
+
 %pre
 getent group %{app_group} > /dev/null || \
     groupadd -r %{app_group}
@@ -101,7 +104,7 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 
 %files
 %license LICENSE
-%dir %attr(0755, %{app_user}, %{app_group}) %{_var}/log/tendrl/api
+%dir %attr(0755, %{app_user}, %{app_group}) %{log_dir}
 %dir %{config_dir}
 %{install_dir}/
 %{doc_dir}/
