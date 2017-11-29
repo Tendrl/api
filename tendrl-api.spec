@@ -3,6 +3,7 @@
 %global app_user %{name}
 %global install_dir %{_datadir}/%{name}
 %global config_dir %{_sysconfdir}/tendrl
+%global doc_dir %{_docdir}/%{name}
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
@@ -63,7 +64,7 @@ install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/forms
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/presenters
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/models
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors
-install -m 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
+install -m 0755 --directory $RPM_BUILD_ROOT%{doc_dir}/config
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/public
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/log
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
@@ -81,7 +82,7 @@ install -Dm 0644 lib/tendrl/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/
 install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors/
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{config_file}
-install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{_datadir}/doc/tendrl
+install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{doc_dir}
 install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
@@ -103,6 +104,7 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %dir %attr(0755, %{app_user}, %{app_group}) %{_var}/log/tendrl/api
 %dir %{config_dir}
 %{install_dir}/
+%{doc_dir}/
 %{_unitdir}/tendrl-api.service
 %config(noreplace) %attr(0640, root, %{app_group}) %{config_file}
 
