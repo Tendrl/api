@@ -6,7 +6,7 @@ directory app_dir
 
 environment 'production'
 
-stdout_redirect "#{app_dir}/log/puma.stdout.log", "/var/log/tendrl/api/error.log", true
+stdout_redirect "#{app_dir}/log/puma.log", "#{app_dir}/log/error.log", true
 
 threads_count = Integer(ENV['PUMA_MAX_THREADS'] || 8)
 threads threads_count, threads_count
