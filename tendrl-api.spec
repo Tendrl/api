@@ -7,7 +7,7 @@
 
 Name: %{name}
 Version: 1.5.4
-Release: 4%{?dist}
+Release: 3%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -111,9 +111,6 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
-* Wed Nov 29 2017 Mrugesh Karnik <mkarnik@redhat.com> - 1.5.4-4
-- Enable the API to run as a non-root user
-
 * Mon Nov 27 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-3
 - Supress service enable message during package update
 
