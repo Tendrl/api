@@ -70,7 +70,7 @@ install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
-install -Dm 0644 $RPM_BUILD_ROOT%{install_dir}/.deploy
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/.deploy
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{install_dir}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{install_dir}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{install_dir}/app/forms/
