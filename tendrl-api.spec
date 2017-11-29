@@ -5,6 +5,7 @@
 %global config_dir %{_sysconfdir}/tendrl
 %global doc_dir %{_docdir}/%{name}
 %global log_dir %{_var}/log/tendrl/api
+%global tmp_dir %{_var}/tmp
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
