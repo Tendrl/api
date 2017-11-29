@@ -8,6 +8,7 @@ Type=simple
 ExecStart=/usr/bin/puma -C /usr/share/tendrl-api/config/puma/production.rb
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
+User=tendrl-api
 Restart=on-failure
 PrivateTmp=true
 
