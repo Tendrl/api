@@ -1,6 +1,6 @@
 NAME      := tendrl-api
 VERSION   := 1.5.4
-RELEASE   := 1
+RELEASE   := 3
 COMMIT := $(shell git rev-parse HEAD)
 SHORTCOMMIT := $(shell echo $(COMMIT) | cut -c1-7)
 

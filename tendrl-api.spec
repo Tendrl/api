@@ -7,7 +7,7 @@
 
 Name: %{name}
 Version: 1.5.4
-Release: 1%{?dist}
+Release: 4%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -42,15 +42,6 @@ Requires: tendrl-node-agent
 %description
 Collection of tendrl api.
 
-%package doc
-Summary: Documentation for %{name}
-Group: Documentation
-Requires: %{name} = %{version}-%{release}
-BuildArch: noarch
-
-%description doc
-Documentation for %{name}.
-
 %package httpd
 Summary: Tendrl api httpd
 Requires: %{name} = %{version}-%{release}
@@ -66,21 +57,20 @@ Tendrl API httpd configuration.
 %build
 
 %install
-install -m  0755  --directory $RPM_BUILD_ROOT%{_var}/log/tendrl/api
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/controllers
-
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/forms
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/presenters
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/models
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors
-install -dm 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/public
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/.deploy
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/log
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
-install -dm 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
+install -m 0755 --directory $RPM_BUILD_ROOT%{_var}/log/tendrl/api
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/controllers
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/forms
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/presenters
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/app/models
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/lib/tendrl/errors
+install -m 0755 --directory $RPM_BUILD_ROOT%{_datadir}/doc/tendrl/config
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/public
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/log
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/tmp
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
+install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
+install -Dm 0644 $RPM_BUILD_ROOT%{install_dir}/.deploy
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{install_dir}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{install_dir}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{install_dir}/app/forms/
@@ -106,27 +96,30 @@ getent passwd %{app_user} > /dev/null || \
 
 %post httpd
 setsebool -P httpd_can_network_connect 1
-systemctl enable tendrl-api
+systemctl enable tendrl-api >/dev/null 2>&1 || :
 
 %files
 %license LICENSE
-%dir %{_var}/log/tendrl/api
+%dir %attr(0755, %{app_user}, %{app_group}) %{_var}/log/tendrl/api
 %dir %{config_dir}
 %{install_dir}/
 %{_unitdir}/tendrl-api.service
 %config(noreplace) %attr(0640, root, %{app_group}) %{config_file}
-
-%files doc
-%dir %{_datadir}/doc/tendrl/config
-%doc %{_datadir}/doc/tendrl/README.adoc
-%{_datadir}/doc/tendrl/config/
-%{_datadir}/doc/tendrl/Rakefile
 
 %files httpd
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Wed Nov 29 2017 Mrugesh Karnik <mkarnik@redhat.com> - 1.5.4-4
+- Enable the API to run as a non-root user
+
+* Mon Nov 27 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-3
+- Supress service enable message during package update
+
+* Fri Nov 10 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-2
+- Bugfixes tendrl-api v1.5.4
+
 * Thu Nov 02 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-1
 - Release tendrl-api v1.5.4
 
