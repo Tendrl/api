@@ -33,8 +33,8 @@ class ClustersController < AuthenticatedUsersController
   end
   
   get '/clusters/:cluster_id/notifications' do
-    notifications = Tendrl::Notification.find_all_by_cluster_id(params[:cluster_id])
-    NotificationPresenter.list(notifications).to_json
+    notifications = Tendrl::Notification.all
+    NotificationPresenter.list_by_cluster_id(notifications, params[:cluster_id]).to_json
   end
   
   post '/clusters/:cluster_id/import' do
