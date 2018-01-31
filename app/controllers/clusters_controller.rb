@@ -33,8 +33,17 @@ class ClustersController < AuthenticatedUsersController
   end
   
   get '/clusters/:cluster_id/notifications' do
-    notifications = Tendrl::Notification.all
+    notifications = Tendrl::Job.all
     NotificationPresenter.list_by_cluster_id(notifications, params[:cluster_id]).to_json
+  end
+  
+  get '/clusters/:cluster_id/jobs' do
+    begin
+      jobs = Tendrl::Job.all
+    rescue Etcd::KeyNotFound
+      jobs = []
+    end
+    { jobs: JobPresenter.list_by_cluster_id(jobs, params[:cluster_id]) }.to_json
   end
   
   post '/clusters/:cluster_id/import' do
