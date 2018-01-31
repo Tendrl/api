@@ -31,7 +31,12 @@ class ClustersController < AuthenticatedUsersController
     bricks = Tendrl::Brick.find_by_cluster_id_and_refs(params[:cluster_id], references)
     { bricks: BrickPresenter.list(bricks) }.to_json
   end
-
+  
+  get '/clusters/:cluster_id/notifications' do
+    notifications = Tendrl::Notification.find_all_by_cluster_id(params[:cluster_id])
+    NotificationPresenter.list(notifications).to_json
+  end
+  
   post '/clusters/:cluster_id/import' do
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
