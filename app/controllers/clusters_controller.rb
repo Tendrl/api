@@ -7,7 +7,13 @@ class ClustersController < AuthenticatedUsersController
 
   get '/clusters/:cluster_id/nodes' do
     nodes = Tendrl::Node.find_all_by_cluster_id(params[:cluster_id])
-    { nodes: NodePresenter.list(nodes) }.to_json
+    node_list = NodePresenter.list(nodes).map do |node_data|
+      bricks = Tendrl::Brick.find_all_by_cluster_id_and_node_fqdn(
+        params[:cluster_id], node_data['fqdn']
+      )
+      node_data.merge(bricks_count: bricks.size)
+    end
+    { nodes: node_list }.to_json
   end
 
   get '/clusters/:cluster_id/nodes/:node_id/bricks' do
