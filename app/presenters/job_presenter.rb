@@ -26,6 +26,17 @@ module JobPresenter
         single(job)
       end.compact
     end
+    
+    def list_by_cluster_id(jobs, cluster_id)
+      jobs.map do |job|
+        unless job['payload'].blank?
+          payload = JSON.parse(job['payload'])
+          if payload['parameters']['integration_id'] == cluster_id
+            single(job)
+          end
+        end
+      end.compact
+    end
 
   end
 
