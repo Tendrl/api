@@ -34,10 +34,9 @@ module Tendrl
           tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("/clusters/#{cluster_id}/TendrlContext"))
           Tendrl.etcd.get("/clusters/#{cluster_id}/nodes", recursive: true)
             .children.map do |node|
-            nodecontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/NodeContext"))
-            counters = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/alert_counters"))
-
-            Tendrl.recurse(node).merge(nodecontext).merge(tendrlcontext).merge(counters)
+            node = Tendrl.recurse(node)
+            node.values.first.merge!(tendrlcontext)
+            node
           end
         rescue Etcd::KeyNotFound, Etcd::NotDir
           []
