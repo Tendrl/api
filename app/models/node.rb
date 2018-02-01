@@ -31,10 +31,10 @@ module Tendrl
 
       def find_all_by_cluster_id(cluster_id)
         begin
+          tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("/clusters/#{cluster_id}/TendrlContext"))
           Tendrl.etcd.get("/clusters/#{cluster_id}/nodes", recursive: true)
             .children.map do |node|
             nodecontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/NodeContext"))
-            tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/TendrlContext"))
             counters = Tendrl.recurse(Tendrl.etcd.get("#{node.key}/alert_counters"))
 
             Tendrl.recurse(node).merge(nodecontext).merge(tendrlcontext).merge(counters)
