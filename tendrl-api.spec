@@ -9,8 +9,8 @@
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
-Version: 1.5.4
-Release: 4%{?dist}
+Version: 1.5.5
+Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -117,6 +117,12 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Feb 02 2018 Rohan Kanade <rkanade@redhat.com> - 1.5.5-1
+- Adds brick_count per node to /clusters/:cluster_id/nodes
+- Adds api /clusters/:cluster_id/notifications
+- Adds api /cluster/:cluster_id/jobs
+- Adds volume alert count to /clusters/:cluster_id
+
 * Thu Nov 30 2017 Rohan Kanade <rkanade@redhat.com> - 1.5.4-4
 - Bugfixes
 
