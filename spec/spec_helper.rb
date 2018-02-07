@@ -105,6 +105,17 @@ def stub_unmanaged_cluster
   )
 end
 
+def stub_managed_cluster
+  stub_request(
+    :get,
+    'http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc'
+  ).
+  to_return(
+    :status => 200,
+    body: File.read('spec/fixtures/managed_clusters.json')
+  )
+end
+
 def stub_cluster_profiling
   stub_request(
     :put,
