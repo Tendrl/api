@@ -31,9 +31,12 @@ module Tendrl
 
       def find_all_by_cluster_id(cluster_id)
         begin
+          tendrlcontext = Tendrl.recurse(Tendrl.etcd.get("/clusters/#{cluster_id}/TendrlContext"))
           Tendrl.etcd.get("/clusters/#{cluster_id}/nodes", recursive: true)
             .children.map do |node|
-            Tendrl.recurse(node)
+            node = Tendrl.recurse(node)
+            node.values.first.merge!(tendrlcontext)
+            node
           end
         rescue Etcd::KeyNotFound, Etcd::NotDir
           []
