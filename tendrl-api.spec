@@ -72,6 +72,7 @@ install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/puma
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/config/initializers
 install -m 0755 --directory $RPM_BUILD_ROOT%{install_dir}/.deploy
+install -m 0755 --directory $RPM_BUILD_ROOT%{_sysconfdir}/firewalld/services
 install -Dm 0644 Rakefile *.ru Gemfile* $RPM_BUILD_ROOT%{install_dir}
 install -Dm 0644 app/controllers/*.rb $RPM_BUILD_ROOT%{install_dir}/app/controllers/
 install -Dm 0644 app/forms/*.rb $RPM_BUILD_ROOT%{install_dir}/app/forms/
@@ -87,6 +88,7 @@ install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/ht
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
 install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{install_dir}/config/initializers/
+install -Dm 0644 config/tendrl-api.xml $RPM_BUILD_ROOT%{_sysconfdir}/firewalld/services
 
 # Symlink writable directories onto /var
 ln -s %{log_dir} $RPM_BUILD_ROOT%{install_dir}/log
@@ -111,6 +113,7 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %{doc_dir}/
 %{_unitdir}/tendrl-api.service
 %config(noreplace) %attr(0640, root, %{app_group}) %{config_file}
+%config(noreplace) %{_sysconfdir}/firewalld/services/tendrl-api.xml
 
 %files httpd
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
