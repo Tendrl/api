@@ -24,9 +24,9 @@ module ClusterPresenter
           'cluster_network',
           'is_managed',
           'enable_volume_profiling',
-          'import_status',
-          'import_job_id',
-          'alert_counters'
+          'alert_counters',
+          'status',
+          'current_job'
         )
         attributes['errors'] = JSON.parse(attributes['errors']) rescue []
         nodes = attributes.delete('nodes')
