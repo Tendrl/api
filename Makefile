@@ -8,7 +8,7 @@ all: srpm
 
 dist:
 	mkdir -p $(NAME)-$(VERSION)
-	cp -r app config docs lib public spec $(NAME)-$(VERSION)/
+	cp -r app config docs firewalld lib public spec $(NAME)-$(VERSION)/
 	cp config.ru LICENSE Gemfile* Makefile Rakefile README* tendrl-api.* $(NAME)-$(VERSION)/
 	tar -zcf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
 	rm -rf $(NAME)-$(VERSION)
