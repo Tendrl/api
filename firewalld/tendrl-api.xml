@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>tendrl-api</short>
+  <description>Enable Port for Tendrl API</description>
+    <port protocol="tcp" port="9292"/> <!-- api -->
+</service>
