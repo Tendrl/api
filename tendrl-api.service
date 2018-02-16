@@ -1,5 +1,6 @@
 [Unit]
 Description=Tendrl Api Daemon
+Documentation=https://github.com/Tendrl/api/tree/master/docs
 After=network.target
 Requires=tendrl-node-agent.service
 
