@@ -9,7 +9,7 @@
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
-Version: 1.5.5
+Version: 1.6.0
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -123,6 +123,9 @@ firewall-cmd --reload >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Sat Feb 17 2018 Rohan Kanade <rkanade@redhat.com> - 1.6.0-1
+- API to un-manage clusters managed by Tendrl
+
 * Fri Feb 02 2018 Rohan Kanade <rkanade@redhat.com> - 1.5.5-1
 - Adds brick_count per node to /clusters/:cluster_id/nodes
 - Adds api /clusters/:cluster_id/notifications
