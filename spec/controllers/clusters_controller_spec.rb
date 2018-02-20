@@ -38,26 +38,9 @@ describe ClustersController do
 
     it 'unmanaged' do
       body = {
-        enable_volume_profiling: "yes"
+        volume_profiling_flag: "enable"
       }
       post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/import',
-        body.to_json,
-        http_env
-      expect(last_response.status).to eq 202
-    end
-
-  end
-
-  context 'unmanage' do
-
-    before do
-      stub_definitions
-      stub_managed_cluster
-      stub_job_creation
-    end
-
-    it 'managed' do
-      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/unmanage',
         body.to_json,
         http_env
       expect(last_response.status).to eq 202
@@ -74,7 +57,7 @@ describe ClustersController do
 
     it 'enable' do
       body = {
-        enable_volume_profiling: "yes"
+        volume_profiling_flag: "enable"
       }
       put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
         body.to_json,

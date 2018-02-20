@@ -56,10 +56,10 @@ class ClustersController < AuthenticatedUsersController
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
-    body['Cluster.enable_volume_profiling'] = if ['yes', 'no'].include?(body['enable_volume_profiling'])
-                                                body['enable_volume_profiling']
+    body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
+                                                body['volume_profiling_flag']
                                               else
-                                                'yes'
+                                                'leave-as-is'
                                               end
     job = Tendrl::Job.new(
       current_user,
@@ -84,17 +84,43 @@ class ClustersController < AuthenticatedUsersController
   put '/clusters/:cluster_id/profiling' do
     cluster = Tendrl::Cluster.find(params[:cluster_id])
     body = JSON.parse(request.body.read)
-    enable_volume_profiling = if ['yes', 'no'].include?(body['enable_volume_profiling'])
-                                 body['enable_volume_profiling']
+    volume_profiling_flag = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
+                                 body['volume_profiling_flag']
                               else
-                                'yes'
+                                'leave-as-is'
                               end
 
-    cluster.update_attributes(enable_volume_profiling: enable_volume_profiling)
+    cluster.update_attributes(volume_profiling_flag: volume_profiling_flag)
     status 200
     ClusterPresenter.single(
       { params[:cluster_id] => cluster.attributes }
     ).to_json
+  end
+
+  post '/clusters/:cluster_id/volumes/:volume_id/start_profiling' do
+    load_definitions(params[:cluster_id])
+    flow = Tendrl::Flow.new('namespace.gluster', 'StartProfiling', "Volume")
+    body = JSON.parse(request.body.read)
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      integration_id: params[:cluster_id],
+      type: "sds").create(body)
+    status 202
+    { job_id: job.job_id }.to_json
+  end
+
+  post '/clusters/:cluster_id/volumes/:volume_id/stop_profiling' do
+    load_definitions(params[:cluster_id])
+    flow = Tendrl::Flow.new('namespace.gluster', 'StopProfiling', "Volume")
+    body = JSON.parse(request.body.read)
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      integration_id: params[:cluster_id],
+      type: "sds").create(body)
+    status 202
+    { job_id: job.job_id }.to_json
   end
 
   private
