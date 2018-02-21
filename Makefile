@@ -3,6 +3,7 @@ VERSION   := 1.6.0
 RELEASE   := 1
 COMMIT := $(shell git rev-parse HEAD)
 SHORTCOMMIT := $(shell echo $(COMMIT) | cut -c1-7)
+BRANCH := $(shell git symbolic-ref --short HEAD)
 
 all: srpm
 
@@ -28,6 +29,12 @@ update-release:
 	sed -i $(NAME).spec \
 	  -e "/^Release:/cRelease: $(shell date +"%Y%m%dT%H%M%S").$(SHORTCOMMIT)"
 
+update-release-pr:
+	sed -i $(NAME).spec \
+	  -e "/^Release:/cRelease: $(shell date +"%Y%m%dT%H%M%S").$(SHORTCOMMIT).$(BRANCH)"
+
 snapshot: update-release srpm
 
-.PHONY: dist rpm srpm update-release snapshot
+snapshot-pr: update-release-pr srpm
+
+.PHONY: dist rpm srpm update-release update-release-pr snapshot snapshot-pr
