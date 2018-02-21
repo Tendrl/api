@@ -19,11 +19,11 @@ module NotificationPresenter
       end
     end
 
-    def list_by_cluster_id(raw_notifications, cluster_id)
+    def list_by_cluster_id(raw_notifications, integration_id)
       notifications = []
       raw_notifications.each do |notification|
         notification.each do |notification_id, attributes|
-          next unless attributes['cluster_id'] == cluster_id
+          next unless attributes['integration_id'] == integration_id
           attributes.slice!('message_id', 'timestamp', 'priority', 'payload')
           payload = attributes.delete('payload')
           message = JSON.parse(payload['message'])['tags']['message'] rescue ""
