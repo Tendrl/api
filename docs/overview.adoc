@@ -81,16 +81,6 @@ The API token needs to be sent in every request in the header
 curl -H "Authorization: Tendrl <API_TOKEN>" http://127.0.0.1/api/1.0
 ----------
 
-=== Flows
-
-The API provides list of flows which can be performed either globally or on a 
-specific resource. The flows provide the url, http method and attributes
-needed for a specific flow. For ex: Getting list of available flows.
-
-----------
-curl -XGET http://127.0.0.1/api/1.0/Flows
-----------
-
 === User Agent
 
 Every API request must send a `User-Agent` property in the header to identity 
