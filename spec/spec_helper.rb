@@ -119,9 +119,9 @@ end
 def stub_cluster_profiling
   stub_request(
     :put,
-    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/enable_volume_profiling").
-    with(:body => "value=yes").
-    to_return(:status => 200, :body => "{\"action\":\"set\",\"node\":{\"key\":\"/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/enable_volume_profiling\",\"value\":\"yes\",\"modifiedIndex\":441,\"createdIndex\":441}}")
+    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/volume_profiling_flag").
+    with(:body => "value=enable").
+    to_return(:status => 200, :body => "{\"action\":\"set\",\"node\":{\"key\":\"/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/volume_profiling_flag\",\"value\":\"enable\",\"modifiedIndex\":441,\"createdIndex\":441}}")
   end
 
 def stub_job_creation
