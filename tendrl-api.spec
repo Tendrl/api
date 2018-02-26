@@ -103,10 +103,6 @@ getent passwd %{app_user} > /dev/null || \
 %post httpd
 setsebool -P httpd_can_network_connect 1
 systemctl enable tendrl-api >/dev/null 2>&1 || :
-firewall-cmd --reload >/dev/null 2>&1 || :
-
-%postun
-firewall-cmd --reload >/dev/null 2>&1 || :
 
 %files
 %license LICENSE
