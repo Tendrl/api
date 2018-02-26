@@ -38,9 +38,9 @@ class ClustersController < AuthenticatedUsersController
     { bricks: BrickPresenter.list(bricks) }.to_json
   end
   
-  get '/clusters/:integration_id/notifications' do
+  get '/clusters/:cluster_id/notifications' do
     notifications = Tendrl::Notification.all
-    NotificationPresenter.list_by_cluster_id(notifications, params[:integration_id]).to_json
+    NotificationPresenter.list_by_cluster_id(notifications, params[:cluster_id]).to_json
   end
   
   get '/clusters/:cluster_id/jobs' do
