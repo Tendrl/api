@@ -23,7 +23,7 @@ module ClusterPresenter
           'public_network',
           'cluster_network',
           'is_managed',
-          'enable_volume_profiling',
+          'volume_profiling_state',
           'alert_counters',
           'status',
           'current_job'
