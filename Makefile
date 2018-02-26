@@ -24,10 +24,10 @@ srpm: dist
 rpm: srpm
 	mock -r epel-7-x86_64 rebuild $(NAME)-$(VERSION)-$(RELEASE).el7.src.rpm --resultdir=. --define "dist .el7"
 
-update-release:
+gitversion:
 	sed -i $(NAME).spec \
 	  -e "/^Release:/cRelease: $(shell date +"%Y%m%dT%H%M%S").$(SHORTCOMMIT)"
 
-snapshot: update-release srpm
+snapshot: gitversion srpm
 
-.PHONY: dist rpm srpm update-release snapshot
+.PHONY: dist rpm srpm gitversion snapshot
