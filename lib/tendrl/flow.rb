@@ -16,7 +16,7 @@ module Tendrl
       @object = object
       @objects = @instance[namespace]['objects']
       @flow = @instance[namespace]['flows'][flow_name] ||
-              @instance[namespace]['objects'][object]['flows'][flow_name]
+              @objects[object]['flows'][flow_name]
     end
 
     def objects
