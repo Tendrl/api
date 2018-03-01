@@ -27,11 +27,11 @@ module JobPresenter
       end.compact
     end
     
-    def list_by_cluster_id(jobs, cluster_id)
+    def list_by_integration_id(jobs, integration_id)
       jobs.map do |job|
         next if job['payload'].blank?
         payload = JSON.parse(job['payload'])
-        if payload['parameters']['TendrlContext.integration_id'] == cluster_id
+        if payload['parameters']['TendrlContext.integration_id'] == integration_id
           single(job)
         end
       end.compact

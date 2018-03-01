@@ -19,7 +19,7 @@ module NotificationPresenter
       end
     end
 
-    def list_by_cluster_id(raw_notifications, cluster_id)
+    def list_by_integration_id(raw_notifications, integration_id)
       notifications = []
       raw_notifications.each do |notification|
         notification.each do |notification_id, attributes|
