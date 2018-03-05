@@ -5,6 +5,11 @@
 
 = Tendrl API
 
+== Build Status
+
+- Unit tests: image:https://travis-ci.org/Tendrl/api.svg?branch=master["Build Status", link="https://travis-ci.org/Tendrl/api"]
+- Functional tests: image:https://ci.centos.org/view/Tendrl-master/job/tendrl-build-1-master-api/lastBuild/badge/icon["Build Status", link="https://ci.centos.org/view/Tendrl-master/job/tendrl-build-1-master-api/lastBuild/"]
+
 == Installation from Source on CentOS 7
 
 NOTE: All the commands are run as a regular user that has `sudo` privileges.
