@@ -6,3 +6,5 @@ config/sds
 coverage
 tmp
 log
+*.swp
+*.swo
