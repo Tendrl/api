@@ -20,7 +20,6 @@ RSpec.describe Tendrl::UserForm do
       expect(validator.errors[:email].size).to eq(1)
       expect(validator.errors[:name].size).to eq(2)
       expect(validator.errors[:password].size).to eq(1)
-      expect(validator.errors[:password_confirmation].size).to eq(1)
       expect(validator.errors[:role].size).to eq(1)
       expect(validator.errors[:email_notifications].size).to eq(1)
     end
@@ -31,7 +30,6 @@ RSpec.describe Tendrl::UserForm do
         email: 'tom@tendrl.org',
         username: 'thardy',
         password: 'temp1234',
-        password_confirmation: 'temp1234',
         role: Tendrl::User::ADMIN,
         email_notifications: true
       })
@@ -44,7 +42,6 @@ RSpec.describe Tendrl::UserForm do
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
         password: 'temp1234',
-        password_confirmation: 'temp1234',
         email_notifications: true,
         role: Tendrl::User::ADMIN
       })
@@ -72,7 +69,6 @@ RSpec.describe Tendrl::UserForm do
     it 'with valid attributes and invalid password' do
       validator = UserForm.new(user, {
         password: 'temp',
-        password_confirmation: 'temp',
         role: Tendrl::User::NORMAL
       })
       expect(validator.valid?).to eq(false)
@@ -85,7 +81,6 @@ RSpec.describe Tendrl::UserForm do
         email: 'tom@tendrl.org',
         username: 'thardy',
         password: 'temp1234',
-        password_confirmation: 'temp1234',
         role: Tendrl::User::NORMAL
       })
       expect(validator.valid?).to eq(true)
@@ -97,7 +92,6 @@ RSpec.describe Tendrl::UserForm do
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
         password: 'temp1234',
-        password_confirmation: 'temp1234',
         role: Tendrl::User::LIMITED
       })
       expect(validator.valid?).to eq(true)
