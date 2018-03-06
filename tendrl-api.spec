@@ -20,6 +20,7 @@ BuildArch: noarch
 
 BuildRequires: ruby
 BuildRequires: systemd-units
+BuildRequires: systemd
 
 Requires: ruby >= 2.0.0
 Requires: rubygem-activemodel >= 4.2.6
@@ -103,6 +104,15 @@ getent passwd %{app_user} > /dev/null || \
 %post httpd
 setsebool -P httpd_can_network_connect 1
 systemctl enable tendrl-api >/dev/null 2>&1 || :
+
+%post
+%systemd_post tendrl-api.service
+
+%preun
+%systemd_preun tendrl-api.service
+
+%postun
+%systemd_postun_with_restart tendrl-api.service
 
 %files
 %license LICENSE
