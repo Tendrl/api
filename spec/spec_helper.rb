@@ -186,6 +186,22 @@ def stub_job
   )
 end
 
+def stub_missing_job
+  stub_request(
+    :get,
+    /http:\/\/127.0.0.1:4001\/v2\/keys\/queue\/missing/
+  ).
+  to_return(
+    :status => 404,
+    :body => {
+      "errorCode" => 100,
+      "message" =>  "Key not found",
+      "cause" => "/queue/missing",
+      "index"=> 51850
+    }.to_json
+  )
+end
+
 def stub_node_ids
   stub_request(
     :get,

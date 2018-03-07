@@ -9,12 +9,19 @@ class JobsController < AuthenticatedUsersController
     { jobs: JobPresenter.list(jobs) }.to_json
   end
 
-  get '/jobs/:job_id' do
+  before '/jobs/:job_id/?*?' do
     begin
-      JobPresenter.single(Tendrl::Job.find(params[:job_id])).to_json
-    rescue Etcd::KeyNotFound
-      {}.to_json
+      Tendrl.etcd.get "/queue/#{params[:job_id]}"
+    rescue Etcd::KeyNotFound => e
+      e = Tendrl::HttpResponseErrorHandler.new(
+        e, cause: '/jobs/id', object_id: params[:job_id]
+      )
+      halt e.status, e.body.to_json
     end
+  end
+
+  get '/jobs/:job_id' do
+    JobPresenter.single(Tendrl::Job.find(params[:job_id])).to_json
   end
 
   get '/jobs/:job_id/messages' do
@@ -33,5 +40,4 @@ class JobsController < AuthenticatedUsersController
   get '/jobs/:job_id/status' do
     Tendrl::Job.status(params[:job_id]).to_json
   end
-
 end

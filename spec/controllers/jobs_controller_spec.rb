@@ -29,6 +29,13 @@ describe JobsController do
       expect(last_response.status).to eq 200
     end
 
-  end
+    specify 'missing job' do
+      stub_missing_job
+      get '/jobs/missing', {}, http_env
+      expect(last_response.status).to eq 404
 
+      get '/jobs/missing/messages', {}, http_env
+      expect(last_response.status).to eq 404
+    end
+  end
 end
