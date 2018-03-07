@@ -3,16 +3,13 @@ module Tendrl
     include ActiveModel::Validations
 
     attr_accessor :name, :username, :email, :password,
-      :password_confirmation, :role, :email_notifications
+      :role, :email_notifications
 
     validates :name, :username, presence: true, length: { minimum: 4, maximum: 100 }
 
-    validates :password, confirmation: true, length: { minimum: 8 }, if:
-      :password_required?
+    validates :password, length: { minimum: 8 }, if: :password_required?
 
-    validates :password_confirmation, presence: true, if: :password_required?
-
-    validates :email, format: { 
+    validates :email, format: {
       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
     }
 
@@ -26,10 +23,9 @@ module Tendrl
       @user = user
       @name = params[:name] || user.name
       @username = params[:username] || user.username
-      @email = params[:email] || user.email 
+      @email = params[:email] || user.email
       @role = params[:role] || user.role
       @password = params[:password]
-      @password_confirmation = params[:password_confirmation]
       @email_notifications = if params[:email_notifications].nil?
                                user.email_notifications
                              else

@@ -26,7 +26,6 @@ RSpec.describe UsersController do
           username: 'thardy',
           name: 'Tom Hardy',
           password: 'temp1234',
-          password_confirmation: 'temp1234',
           role: 'admin',
           email_notifications: true
         }

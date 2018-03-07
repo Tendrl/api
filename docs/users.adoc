@@ -26,7 +26,7 @@ curl -H 'Content-Type: application/json' -H 'Authorization: Bearer
 d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' 
 -XPOST -d '{"name":"Tom Hardy", "username":"thardy",
 "email":"thardy@tendrl.org", "role":"admin", "password":"pass1234",
-"password_confirmation":"pass1234","email_notifications": true}'
+"email_notifications": true}'
 http://127.0.0.1/api/1.0/users
 ----------
 

@@ -19,7 +19,6 @@ namespace :etcd do
         email: 'admin@tendrl.org',
         role: 'admin',
         password: password,
-        password_confirmation: password,
         email_notifications: false
       })
       p 'Generated default admin'
