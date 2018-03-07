@@ -9,7 +9,7 @@
 %global config_file %{config_dir}/etcd.yml
 
 Name: %{name}
-Version: 1.6.0
+Version: 1.6.1
 Release: 1%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
@@ -129,6 +129,9 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Wed Mar 07 2018 Rohan Kanade <rkanade@redhat.com> - 1.6.1-1
+- Bugfixes (https://github.com/Tendrl/api/milestone/3)
+
 * Sat Feb 17 2018 Rohan Kanade <rkanade@redhat.com> - 1.6.0-1
 - API to un-manage clusters managed by Tendrl
 
