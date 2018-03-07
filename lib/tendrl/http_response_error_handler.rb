@@ -35,6 +35,14 @@ module Tendrl
           }
         }
       },
+      '/jobs/id' => {
+        status: 404,
+        body: {
+          errors: {
+            message: 'Job with job_id %s not found.'
+          }
+        }
+      },
       'invalid_json' => {
         status: 400,
         body: {
