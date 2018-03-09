@@ -8,3 +8,7 @@ tmp
 log
 *.swp
 *.swo
+.bundle
+vendor/bundle
+vendor/bin
+config/gluster.yaml

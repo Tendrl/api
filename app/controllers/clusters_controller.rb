@@ -79,12 +79,21 @@ class ClustersController < AuthenticatedUsersController
   post '/clusters/:cluster_id/unmanage' do
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'UnmanageCluster')
-    body = request.body.read
-    body = JSON.parse(body.empty? ? '{}' : body)
     job = Tendrl::Job.new(
       current_user,
       flow,
-      integration_id: params[:cluster_id]).create(body)
+      integration_id: params[:cluster_id]).create({})
+    status 202
+    { job_id: job.job_id }.to_json
+  end
+
+  post '/clusters/:cluster_id/expand' do
+    flow = Tendrl::Flow.new 'namespace.tendrl', 'ExpandClusterWithDetectedPeers'
+    job = Tendrl::Job.new(
+      current_user,
+      flow,
+      integration_id: params[:cluster_id]
+    ).create({})
     status 202
     { job_id: job.job_id }.to_json
   end

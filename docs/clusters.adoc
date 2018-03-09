@@ -116,6 +116,32 @@ The import cluster action queued a job in etcd which will be picked up by the
 node agent and processed.
 ----------
 
+== Expand Cluster
+
+Expand an existing cluster with newly detected peers
+
+Sample Request
+
+----------
+curl -XPOST -H "Authorization: Bearer
+4b1b225d84104405b52a5646c997c22882aaeba094330c375cb7b0278e9d642a" -H "Content-Type: application/json" \
+http://127.0.0.1/api/1.0/clusters/9a4b84e0-17b3-4543-af9f-e42000c52bfc/expand
+----------
+
+Sample Response
+
+----------
+Status: 202 Accepted
+
+{ job_id: "3784922e33e8bec939be5e626e21a174" }
+----------
+
+The `job_id` can be used to poll the status of the job.
+The expand cluster action queues a job in etcd which will be picked up by the
+node agent and processed.
+
+----------
+
 == Unmanage Cluster
 
 Unmanage an already managed Gluster cluster.
