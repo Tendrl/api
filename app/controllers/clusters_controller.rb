@@ -1,8 +1,15 @@
 class ClustersController < AuthenticatedUsersController
-
   get '/clusters' do
     clusters = Tendrl::Cluster.all
     { clusters: ClusterPresenter.list(clusters) }.to_json
+  end
+
+  get '/clusters/:cluster_id' do
+    cluster = Tendrl::Cluster.find(params[:cluster_id])
+    status 200
+    ClusterPresenter.single(
+      params[:cluster_id] => cluster.attributes
+    ).to_json
   end
 
   get '/clusters/:cluster_id/nodes' do
@@ -37,12 +44,12 @@ class ClustersController < AuthenticatedUsersController
     bricks = Tendrl::Brick.find_by_cluster_id_and_refs(params[:cluster_id], references)
     { bricks: BrickPresenter.list(bricks) }.to_json
   end
-  
+
   get '/clusters/:cluster_id/notifications' do
     notifications = Tendrl::Notification.all
     NotificationPresenter.list_by_integration_id(notifications, params[:cluster_id]).to_json
   end
-  
+
   get '/clusters/:cluster_id/jobs' do
     begin
       jobs = Tendrl::Job.all
@@ -51,7 +58,7 @@ class ClustersController < AuthenticatedUsersController
     end
     { jobs: JobPresenter.list_by_integration_id(jobs, params[:cluster_id]) }.to_json
   end
-  
+
   post '/clusters/:cluster_id/import' do
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
