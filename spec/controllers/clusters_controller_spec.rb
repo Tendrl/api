@@ -28,8 +28,18 @@ describe ClustersController do
 
   end
 
-  context 'import' do
+  context 'show' do
+    before do
+      stub_cluster
+    end
 
+    specify 'cluster details' do
+      get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc', nil, http_env
+      expect(last_response.status).to eq 200
+    end
+  end
+
+  context 'import' do
     before do
       stub_definitions
       stub_unmanaged_cluster
