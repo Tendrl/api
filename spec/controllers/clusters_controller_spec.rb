@@ -48,7 +48,7 @@ describe ClustersController do
 
     it 'unmanaged' do
       body = {
-        volume_profiling_flag: "enable"
+        'Cluster.volume_profiling_flag' => 'enable'
       }
       post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/import',
         body.to_json,
