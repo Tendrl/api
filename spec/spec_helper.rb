@@ -23,6 +23,8 @@ RSpec.configure do |config|
 end
 
 def stub_definitions
+  defs = YAML.load_file 'spec/fixtures/definitions/tendrl_definitions_node_agent.yaml'
+  defs = defs.to_yaml.gsub(/"/, '\"').gsub(/\n/, '\n')
   stub_request(
     :get,
     "http://127.0.0.1:4001/v2/keys/_NS/node_agent/compiled_definitions/data"
@@ -31,11 +33,13 @@ def stub_definitions
     status: 200,
     body: File.read(
       'spec/fixtures/definitions/tendrl_definitions_node_agent.json'
-    )
+    ).gsub('{{definitions}}', defs)
   )
 end
 
 def stub_cluster_definitions(type='gluster')
+  defs = YAML.load_file "spec/fixtures/definitions/#{type}.yaml"
+  defs = defs.to_yaml.gsub(/"/, '\"').gsub(/\n/, '\n')
   stub_request(
     :get,
     "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/_NS/definitions/data"
@@ -44,7 +48,7 @@ def stub_cluster_definitions(type='gluster')
     status: 200,
     body: File.read(
       "spec/fixtures/definitions/#{type}_definitions.json"
-    )
+    ).gsub('{{definitions}}', defs)
   )
 end
 
