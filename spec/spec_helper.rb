@@ -15,6 +15,8 @@ WebMock.disable_net_connect!(allow_localhost: false)
 RSpec.configure do |config|
   include Rack::Test::Methods
 
+  config.filter_run_when_matching :focus
+
   def app
     described_class
   end

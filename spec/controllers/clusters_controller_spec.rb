@@ -58,6 +58,20 @@ describe ClustersController do
 
   end
 
+  context 'expand' do
+    before do
+      stub_definitions
+      stub_unmanaged_cluster
+      stub_job_creation
+    end
+
+    specify 'cluster with detected peers' do
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/expand',
+           nil, http_env
+      expect(last_response.status).to eq 202
+    end
+  end
+
   context 'unmanage' do
 
     before do
@@ -73,6 +87,7 @@ describe ClustersController do
     end
 
   end
+
   context 'profiling' do
 
     before do
