@@ -64,10 +64,10 @@ class ClustersController < AuthenticatedUsersController
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
     body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
-                                                body['volume_profiling_flag']
-                                              else
-                                                'leave-as-is'
-                                              end
+                                              body['Cluster.volume_profiling_flag']
+                                            else
+                                              'leave-as-is'
+                                            end
     job = Tendrl::Job.new(
       current_user,
       flow,
@@ -92,11 +92,11 @@ class ClustersController < AuthenticatedUsersController
   put '/clusters/:cluster_id/profiling' do
     cluster = Tendrl::Cluster.find(params[:cluster_id])
     body = JSON.parse(request.body.read)
-    volume_profiling_flag = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
-                                 body['volume_profiling_flag']
-                              else
-                                'leave-as-is'
-                              end
+    volume_profiling_flag = if ['enable', 'disable'].include?(body['Cluster.volume_profiling_flag'])
+                              body['Cluster.volume_profiling_flag']
+                            else
+                              'leave-as-is'
+                            end
 
     cluster.update_attributes(volume_profiling_flag: volume_profiling_flag)
     status 200
