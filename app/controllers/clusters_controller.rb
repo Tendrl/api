@@ -63,15 +63,11 @@ class ClustersController < AuthenticatedUsersController
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
-    body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
-                                                body['volume_profiling_flag']
-                                              else
-                                                'leave-as-is'
-                                              end
     job = Tendrl::Job.new(
       current_user,
       flow,
-      integration_id: params[:cluster_id]).create(body)
+      integration_id: params[:cluster_id]
+    ).create(body)
     status 202
     { job_id: job.job_id }.to_json
   end
