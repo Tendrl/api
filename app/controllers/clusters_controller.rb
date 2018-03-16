@@ -63,7 +63,7 @@ class ClustersController < AuthenticatedUsersController
     load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
-    body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['volume_profiling_flag'])
+    body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['Cluster.volume_profiling_flag'])
                                               body['Cluster.volume_profiling_flag']
                                             else
                                               'leave-as-is'
