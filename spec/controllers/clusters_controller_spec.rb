@@ -42,11 +42,11 @@ describe ClustersController do
   context 'import' do
     before do
       stub_definitions
-      stub_unmanaged_cluster
-      stub_job_creation
     end
 
     it 'unmanaged' do
+      stub_unmanaged_cluster
+      stub_job_creation
       body = {
         'Cluster.volume_profiling_flag' => "enable"
       }
@@ -56,6 +56,11 @@ describe ClustersController do
       expect(last_response.status).to eq 202
     end
 
+    specify 'unknown cluster' do
+      stub_unknown_cluster
+      post '/clusters/unknown/import', '{}', http_env
+      expect(last_response.status).to eq 404
+    end
   end
 
   context 'expand' do

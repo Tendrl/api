@@ -61,6 +61,7 @@ class ClustersController < AuthenticatedUsersController
 
   post '/clusters/:cluster_id/import' do
     load_node_definitions
+    cluster_present params[:cluster_id]
     flow = Tendrl::Flow.new('namespace.tendrl', 'ImportCluster')
     body = JSON.parse(request.body.read)
     body['Cluster.volume_profiling_flag'] = if ['enable', 'disable'].include?(body['Cluster.volume_profiling_flag'])
@@ -142,6 +143,15 @@ class ClustersController < AuthenticatedUsersController
   end
 
   private
+
+  def cluster_present(cluster_id)
+    Tendrl.etcd.get "/clusters/#{cluster_id}"
+  rescue Etcd::KeyNotFound => e
+    exception =  Tendrl::HttpResponseErrorHandler.new(
+      e, cause: '/clusters/id', object_id: cluster_id
+    )
+    halt exception.status, exception.body.to_json
+  end
 
   def cluster(cluster_id)
     load_definitions(cluster_id)
