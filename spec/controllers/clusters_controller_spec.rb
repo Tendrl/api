@@ -93,11 +93,13 @@ describe ClustersController do
     before do
       stub_cluster
       stub_cluster_profiling
+      stub_cluster_definitions
+      stub_job_creation
     end
 
     it 'enable' do
       body = {
-        'Cluster.volume_profiling_flag' => "enable"
+        'Cluster.volume_profiling_flag' => 'enable'
       }
       put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
         body.to_json,
@@ -105,6 +107,17 @@ describe ClustersController do
       expect(last_response.status).to eq 200
     end
 
+    specify 'start_profiling' do
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/volumes/3199b12f-0626-44ea-9315-03614a595e90/start_profiling',
+           nil, http_env
+      expect(last_response.status).to eq 202
+    end
+
+    specify 'stop_profiling' do
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/volumes/3199b12f-0626-44ea-9315-03614a595e90/stop_profiling',
+           nil, http_env
+      expect(last_response.status).to eq 202
+    end
   end
 
   context 'actions' do

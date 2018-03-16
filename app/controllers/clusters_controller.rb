@@ -117,26 +117,26 @@ class ClustersController < AuthenticatedUsersController
 
   post '/clusters/:cluster_id/volumes/:volume_id/start_profiling' do
     load_definitions(params[:cluster_id])
-    flow = Tendrl::Flow.new('namespace.gluster', 'StartProfiling', "Volume")
-    body = JSON.parse(request.body.read)
+    flow = Tendrl::Flow.new('namespace.gluster', 'StartProfiling', 'Volume')
     job = Tendrl::Job.new(
       current_user,
       flow,
       integration_id: params[:cluster_id],
-      type: "sds").create(body)
+      type: 'sds'
+    ).create('Volume.volume_id' => params[:volume_id])
     status 202
     { job_id: job.job_id }.to_json
   end
 
   post '/clusters/:cluster_id/volumes/:volume_id/stop_profiling' do
     load_definitions(params[:cluster_id])
-    flow = Tendrl::Flow.new('namespace.gluster', 'StopProfiling', "Volume")
-    body = JSON.parse(request.body.read)
+    flow = Tendrl::Flow.new('namespace.gluster', 'StopProfiling', 'Volume')
     job = Tendrl::Job.new(
       current_user,
       flow,
       integration_id: params[:cluster_id],
-      type: "sds").create(body)
+      type: 'sds'
+    ).create('Volume.volume_id' => params[:volume_id])
     status 202
     { job_id: job.job_id }.to_json
   end

@@ -33,7 +33,7 @@ RSpec.describe Tendrl::Flow do
 
   context 'cluster' do
 
-    context 'gluster' do
+    context 'gluster volume' do
 
       before do
         Tendrl.cluster_definitions = YAML.load_file(
@@ -41,13 +41,24 @@ RSpec.describe Tendrl::Flow do
         )
       end
 
-      it 'CreateVolume' do
+      specify 'StartProfiling' do
         flow = Tendrl::Flow.new(
           'namespace.gluster',
-          'CreateVolume'
+          'StartProfiling',
+          'Volume'
         )
-        expect(flow.flow_name).to eq('CreateVolume')
-        expect(flow.tags({ 'TendrlContext.integration_id' => '12345'})).to eq(['tendrl/integration/12345'])
+        expect(flow.flow_name).to eq('StartProfiling')
+        expect(flow.tags({ 'TendrlContext.integration_id' => '12345'})).to eq(['provisioner/12345'])
+      end
+
+      specify 'StopProfiling' do
+        flow = Tendrl::Flow.new(
+          'namespace.gluster',
+          'StopProfiling',
+          'Volume'
+        )
+        expect(flow.flow_name).to eq('StopProfiling')
+        expect(flow.tags({ 'TendrlContext.integration_id' => '12345'})).to eq(['provisioner/12345'])
       end
 
     end

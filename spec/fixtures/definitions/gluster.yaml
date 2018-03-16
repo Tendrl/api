@@ -1,39 +1,42 @@
 namespace.gluster:
-  flows:
-    CreateVolume:
-      tags:
-       - "tendrl/integration/$TendrlContext.integration_id"
-      atoms:
-        - gluster.objects.Volume.atoms.Create
-      help: "Create Volume with bricks"
-      enabled: true
-      inputs:
-        mandatory:
-          - Volume.volname
-          - Volume.bricks
-        optional:
-          - Volume.replica_count
-          - Volume.disperse_count
-          - Volume.redundancy_count
-          - Volume.transport
-          - Volume.force
-          - Volume.tuned_profile
-      pre_run:
-        - gluster.objects.Volume.atoms.NamedVolumeNotExists
-      run: gluster.flows.CreateVolume
-      type: Create
-      uuid: 1951e821-7aa9-4a91-8183-e73bc8275b8e
-      version: 1
   objects:
     GlobalDetails:
       attrs:
+        integration_id:
+          help: Uuid of the cluster
+          type: String
         status:
           help: status of the cluster
           type: String
+        connection_count:
+          help: total connection count
+          type: Integer
+        connection_active:
+          help: no.of connections active
+          type: Integer
+        volume_up_degraded:
+          help: no.of volumes degraded
+          type: Integer
+        peer_count:
+          help: no of peers in cluster
+          type: Integer
+        vol_count:
+          help: no of volumes in cluster
+          type: Integer
       enabled: true
       list: clusters/$TendrlContext.integration_id/GlobalDetails
       value: clusters/$TendrlContext.integration_id/GlobalDetails
       help: Clustr global details
+      watch_attrs:
+        - status
+    GlusterBrickDir:
+      attrs:
+        default_brick_dir:
+          help: gives the default brick directory
+          type: String
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/GlusterBrickDir
+      help: directory of gluster bricks
     Utilization:
       attrs:
         raw_capacity:
@@ -64,8 +67,17 @@ namespace.gluster:
         state:
           help: "Gluster Peer state"
           type: String
+        connected:
+          help: Connected status of peer
+          type: String
         update:
           help: "Last Peer update time"
+          type: String
+        deleted:
+          help: if the entity is deleted
+          type: Boolean
+        deleted_at:
+          help: deletion time
           type: String
       value: clusters/$TendrlContext.integration_id/Peers/$Peer.peer_uuid
       list: clusters/$TendrlContext.integration_id/Peers
@@ -97,14 +109,287 @@ namespace.gluster:
       value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/options
       list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/options
       help: gluster volume options
-    Brick:
+    VolumeAlertCounters:
+      enabled: True
+      attrs:
+        alert_count:
+          help: "Count of alerts for the volume"
+          type: int
+        integration_id:
+          help: "Id of the cluster"
+          type: String
+        volume_id:
+          help: "Id of the volume"
+          type: String
+      value: /clusters/{0}/Volumes/{1}
+      list: /clusters/{0}/Volumes/{1}
+      help: "Volume Alert Counter"
+    RebalanceDetails:
       attrs:
         vol_id:
           help: Volume id
           type: String
-        path:
-          help: Path of the brick
+        rebal_status:
+          help: "Status of rebalance task"
           type: String
+        rebal_failures:
+          help: "Failed no of files for rebalance"
+          type: Integer
+        rebal_id:
+          help: "UUID of the rabalance task"
+          type: String
+        rebal_lookedup:
+          help: "Looked up files for rebalance"
+          type: Integer
+        rebal_files:
+          help: "No of files rebalanced"
+          type: Integer
+        rebal_data:
+          help: "Rebalance data"
+          type: String
+        rebal_skipped:
+          help: "Skipped files while rebalance"
+          type: String
+        time_left:
+          help: time left for rebalance to complete
+          type: int
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/RebalanceDetails/$TendrlContext.node_id
+      list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/RebalanceDetails
+      help: gluster volume rebalance details
+    NativeEvents:
+      attrs:
+        context:
+          help: context that identifies this perticular event
+          type: String
+        processed:
+          help: flag to know if this event was processed.
+          type: Boolean
+        recovery_processed:
+          help: flag to know if this revocery event was processed.
+          type: Boolean
+        message:
+          help: message of this event
+          type: String
+        severity:
+          help: severity of this event
+          type: String
+        alert_notify:
+          help: Flag to indicate if the event is just alert notification
+          type: Boolean
+        current_value:
+          help: current_value for which event was raised
+          type: String
+        tags:
+          help: optional parameters
+          type: Dict
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/native_events/$NativeEvents.context
+      list: clusters/$TendrlContext.integration_id/native_events
+      help: gluster native events
+    GeoReplicationPair:
+      attrs:
+        vol_id:
+          help: Volume id
+          type: String
+        session_id:
+          help: "unique id of geo replication session"
+          type: String
+        pair:
+          help: "geo replication session pair name"
+          type: String
+        master_node:
+          help: "master node ip/fqdn"
+          type: String
+        master_volume:
+          help: "master volume name"
+          type: String
+        master_brick:
+          help: "master brick name"
+          type: String
+        slave_user:
+          help: "slave user name"
+          type: String
+        slave:
+          help: "slave host and volume name"
+          type: String
+        slave_node:
+          help: "slave node with which geo-rep session is going"
+          type: String
+        status:
+          help: "geo replication session status"
+          type: String
+        crawl_status:
+          help: "geo replication crawl status"
+          type: String
+        last_synced:
+          help: "last synced time"
+          type: String
+        entry:
+          help: "entries synced"
+          type: String
+        data:
+          help: "data synced"
+          type: String
+        meta:
+          help: "metadata synced"
+          type: String
+        failures:
+          help: "number of failures"
+          type: String
+        checkpoint_time:
+          help: "checkpoint time"
+          type: String
+        checkpoint_completed:
+          help: "if checkpoint is completed"
+          type: String
+        checkpoint_completion_time:
+          help: "time of checkpoint completion"
+          type: String
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/GeoReplicationSessions/$GeoReplicationPair.session_id/pairs/$GeoReplicationPair.pair
+      list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/GeoReplicationSessions/$GeoReplicationPair.session_id/pairs
+      help: gluster volume geo replication pair details
+    GeoReplicationSession:
+      attrs:
+        vol_id:
+          help: Volume id
+          type: String
+        session_id:
+          help: "unique id of geo replication session"
+          type: String
+        pairs:
+          help: "geo replication session pair list"
+          type: List
+        session_status:
+          help: "aggregated status of geo-replication session"
+          type: String
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/GeoReplicationSessions/$GeoReplicationPair.session_id
+      list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/GeoReplicationSessions
+      help: gluster volume geo replication session details
+    Snapshot:
+      attrs:
+        vol_id:
+          help: Volume id
+          type: String
+        name:
+          help: name of snapshot
+          type: String
+        id:
+          help: uuid of snapshot
+          type: Integer
+        created_at:
+          help: creation time of snapshot
+          type: String
+        description:
+          help: description of snapshot
+          type: String
+        status:
+          help: status of snapshot
+          type: String
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/Snapshots/$Snapshot.id
+      list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/Snapshots
+      help: gluster volume snapshot details
+    ClientConnection:
+      attrs:
+        brick_name:
+          help: name of the brick
+          type: String
+        hostname:
+          help: client hostname
+          type: String
+        fqdn:
+          help: Fqdn of node on which brick recides
+          type: String
+        brick_dir:
+          help: Directory of brick
+          type: String
+        bytesread:
+          help: no of bytes read
+          type: int
+        byteswrite:
+          help: no of bytes written
+          type: int
+        opversion:
+          help: operational version
+          type: String
+      enabled: true
+      value: clusters/$TendrlContext.integration_id/Bricks/all/$ClientConnection.fqdn/$ClientConnection.brick_dir/ClientConnections/$ClientConnection.hostname
+      list:  clusters/$TendrlContext.integration_id/Bricks/all/$ClientConnection.fqdn/$CleintConnection.brick_dir/ClientConnections
+      help: brick client connection details
+    Brick:
+      atoms:
+        Create:
+          enabled: false
+          inputs:
+            mandatory:
+              - Cluster.node_configuration
+            optional:
+              - Brick.disk_type
+              - Brick.disk_count
+              - Brick.stripe_size
+          name: create_brick
+          run: gluster.objects.Brick.atoms.Create
+          type: Create
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d9649d
+          help: Create gluster brick for gluster volume
+      attrs:
+        devices:
+          help: the underlying devices for the brick
+          type: List
+        partitions:
+          help: the underlying partitions for the brick
+          type: List
+        name:
+          help: name of the brick
+          type: String
+        node_id:
+          help: node_id of the node on which brick recides
+          type: String
+        mount_path:
+          help: mount point of the brick
+          type: String
+        brick_path:
+          help: Brick path
+          type: int
+        disk_type:
+          help: type of the disk(raid10/raid6/jbods)
+          type: String
+        disk_count:
+          help: disk count in case the disk is a raid device
+          type: String
+        stripe_size:
+          help: stripe size in case disk is a raid device
+          type: String
+        size:
+          help: size of the underlying device
+          type: String
+        lv:
+          help: The underlying lv name of the brick
+          type: String
+        pv:
+          help: The underlying pv name of the brick
+          type: String
+        vg:
+          help: The underlying vg name of the brick
+          type: String
+        pool:
+          help: The underlying pool name of the brick
+          type: String
+        vol_id:
+          help: Volume id
+          type: String
+        vol_name:
+          help: Volume name
+          type: String
+        used:
+          help: whether the brick is part of a volume
+          type: Boolean
+        sequence_number:
+          help: Sequence number amongst gluster replica-set
+          type: Integer
         hostname:
           help: Name of the host
           type: String
@@ -114,20 +399,41 @@ namespace.gluster:
         status:
           help: Status of the brick
           type: String
+        fqdn:
+          help: Fqdn of node on which brick recides
+          type: String
+        brick_dir:
+          help: Directory of brick
+          type: String
         filesystem_type:
           help: File system type
           type: String
         mount_opts:
           help: Mount options
           type: String
+        utilization:
+          help: Brick utilization
+          type: json
+        client_count:
+          help: no of client connections
+          type: int
+        is_arbiter:
+          help: Flag to mention if brick is arbiter
+          type: int
+        deleted:
+          help: if the entity is deleted
+          type: Boolean
+        deleted_at:
+          help: deletion time
+          type: String
       enabled: true
-      value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/Bricks/$Brick.path
-      list: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/Bricks
-      help: gluster volume bricks
+      value: clusters/$TendrlContext.integration_id/Bricks/all/$Brick.fqdn/$Brick.brick_dir
+      list:  clusters/$TendrlContext.integration_id/Bricks/all/$Brick.fqdn
+      help: gluster brick details
     Volume:
       atoms:
         Create:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -144,21 +450,96 @@ namespace.gluster:
           type: Create
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9649c
           help: Create gluster volume
+        GenerateBrickMapping:
+          enabled: false
+          inputs:
+            mandatory:
+              - Cluster.node_configuration
+              - Volume.brick_count
+              - Volume.subvol_size
+          name: get_mapping
+          run: gluster.objects.Volume.atoms.GenerateBrickMapping
+          type: Create
+          uuid: aa355f87-fd02-488c-bab8-2f755e2c1dfc
+          help: Get brick mapping for gluster volume
         Delete:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
               - Volume.vol_id
-            optional:
-              - Volume.format_bricks
           name: delete_volume
           run: gluster.objects.Volume.atoms.Delete
           type: Delete
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9650c
           help: Delete gluster volume
+        Expand:
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+            optional:
+              - Volume.replica_count
+              - Volume.force
+              - Volume.disperse_count
+          name: expand_volume
+          run: gluster.objects.Volume.atoms.Expand
+          type: Create
+          uuid: b4733069-052f-48b3-8d18-9a9b08373ae2
+          help: Expand gluster volume
+        ValidateExpandVolumeInputs:
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+            optional:
+              - Volume.replica_count
+              - Volume.force
+              - Volume.disperse_count
+          name: validate_expand_volume_inputs
+          run: gluster.objects.Volume.atoms.ValidateExpandVolumeInputs
+          type: Check
+          uuid: c7a2b247-2065-49a3-af62-247ec59ab3b2
+          help: Validate expand gluster volume inputs
+        ValidateShrinkVolumeInputs:
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+            optional:
+              - Volume.replica_count
+              - Volume.force
+              - Volume.disperse_count
+          name: validate_shrink_volume_inputs
+          run: gluster.objects.Volume.atoms.ValidateShrinkVolumeInputs
+          type: Check
+          uuid: 984b5748-c5f1-42d4-b9e6-b3927d04cb0a
+          help: Validate shrink gluster volume inputs
+        Shrink:
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+              - Volume.action
+            optional:
+              - Volume.replica_count
+              - Volume.force
+              - Volume.disperse_count
+          name: shrink_volume
+          run: gluster.objects.Volume.atoms.Shrink
+          type: Shrink
+          uuid: 9eadf1e3-a2be-4a3e-9f8b-584b44c66e9d
+          help: Shrink gluster volume
         Start:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -168,7 +549,7 @@ namespace.gluster:
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9651c
           help: Start gluster volume
         Stop:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -178,7 +559,7 @@ namespace.gluster:
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9652c
           help: Stop gluster volume
         NamedVolumeNotExists:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -188,7 +569,7 @@ namespace.gluster:
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9653d
           help: check if named volume exists
         VolumeExists:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.vol_id
@@ -208,7 +589,7 @@ namespace.gluster:
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9654c
           help: check if volume not exists
         VolumeStarted:
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.vol_id
@@ -227,20 +608,129 @@ namespace.gluster:
           type: Check
           uuid: 242f6190-9b37-11e6-950d-a24fc0d9656c
           help: check if volume is stopped
-      flows:
-        DeleteVolume:
-          tags:
-            - "tendrl/integration/$TendrlContext.integration_id"
-          atoms:
-            - gluster.objects.Volume.atoms.Delete
-          help: "Delete Volume"
-          enabled: true
+        RebalanceNotRunning:
+          enabled: false
+          help: check if rebalance not running
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+          name: rebalancenotrunning
+          run: gluster.objects.Volume.atoms.RebalanceNotRunning
+          type: Check
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96588
+        StartRebalance:
+          enabled: false
+          help: start rebalance
           inputs:
             mandatory:
               - Volume.volname
               - Volume.vol_id
             optional:
-              - Volume.format_bricks
+              - Volume.fix_layout
+              - Volume.force
+          name: start_rebalance
+          run: gluster.objects.Volume.atoms.StartRebalance
+          type: Start
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96599
+        RebalanceRunning:
+          enabled: false
+          help: check if rebalance is running
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+          name: rebalancerunning
+          run: gluster.objects.Volume.atoms.RebalanceRunning
+          type: Check
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96579
+        StopRebalance:
+          enabled: false
+          help: stop rebalance
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+            optional:
+              - Volume.force
+          name: stop_rebalance
+          run: gluster.objects.Volume.atoms.StopRebalance
+          type: Start
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96567
+        CheckVolumeAvailable:
+          enabled: true
+          help: check if volume is available
+          inputs:
+            mandatory:
+              - Volume.volname
+          name: volume available
+          run: gluster.objects.Volume.atoms.CheckVolumeAvailable
+          type: Start
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96765
+        StartProfiling:
+          enabled: true
+          inputs:
+            mandatory:
+              - Volume.vol_id
+          name: start volume profiling
+          run: gluster.objects.Volume.atoms.StartProfiling
+          type: Start
+          uuid: 242f6190-9b37-11e6-950d-a24fc0d96c05
+          help: Start volume profling
+        StopProfiling:
+          enabled: true
+          inputs:
+            mandatory:
+              - Volume.vol_id
+          name: stop volume profiling
+          run: gluster.objects.Volume.atoms.StopProfiling
+          type: Stop
+          uuid: 6190242f-9b37-11e6-950d-a24fc0d9650c
+          help: Stop volume profiling
+      flows:
+        StartProfiling:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.StartProfiling
+          help: "Start profiling on volume"
+          enabled: true
+          inputs:
+            mandatory:
+              - Volume.vol_id
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+          run: gluster.objects.Volume.flows.StartProfiling
+          type: Start
+          uuid: 1951e821-7aa9-4a91-8183-e73bc8275e9b
+          version: 1
+        StopProfiling:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.StopProfiling
+          help: "Delete Volume"
+          enabled: true
+          inputs:
+            mandatory:
+              - Volume.vol_id
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+          run: gluster.objects.Volume.flows.StopProfiling
+          type: Stop
+          uuid: 1951e821-7aa9-4a91-8183-e73bc827e9b5
+          version: 1
+        DeleteVolume:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.Delete
+          help: "Delete Volume"
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
           post_run:
             - gluster.objects.Volume.atoms.VolumeNotExists
           pre_run:
@@ -249,13 +739,59 @@ namespace.gluster:
           type: Delete
           uuid: 1951e821-7aa9-4a91-8183-e73bc8275b9e
           version: 1
+        ExpandVolume:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.Expand
+          help: "expand volume by adding bricks"
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+            optional:
+              - Volume.replica_count
+              - Volume.force
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+            - gluster.objects.Volume.atoms.ValidateExpandVolumeInputs
+          run: gluster.objects.Volume.flows.ExpandVolume
+          type: Create
+          uuid: 23f95de7-e4ac-4c0b-9db2-88b3bd542eb9
+          version: 1
+        ShrinkVolume:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.Shrink
+          help: "shrink volume by removing bricks"
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+              - Volume.bricks
+              - Volume.action
+            optional:
+              - Volume.replica_count
+              - Volume.force
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+            - gluster.objects.Volume.atoms.ValidateShrinkVolumeInputs
+            - gluster.objects.Volume.atoms.VolumeStarted
+          run: gluster.objects.Volume.flows.ShrinkVolume
+          type: Delete
+          uuid: 85108d0f-91d0-4a6c-8d67-030a4e724ed6
+          version: 1
         StartVolume:
           tags:
-            - "tendrl/integration/$TendrlContext.integration_id"
+            - "provisioner/$TendrlContext.integration_id"
           atoms:
             - gluster.objects.Volume.atoms.Start
           help: "Start Volume"
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -269,11 +805,11 @@ namespace.gluster:
           version: 1
         StopVolume:
           tags:
-            - "tendrl/integration/$TendrlContext.integration_id"       
+            - "provisioner/$TendrlContext.integration_id"
           atoms:
             - gluster.objects.Volume.atoms.Stop
           help: "Stop Volume"
-          enabled: true
+          enabled: false
           inputs:
             mandatory:
               - Volume.volname
@@ -285,6 +821,49 @@ namespace.gluster:
           type: Stop
           uuid: 1951e821-7aa9-4a91-8183-e73bc8275b5e
           version: 1
+        StartVolumeRebalance:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.StartRebalance
+          help: "Start Volume Rebalance"
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+            optional:
+              - Volume.fix_layout
+              - Volume.force
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+            - gluster.objects.Volume.atoms.VolumeStarted
+            - gluster.objects.Volume.atoms.RebalanceNotRunning
+          run: gluster.objects.Volume.flows.StartVolumeRebalance
+          type: Start
+          uuid: 1951e821-7aa9-4a91-8183-e73bc8275b7d
+          version: 1
+        StopVolumeRebalance:
+          tags:
+            - "provisioner/$TendrlContext.integration_id"
+          atoms:
+            - gluster.objects.Volume.atoms.StopRebalance
+          help: "Stop Volume Rebalance"
+          enabled: false
+          inputs:
+            mandatory:
+              - Volume.volname
+              - Volume.vol_id
+            optional:
+              - Volume.force
+          pre_run:
+            - gluster.objects.Volume.atoms.VolumeExists
+            - gluster.objects.Volume.atoms.VolumeStarted
+            - gluster.objects.Volume.atoms.RebalanceRunning
+          run: gluster.objects.Volume.flows.StopVolumeRebalance
+          type: Start
+          uuid: 1951e821-7aa9-4a91-8183-e73bc8275b2d
+          version: 1
       attrs:
         arbiter_count:
           help: "Arbiter count of volume"
@@ -292,18 +871,24 @@ namespace.gluster:
         bricks:
           help: "List of brick mnt_paths for volume"
           type: List
-        deleted:
-          help: "Flag is volume is deleted"
+        fix_layout:
+          help: "Whether the volume layout has to be fixed after rebalance"
           type: Boolean
         disperse_count:
           help: "Disperse count of volume"
           type: Integer
+        tuned_profile:
+          help: "The tuning profile the volume"
+          type: String
         disperse_data_count:
           help: "Disperse data count of volume"
           type: Integer
         force:
           help: "If force execute the action"
           type: Boolean
+        action:
+          help: "action that has to be performed on volume"
+          type: String
         redundancy_count:
           help: "Redundancy count of volume"
           type: Integer
@@ -325,14 +910,11 @@ namespace.gluster:
         vol_type:
           help: "Type of the volume"
           type: String
-        rebal_data:
-          help: "Rebalance data"
-          type: String
-        rebal_skipped:
-          help: "Skipped files while rebalance"
-          type: String
         subvol_count:
           help: "Count of subvolumes"
+          type: Integer
+        subvol_size:
+          help: "Count of bricks in subvolumes"
           type: Integer
         brick_count:
           help: "Count of bricks"
@@ -346,33 +928,59 @@ namespace.gluster:
         status:
           help: "Status of the volume"
           type: String
-        rebal_id:
-          help: "UUID of the rabalance task"
-          typoe: String
-        rebal_lookedup:
-          help: "Looked up files for rebalance"
-          type: Integer
+        state:
+          help: state of the volume
+          type: String
         snap_count:
           help: "Count of the snapshots"
-          type: Integer
-        rebal_files:
-          help: "No of files rebalanced"
           type: Integer
         snapd_status:
           help: "Status of snapd"
           type: String
         options:
           help: "options list for volume"
-          type: json
+          type: Dict
         quorum_status:
           help: "Quorum status"
           type: String
-        rebal_status:
-          help: "Status of rebalance task"
+        usable_capacity:
+          help: "total capacity of the volume"
+          type: int
+        used_capacity:
+          help: "used capacity of the volume"
+          type: int
+        pcnt_used:
+          help: "percentage of space used in volume"
+          type: int
+        total_inode_capacity:
+          help: "total inode"
+          type: int
+        used_inode_capacity:
+          help: "inode used"
+          type: int
+        pcnt_inode_used:
+          help: "inode used percentage"
+          type: int
+        profiling_enabled:
+          help: Whether profiling is enabled
           type: String
-        rebal_failures:
-          help: "Failed no of files for rebalance"
-          type: Integer
+        client_count:
+          help: No of client connections
+        rebal_estimated_time:
+          help: Estimated time left for rebalance to complete
+          type: int
+        deleted:
+          help: if the entity is deleted
+          type: Boolean
+        deleted_at:
+          help: deletion time
+          type: String
+        current_job:
+          help: Current job on the volume
+          type: json
+        locked_by:
+          help: job details which locks the volume
+          type: json
       enabled: true
       value: clusters/$TendrlContext.integration_id/Volumes/$Volume.vol_id/
       list: clusters/$TendrlContext.integration_id/Volumes
