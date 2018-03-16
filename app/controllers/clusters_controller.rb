@@ -88,6 +88,7 @@ class ClustersController < AuthenticatedUsersController
   end
 
   post '/clusters/:cluster_id/expand' do
+    load_node_definitions
     flow = Tendrl::Flow.new 'namespace.tendrl', 'ExpandClusterWithDetectedPeers'
     job = Tendrl::Job.new(
       current_user,
