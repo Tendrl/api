@@ -100,20 +100,24 @@ class ClustersController < AuthenticatedUsersController
     { job_id: job.job_id }.to_json
   end
 
-  put '/clusters/:cluster_id/profiling' do
-    cluster = Tendrl::Cluster.find(params[:cluster_id])
+  post '/clusters/:cluster_id/profiling' do
+    load_definitions(params[:cluster_id])
     body = JSON.parse(request.body.read)
     volume_profiling_flag = if ['enable', 'disable'].include?(body['Cluster.volume_profiling_flag'])
                               body['Cluster.volume_profiling_flag']
                             else
                               'leave-as-is'
                             end
+    flow = Tendrl::Flow.new('namespace.gluster', 'EnableDisableVolumeProfiling')
 
-    cluster.update_attributes(volume_profiling_flag: volume_profiling_flag)
-    status 200
-    ClusterPresenter.single(
-      { params[:cluster_id] => cluster.attributes }
-    ).to_json
+    job = Tendrl::Job.new(
+        current_user,
+        flow,
+        integration_id: params[:cluster_id],
+        type: 'sds'
+    ).create('Cluster.volume_profiling_flag' => volume_profiling_flag)
+    status 202
+    { job_id: job.job_id }.to_json
   end
 
   post '/clusters/:cluster_id/volumes/:volume_id/start_profiling' do
