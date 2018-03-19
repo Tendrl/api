@@ -124,7 +124,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       integration_id: params[:cluster_id],
       type: 'sds'
-    ).create('Volume.volume_id' => params[:volume_id])
+    ).create('Volume.vol_id' => params[:volume_id])
     status 202
     { job_id: job.job_id }.to_json
   end
@@ -137,7 +137,7 @@ class ClustersController < AuthenticatedUsersController
       flow,
       integration_id: params[:cluster_id],
       type: 'sds'
-    ).create('Volume.volume_id' => params[:volume_id])
+    ).create('Volume.vol_id' => params[:volume_id])
     status 202
     { job_id: job.job_id }.to_json
   end
