@@ -106,10 +106,10 @@ describe ClustersController do
       body = {
         'Cluster.volume_profiling_flag' => 'enable'
       }
-      put '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/profiling',
         body.to_json,
         http_env
-      expect(last_response.status).to eq 200
+      expect(last_response.status).to eq 202
     end
 
     specify 'start_profiling' do

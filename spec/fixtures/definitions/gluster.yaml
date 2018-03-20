@@ -1,4 +1,18 @@
 namespace.gluster:
+  flows:
+    EnableDisableVolumeProfiling:
+      tags:
+        - "provisioner/$TendrlContext.integration_id"
+      help: "enable disable profiling for all the volumes"
+      enabled: true
+      inputs:
+        mandatory:
+          - TendrlContext.integration_id
+          - Cluster.volume_profiling_flag
+      run: gluster.flows.EnableDisableVolumeProfiling
+      type: Update
+      uuid: 2f94a48a-05d7-408c-b400-e27827f4dcae
+      version: 1
   objects:
     GlobalDetails:
       attrs:
@@ -698,8 +712,6 @@ namespace.gluster:
           inputs:
             mandatory:
               - Volume.vol_id
-          pre_run:
-            - gluster.objects.Volume.atoms.VolumeExists
           run: gluster.objects.Volume.flows.StartProfiling
           type: Start
           uuid: 1951e821-7aa9-4a91-8183-e73bc8275e9b
@@ -714,8 +726,6 @@ namespace.gluster:
           inputs:
             mandatory:
               - Volume.vol_id
-          pre_run:
-            - gluster.objects.Volume.atoms.VolumeExists
           run: gluster.objects.Volume.flows.StopProfiling
           type: Stop
           uuid: 1951e821-7aa9-4a91-8183-e73bc827e9b5
