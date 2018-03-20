@@ -1,602 +1,8 @@
-namespace.node_agent:
-  flows:
-    GenerateJournalMapping:
-      enabled: true
-      help: Generate journal mapping
-      inputs:
-        mandatory:
-        - Cluster.node_configuration
-      run: node_agent.flows.GenerateJournalMapping
-      type: Create
-      uuid: 3f94a48a-05d7-408c-b400-e27827f4eacc
-      version: 1
-  objects:
-    GlobalNetwork:
-      attrs:
-        device_link:
-          help: device link
-          type: String
-        driver:
-          help: driver
-          type: String
-        driver_modules:
-          help: driver modules
-          type: String
-        hw_address:
-          help: hardware address
-          type: String
-        interface:
-          help: network interface name
-          type: List
-        interface_id:
-          help: unique id
-          type: String
-        interface_type:
-          help: interface type
-          type: String
-        ipv4:
-          help: ipv4 addresses
-          type: List
-        ipv6:
-          help: ipv6 addresses
-          type: List
-        link_detected:
-          help: link detected
-          type: String
-        model:
-          help: interface model
-          type: String
-        netmask:
-          help: subnet masks
-          type: List
-        status:
-          help: interface status up/down
-          type: String
-        subnet:
-          help: subnet
-          type: String
-        sysfs_id:
-          help: sysfs id
-          type: String
-      enabled: true
-      help: Global subnet wise network interface
-      list: nodes/$NodeContext.node.id/Networks
-      value: /networks
-namespace.tendrl:
-  ceph_provisioner: CephInstallerPlugin
-  flows:
-    CreateCluster:
-      enabled: true
-      help: Create a cluster from scratch
-      inputs:
-        mandatory:
-        - Node[]
-        - TendrlContext.cluster_name
-        - TendrlContext.sds_name
-        - TendrlContext.sds_version
-        - TendrlContext.cluster_id
-        - Cluster.public_network
-        - Cluster.cluster_network
-        - TendrlContext.integration_id
-        - Cluster.node_configuration
-        - Cluster.conf_overrides
-      run: tendrl.flows.CreateCluster
-      tags:
-      - provisioner/$TendrlContext.sds_name
-      type: Create
-      uuid: 2f94a48a-05d7-408c-b400-e27827f4eacd
-      version: 1
-    ImportCluster:
-      enabled: true
-      help: Import existing Gluster Cluster
-      inputs:
-        mandatory:
-        - Node[]
-        - DetectedCluster.detected_cluster_id
-        - DetectedCluster.sds_pkg_name
-        - DetectedCluster.sds_pkg_version
-        - TendrlContext.integration_id
-      run: tendrl.flows.ImportCluster
-      tags:
-      - detected_cluster/$DetectedCluster.detected_cluster_id
-      type: Create
-      uuid: 2f94a48a-05d7-408c-b400-e27827f4edef
-      version: 1
-  gluster_provisioner: GdeployPlugin
-  min_reqd_ceph_ver: 10.2.5
-  min_reqd_gluster_ver: 3.9.0
-  objects:
-    Cluster:
-      attrs:
-        cluster_network:
-          help: Data Nework cidr of the cluster
-        conf_overrides:
-          help: Configuration overrides for the cluster
-          type: Dict
-        node_configuration:
-          help: Node configuration for the cluster nodes
-          type: Dict[]
-        public_network:
-          help: Public Network cidr of the cluster
-          type: String
-      enabled: true
-      help: Represents a cluster
-      internal: true
-      list: /clusters
-    ClusterNodeContext:
-      attrs:
-        fqdn:
-          help: FQDN of the Tendrl managed node
-          type: String
-        machine_id:
-          help: Unique /etc/machine-id
-          type: String
-        node_id:
-          help: Tendrl ID for the managed node
-          type: String
-        status:
-          help: Node status
-          type: String
-        tags:
-          help: The tags associated with this node
-          type: List
-      enabled: true
-      help: Cluster leval Node Context
-      list: clusters/$TendrlContext.integration_id/nodes/$NodeContext.node_id/NodeContext
-      value: clusters/$TendrlContext.integration_id/nodes/$NodeContext.node_id/NodeContext
-    ClusterTendrlContext:
-      attrs:
-        cluster_id:
-          help: FSID (Ceph) or Gluster specific ID
-          type: String
-        cluster_name:
-          help: Name of the cluster
-          type: String
-        integration_id:
-          help: Tendrl managed/generated cluster id for the sds being managed by Tendrl
-          type: String
-        node_id:
-          help: Tendrl ID for the managed node
-          type: String
-        sds_name:
-          help: 'Name of the Tendrl managed sds, eg: ''gluster'''
-          type: String
-        sds_version:
-          help: 'Version of the Tendrl managed sds, eg: ''3.2.1'''
-          type: String
-      enabled: true
-      help: Tendrl context
-      value: clusters/$TendrlContext.integration_id/TendrlContext
-    Cpu:
-      attrs:
-        architecture:
-          type: String
-        cores_per_socket:
-          type: String
-        cpu_family:
-          type: String
-        cpu_op_mode:
-          type: String
-        model:
-          type: String
-        model_name:
-          type: String
-        vendor_id:
-          type: String
-      enabled: true
-      help: CPU
-      value: nodes/$NodeContext.node_id/Cpu
-    DetectedCluster:
-      attrs:
-        detected_cluster_id:
-          help: Temporary id for the sds which is detected in Tendrl
-          type: String
-        detected_cluster_name:
-          help: Name of the sds which is detected in Tendrl
-          type: String
-        sds_pkg_name:
-          help: Storage system package name
-          type: String
-        sds_pkg_version:
-          help: Storage system package version
-          type: String
-      enabled: true
-      help: DetectedCluster
-      list: nodes/$NodeContext.node_id/DetectedCluster
-      value: nodes/$NodeContext.node_id/DetectedCluster
-    Disk:
-      attrs:
-        Model:
-          help: disk model name
-          type: String
-        alignement:
-          help: alignement
-          type: String
-        bios_id:
-          help: Bios id
-          type: String
-        device:
-          help: device
-          type: String
-        device_files:
-          help: device files
-          type: String
-        device_name:
-          help: disk name
-          type: String
-        device_number:
-          help: device number
-          type: String
-        discard_align_offset:
-          help: discard align offset
-          type: String
-        discard_granularity:
-          help: discard granularity
-          type: String
-        discard_max_bytes:
-          help: discard max bytes
-          type: String
-        discard_zeroes_data:
-          help: discard zeroes data
-          type: String
-        disk_id:
-          help: disk unique id
-          type: String
-        disk_kernel_name:
-          help: disk internal kernel name
-          type: String
-        disk_type:
-          help: disk type
-          type: String
-        drive_status:
-          help: disk status
-          type: String
-        driver:
-          help: driver
-          type: String
-        driver_modules:
-          help: driver modules
-          type: String
-        fstype:
-          help: file system type
-          type: String
-        fsuuid:
-          help: file system uuid
-          type: String
-        geo_bios_edd:
-          help: geometry bios edd
-          type: String
-        geo_bios_legacy:
-          help: geometry bios legacy
-          type: String
-        geo_logical:
-          help: geometry logical
-          type: String
-        group:
-          help: disk group
-          type: String
-        label:
-          help: label
-          type: String
-        log_sector_size:
-          help: logical sector size
-          type: String
-        major_to_minor_no:
-          help: major to minor number
-          type: String
-        min_io_size:
-          help: min I/O size
-          type: String
-        mode:
-          help: driver mode
-          type: String
-        mount_point:
-          help: disk mount point
-          type: String
-        optimal_io_size:
-          help: optimal I/O size
-          type: String
-        owner:
-          help: driver owner
-          type: String
-        parent_id:
-          help: disk parent id
-          type: String
-        parent_name:
-          help: disk parent name
-          type: String
-        phy_sector_size:
-          help: physical sector size
-          type: String
-        read_ahead:
-          help: read ahead
-          type: String
-        read_only:
-          help: disk is read only or not
-          type: String
-        removable_device:
-          help: removable device or not
-          type: String
-        req_queue_size:
-          help: request queue size
-          type: String
-        rmversion:
-          help: disk firmeware version
-          type: String
-        scheduler_name:
-          help: scheduler_name
-          type: String
-        serial_no:
-          help: disk serial number
-          type: String
-        size:
-          help: size of the disk
-          type: Integer
-        ssd:
-          help: ssd is true / not
-          type: String
-        state:
-          help: disk state
-          type: String
-        sysfs_busid:
-          help: sysfs bus id
-          type: String
-        sysfs_device_link:
-          help: sysfs device link
-          type: String
-        sysfs_id:
-          help: sysfs id
-          type: String
-        used:
-          help: disk used or not True/False
-          type: String
-        vendor:
-          help: disk vendor name
-          type: String
-      enabled: true
-      help: Disk
-      list: nodes/$NodeContext.node_id/Disks
-      value: nodes/$NodeContext.node_id/Disks
-    Job:
-      attrs:
-        children:
-          help: ID of child jobs created by this job
-          type: List
-        errors:
-          help: any errors occured or not
-          type: String
-        job_id:
-          help: job unique id
-          type: String
-        output:
-          help: output of the job execution
-          type: String
-        payload:
-          help: dict
-          type: Dict
-        status:
-          help: job current status
-          type: String
-      enabled: true
-      help: jobs
-      list: /queue
-      value: /queue
-    Memory:
-      attrs:
-        total_size:
-          type: String
-        total_swap:
-          type: String
-      enabled: true
-      help: Node Memory
-      value: nodes/$NodeContext.node_id/Memory
-    Node:
-      atoms:
-        CheckNodeUp:
-          enabled: true
-          help: Checks if a node is up
-          inputs:
-            mandatory:
-            - Node.fqdn
-          name: check whether the node is up
-          outputs:
-          - Node.status
-          run: tendrl.objects.Node.atoms.CheckNodeUp
-          type: Create
-          uuid: eda0b13a-7362-48d5-b5ca-4b6d6533a5ab
-        Cmd:
-          enabled: true
-          help: Executes a command
-          inputs:
-            mandatory:
-            - Node.cmd_str
-          name: Execute CMD on Node
-          outputs:
-          - Node.status
-          run: tendrl.objects.Node.atoms.Cmd
-          type: Create
-          uuid: dc8fff3a-34d9-4786-9282-55eff6abb6c3
-      attrs:
-        cmd_str:
-          type: String
-        fqdn:
-          type: String
-        status:
-          type: Boolean
-      enabled: true
-      help: Node
-      list: nodes/
-      value: nodes/$NodeContext.node_id/Node
-    NodeContext:
-      attrs:
-        fqdn:
-          help: FQDN of the Tendrl managed node
-          type: String
-        machine_id:
-          help: Unique /etc/machine-id
-          type: String
-        node_id:
-          help: Tendrl ID for the managed node
-          type: String
-        status:
-          help: Node status
-          type: String
-        tags:
-          help: The tags associated with this node
-          type: List
-      enabled: true
-      help: Node Context
-      list: nodes/$NodeContext.node_id/NodeContext
-      value: nodes/$NodeContext.node_id/NodeContext
-    NodeNetwork:
-      attrs:
-        device_link:
-          help: device link
-          type: String
-        driver:
-          help: driver
-          type: String
-        driver_modules:
-          help: driver modules
-          type: String
-        hw_address:
-          help: hardware address
-          type: String
-        interface:
-          help: network interface name
-          type: List
-        interface_id:
-          help: unique id
-          type: String
-        interface_type:
-          help: interface type
-          type: String
-        ipv4:
-          help: ipv4 addresses
-          type: List
-        ipv6:
-          help: ipv6 addresses
-          type: List
-        link_detected:
-          help: link detected
-          type: String
-        model:
-          help: interface model
-          type: String
-        netmask:
-          help: subnet masks
-          type: List
-        status:
-          help: interface status up/down
-          type: String
-        subnet:
-          help: subnet
-          type: String
-        sysfs_id:
-          help: sysfs id
-          type: String
-      enabled: true
-      help: Node wise network interface
-      list: nodes/$NodeContext.node_id/Networks
-      value: nodes/$NodeContext.node_id/Networks
-    Os:
-      attrs:
-        kernel_version:
-          type: String
-        os:
-          type: String
-        os_version:
-          type: String
-        selinux_mode:
-          type: String
-      enabled: true
-      help: OS
-      value: nodes/$NodeContext.node_id/Os
-    Platform:
-      attrs:
-        kernel_version:
-          type: String
-        os:
-          type: String
-        os_version:
-          type: String
-      enabled: true
-      help: Platform of the Node
-      list: nodes/$NodeContext.node_id/Platform
-      value: nodes/$NodeContext.node_id/Platform
-    Service:
-      atoms:
-        CheckServiceStatus:
-          enabled: true
-          help: check whether the service is running
-          inputs:
-            mandatory:
-            - Node.fqdn
-            - Service.name
-          name: check whether the service is running
-          outputs:
-          - status
-          run: tendrl.objects.Service.atoms.CheckServiceStatus
-          type: Create
-          uuid: eda0b13a-7362-48d5-b5ca-4b6d6533a5ab
-      attrs:
-        exists:
-          type: String
-        running:
-          type: String
-        service:
-          type: String
-      enabled: true
-      help: Service
-      list: nodes/$NodeContext.node_id/Services
-      value: nodes/$NodeContext.node_id/Services
-    TendrlContext:
-      attrs:
-        cluster_id:
-          help: UUID of the cluster
-          type: String
-        cluster_name:
-          help: Name of the cluster
-          type: String
-        integration_id:
-          help: Tendrl managed/generated cluster id for the sds being managed by Tendrl
-          type: String
-        node_id:
-          help: Tendrl ID for the managed node
-          type: String
-        sds_name:
-          help: 'Name of the Tendrl managed sds, eg: ''gluster'''
-          type: String
-        sds_version:
-          help: 'Version of the Tendrl managed sds, eg: ''3.2.1'''
-          type: String
-      enabled: true
-      help: Tendrl context
-      value: nodes/$NodeContext.node_id/TendrlContext
-  supported_sds:
-  - ceph
-  - gluster
-  tags:
-    ceph-installer: provisioner/ceph
-    ceph-mon: ceph/mon
-    ceph-osd: ceph/osd
-    ceph-provisioner: provisioner/ceph
-    etcd: tendrl/central-store
-    gluster-provisioner: provisioner/gluster
-    glusterd: gluster/server
-    tendrl-api: tendrl/server
-    tendrl-ceph-integration: tendrl/integration/ceph
-    tendrl-gluster-integration: tendrl/integration/gluster
-    tendrl-monitor: tendrl/monitor
-    tendrl-node-agent: tendrl/node
-tendrl_schema_version: 0.3---
+---
 namespace.tendrl:
   supported_sds:
-   - ceph
    - gluster
-  min_reqd_gluster_ver: 3.9.0
-  min_reqd_ceph_ver: 10.2.5
-  ceph_provisioner: CephInstallerPlugin
+  min_reqd_gluster_ver: 3.12.0
   gluster_provisioner: GdeployPlugin
   tags:
     tendrl-node-agent: "tendrl/node"
@@ -604,70 +10,282 @@ namespace.tendrl:
     tendrl-api: "tendrl/server"
     tendrl-monitor: "tendrl/monitor"
     tendrl-gluster-integration: "tendrl/integration/gluster"
-    tendrl-ceph-integration: "tendrl/integration/ceph"
     glusterd: "gluster/server"
-    ceph-mon: "ceph/mon"
-    ceph-osd: "ceph/osd"
     gluster-provisioner: "provisioner/gluster"
-    ceph-provisioner: "provisioner/ceph"
-    ceph-installer: "provisioner/ceph"
   flows:
-    CreateCluster:
-      tags: 
-        - "provisioner/$TendrlContext.sds_name"
-      help: "Create a cluster from scratch"
+    ConfigureMonitoring:
+      tags:
+        - "tendrl/node_$NodeContext.node_id"
+      atoms:
+        - tendrl.objects.Cluster.atoms.ConfigureMonitoring
+      help: "(Re)Configure Monitoring"
       enabled: true
       inputs:
         mandatory:
+          - TendrlContext.integration_id
+      pre_run:
+        - tendrl.objects.Cluster.atoms.CheckClusterAvailable
+      post_run:
+        - tendrl.objects.Service.atoms.CheckServiceStatus
+      run: tendrl.flows.ConfigureMonitoring
+      type: Create
+      uuid: 6f94a48a-05d7-408m-b400-e27827q4eacd
+      version: 1
+    ExpandCluster:
+      tags: 
+        - "provisioner/$TendrlContext.integration_id"
+      help: "expanding an existing cluster"
+      enabled: false
+      inputs:
+        mandatory:
           - "Node[]"
+          - TendrlContext.integration_id
+          - TendrlContext.cluster_id
           - TendrlContext.cluster_name
           - TendrlContext.sds_name
-          - TendrlContext.sds_version
-          - TendrlContext.cluster_id
           - Cluster.public_network
           - Cluster.cluster_network
-          - TendrlContext.integration_id
+          - Cluster.node_identifier
           - Cluster.node_configuration
-          - Cluster.conf_overrides
-      run: tendrl.flows.CreateCluster
-      type: Create
+      pre_run:
+        - tendrl.objects.Cluster.atoms.CheckClusterNodesUp
+      run: tendrl.flows.ExpandCluster
+      type: Update
       uuid: 2f94a48a-05d7-408c-b400-e27827f4eacd
       version: 1
     ImportCluster:
       tags:
-        - "detected_cluster/$DetectedCluster.detected_cluster_id"
+        - "tendrl/integration/$TendrlContext.integration_id"
+      atoms:
+        - tendrl.objects.Cluster.atoms.ImportCluster
       help: "Import existing Gluster Cluster"
       enabled: true
       inputs:
         mandatory:
-          - "Node[]"
-          - DetectedCluster.detected_cluster_id
-          - DetectedCluster.sds_pkg_name
-          - DetectedCluster.sds_pkg_version
           - TendrlContext.integration_id
+          - Cluster.volume_profiling_flag
+      pre_run:
+        - tendrl.objects.Cluster.atoms.CheckClusterNodesUp
+        - tendrl.objects.Node.atoms.IsNodeTendrlManaged
+        - tendrl.objects.Cluster.atoms.ValidImportClusterParams
+      post_run:
+        - tendrl.objects.Cluster.atoms.ConfigureMonitoring
+        - tendrl.objects.Service.atoms.CheckServiceStatus
+        - tendrl.objects.Cluster.atoms.CheckSyncDone
       run: tendrl.flows.ImportCluster
       type: Create
       uuid: 2f94a48a-05d7-408c-b400-e27827f4edef
       version: 1
+    UnmanageCluster:
+      tags:
+        - "tendrl/monitor"
+      atoms:
+        - tendrl.objects.Cluster.atoms.SetClusterUnmanaged
+        - tendrl.objects.Cluster.atoms.StopMonitoringServices
+        - tendrl.objects.Cluster.atoms.StopIntegrationServices
+        - tendrl.objects.Cluster.atoms.DeleteMonitoringDetails
+        - tendrl.objects.Cluster.atoms.DeleteClusterDetails
+      help: "Unmanage a Gluster Cluster"
+      enabled: true
+      inputs:
+        mandatory:
+          - TendrlContext.integration_id
+      pre_run:
+        - tendrl.objects.Cluster.atoms.CheckClusterNodesUp
+        - tendrl.objects.Cluster.atoms.IsClusterManaged
+      post_run:
+        - tendrl.objects.Cluster.atoms.IsClusterImportReady
+      run: tendrl.flows.UnmanageCluster
+      type: Update
+      uuid: 2f94a48a-05d7-408c-b400-e27827f4efed
+      version: 1
+    ExpandClusterWithDetectedPeers:
+      tags:
+        - "provisioner/$TendrlContext.integration_id"
+      help: "Expand an existing cluster with newly detected peers"
+      enabled: true
+      inputs:
+        mandatory:
+          - TendrlContext.integration_id
+      run: tendrl.flows.ExpandClusterWithDetectedPeers
+      type: Update
+      uuid: 2f94a48a-05d7-408c-b400-27827f4edcae
+      version: 1
 
   objects:
     Cluster:
-      internal: True
       enabled: True
       help: "Represents a cluster"
       list: /clusters
+      value: clusters/$TendrlContext.integration_id
+      atoms:
+        StopMonitoringServices:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: stop node services
+          run: tendrl.objects.Cluster.atoms.StopNodeServices
+          type: Update
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c4444c
+          help: Stop node services
+        StopIntegrationServices:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: stop node services
+          run: tendrl.objects.Cluster.atoms.StopNodeServices
+          type: Update
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c4444d
+          help: Stop node services
+        DeleteClusterDetails:
+          enabled: True
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: clear cluster details
+          run: tendrl.objects.Cluster.atoms.ClearClusterDetails
+          type: Update
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c5555c
+          help: Clear cluster details
+        DeleteMonitoringDetails:
+          enabled: True
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: Clear monitoring data
+          run: tendrl.objects.Cluster.atoms.ClearMonitoringData
+          type: Update
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c6666c
+          help: Clear monitoring data
+        SetClusterUnmanaged:
+          enabled: True
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: Set the cluster state as un-managed
+          run: tendrl.objects.Cluster.atoms.SetClusterUnmanaged
+          type: Update
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c7766c
+          help: Set cluster as un-managed
+        IsClusterManaged:
+          enabled: True
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: Check if the cluster is managed by tendrl
+          run: tendrl.objects.Cluster.atoms.IsClusterManaged
+          type: check
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c7676c
+          help: Check if cluster is managed
+        IsClusterImportReady:
+          enabled: True
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: Check if the cluster is import ready
+          run: tendrl.objects.Cluster.atoms.IsClusterImportReady
+          type: check
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c7678c
+          help: Check if cluster is import ready
+        ConfigureMonitoring:
+          enabled: true
+          name: configure monitoring
+          run: tendrl.objects.Cluster.atoms.ConfigureMonitoring
+          type: Create
+          uuid: 333c3333-3c33-33c3-333c-c33cc3c3333c
+          help: Configure monitoring
+        ValidImportClusterParams:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: valid import cluster params
+          run: tendrl.objects.Cluster.atoms.ValidImportClusterParams
+          type: Get
+          uuid: 352f6190-9b37-11e6-950d-a24fc0d9649e
+          help: Check if the import cluster parameters are valid
+        ImportCluster:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: import cluster
+          run: tendrl.objects.Cluster.atoms.ImportCluster
+          type: Create
+          uuid: 452f6190-9b37-11e6-950d-a24fc0d9649c
+          help: Import the cluster
+        CheckClusterAvailable:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: check cluster available
+          run: tendrl.objects.Cluster.atoms.CheckClusterAvailable
+          type: Get
+          uuid: 552f6190-9b37-11e6-950d-a24fc0d9649e
+          help: check if cluster is available
+        CheckSyncDone:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: check sync is done from nodes of the cluster
+          run: tendrl.objects.Cluster.atoms.CheckSyncDone
+          type: Get
+          uuid: 552f6190-9b37-11e6-950d-a24fc096d49e
+          help: check sync is done from nodes of the cluster
+        CheckClusterNodesUp:
+          enabled: true
+          inputs:
+            mandatory:
+              - TendrlContext.integration_id
+          name: "Check all cluster nodes are up"
+          help: "Check all cluster nodes are up"
+          run: tendrl.objects.Cluster.atoms.CheckClusterNodesUp
+          type: Create
+          uuid: eda0b13a-7362-48d5-b5ca-4b6d6533a5ab
       attrs:
+        integration_id:
+          help: integration id
+          type: String
         public_network:
           help: Public Network cidr of the cluster
           type: String
         cluster_network:
           help: Data Nework cidr of the cluster
+          type: String
         node_configuration:
           help: Node configuration for the cluster nodes
           type: Dict[]
         conf_overrides:
           help: Configuration overrides for the cluster
           type: Dict
+        node_identifier:
+          help: How nodes should be identified while create cluster
+          type: list
+        volume_profiling_flag:
+          help: Whether to enable/disable/leave as-is volume profiling
+          type: String
+        volume_profiling_state:
+          help: Current state(enabled/disabled/mixed) of volume profiling for cluster
+          type: String
+        is_managed:
+          help: If the cluster is managed by tendrl
+          type: String
+        errors:
+          help: Cluster wide errors
+          type: list
+        status:
+          help: status of the cluster (importing, syncing, unmanaging, unknown)
+          type: String
+        current_job:
+          help: Current job on the cluster
+          type: json
+        locked_by:
+          help: job details which locks the cluster
+          type: json
     DetectedCluster:
       enabled: True
       help: "DetectedCluster"
@@ -702,14 +320,24 @@ namespace.tendrl:
           type: String
         vendor_id:
           type: String
+        cpu_util_percent:
+          type: String
       enabled: true
       value: nodes/$NodeContext.node_id/Cpu
       help: "CPU"
     Memory:
       attrs:
-        total_size:
+        memory_total:
           type: String
-        total_swap:
+        memory_available:
+          type: String
+        memory_util_percent:
+          type: String
+        swap_total:
+          type: String
+        swap_available:
+          type: String
+        swap_util_percent:
           type: String
       enabled: true
       value: nodes/$NodeContext.node_id/Memory
@@ -720,7 +348,6 @@ namespace.tendrl:
           enabled: true
           inputs:
             mandatory:
-              - Node.fqdn
               - Service.name
           outputs:
             - status
@@ -745,157 +372,539 @@ namespace.tendrl:
         disk_id:
           help: "disk unique id"
           type: String
-        device_name:
+        hardware_id:
+          help: "hwinfo id"
+          type: String
+        disk_name:
           help: "disk name"
-          type: String
-        disk_kernel_name:
-          help: "disk internal kernel name"
-          type: String
-        parent_id:
-          help: "disk parent id"
-          type: String
-        parent_name:
-          help: "disk parent name"
-          type: String
-        disk_type:
-          help: "disk type"
-          type: String
-        fsuuid:
-          help: "file system uuid"
-          type: String
-        mount_point:
-          help: "disk mount point"
-          type: String
-        Model:
-          help: "disk model name"
-          type: String
-        vendor:
-          help: "disk vendor name"
-          type: String
-        used:
-          help: "disk used or not True/False"
-          type: String
-        serial_no:
-          help: "disk serial number"
-          type: String
-        rmversion:
-          help: "disk firmeware version"
-          type: String
-        fstype:
-          help: "file system type"
-          type: String
-        ssd:
-          help: "ssd is true / not"
-          type: String
-        size:
-          help: "size of the disk"
-          type: Integer
-        device_number:
-          help: "device number"
-          type: String
-        driver:
-          help: "driver"
-          type: String
-        group:
-          help: "disk group"
-          type: String
-        device:
-          help: "device"
-          type: String
-        bios_id:
-          help: "Bios id"
-          type: String
-        state:
-          help: "disk state"
-          type: String
-        drive_status:
-          help: "disk status"
-          type: String
-        label:
-          help: "label"
-          type: String
-        req_queue_size:
-          help: "request queue size"
-          type: String
-        driver_modules:
-          help: "driver modules"
-          type: String
-        mode:
-          help: "driver mode"
-          type: String
-        owner:
-          help: "driver owner"
-          type: String
-        min_io_size:
-          help: "min I/O size"
-          type: String
-        major_to_minor_no:
-          help: "major to minor number"
-          type: String
-        device_files:
-          help: "device files"
-          type: String
-        sysfs_busid:
-          help: "sysfs bus id"
-          type: String
-        alignement:
-          help: "alignement"
-          type: String
-        read_only:
-          help: "disk is read only or not"
-          type: String
-        read_ahead:
-          help: "read ahead"
-          type: String
-        removable_device:
-          help: "removable device or not"
-          type: String
-        scheduler_name:
-          help: "scheduler_name"
           type: String
         sysfs_id:
           help: "sysfs id"
           type: String
+        sysfs_busid:
+          help: "sysfs bus id"
+          type: String
         sysfs_device_link:
           help: "sysfs device link"
+          type: String
+        hardware_class:
+          help: "type"
+          type: String
+        model:
+          help: "interface model"
+          type: String
+        vendor:
+          help: "disk vendor name"
+          type: String
+        device:
+          help: "device"
+          type: String
+        rmversion:
+          help: "disk firmeware version"
+          type: String
+        serial_no:
+          help: "disk serial number"
+          type: String
+        driver:
+          help: "driver"
+          type: String
+        driver_modules:
+          help: "driver modules"
+          type: String
+        device_files:
+          help: "device files"
+          type: String
+        device_number:
+          help: "device number"
+          type: String
+        bios_id:
+          help: "Bios id"
           type: String
         geo_bios_edd:
           help: "geometry bios edd"
           type: String
+        geo_logical:
+          help: "geometry logical"
+          type: String
+        size:
+          help: "size of the disk"
+          type: String
+        size_bios_edd:
+          help: "size of bios edd"
+          type: String
         geo_bios_legacy:
           help: "geometry bios legacy"
+          type: String
+        config_status:
+          help: "configuration status"
+          type: String
+        partitions:
+          help: "partitions details"
+          type: json
+      enabled: true
+      list: nodes/$NodeContext.node_id/LocalStorage/Disks
+      value: nodes/$NodeContext.node_id/LocalStorage/Disks
+      help: "Disk"
+    VirtualDisk:
+      attrs:
+        disk_id:
+          help: "disk unique id"
+          type: String
+        hardware_id:
+          help: "hwinfo id"
+          type: String
+        disk_name:
+          help: "disk name"
+          type: String
+        sysfs_id:
+          help: "sysfs id"
+          type: String
+        sysfs_busid:
+          help: "sysfs bus id"
+          type: String
+        sysfs_device_link:
+          help: "sysfs device link"
+          type: String
+        hardware_class:
+          help: "type"
+          type: String
+        model:
+          help: "interface model"
+          type: String
+        vendor:
+          help: "disk vendor name"
+          type: String
+        device:
+          help: "device"
+          type: String
+        rmversion:
+          help: "disk firmeware version"
+          type: String
+        serial_no:
+          help: "disk serial number"
+          type: String
+        driver:
+          help: "driver"
+          type: String
+        driver_modules:
+          help: "driver modules"
+          type: String
+        device_files:
+          help: "device files"
+          type: String
+        device_number:
+          help: "device number"
+          type: String
+        bios_id:
+          help: "Bios id"
+          type: String
+        geo_bios_edd:
+          help: "geometry bios edd"
           type: String
         geo_logical:
           help: "geometry logical"
           type: String
-        phy_sector_size:
-          help: "physical sector size"
+        size:
+          help: "size of the disk"
           type: String
-        discard_granularity:
-          help: "discard granularity"
+        size_bios_edd:
+          help: "size of bios edd"
           type: String
-        discard_align_offset:
-          help: "discard align offset"
+        geo_bios_legacy:
+          help: "geometry bios legacy"
           type: String
-        discard_max_bytes:
-          help: "discard max bytes"
+        config_status:
+          help: "configuration status"
           type: String
-        discard_zeroes_data:
-          help: "discard zeroes data"
+        partitions:
+          help: "partitions details"
+          type: json
+      enabled: true
+      list: nodes/$NodeContext.node_id/LocalStorage/Virtio
+      value: nodes/$NodeContext.node_id/LocalStorage/Virtio
+      help: "VirtualDisk"
+    BlockDevice:
+      attrs:
+        device_name:
+          help: "block device name"
+          type: String
+        device_kernel_name:
+          help: "block device kernel name"
+          type: String
+        parent_name:
+          help: "block device parent name"
+          type: String
+        disk_id:
+          help: "disk id of block device"
+          type: String
+        major_to_minor_no:
+          help: "major:minor device number"
+          type: String
+        fstype:
+          help: "filesystem type"
+          type: String
+        mount_point:
+          help: "where the device is mounted"
+          type: String
+        label:
+          help: "filesystem LABEL"
+          type: String
+        fsuuid:
+          help: "filesystem UUID"
+          type: String
+        read_ahead:
+          help: "read-ahead of the device"
+          type: String
+        read_only:
+          help: "read-only device"
+          type: String
+        removable_device:
+          help: "removable device"
+          type: String
+        size:
+          help: "size of the device"
+          type: String
+        state:
+          help: "state of the device"
+          type: String
+        owner:
+          help: "user name"
+          type: String
+        group:
+          help: "group name"
+          type: String
+        mode:
+          help: "device node permissions"
+          type: String
+        alignment:
+          help: "alignment offset"
+          type: String
+        min_io_size:
+          help: "minimum I/O size"
           type: String
         optimal_io_size:
           help: "optimal I/O size"
           type: String
+        phy_sector_size:
+          help: "physical sector size"
+          type: String
         log_sector_size:
           help: "logical sector size"
           type: String
-
+        device_type:
+          help: "device type"
+          type: String
+        scheduler_name:
+          help: "I/O scheduler name"
+          type: String
+        req_queue_size:
+          help: "request queue size"
+          type: String
+        discard_align_offset:
+          help: "discard alignment offset"
+          type: String
+        discard_granularity:
+          help: "discard granularity"
+          type: String
+        discard_max_bytes:
+          help: "discard max bytes"
+          type: String
+        discard_zeros_data:
+          help: "discard zeroes data"
+          type: String
+        used:
+          help: "device is free or used"
+          type: Boolean
+        rotational:
+          help: "device rotational flag"
+          type: String
+        ssd:
+          help: "device is ssd or not"
+          type: Boolean
       enabled: true
-      list: nodes/$NodeContext.node_id/Disks
-      value: nodes/$NodeContext.node_id/Disks
-      help: "Disk"
+      list: nodes/$NodeContext.node_id/LocalStorage/BlockDevice
+      value: nodes/$NodeContext.node_id/LocalStorage/BlockDevice
+      help: "BlockDevice"
+    Alert:
+      attrs:
+        alert_id:
+          help: 'The unique identifier of alert'
+          type: String
+        node_id:
+          help: 'The unique identifier of node on which alert was detected'
+          type: String
+        time_stamp:
+          help: 'The timestamp at which alert was observed'
+          type: String
+        resource:
+          help: 'The resource with problem for which alert was raised'
+          type: String
+        current_value:
+          help: 'The current magnitude(status/utilization) of problem'
+          type: String
+        tags:
+          help: 'Alert specific fields that cannot be generalized for all alerts'
+          type: Dict
+        alert_type:
+          help: 'The type(status/percentage utilization) of alert'
+          type: String
+        severity:
+          help: 'The severity of alert'
+          type: String
+        classification:
+          help: 'node or cluster or both'
+          type: List
+        significance:
+          help: 'The significance of notifying alert'
+          type: String
+        ackedby:
+          help: 'Entity/person acking the alert'
+          type: String
+        acked:
+          help: 'Indication of whether alert is acked or not'
+          type: Boolean
+        ack_comment:
+          help: 'Users comments for acking this alert'
+          type: List
+        acked_at:
+          help: 'Time at which the alert was acked'
+          type: String
+        pid:
+          help: 'The id of process raising the alert'
+          type: String
+        source:
+          help: 'The process raising the alert'
+          type: String
+        delivered:
+          help: 'Delivery detials by notifier'
+          type: Dict
+      enabled: true
+      value: alerting/alerts/$Alert.alert_id
+      list: alerting/alerts
+      help: "alerts"
+    NodeAlert:
+      attrs:
+        alert_id:
+          help: 'The unique identifier of alert'
+          type: String
+        node_id:
+          help: 'The unique identifier of node on which alert was detected'
+          type: String
+        time_stamp:
+          help: 'The timestamp at which alert was observed'
+          type: String
+        resource:
+          help: 'The resource with problem for which alert was raised'
+          type: String
+        current_value:
+          help: 'The current magnitude(status/utilization) of problem'
+          type: String
+        tags:
+          help: 'Alert specific fields that cannot be generalized for all alerts'
+          type: Dict
+        alert_type:
+          help: 'The type(status/percentage utilization) of alert'
+          type: String
+        severity:
+          help: 'The severity of alert'
+          type: String
+        classification:
+          help: 'node or cluster or both'
+          type: List
+        significance:
+          help: 'The significance of notifying alert'
+          type: String
+        ackedby:
+          help: 'Entity/person acking the alert'
+          type: String
+        acked:
+          help: 'Indication of whether alert is acked or not'
+          type: Boolean
+        ack_comment:
+          help: 'Users comments for acking this alert'
+          type: List
+        acked_at:
+          help: 'Time at which the alert was acked'
+          type: String
+        pid:
+          help: 'The id of process raising the alert'
+          type: String
+        source:
+          help: 'The process raising the alert'
+          type: String
+        delivered:
+          help: 'Delivery detials by notifier'
+          type: Dict
+      relationship:
+        utilization:
+          - cpu_utilization
+          - memory_utilization
+          - swap_utilization
+          - brick_utilization
+        status:
+          - brick_status
+          - node_status
+      enabled: true
+      value: alerting/nodes/$Alert.node_id/$Alert.alert_id
+      list: alerting/nodes/$Alert.node_id
+      help: "Node alerts"
+    ClusterAlert:
+      attrs:
+        alert_id:
+          help: 'The unique identifier of alert'
+          type: String
+        node_id:
+          help: 'The unique identifier of node on which alert was detected'
+          type: String
+        time_stamp:
+          help: 'The timestamp at which alert was observed'
+          type: String
+        resource:
+          help: 'The resource with problem for which alert was raised'
+          type: String
+        current_value:
+          help: 'The current magnitude(status/utilization) of problem'
+          type: String
+        tags:
+          help: 'Alert specific fields that cannot be generalized for all alerts'
+          type: Dict
+        alert_type:
+          help: 'The type(status/percentage utilization) of alert'
+          type: String
+        severity:
+          help: 'The severity of alert'
+          type: String
+        classification:
+          help: 'node or cluster or both'
+          type: List
+        significance:
+          help: 'The significance of notifying alert'
+          type: String
+        ackedby:
+          help: 'Entity/person acking the alert'
+          type: String
+        acked:
+          help: 'Indication of whether alert is acked or not'
+          type: Boolean
+        ack_comment:
+          help: 'Users comments for acking this alert'
+          type: List
+        acked_at:
+          help: 'Time at which the alert was acked'
+          type: String
+        pid:
+          help: 'The id of process raising the alert'
+          type: String
+        source:
+          help: 'The process raising the alert'
+          type: String
+        delivered:
+          help: 'Delivery detials by notifier'
+          type: Dict
+      relationship:
+        utilization:
+          - volume_utilization
+          - brick_utilization
+          - cluster_utilization
+        status:
+          - volume_status
+          - brick_status
+          - volume_state
+          - cluster_health_status
+          - peer_status
+          - rebalance_status_update_failed
+          - georep_checkpoint_completed
+          - quorum
+          - svc_connecion
+          - ec_min_bricks_up
+          - afr_quorum_state
+          - afr_subvol_state
+          - georep_status
+          - cluster_status
+      enabled: true
+      value: alerting/clusters/$Alert.tags['integration_id']/$Alert.alert_id
+      list: alerting/clusters/$Alert.tags['integration_id']
+      help: "Cluster alerts"
+    NotificationOnlyAlert:
+      attrs:
+        alert_id:
+          help: 'The unique identifier of alert'
+          type: String
+        node_id:
+          help: 'The unique identifier of node on which alert was detected'
+          type: String
+        time_stamp:
+          help: 'The timestamp at which alert was observed'
+          type: String
+        resource:
+          help: 'The resource with problem for which alert was raised'
+          type: String
+        current_value:
+          help: 'The current magnitude(status/utilization) of problem'
+          type: String
+        tags:
+          help: 'Alert specific fields that cannot be generalized for all alerts'
+          type: Dict
+        alert_type:
+          help: 'The type(status/percentage utilization) of alert'
+          type: String
+        severity:
+          help: 'The severity of alert'
+          type: String
+        classification:
+          help: 'node or cluster or both'
+          type: List
+        significance:
+          help: 'The significance of notifying alert'
+          type: String
+        ackedby:
+          help: 'Entity/person acking the alert'
+          type: String
+        acked:
+          help: 'Indication of whether alert is acked or not'
+          type: Boolean
+        ack_comment:
+          help: 'Users comments for acking this alert'
+          type: List
+        acked_at:
+          help: 'Time at which the alert was acked'
+          type: String
+        pid:
+          help: 'The id of process raising the alert'
+          type: String
+        source:
+          help: 'The process raising the alert'
+          type: String
+        delivered:
+          help: 'Delivery detials by notifier'
+          type: Dict
+      enabled: true
+      value: alerting/notify/$Alert.alert_id
+      list: alerting/notify
+      help: "notification only alert"
     Node:
+      flows:
+        StopServices:
+          help: Stop services on the node
+          enabled: True
+          inputs:
+            mandatory:
+              - "Services[]"
+          run: "tendrl.objects.Node.flows.StopServices"
+          uuid: 2f94a48a-05d7-408c-b400-e27827f4eacd
+          type: Update
+          version: 1
       atoms:
+        IsNodeTendrlManaged:
+          help: Check if a node is being managed by tendrl
+          enabled: true
+          inputs:
+            mandatory:
+              - "Node[]"
+          run: tendrl.objects.Node.atoms.IsNodeTendrlManaged
+          type: check
+          uuid: 2f94a48a-05d7-408c-b400-e27827f4edca
+          version: 1
         Cmd:
           enabled: true
           inputs:
@@ -908,18 +917,6 @@ namespace.tendrl:
           run: tendrl.objects.Node.atoms.Cmd
           type: Create
           uuid: dc8fff3a-34d9-4786-9282-55eff6abb6c3
-        CheckNodeUp:
-          enabled: true
-          inputs:
-            mandatory:
-              - Node.fqdn
-          outputs:
-            - Node.status
-          name: "check whether the node is up"
-          help: "Checks if a node is up"
-          run: tendrl.objects.Node.atoms.CheckNodeUp
-          type: Create
-          uuid: eda0b13a-7362-48d5-b5ca-4b6d6533a5ab
       attrs:
         cmd_str:
           type: String
@@ -1043,14 +1040,14 @@ namespace.tendrl:
       help: "Tendrl context"
     NodeContext:
       attrs:
-        machine_id:
-          help: "Unique /etc/machine-id"
-          type: String
         fqdn:
           help: "FQDN of the Tendrl managed node"
           type: String
         node_id:
           help: "Tendrl ID for the managed node"
+          type: String
+        updated_at:
+          help: "last updated time of node context"
           type: String
         tags:
           help: "The tags associated with this node"
@@ -1063,22 +1060,27 @@ namespace.tendrl:
       list: nodes/$NodeContext.node_id/NodeContext
       value: nodes/$NodeContext.node_id/NodeContext
       help: Node Context
+      watch_attrs:
+        - status
     ClusterNodeContext:
       attrs:
-        machine_id:
-          help: "Unique /etc/machine-id"
-          type: String
         fqdn:
           help: "FQDN of the Tendrl managed node"
           type: String
         node_id:
           help: "Tendrl ID for the managed node"
           type: String
+        updated_at:
+          help: "last updated time of node context"
+          type: String
         tags:
           help: "The tags associated with this node"
           type: List
         status:
           help: "Node status"
+          type: String
+        first_sync_done:
+          help: "Flag to mention if first round of sync is done for cluster data"
           type: String
 
       enabled: true
@@ -1094,14 +1096,20 @@ namespace.tendrl:
           help: "job current status"
           type: String
         payload:
-          help: "dict"
-          type: Dict
+          help: "json"
+          type: Json
         errors:
           help: "any errors occured or not"
           type: String
         children:
           help: "ID of child jobs created by this job"
           type: List
+        output:
+          help: output of the job execution
+          type: dict
+        timeout:
+          help: Job is timed out after 10 mins if yes
+          type: String
       enabled: true
       list: /queue
       value: /queue
@@ -1118,4 +1126,43 @@ namespace.tendrl:
       help: "Platform of the Node"
       value: nodes/$NodeContext.node_id/Platform
       list: nodes/$NodeContext.node_id/Platform
+    ClusterAlertCounters:
+      enabled: True
+      attrs:
+        alert_count:
+          help: "Count of alerts for the cluster"
+          type: int
+        integration_id:
+          help: "Id of the cluster"
+          type: String
+      value: /clusters/{0}/alert_counters
+      list: /clusters/{0}/alert_counters
+      help: "Cluster Alert Counter"
+    NodeAlertCounters:
+      enabled: True
+      attrs:
+        alert_count:
+          help: "Count of alerts for the node"
+          type: int
+        integration_id:
+          help: "Id of the node"
+          type: String
+      value: /nodes/{0}/alert_counters
+      list: /nodes/{0}/alert_counters
+      help: "Node Alert Counter"
+    ClusterNodeAlertCounters:
+      enabled: True
+      attrs:
+        alert_count:
+          help: "Count of alerts for the cluster node"
+          type: int
+        node_id:
+          help: "Id of the node"
+          type: String
+        integration_id:
+          help: "Integration Id of the cluster"
+          type: String
+      value: /clusters/{0}/nodes/{1}/alert_counters
+      list: /clusters/{0}/nodes/{1}/alert_counters
+      help: "Cluster Alert Counter"
 tendrl_schema_version: 0.3
