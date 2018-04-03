@@ -36,6 +36,8 @@ describe ClustersController do
     specify 'cluster details' do
       get '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc', nil, http_env
       expect(last_response.status).to eq 200
+      body = JSON.parse last_response.body
+      expect(body['short_name']).to eq('cluster-short-name')
     end
   end
 
