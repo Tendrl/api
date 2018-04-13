@@ -19,6 +19,7 @@ module ClusterPresenter
         attributes.slice!(
           'errors',
           'globaldetails',
+          'short_name',
           'nodes',
           'public_network',
           'cluster_network',
