@@ -1,5 +1,5 @@
 module Tendrl
-  class HttpResponseErrorHandler
+  class HttpResponseErrorHandler < StandardError
     attr_reader :status, :body
 
     EXCEPTION_MAPPING = {

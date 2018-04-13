@@ -1,25 +1,12 @@
 module Tendrl
   class Alert
-
     class << self
-
       def all(path='alerts')
-        alerts = []
-        Tendrl.etcd.get("/alerting/#{path}", recursive: true).children.each do |children|
-          alert = {}
-          children.children.each do |child|
-            key = child.key.split('/')[-1]
-            if child.dir
-              alert[key] = {}
-              child.children.each do |cchild|
-                alert[key][cchild.key.split('/')[-1]] = cchild.value
-              end
-            else
-              alert[key] = child.value
-            end
-          end
+        alerts = Tendrl.etcd.get("/alerting/#{path}", recursive: true)
+                       .children.map do |alert|
+          alert = Tendrl.recurse(alert).values.first
           alert['tags'] = JSON.parse(alert['tags']) || []
-          alerts << alert
+          alert
         end
         alerts.sort do |a, b|
           Time.parse(a['time_stamp']) <=> Time.parse(b['time_stamp'])
@@ -27,23 +14,12 @@ module Tendrl
       end
 
       def find(alert_id)
-        alert = {}
-        Tendrl.etcd.get("/alerting/alerts/#{alert_id}", recursive: true).children.each do |children|
-          key = children.key.split('/')[-1]
-          if children.dir
-            alert[key] = {}
-            children.children.each do |child|
-              alert[key][child.key.split('/')[-1]] = child.value
-            end          
-          else
-            alert[key] = children.value
-          end
-        end
+        alert = Tendrl.recurse(
+          Tendrl.etcd.get("/alerting/alerts/#{alert_id}")
+        )[alert_id]
         alert['tags'] = JSON.parse(alert['tags']) rescue []
         alert
       end
-
     end
-
   end
 end

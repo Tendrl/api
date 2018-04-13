@@ -7,17 +7,13 @@ module Tendrl
       @attributes = attributes
     end
 
-    def update_attributes(attributes)
-      attributes.each do |key, value|
-        Tendrl.etcd.set("/clusters/#{@attributes['integration_id']}/#{key}", value: value)
-        @attributes[key.to_s] = value
-      end
-      self
-    end
-
     class << self
-
       def exist?(cluster_id)
+        Tendrl.etcd.get "/clusters/#{cluster_id}"
+      rescue Etcd::KeyNotFound => e
+        raise Tendrl::HttpResponseErrorHandler.new(
+          e, cause: '/clusters/id', object_id: cluster_id
+        )
       end
 
       def find(cluster_id)
@@ -29,6 +25,9 @@ module Tendrl
             )
           )[cluster_id]
         rescue Etcd::KeyNotFound
+          raise Tendrl::HttpResponseErrorHandler.new(
+            e, cause: '/clusters/id', object_id: cluster_id
+          )
         end
         new(attributes)
       end
@@ -43,6 +42,5 @@ module Tendrl
         end
       end
     end
-
   end
 end

@@ -35,7 +35,7 @@ class UsersController < AuthenticatedUsersController
     user_form = Tendrl::UserForm.new(user, user_attributes)
     if user_form.valid?
       attributes = user_form.attributes
-      attributes.delete(:role) # Disallow updating role
+      attributes[:role] = user.role # Disallow updating role
       user = Tendrl::User.save(attributes)
       UserPresenter.single(user).to_json
     else

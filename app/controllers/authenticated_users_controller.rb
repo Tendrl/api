@@ -32,30 +32,11 @@ class AuthenticatedUsersController < ApplicationController
     current_user.limited?
   end
 
+  error Tendrl::HttpResponseErrorHandler do
+    halt env['sinatra.error'].status, env['sinatra.error'].body.to_json
+  end
+
   protected
-
-  def load_definitions(cluster_id)
-    definitions = etcd.get(
-      "/clusters/#{cluster_id}/_NS/definitions/data"
-    ).value
-    Tendrl.cluster_definitions = YAML.load(definitions)
-  rescue Etcd::KeyNotFound => e
-    exception = Tendrl::HttpResponseErrorHandler.new(
-      e, cause: '/clusters/definitions', object_id: cluster_id
-    )
-    halt exception.status, exception.body.to_json
-  end
-
-  def cluster(cluster_id)
-    load_definitions(cluster_id)
-    @cluster ||=
-      Tendrl.recurse(etcd.get("/clusters/#{cluster_id}/TendrlContext"))['tendrlcontext']
-  rescue Etcd::KeyNotFound => e
-    exception =  Tendrl::HttpResponseErrorHandler.new(
-      e, cause: '/clusters/id', object_id: cluster_id
-    )
-    halt exception.status, exception.body.to_json
-  end
 
   def authenticate
     if access_token.present?
@@ -67,5 +48,4 @@ class AuthenticatedUsersController < ApplicationController
   def current_user
     @current_user || authenticate
   end
-
 end

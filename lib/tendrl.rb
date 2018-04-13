@@ -42,6 +42,24 @@ module Tendrl
       @node_definitions = definitions
     end
 
+    def load_node_definitions
+      defs = etcd.cached_get('/_NS/node_agent/compiled_definitions/data').value
+      self.node_definitions = YAML.load JSON.parse(defs)['data']
+    rescue Etcd::KeyNotFound => e
+      raise Tendrl::HttpResponseErrorHandler.new(
+        e, cause: '/_tendrl/definitions'
+      )
+    end
+
+    def load_definitions(cluster_id)
+      defs = etcd.cached_get("/clusters/#{cluster_id}/_NS/definitions/data").value
+      self.cluster_definitions = YAML.load JSON.parse(defs)['data']
+    rescue Etcd::KeyNotFound => e
+      raise Tendrl::HttpResponseErrorHandler.new(
+        e, cause: '/clusters/definitions', object_id: cluster_id
+      )
+    end
+
     def etcd_config=(config)
       $etcd_config = config.freeze
     end
@@ -97,13 +115,16 @@ module Tendrl
         if child.dir
           recurse(child, attrs[parent_key], options)
         else
-          if attrs[parent_key]
-            attrs[parent_key][child_key] = child.value
-          else
-            attrs[child_key] = child.value
-          end
+          attrs[parent_key][child_key] = child.value
+          unmarshall! attrs[parent_key]
         end
       end
+      attrs
+    end
+
+    def unmarshall!(attrs)
+      serialized_data = attrs.delete 'data'
+      attrs.merge! JSON.parse(serialized_data) if serialized_data
       attrs
     end
   end

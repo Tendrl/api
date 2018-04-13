@@ -1,7 +1,5 @@
 module UserPresenter
-
   class << self
-
     def single(user)
       {
         email: user.email,
@@ -17,7 +15,5 @@ module UserPresenter
         single(user)
       end
     end
-    
   end
-
 end
