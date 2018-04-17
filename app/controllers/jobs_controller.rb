@@ -1,5 +1,4 @@
 class JobsController < AuthenticatedUsersController
-
   get '/jobs' do
     begin
       jobs = Tendrl::Job.all
@@ -11,7 +10,7 @@ class JobsController < AuthenticatedUsersController
 
   before '/jobs/:job_id/?*?' do
     begin
-      Tendrl.etcd.get "/queue/#{params[:job_id]}"
+      @job = Tendrl::Job.find(params[:job_id])
     rescue Etcd::KeyNotFound => e
       e = Tendrl::HttpResponseErrorHandler.new(
         e, cause: '/jobs/id', object_id: params[:job_id]
@@ -21,12 +20,15 @@ class JobsController < AuthenticatedUsersController
   end
 
   get '/jobs/:job_id' do
-    JobPresenter.single(Tendrl::Job.find(params[:job_id])).to_json
+    JobPresenter.single(@job).to_json
   end
 
   get '/jobs/:job_id/messages' do
     parent_job_messages = Tendrl::Job.messages(params[:job_id])
-    child_job_messages = Tendrl::Job.children_messages(params[:job_id])
+    child_job_ids = JSON.parse @job['children']
+    child_job_messages = child_job_ids.map do |child_id|
+      Tendrl::Job.messages child_id
+    end
     jobs = (parent_job_messages + child_job_messages.flatten).sort do |a, b|
       Time.parse(a['timestamp']) <=> Time.parse(b['timestamp'])
     end
@@ -34,10 +36,10 @@ class JobsController < AuthenticatedUsersController
   end
 
   get '/jobs/:job_id/output' do
-    Tendrl::Job.output(params[:job_id]).to_json
+    @job['output'].to_json
   end
 
   get '/jobs/:job_id/status' do
-    Tendrl::Job.status(params[:job_id]).to_json
+    { status: @job['status'] }.to_json
   end
 end

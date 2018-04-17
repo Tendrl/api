@@ -11,13 +11,14 @@ module Tendrl
       :password_salt, :email_notifications
 
     def initialize(attributes={})
+      attributes = attributes.with_indifferent_access
       @name = attributes[:name]
       @email = attributes[:email]
       @username = attributes[:username]
       @email_notifications = attributes[:email_notifications]
       @role = attributes[:role]
-      @password_hash = nil
-      @password_salt = nil
+      @password_hash = attributes[:password_hash]
+      @password_salt = attributes[:password_salt]
     end
 
     def attributes
@@ -62,71 +63,38 @@ module Tendrl
 
     def delete
       Tendrl.etcd.delete("/_tendrl/indexes/notifications/email_notifications/#{username}") rescue Etcd::KeyNotFound
-      Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
+      Tendrl.etcd.cached_delete("/_tendrl/users/#{username}", recursive: true)
     end
 
     class << self
-
       def all
-        begin
-          users = []
-          Tendrl.etcd.get("/_tendrl/users", recursive: true).children.each do
-            |child|
-            attributes = {}
-            child.children.each do |attribute|
-              attributes[attribute.key.split('/')[-1].to_sym] = attribute.value
-            end
-            users << new(attributes)
-          end
-        rescue Etcd::KeyNotFound
+        Tendrl.etcd.get('/_tendrl/users', recursive: true)
+              .children.collect_concat do |user|
+          new(Tendrl.recurse(user).values.first)
         end
-        users
       end
 
       def find(username)
-        attributes = {}
-        Tendrl.etcd.get("/_tendrl/users/#{username}").
-          children.each do |child|
-          attributes[child.key.split('/')[-1].to_sym] = child.value
-        end
-        user = new(attributes)
-        user.password_hash = attributes[:password_hash]
-        user.password_salt = attributes[:password_salt]
+        attrs = Tendrl.recurse(
+          Tendrl.etcd.cached_get("/_tendrl/users/#{username}")
+        )[username]
+        user = new(attrs)
         user
       rescue Etcd::KeyNotFound
         nil
       end
 
       def find_user_by_access_token(token)
-        username = Tendrl.etcd.get("/_tendrl/access_tokens/#{token}").value
+        username = Tendrl.etcd.cached_get("/_tendrl/access_tokens/#{token}").value
         find(username)
       rescue Etcd::KeyNotFound
         nil
       end
 
       def save(attributes)
-        password = attributes.delete(:password)
-        if password
-          password_salt = BCrypt::Engine.generate_salt
-          password_hash = BCrypt::Engine.hash_secret(
-            password, password_salt
-          )
-          attributes.merge!(
-            password_salt: password_salt,
-            password_hash: password_hash
-          )
-        end
-        begin
-          Tendrl.etcd.set(
-            "/_tendrl/users/#{attributes[:username]}",
-            dir: true
-          )
-        rescue Etcd::NotFile
-          # Exception for existing username, so update
-        end
-        attributes.each do |key, value|
-          Tendrl.etcd.set("/_tendrl/users/#{attributes[:username]}/#{key}", value: value)
-        end
+        user_path = "/_tendrl/users/#{attributes[:username]}"
+        Tendrl.etcd.cache.delete user_path
+        Tendrl.etcd.set "#{user_path}/data", value: attributes.to_json
         user = find(attributes[:username])
         post_save_hooks(user)
         user

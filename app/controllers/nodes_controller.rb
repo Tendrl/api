@@ -1,8 +1,7 @@
 class NodesController < AuthenticatedUsersController
 
   before do
-    definitions = etcd.get('/_NS/node_agent/compiled_definitions/data').value
-    Tendrl.node_definitions = YAML.load(definitions)
+    Tendrl.load_node_definitions
   end
 
   get '/nodes' do

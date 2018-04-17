@@ -13,14 +13,17 @@ namespace :etcd do
     if user
       p 'User named admin already exists.'
     else
-      Tendrl::User.save({
-        name: 'Admin',
-        username: 'admin',
-        email: 'admin@tendrl.org',
-        role: 'admin',
-        password: password,
-        email_notifications: false
-      })
+      Tendrl::User.save(
+        Tendrl::UserForm.new(
+          Tendrl::User.new,
+          name: 'Admin',
+          username: 'admin',
+          email: 'admin@tendrl.org',
+          role: 'admin',
+          password: password,
+          email_notifications: false
+        ).attributes
+      )
       p 'Generated default admin'
       p 'Username: admin'
       p "Password: #{password}"

@@ -25,7 +25,16 @@ module Tendrl
       @username = params[:username] || user.username
       @email = params[:email] || user.email
       @role = params[:role] || user.role
-      @password = params[:password]
+      @password = params.delete(:password)
+      if @password
+        @password_salt = BCrypt::Engine.generate_salt
+        @password_hash = BCrypt::Engine.hash_secret(
+          @password, @password_salt
+        )
+      else
+        @password_salt = user.password_salt
+        @password_hash = user.password_hash
+      end
       @email_notifications = if params[:email_notifications].nil?
                                user.email_notifications
                              else
@@ -37,7 +46,8 @@ module Tendrl
       {
         name: @name,
         username: @username,
-        password: @password,
+        password_salt: @password_salt,
+        password_hash: @password_hash,
         email: @email,
         role: @role,
         email_notifications: @email_notifications
