@@ -6,7 +6,7 @@ module UserPresenter
         username: user.username,
         name: user.name,
         role: user.role,
-        email_notifications: user.email_notifications == "true" ? true : false
+        email_notifications: user.email_notifications
       }
     end
 

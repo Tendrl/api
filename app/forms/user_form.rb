@@ -38,7 +38,7 @@ module Tendrl
       @email_notifications = if params[:email_notifications].nil?
                                user.email_notifications
                              else
-                               params[:email_notifications]
+                               [true, 'true'].include? params[:email_notifications]
                              end
     end
 
