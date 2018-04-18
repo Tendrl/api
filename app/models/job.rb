@@ -39,14 +39,15 @@ module Tendrl
     class << self
       def all
         Tendrl.etcd.get('/queue', recursive: true).children.map do |job|
-          Tendrl.recurse(job).values.first
+          job = Tendrl.recurse(job)
+          job.values.first.merge('job_id' => job.keys.first)
         end
       end
 
       def find(job_id)
         Tendrl.recurse(
           Tendrl.etcd.get("/queue/#{job_id}", recursive: true)
-        )[job_id]
+        )[job_id].merge('job_id' => job_id)
       end
 
       def messages(job_id)

@@ -105,9 +105,11 @@ module Tendrl
       end
 
       def update_email_notification_indexes(user)
-        if user.email_notifications == "true"
-          Tendrl.etcd.set("/_tendrl/indexes/notifications/email_notifications/#{user.username}",
-                        value: user.email)
+        email_index = "/_tendrl/indexes/notifications/email_notifications/#{user.username}"
+        if user.email_notifications
+          Tendrl.etcd.set(email_index, value: user.email)
+        else
+          Tendrl.etcd.delete(email_index) rescue Etcd::KeyNotFound
         end
       end
 
