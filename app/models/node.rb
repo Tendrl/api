@@ -44,14 +44,9 @@ module Tendrl
       end
 
       def find_by_cluster_id(cluster_id, node_id)
-        node = {}
-        begin
-          Tendrl.recurse Tendrl.etcd.get("/clusters/#{cluster_id}/nodes/#{node_id}/NodeContext")
-        rescue Etcd::KeyNotFound
-        end
-        node
+        Tendrl.recurse(Tendrl.etcd.get("/clusters/#{cluster_id}/nodes/#{node_id}/NodeContext"))['nodecontext']
+      rescue Etcd::KeyNotFound
       end
-
     end
 
     attr_reader :uuid

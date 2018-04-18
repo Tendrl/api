@@ -25,7 +25,7 @@ class JobsController < AuthenticatedUsersController
 
   get '/jobs/:job_id/messages' do
     parent_job_messages = Tendrl::Job.messages(params[:job_id])
-    child_job_ids = JSON.parse @job['children']
+    child_job_ids = JSON.parse @job.fetch('children', '[]')
     child_job_messages = child_job_ids.map do |child_id|
       Tendrl::Job.messages child_id
     end
