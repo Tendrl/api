@@ -24,10 +24,12 @@ class ClustersController < AuthenticatedUsersController
   end
 
   get '/clusters/:cluster_id/nodes/:node_id/bricks' do
-    node = Tendrl::Node.find_by_cluster_id(params[:cluster_id], params[:node_id])
-    halt 404 if node['nodecontext'].present?
+    node = Tendrl::Node.find_by_cluster_id(
+      params[:cluster_id], params[:node_id]
+    )
+    halt 404 unless node.present?
     bricks = Tendrl::Brick.find_all_by_cluster_id_and_node_fqdn(
-      params[:cluster_id], node['nodecontext']['fqdn']
+      params[:cluster_id], node['fqdn']
     )
     { bricks: BrickPresenter.list(bricks) }.to_json
   end
