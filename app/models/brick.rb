@@ -4,8 +4,9 @@ module Tendrl
       def find_all_by_cluster_id_and_node_fqdn(cluster_id, fqdn)
         begin
           Tendrl.etcd.get("/clusters/#{cluster_id}/Bricks/all/#{fqdn}", recursive: true)
-            .children.inject({}) do |bricks, node|
-            bricks.merge! Tendrl.recurse(node)
+            .children.inject([]) do |bricks, node|
+            brick = Tendrl.recurse node
+            bricks + brick.values
           end
         rescue Etcd::KeyNotFound, Etcd::NotDir
           {}
@@ -25,24 +26,25 @@ module Tendrl
       end
 
       def find_by_cluster_id_and_refs(cluster_id, sub_volumes)
-        bricks = {}
         sub_volumes.collect_concat do |sub_volume, paths|
           paths.collect_concat do |path|
             path = path.sub(':_', '/')
             begin
-              path_bricks = Tendrl.recurse(
+              path_brick = Tendrl.recurse(
                 Tendrl.etcd.get(
                   "/clusters/#{cluster_id}/Bricks/all/#{path}",
                   recursive: true
                 )
               )
-              path_bricks.each_value { |brick| brick['subvolume'] = sub_volume }
-              bricks.merge! path_bricks
+              path_brick.each_value do |attrs|
+                attrs['subvolume'] = sub_volume
+              end
+              path_brick.values
             rescue Etcd::KeyNotFound, Etcd::NotDir
+              []
             end
           end
         end
-        bricks
       end
     end
   end

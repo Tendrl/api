@@ -1,11 +1,10 @@
 module BrickPresenter
   class << self
     def list(bricks)
-      bricks.map do |(brick_id, attributes)|
-        attributes['brick_id'] = brick_id
-        attributes['devices'] = JSON.parse(attributes['devices'] || '[]')
-        attributes['partitions'] = JSON.parse(attributes['partitions'] || '[]')
-        attributes['pv'] = JSON.parse(attributes['pv'] || '[]')
+      bricks.map do |attributes|
+        %w[devices partitions pv].each do |key|
+          attributes[key] = JSON.parse(attributes[key] || '[]')
+        end
         attributes
       end
     end
