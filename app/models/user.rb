@@ -63,7 +63,7 @@ module Tendrl
 
     def delete
       Tendrl.etcd.delete("/_tendrl/indexes/notifications/email_notifications/#{username}") rescue Etcd::KeyNotFound
-      Tendrl.etcd.cached_delete("/_tendrl/users/#{username}", recursive: true)
+      Tendrl.etcd.delete("/_tendrl/users/#{username}", recursive: true)
     end
 
     class << self
@@ -76,7 +76,7 @@ module Tendrl
 
       def find(username)
         attrs = Tendrl.recurse(
-          Tendrl.etcd.cached_get("/_tendrl/users/#{username}")
+          Tendrl.etcd.get("/_tendrl/users/#{username}")
         )[username]
         user = new(attrs)
         user
@@ -85,7 +85,7 @@ module Tendrl
       end
 
       def find_user_by_access_token(token)
-        username = Tendrl.etcd.cached_get("/_tendrl/access_tokens/#{token}").value
+        username = Tendrl.etcd.get("/_tendrl/access_tokens/#{token}").value
         find(username)
       rescue Etcd::KeyNotFound
         nil
@@ -93,7 +93,6 @@ module Tendrl
 
       def save(attributes)
         user_path = "/_tendrl/users/#{attributes[:username]}"
-        Tendrl.etcd.cache.delete user_path
         Tendrl.etcd.set "#{user_path}/data", value: attributes.to_json
         user = find(attributes[:username])
         post_save_hooks(user)
