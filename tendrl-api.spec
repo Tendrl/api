@@ -10,7 +10,7 @@
 
 Name: %{name}
 Version: 1.6.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -129,6 +129,9 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri May 04 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-3
+- Bugfixes for user management
+
 * Wed Apr 25 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-2
 - Bugfix for volume-bricks API
 
