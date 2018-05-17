@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe Tendrl::User do
-
-  before do
-    Tendrl.etcd = Etcd::Client.new
-  end
-  
   it 'create' do
     stub_email_notifications_index('dwarner', 'dwarner@tendrl.org')
     stub_user('dwarner')

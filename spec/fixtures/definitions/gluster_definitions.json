@@ -1,9 +1,0 @@
-{
-	"action": "get",
-	"node": {
-		"key": "/clusters/ab3b125e-4769-4071-a349-e82b380c11f4/_NS/definitions/data",
-		"value": "{{definitions}}",
-		"modifiedIndex": 169176,
-		"createdIndex": 169176
-	}
-}

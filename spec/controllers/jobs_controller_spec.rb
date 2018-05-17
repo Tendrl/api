@@ -25,7 +25,7 @@ describe JobsController do
 
     it 'details' do
       stub_job
-      get '/jobs/165bd201-2bee-44e9-a706-321290db798c', {}, http_env
+      get '/jobs/3d38fb70-6865-4d77-82e0-22509359efef', {}, http_env
       expect(last_response.status).to eq 200
     end
 

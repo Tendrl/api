@@ -8,24 +8,34 @@ end
 
 Tendrl::ETCD_CACHE = {}
 
-Tendrl.etcd = Etcd.client(etcd_config).tap do |etcd|
-  def etcd.cache
-    Tendrl::ETCD_CACHE
-  end
-
-  def etcd.cached_get(path, opts = {})
-    if cache[path].present? && cache[path]['updated'] > 5.minutes.ago
-      return cache[path]['data']
+module Tendrl
+  module EtcdCache
+    def cache
+      Tendrl::ETCD_CACHE
     end
-    cache[path] = {
-      'data' => get(path, opts),
-      'updated' => Time.now
-    }
-    cache[path]['data']
-  end
 
-  def etcd.cached_delete(path, opts = {})
-    cache.delete path
-    delete path, opts
+    def cached_get(path, opts = {})
+      if cache[path].present? && cache[path]['updated'] > 5.minutes.ago
+        return cache[path]['data']
+      end
+      cache[path] = {
+        'data' => get(path, opts),
+        'updated' => Time.now
+      }
+      cache[path]['data']
+    end
+
+    def cached_delete(path, opts = {})
+      cache.delete path
+      delete path, opts
+    end
   end
 end
+
+module Etcd
+  class Client
+    include Tendrl::EtcdCache
+  end
+end
+
+Tendrl.etcd = Etcd.client(etcd_config)

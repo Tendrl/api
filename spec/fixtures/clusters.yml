@@ -1,0 +1,1801 @@
+--- !ruby/object:Etcd::Response
+action: get
+node: !ruby/object:Etcd::Node
+  created_index: 63122
+  modified_index: 63122
+  ttl: 
+  key: /clusters
+  value: 
+  expiration: 
+  dir: true
+  children:
+  - !ruby/object:Etcd::Node
+    created_index: 63122
+    modified_index: 63122
+    ttl: 
+    key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59
+    value: 
+    expiration: 
+    dir: true
+    children:
+    - !ruby/object:Etcd::Node
+      created_index: 63122
+      modified_index: 63122
+      ttl: 
+      key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 63128
+        modified_index: 63128
+        ttl: 
+        key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60
+        value: 
+        expiration: 
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 63128
+          modified_index: 63128
+          ttl: 
+          key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 63128
+            modified_index: 63128
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/data
+            value: '{"integration_id": "84204743-0a5c-47bc-9e10-214a85395a59", "node_id":
+              "c0ef7e50-61b7-45d3-ba47-a75168e12a60", "alert_count": 1}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 63134
+            modified_index: 63134
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/hash
+            value: 3c75e61f413684cf1dd07affef0da74f
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 63130
+            modified_index: 63130
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/updated_at
+            value: '2018-04-26 05:24:59.453630+00:00'
+            expiration: 
+            dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 63122
+        modified_index: 63122
+        ttl: 
+        key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/d655b536-191f-4fef-98b2-4525919d60ed
+        value: 
+        expiration: 
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 63122
+          modified_index: 63122
+          ttl: 
+          key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 63125
+            modified_index: 63125
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/updated_at
+            value: '2018-04-26 05:24:59.333728+00:00'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 63122
+            modified_index: 63122
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/data
+            value: '{"integration_id": "84204743-0a5c-47bc-9e10-214a85395a59", "node_id":
+              "d655b536-191f-4fef-98b2-4525919d60ed", "alert_count": 1}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 63126
+            modified_index: 63126
+            ttl: 
+            key: /clusters/84204743-0a5c-47bc-9e10-214a85395a59/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/hash
+            value: 03aba1cd54e02a3fb06fad9ce7fe57ed
+            expiration: 
+            dir: 
+  - !ruby/object:Etcd::Node
+    created_index: 63370
+    modified_index: 63370
+    ttl: 
+    key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a
+    value: 
+    expiration: 
+    dir: true
+    children:
+    - !ruby/object:Etcd::Node
+      created_index: 68652
+      modified_index: 68652
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlusterBrickDir
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 714194
+        modified_index: 714194
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlusterBrickDir/data
+        value: '{"default_brick_dir": "/tendrl_gluster_bricks"}'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 714201
+        modified_index: 714201
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlusterBrickDir/hash
+        value: 05982c60f5f9bbbc5ede2a5c57a192f6
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 714195
+        modified_index: 714195
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlusterBrickDir/updated_at
+        value: '2018-05-14 07:07:24.954851+00:00'
+        expiration: 
+        dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 68757
+      modified_index: 68757
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/alert_counters
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 924261
+        modified_index: 924261
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/alert_counters/data
+        value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "alert_count":
+          0}'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924263
+        modified_index: 924263
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/alert_counters/hash
+        value: 7a9ec42ecdf69609db606d367cd2111d
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924262
+        modified_index: 924262
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/alert_counters/updated_at
+        value: '2018-05-14 15:42:38.232242+00:00'
+        expiration: 
+        dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 924488
+      modified_index: 924488
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/data
+      value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "current_job":
+        {"status": "finished", "job_id": "d6c16e51-02a8-4ff3-87b3-854f561cd1d3", "job_name":
+        "ImportCluster"}, "errors": "[\"Atom Execution failed. Error: Node doesnt
+        have network details populated\"]", "node_configuration": "", "short_name":
+        "short_name_1", "locked_by": {}, "last_sync": "2018-05-14 15:42:55.930077+00:00",
+        "status": "", "volume_profiling_state": "disabled", "public_network": "",
+        "is_managed": "yes", "node_identifier": "[]", "cluster_network": "172.28.128.0/24",
+        "volume_profiling_flag": "enable", "conf_overrides": ""}'
+      expiration: 
+      dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 66001
+      modified_index: 66001
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/messages
+      value: 
+      expiration: 
+      dir: true
+    - !ruby/object:Etcd::Node
+      created_index: 63440
+      modified_index: 63440
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 63440
+        modified_index: 63440
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60
+        value: 
+        expiration: 
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 63440
+          modified_index: 63440
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/NodeContext
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 213919
+            modified_index: 213919
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/NodeContext/data
+            value: '{"integration_id": "", "status": "UP", "tags": "[\"tendrl/node_c0ef7e50-61b7-45d3-ba47-a75168e12a60\",
+              \"tendrl/integration/84204743-0a5c-47bc-9e10-214a85395a59\", \"gluster/server\",
+              \"tendrl/integration/gluster\", \"detected_cluster/9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430\",
+              \"tendrl/integration/928ef2dd-31ab-4bcf-977b-533ddc96249a\", \"tendrl/node\"]",
+              "sync_status": "done", "fqdn": "tendrl-node-1.local", "last_sync": "2018-04-26
+              05:37:39.361098+00:00", "first_sync_done": "yes", "node_id": "c0ef7e50-61b7-45d3-ba47-a75168e12a60",
+              "ipv4_addr": "172.28.128.204", "is_managed": "yes"}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 213925
+            modified_index: 213925
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/NodeContext/hash
+            value: 904cd192cb7327f9140cce92438439e7
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 213917
+            modified_index: 213917
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/NodeContext/status
+            value: UP
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 213923
+            modified_index: 213923
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/NodeContext/updated_at
+            value: '2018-05-02 07:01:28.884600+00:00'
+            expiration: 
+            dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 63493
+          modified_index: 63493
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 63496
+            modified_index: 63496
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 715012
+              modified_index: 715012
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/data
+              value: '{"peer_uuid": "3f7532a7-cd02-4536-9371-c97a00a2fa3e", "deleted":
+                false, "hostname": "localhost", "state": "", "connected": "Connected",
+                "deleted_at": ""}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 715014
+              modified_index: 715014
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/hash
+              value: 8cab8c0dc0cb853b5159dc0ea119932e
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 715013
+              modified_index: 715013
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/updated_at
+              value: '2018-05-14 07:07:39.401451+00:00'
+              expiration: 
+              dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714245
+            modified_index: 714245
+            ttl: 148
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/2726e012-6344-4335-8754-0509326ddfb1
+            value: 
+            expiration: '2018-05-14T15:45:38.429682648Z'
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924378
+              modified_index: 924378
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/2726e012-6344-4335-8754-0509326ddfb1/data
+              value: '{"peer_uuid": "2726e012-6344-4335-8754-0509326ddfb1", "deleted":
+                false, "hostname": "tendrl-node-2", "state": "[\"Peer\", \"Cluster\",
+                \"in\"]", "connected": "Connected", "deleted_at": ""}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924379
+              modified_index: 924379
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/2726e012-6344-4335-8754-0509326ddfb1/updated_at
+              value: '2018-05-14 15:42:53.418545+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924380
+              modified_index: 924380
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/Peers/2726e012-6344-4335-8754-0509326ddfb1/hash
+              value: b31438a7f0899c2315b0b41bc84d1df1
+              expiration: 
+              dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 212360
+          modified_index: 212360
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 477629
+            modified_index: 477629
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/data
+            value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "node_id":
+              "c0ef7e50-61b7-45d3-ba47-a75168e12a60", "alert_count": 1}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 477631
+            modified_index: 477631
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/hash
+            value: 86d68943cffbdbe482db7cddf19c46d8
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 477630
+            modified_index: 477630
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/alert_counters/updated_at
+            value: '2018-05-03 08:37:30.263331+00:00'
+            expiration: 
+            dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 68666
+          modified_index: 68666
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/raw_map
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 924375
+            modified_index: 924375
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/raw_map/data
+            value: '{"data": "{\"Peers\": {\"peer1.primary_hostname\": \"tendrl-node-2\",
+              \"peer1.uuid\": \"2726e012-6344-4335-8754-0509326ddfb1\", \"peer1.othernames\":
+              \"\", \"peer1.connected\": \"Connected\", \"peer1.state\": [\"Peer\",
+              \"in\", \"Cluster\"]}, \"Global options\": {}, \"Global\": {\"myuuid\":
+              \"3f7532a7-cd02-4536-9371-c97a00a2fa3e\", \"op-version\": \"31202\"},
+              \"Misc\": {\"base port\": \"49152\", \"last allocated port\": \"49154\"},
+              \"Volumes\": {\"volume1.options.performance.client-io-threads\": \"off\",
+              \"volume1.arbiter_count\": \"0\", \"volume1.options.diagnostics.count-fop-hits\":
+              \"on\", \"volume1.subvol_count\": \"2\", \"volume1.rebalance.lookedup\":
+              \"0\", \"volume1.brick1.status\": \"Started\", \"volume1.rebalance.files\":
+              \"0\", \"volume1.id\": \"49dde9ca-0a7e-4748-8def-9ea3a0a91db2\", \"volume1.brick1.hostname\":
+              \"tendrl-node-1\", \"volume1.snapd_svc.online_status\": \"Offline\",
+              \"volume1.brick3.client_count\": \"2\", \"volume1.brick3.client2.byteswrite\":
+              \"772\", \"volume1.brick3.client2.hostname\": \"172.28.128.225:49143\",
+              \"volume1.brick1.spacetotal\": \"250871808Bytes\", \"volume1.brick3.status\":
+              \"Started\", \"volume1.brickcount\": \"4\", \"volume1.brick1.client1.hostname\":
+              \"172.28.128.204:49142\", \"volume1.brick3.spacefree\": \"237371392Bytes\",
+              \"volume1.rebalance.id\": \"00000000-0000-0000-0000-000000000000\",
+              \"volume1.gsync_count\": \"0\", \"volume1.brick3.client2.opversion\":
+              \"31202\", \"volume1.name\": \"glustervol\", \"volume1.brick4.hostname\":
+              \"tendrl-node-2\", \"volume1.time_left\": \"0\", \"volume1.redundancy_count\":
+              \"0\", \"volume1.brick1.spacefree\": \"237371392Bytes\", \"volume1.quorum_status\":
+              \"not_applicable\", \"volume1.brick1.client2.opversion\": \"31202\",
+              \"volume1.brick3.path\": \"tendrl-node-1:/gluster/brick2/brick2\", \"volume1.rebalance.failures\":
+              \"0\", \"volume1.snapd_svc.inited\": \"True\", \"volume1.transport_type\":
+              \"tcp\", \"volume1.brick1.client1.bytesread\": \"129212\", \"volume1.brick3.client1.hostname\":
+              \"172.28.128.204:49141\", \"volume1.replica_count\": \"2\", \"volume1.brick1.path\":
+              \"tendrl-node-1:/gluster/brick1/brick1\", \"volume1.brick3.port\": \"49153\",
+              \"volume1.options.nfs.disable\": \"on\", \"volume1.brick3.client1.byteswrite\":
+              \"112952\", \"volume1.brick1.client2.bytesread\": \"1336\", \"volume1.brick3.spacetotal\":
+              \"250871808Bytes\", \"volume1.rebalance.status\": \"not_started\", \"volume1.brick1.port\":
+              \"49152\", \"volume1.brick2.hostname\": \"tendrl-node-2\", \"volume1.rebalance.skipped\":
+              \"0\", \"volume1.brick3.client2.bytesread\": \"1336\", \"volume1.options.transport.address-family\":
+              \"inet\", \"volume1.brick3.hostname\": \"tendrl-node-1\", \"volume1.type\":
+              \"Distributed-Replicate\", \"volume1.brick1.client_count\": \"2\", \"volume1.brick1.client1.opversion\":
+              \"31202\", \"volume1.brick1.rdma_port\": \"0\", \"volume1.brick3.rdma_port\":
+              \"0\", \"volume1.brick4.path\": \"tendrl-node-2:/gluster/brick2/brick2\",
+              \"volume1.brick1.client1.byteswrite\": \"112952\", \"volume1.brick3.client1.bytesread\":
+              \"129212\", \"volume1.disperse_count\": \"0\", \"volume1.rebalance.data\":
+              \"0Bytes\", \"volume1.stripe_count\": \"1\", \"volume1.snap_count\":
+              \"0\", \"volume1.brick2.path\": \"tendrl-node-2:/gluster/brick1/brick1\",
+              \"volume1.options.diagnostics.latency-measurement\": \"on\", \"volume1.status\":
+              \"Started\", \"volume1.brick3.client1.opversion\": \"31202\", \"volume1.brick1.client2.byteswrite\":
+              \"772\", \"volume1.brick1.client2.hostname\": \"172.28.128.225:49150\"},
+              \"Services\": {\"svc1.name\": \"glustershd\", \"svc3.online_status\":
+              \"Offline\", \"svc4.online_status\": \"Offline\", \"svc3.name\": \"bitd\",
+              \"svc2.online_status\": \"Offline\", \"svc5.name\": \"quotad\", \"svc4.name\":
+              \"scrub\", \"svc5.online_status\": \"Offline\", \"svc1.online_status\":
+              \"Online\", \"svc2.name\": \"nfs\"}}"}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924377
+            modified_index: 924377
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/raw_map/hash
+            value: 7f9c83427304bf7593571a946d3cd144
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924376
+            modified_index: 924376
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/c0ef7e50-61b7-45d3-ba47-a75168e12a60/raw_map/updated_at
+            value: '2018-05-14 15:42:53.389750+00:00'
+            expiration: 
+            dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 64210
+        modified_index: 64210
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed
+        value: 
+        expiration: 
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 64210
+          modified_index: 64210
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/NodeContext
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 714963
+            modified_index: 714963
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/NodeContext/data
+            value: '{"integration_id": "", "status": "UP", "tags": "[\"tendrl/integration/gluster\",
+              \"tendrl/node_d655b536-191f-4fef-98b2-4525919d60ed\", \"provisioner/928ef2dd-31ab-4bcf-977b-533ddc96249a\",
+              \"provisioner/84204743-0a5c-47bc-9e10-214a85395a59\", \"tendrl/integration/84204743-0a5c-47bc-9e10-214a85395a59\",
+              \"gluster/server\", \"detected_cluster/9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430\",
+              \"tendrl/integration/928ef2dd-31ab-4bcf-977b-533ddc96249a\", \"tendrl/node\"]",
+              "sync_status": "done", "fqdn": "tendrl-node-2", "last_sync": "2018-04-26
+              05:38:39.684029+00:00", "first_sync_done": "yes", "node_id": "d655b536-191f-4fef-98b2-4525919d60ed",
+              "ipv4_addr": "172.28.128.225", "is_managed": "yes"}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714967
+            modified_index: 714967
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/NodeContext/hash
+            value: 01787f283f3d7a9dcd840cb7d4128899
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714962
+            modified_index: 714962
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/NodeContext/status
+            value: UP
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714965
+            modified_index: 714965
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/NodeContext/updated_at
+            value: '2018-05-14 07:07:39.141572+00:00'
+            expiration: 
+            dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 64243
+          modified_index: 64243
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 64243
+            modified_index: 64243
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/2726e012-6344-4335-8754-0509326ddfb1
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 714989
+              modified_index: 714989
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/2726e012-6344-4335-8754-0509326ddfb1/hash
+              value: 029237ac7d71929ecff2688072c94b87
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 714988
+              modified_index: 714988
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/2726e012-6344-4335-8754-0509326ddfb1/updated_at
+              value: '2018-05-14 07:07:39.278606+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 714987
+              modified_index: 714987
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/2726e012-6344-4335-8754-0509326ddfb1/data
+              value: '{"peer_uuid": "2726e012-6344-4335-8754-0509326ddfb1", "deleted":
+                false, "hostname": "localhost", "state": "", "connected": "Connected",
+                "deleted_at": ""}'
+              expiration: 
+              dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714240
+            modified_index: 714240
+            ttl: 128
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e
+            value: 
+            expiration: '2018-05-14T15:45:19.26210561Z'
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924188
+              modified_index: 924188
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/data
+              value: '{"peer_uuid": "3f7532a7-cd02-4536-9371-c97a00a2fa3e", "deleted":
+                false, "hostname": "tendrl-node-1", "state": "[\"Peer\", \"Cluster\",
+                \"in\"]", "connected": "Connected", "deleted_at": ""}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924189
+              modified_index: 924189
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/updated_at
+              value: '2018-05-14 15:42:34.255214+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924190
+              modified_index: 924190
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/Peers/3f7532a7-cd02-4536-9371-c97a00a2fa3e/hash
+              value: 392feae138a6198f40c80e5429ef0a1d
+              expiration: 
+              dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 212391
+          modified_index: 212391
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 212392
+            modified_index: 212392
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/updated_at
+            value: '2018-04-26 19:41:47.868433+00:00'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 212391
+            modified_index: 212391
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/data
+            value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "node_id":
+              "d655b536-191f-4fef-98b2-4525919d60ed", "alert_count": 1}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 212393
+            modified_index: 212393
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/alert_counters/hash
+            value: 40e8957aceffa5507d1d92acbe1a6b8d
+            expiration: 
+            dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 69152
+          modified_index: 69152
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/raw_map
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 924185
+            modified_index: 924185
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/raw_map/data
+            value: '{"data": "{\"Peers\": {\"peer1.primary_hostname\": \"tendrl-node-1\",
+              \"peer1.uuid\": \"3f7532a7-cd02-4536-9371-c97a00a2fa3e\", \"peer1.othernames\":
+              \"\", \"peer1.connected\": \"Connected\", \"peer1.state\": [\"Peer\",
+              \"in\", \"Cluster\"]}, \"Global options\": {}, \"Global\": {\"myuuid\":
+              \"2726e012-6344-4335-8754-0509326ddfb1\", \"op-version\": \"31202\"},
+              \"Misc\": {\"base port\": \"49152\", \"last allocated port\": \"49154\"},
+              \"Volumes\": {\"volume1.gsync_count\": \"0\", \"volume1.rebalance.skipped\":
+              \"0\", \"volume1.brick4.client2.opversion\": \"31202\", \"volume1.brick2.client1.opversion\":
+              \"31202\", \"volume1.rebalance.lookedup\": \"0\", \"volume1.brick4.hostname\":
+              \"tendrl-node-2\", \"volume1.rebalance.data\": \"0Bytes\", \"volume1.id\":
+              \"49dde9ca-0a7e-4748-8def-9ea3a0a91db2\", \"volume1.brick1.hostname\":
+              \"tendrl-node-1\", \"volume1.snapd_svc.online_status\": \"Offline\",
+              \"volume1.options.performance.client-io-threads\": \"off\", \"volume1.subvol_count\":
+              \"2\", \"volume1.brick2.client2.hostname\": \"172.28.128.225:49140\",
+              \"volume1.brick4.client_count\": \"2\", \"volume1.brick2.client1.byteswrite\":
+              \"616\", \"volume1.brick2.client1.bytesread\": \"1212\", \"volume1.brick4.client1.byteswrite\":
+              \"616\", \"volume1.brick4.client2.hostname\": \"172.28.128.225:49139\",
+              \"volume1.arbiter_count\": \"0\", \"volume1.name\": \"glustervol\",
+              \"volume1.brick2.client_count\": \"2\", \"volume1.brick2.status\": \"Started\",
+              \"volume1.brick2.spacetotal\": \"250871808Bytes\", \"volume1.time_left\":
+              \"0\", \"volume1.brick4.rdma_port\": \"0\", \"volume1.quorum_status\":
+              \"not_applicable\", \"volume1.stripe_count\": \"1\", \"volume1.brick3.path\":
+              \"tendrl-node-1:/gluster/brick2/brick2\", \"volume1.brick2.client1.hostname\":
+              \"172.28.128.204:49138\", \"volume1.brick2.spacefree\": \"237371392Bytes\",
+              \"volume1.snap_count\": \"0\", \"volume1.snapd_svc.inited\": \"True\",
+              \"volume1.transport_type\": \"tcp\", \"volume1.redundancy_count\": \"0\",
+              \"volume1.brick4.client2.bytesread\": \"126860\", \"volume1.brick4.status\":
+              \"Started\", \"volume1.replica_count\": \"2\", \"volume1.brick1.path\":
+              \"tendrl-node-1:/gluster/brick1/brick1\", \"volume1.options.nfs.disable\":
+              \"on\", \"volume1.options.transport.address-family\": \"inet\", \"volume1.brick2.client2.byteswrite\":
+              \"110868\", \"volume1.rebalance.status\": \"not_started\", \"volume1.brick2.client2.opversion\":
+              \"31202\", \"volume1.brick4.client1.opversion\": \"31202\", \"volume1.rebalance.id\":
+              \"00000000-0000-0000-0000-000000000000\", \"volume1.options.diagnostics.count-fop-hits\":
+              \"on\", \"volume1.brickcount\": \"4\", \"volume1.brick2.hostname\":
+              \"tendrl-node-2\", \"volume1.brick4.client1.hostname\": \"172.28.128.204:49137\",
+              \"volume1.brick4.spacefree\": \"237371392Bytes\", \"volume1.brick3.hostname\":
+              \"tendrl-node-1\", \"volume1.type\": \"Distributed-Replicate\", \"volume1.brick4.client2.byteswrite\":
+              \"110868\", \"volume1.brick2.client2.bytesread\": \"126860\", \"volume1.brick4.path\":
+              \"tendrl-node-2:/gluster/brick2/brick2\", \"volume1.rebalance.files\":
+              \"0\", \"volume1.brick4.spacetotal\": \"250871808Bytes\", \"volume1.rebalance.failures\":
+              \"0\", \"volume1.disperse_count\": \"0\", \"volume1.brick2.rdma_port\":
+              \"0\", \"volume1.brick4.client1.bytesread\": \"1212\", \"volume1.brick2.path\":
+              \"tendrl-node-2:/gluster/brick1/brick1\", \"volume1.options.diagnostics.latency-measurement\":
+              \"on\", \"volume1.status\": \"Started\", \"volume1.brick2.port\": \"49152\",
+              \"volume1.brick4.port\": \"49153\"}, \"Services\": {\"svc1.name\": \"glustershd\",
+              \"svc3.online_status\": \"Offline\", \"svc4.online_status\": \"Offline\",
+              \"svc3.name\": \"bitd\", \"svc2.online_status\": \"Offline\", \"svc5.name\":
+              \"quotad\", \"svc4.name\": \"scrub\", \"svc5.online_status\": \"Offline\",
+              \"svc1.online_status\": \"Online\", \"svc2.name\": \"nfs\"}}"}'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924187
+            modified_index: 924187
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/raw_map/hash
+            value: 6795142d087861dd4bb8e8a74dc2dbe3
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924186
+            modified_index: 924186
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/nodes/d655b536-191f-4fef-98b2-4525919d60ed/raw_map/updated_at
+            value: '2018-05-14 15:42:34.223853+00:00'
+            expiration: 
+            dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 68702
+      modified_index: 68702
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 68702
+        modified_index: 68702
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all
+        value: 
+        expiration: 
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 68702
+          modified_index: 68702
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 68702
+            modified_index: 68702
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924431
+              modified_index: 924431
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/data
+              value: '{"vol_name": "glustervol", "vg": "GLUSTER_vg1", "deleted_at":
+                "", "port": "49152", "size": 260046848, "stripe_size": "", "disk_type":
+                "", "pv": "[\"/dev/vdb\"]", "utilization": {"metadata_used": 3.828125000000012e-05,
+                "used_percent": 5.38140020898642, "thinpool_used_percent": 4.54, "used":
+                13500416, "free_inode": 125929, "used_inode": 23, "metadata_size":
+                0.00390625, "free": 237371392, "used_percent_inode": 0.018260924796749123,
+                "total_inode": 125952, "thinpool_used": 0.010995312499999993, "mount_point":
+                "/gluster/brick1", "metadata_used_percent": 0.98, "metadata_free":
+                0.00386796875, "total": 250871808, "thinpool_size": 0.2421875, "thinpool_free":
+                0.2311921875}, "is_arbiter": "", "client_count": "2", "hostname":
+                "tendrl-node-1", "disk_count": "", "lv": "GLUSTER_vg1-GLUSTER_lv1",
+                "brick_path": "tendrl-node-1:/gluster/brick1/brick1", "filesystem_type":
+                "", "status": "Started", "used": true, "mount_opts": "", "deleted":
+                false, "node_id": "c0ef7e50-61b7-45d3-ba47-a75168e12a60", "vol_id":
+                "49dde9ca-0a7e-4748-8def-9ea3a0a91db2", "pool": "GLUSTER_vg1-GLUSTER_pool1",
+                "partitions": "[]", "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a",
+                "name": "tendrl-node-1:_gluster_brick1_brick1", "mount_path": "/gluster/brick1",
+                "fqdn": "tendrl-node-1", "devices": "[\"/dev/vdb\"]", "brick_dir":
+                "gluster_brick1_brick1", "sequence_number": 1}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924434
+              modified_index: 924434
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/hash
+              value: bc74795bb84d77926425755b01e9b04e
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924432
+              modified_index: 924432
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/updated_at
+              value: '2018-05-14 15:42:54.692116+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924430
+              modified_index: 924436
+              ttl: 499
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/status
+              value: Started
+              expiration: '2018-05-14T15:51:29.699367945Z'
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 68712
+              modified_index: 68712
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections
+              value: 
+              expiration: 
+              dir: true
+              children:
+              - !ruby/object:Etcd::Node
+                created_index: 715075
+                modified_index: 715075
+                ttl: 499
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.204:49142
+                value: 
+                expiration: '2018-05-14T15:51:29.745030147Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924445
+                  modified_index: 924445
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.204:49142/hash
+                  value: 300e8e7e2257dd29eb8099be6d03c85f
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924440
+                  modified_index: 924440
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.204:49142/data
+                  value: '{"hostname": "172.28.128.204:49142", "fqdn": "tendrl-node-1",
+                    "byteswrite": "112952", "brick_dir": "gluster_brick1_brick1",
+                    "opversion": "31202", "bytesread": "129212", "brick_name": "tendrl-node-1:_gluster_brick1_brick1"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924443
+                  modified_index: 924443
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.204:49142/updated_at
+                  value: '2018-05-14 15:42:54.730106+00:00'
+                  expiration: 
+                  dir: 
+              - !ruby/object:Etcd::Node
+                created_index: 715079
+                modified_index: 715079
+                ttl: 499
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.225:49150
+                value: 
+                expiration: '2018-05-14T15:51:29.766387438Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924450
+                  modified_index: 924450
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.225:49150/data
+                  value: '{"hostname": "172.28.128.225:49150", "fqdn": "tendrl-node-1",
+                    "byteswrite": "772", "brick_dir": "gluster_brick1_brick1", "opversion":
+                    "31202", "bytesread": "1336", "brick_name": "tendrl-node-1:_gluster_brick1_brick1"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924452
+                  modified_index: 924452
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.225:49150/updated_at
+                  value: '2018-05-14 15:42:54.753920+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924453
+                  modified_index: 924453
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick1_brick1/ClientConnections/172.28.128.225:49150/hash
+                  value: 6757c388c18bf1e8370e060b6d5e0086
+                  expiration: 
+                  dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 68721
+            modified_index: 68721
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 68735
+              modified_index: 68735
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections
+              value: 
+              expiration: 
+              dir: true
+              children:
+              - !ruby/object:Etcd::Node
+                created_index: 715096
+                modified_index: 715096
+                ttl: 504
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.204:49141
+                value: 
+                expiration: '2018-05-14T15:51:34.371885224Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924477
+                  modified_index: 924477
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.204:49141/data
+                  value: '{"hostname": "172.28.128.204:49141", "fqdn": "tendrl-node-1",
+                    "byteswrite": "112952", "brick_dir": "gluster_brick2_brick2",
+                    "opversion": "31202", "bytesread": "129212", "brick_name": "tendrl-node-1:_gluster_brick2_brick2"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924478
+                  modified_index: 924478
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.204:49141/updated_at
+                  value: '2018-05-14 15:42:55.364229+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924479
+                  modified_index: 924479
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.204:49141/hash
+                  value: 247c3ee7caac8bb50e48ccba825b966f
+                  expiration: 
+                  dir: 
+              - !ruby/object:Etcd::Node
+                created_index: 715100
+                modified_index: 715100
+                ttl: 504
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.225:49143
+                value: 
+                expiration: '2018-05-14T15:51:34.390331814Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924481
+                  modified_index: 924481
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.225:49143/data
+                  value: '{"hostname": "172.28.128.225:49143", "fqdn": "tendrl-node-1",
+                    "byteswrite": "772", "brick_dir": "gluster_brick2_brick2", "opversion":
+                    "31202", "bytesread": "1336", "brick_name": "tendrl-node-1:_gluster_brick2_brick2"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924482
+                  modified_index: 924482
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.225:49143/updated_at
+                  value: '2018-05-14 15:42:55.383168+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924483
+                  modified_index: 924483
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/ClientConnections/172.28.128.225:49143/hash
+                  value: d8d829b03ca7401606f7de60fab0833c
+                  expiration: 
+                  dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924473
+              modified_index: 924473
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/data
+              value: '{"vol_name": "glustervol", "vg": "GLUSTER_vg2", "deleted_at":
+                "", "port": "49153", "size": 260046848, "stripe_size": "", "disk_type":
+                "", "pv": "[\"/dev/vdc\"]", "utilization": {"metadata_used": 3.828125000000012e-05,
+                "used_percent": 5.38140020898642, "thinpool_used_percent": 4.54, "used":
+                13500416, "free_inode": 125929, "used_inode": 23, "metadata_size":
+                0.00390625, "free": 237371392, "used_percent_inode": 0.018260924796749123,
+                "total_inode": 125952, "thinpool_used": 0.010995312499999993, "mount_point":
+                "/gluster/brick2", "metadata_used_percent": 0.98, "metadata_free":
+                0.00386796875, "total": 250871808, "thinpool_size": 0.2421875, "thinpool_free":
+                0.2311921875}, "is_arbiter": "", "client_count": "2", "hostname":
+                "tendrl-node-1", "disk_count": "", "lv": "GLUSTER_vg2-GLUSTER_lv2",
+                "brick_path": "tendrl-node-1:/gluster/brick2/brick2", "filesystem_type":
+                "", "status": "Started", "used": true, "mount_opts": "", "deleted":
+                false, "node_id": "c0ef7e50-61b7-45d3-ba47-a75168e12a60", "vol_id":
+                "49dde9ca-0a7e-4748-8def-9ea3a0a91db2", "pool": "GLUSTER_vg2-GLUSTER_pool2",
+                "partitions": "[]", "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a",
+                "name": "tendrl-node-1:_gluster_brick2_brick2", "mount_path": "/gluster/brick2",
+                "fqdn": "tendrl-node-1", "devices": "[\"/dev/vdc\"]", "brick_dir":
+                "gluster_brick2_brick2", "sequence_number": 3}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924475
+              modified_index: 924475
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/hash
+              value: 4334ca3c387feda7c4615160648d1c08
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924474
+              modified_index: 924474
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/updated_at
+              value: '2018-05-14 15:42:55.347769+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924472
+              modified_index: 924476
+              ttl: 504
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-1/gluster_brick2_brick2/status
+              value: Started
+              expiration: '2018-05-14T15:51:34.355429662Z'
+              dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 69208
+          modified_index: 69208
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 69208
+            modified_index: 69208
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 69218
+              modified_index: 69218
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections
+              value: 
+              expiration: 
+              dir: true
+              children:
+              - !ruby/object:Etcd::Node
+                created_index: 715177
+                modified_index: 715177
+                ttl: 480
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.204:49138
+                value: 
+                expiration: '2018-05-14T15:51:10.530830899Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924222
+                  modified_index: 924222
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.204:49138/data
+                  value: '{"hostname": "172.28.128.204:49138", "fqdn": "tendrl-node-2",
+                    "byteswrite": "616", "brick_dir": "gluster_brick1_brick1", "opversion":
+                    "31202", "bytesread": "1212", "brick_name": "tendrl-node-2:_gluster_brick1_brick1"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924223
+                  modified_index: 924223
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.204:49138/updated_at
+                  value: '2018-05-14 15:42:35.524486+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924224
+                  modified_index: 924224
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.204:49138/hash
+                  value: 01e5ef33a3257c537cc85fbf880c49da
+                  expiration: 
+                  dir: 
+              - !ruby/object:Etcd::Node
+                created_index: 715183
+                modified_index: 715183
+                ttl: 480
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.225:49140
+                value: 
+                expiration: '2018-05-14T15:51:10.546709045Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924226
+                  modified_index: 924226
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.225:49140/data
+                  value: '{"hostname": "172.28.128.225:49140", "fqdn": "tendrl-node-2",
+                    "byteswrite": "110868", "brick_dir": "gluster_brick1_brick1",
+                    "opversion": "31202", "bytesread": "126860", "brick_name": "tendrl-node-2:_gluster_brick1_brick1"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924227
+                  modified_index: 924227
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.225:49140/updated_at
+                  value: '2018-05-14 15:42:35.540292+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924228
+                  modified_index: 924228
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/ClientConnections/172.28.128.225:49140/hash
+                  value: f69ac92743012d8a84308d027860702c
+                  expiration: 
+                  dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924218
+              modified_index: 924218
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/data
+              value: '{"vol_name": "glustervol", "vg": "GLUSTER_vg1", "deleted_at":
+                "", "port": "49152", "size": 260046848, "stripe_size": "", "disk_type":
+                "", "pv": "[\"/dev/vdb\"]", "utilization": {"metadata_used": 3.828125000000012e-05,
+                "used_percent": 5.38140020898642, "thinpool_used_percent": 4.54, "used":
+                13500416, "free_inode": 125929, "used_inode": 23, "metadata_size":
+                0.00390625, "free": 237371392, "used_percent_inode": 0.018260924796749123,
+                "total_inode": 125952, "thinpool_used": 0.010995312499999993, "mount_point":
+                "/gluster/brick1", "metadata_used_percent": 0.98, "metadata_free":
+                0.00386796875, "total": 250871808, "thinpool_size": 0.2421875, "thinpool_free":
+                0.2311921875}, "is_arbiter": "", "client_count": "2", "hostname":
+                "tendrl-node-2", "disk_count": "", "lv": "GLUSTER_vg1-GLUSTER_lv1",
+                "brick_path": "tendrl-node-2:/gluster/brick1/brick1", "filesystem_type":
+                "", "status": "Started", "used": true, "mount_opts": "", "deleted":
+                false, "node_id": "d655b536-191f-4fef-98b2-4525919d60ed", "vol_id":
+                "49dde9ca-0a7e-4748-8def-9ea3a0a91db2", "pool": "GLUSTER_vg1-GLUSTER_pool1",
+                "partitions": "[]", "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a",
+                "name": "tendrl-node-2:_gluster_brick1_brick1", "mount_path": "/gluster/brick1",
+                "fqdn": "tendrl-node-2", "devices": "[\"/dev/vdb\"]", "brick_dir":
+                "gluster_brick1_brick1", "sequence_number": 2}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924220
+              modified_index: 924220
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/hash
+              value: f1fc2a9b7c25d2a22403248dedb64742
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924219
+              modified_index: 924219
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/updated_at
+              value: '2018-05-14 15:42:35.488385+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924217
+              modified_index: 924221
+              ttl: 480
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick1_brick1/status
+              value: Started
+              expiration: '2018-05-14T15:51:10.515067432Z'
+              dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 69232
+            modified_index: 69232
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 69264
+              modified_index: 69264
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections
+              value: 
+              expiration: 
+              dir: true
+              children:
+              - !ruby/object:Etcd::Node
+                created_index: 715267
+                modified_index: 715267
+                ttl: 484
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.204:49137
+                value: 
+                expiration: '2018-05-14T15:51:14.8865577Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924241
+                  modified_index: 924241
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.204:49137/data
+                  value: '{"hostname": "172.28.128.204:49137", "fqdn": "tendrl-node-2",
+                    "byteswrite": "616", "brick_dir": "gluster_brick2_brick2", "opversion":
+                    "31202", "bytesread": "1212", "brick_name": "tendrl-node-2:_gluster_brick2_brick2"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924242
+                  modified_index: 924242
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.204:49137/updated_at
+                  value: '2018-05-14 15:42:35.871863+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924243
+                  modified_index: 924243
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.204:49137/hash
+                  value: c6bd6a1ec4fabab44d6599420518c3b2
+                  expiration: 
+                  dir: 
+              - !ruby/object:Etcd::Node
+                created_index: 715275
+                modified_index: 715275
+                ttl: 484
+                key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.225:49139
+                value: 
+                expiration: '2018-05-14T15:51:14.906509577Z'
+                dir: true
+                children:
+                - !ruby/object:Etcd::Node
+                  created_index: 924245
+                  modified_index: 924245
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.225:49139/data
+                  value: '{"hostname": "172.28.128.225:49139", "fqdn": "tendrl-node-2",
+                    "byteswrite": "110868", "brick_dir": "gluster_brick2_brick2",
+                    "opversion": "31202", "bytesread": "126860", "brick_name": "tendrl-node-2:_gluster_brick2_brick2"}'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924246
+                  modified_index: 924246
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.225:49139/updated_at
+                  value: '2018-05-14 15:42:35.898411+00:00'
+                  expiration: 
+                  dir: 
+                - !ruby/object:Etcd::Node
+                  created_index: 924247
+                  modified_index: 924247
+                  ttl: 
+                  key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/ClientConnections/172.28.128.225:49139/hash
+                  value: b39b110cd21726ae2899b82ad5228614
+                  expiration: 
+                  dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924237
+              modified_index: 924237
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/data
+              value: '{"vol_name": "glustervol", "vg": "GLUSTER_vg2", "deleted_at":
+                "", "port": "49153", "size": 260046848, "stripe_size": "", "disk_type":
+                "", "pv": "[\"/dev/vdc\"]", "utilization": {"metadata_used": 3.828125000000012e-05,
+                "used_percent": 5.38140020898642, "thinpool_used_percent": 4.54, "used":
+                13500416, "free_inode": 125929, "used_inode": 23, "metadata_size":
+                0.00390625, "free": 237371392, "used_percent_inode": 0.018260924796749123,
+                "total_inode": 125952, "thinpool_used": 0.010995312499999993, "mount_point":
+                "/gluster/brick2", "metadata_used_percent": 0.98, "metadata_free":
+                0.00386796875, "total": 250871808, "thinpool_size": 0.2421875, "thinpool_free":
+                0.2311921875}, "is_arbiter": "", "client_count": "2", "hostname":
+                "tendrl-node-2", "disk_count": "", "lv": "GLUSTER_vg2-GLUSTER_lv2",
+                "brick_path": "tendrl-node-2:/gluster/brick2/brick2", "filesystem_type":
+                "", "status": "Started", "used": true, "mount_opts": "", "deleted":
+                false, "node_id": "d655b536-191f-4fef-98b2-4525919d60ed", "vol_id":
+                "49dde9ca-0a7e-4748-8def-9ea3a0a91db2", "pool": "GLUSTER_vg2-GLUSTER_pool2",
+                "partitions": "[]", "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a",
+                "name": "tendrl-node-2:_gluster_brick2_brick2", "mount_path": "/gluster/brick2",
+                "fqdn": "tendrl-node-2", "devices": "[\"/dev/vdc\"]", "brick_dir":
+                "gluster_brick2_brick2", "sequence_number": 4}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924239
+              modified_index: 924239
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/hash
+              value: 6629f67103348bd9564606b932ffc2df
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924238
+              modified_index: 924238
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/updated_at
+              value: '2018-05-14 15:42:35.856251+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924236
+              modified_index: 924240
+              ttl: 484
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Bricks/all/tendrl-node-2/gluster_brick2_brick2/status
+              value: Started
+              expiration: '2018-05-14T15:51:14.86221275Z'
+              dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 68749
+      modified_index: 68749
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlobalDetails
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 924254
+        modified_index: 924254
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlobalDetails/data
+        value: '{"status": "healthy", "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a",
+          "connection_active": 0, "vol_count": 1, "volume_up_degraded": 0, "peer_count":
+          2, "connection_count": 0}'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924253
+        modified_index: 924257
+        ttl: 482
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlobalDetails/status
+        value: healthy
+        expiration: '2018-05-14T15:51:12.649268282Z'
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924255
+        modified_index: 924255
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlobalDetails/updated_at
+        value: '2018-05-14 15:42:36.642184+00:00'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924256
+        modified_index: 924256
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/GlobalDetails/hash
+        value: b734ecf6ad28b9be286c784c53b201b2
+        expiration: 
+        dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 924489
+      modified_index: 924489
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/updated_at
+      value: '2018-05-14 15:42:55.951506+00:00'
+      expiration: 
+      dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 68689
+      modified_index: 68689
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 714345
+        modified_index: 714345
+        ttl: 479
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2
+        value: 
+        expiration: '2018-05-14T15:51:09.968079715Z'
+        dir: true
+        children:
+        - !ruby/object:Etcd::Node
+          created_index: 924486
+          modified_index: 924486
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/updated_at
+          value: '2018-05-14 15:42:55.838879+00:00'
+          expiration: 
+          dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 924487
+          modified_index: 924487
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/hash
+          value: 051f08952d469c18cbb5ddd2f06454b1
+          expiration: 
+          dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 715506
+          modified_index: 715506
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/alert_counters
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 924265
+            modified_index: 924265
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/alert_counters/updated_at
+            value: '2018-05-14 15:42:38.248398+00:00'
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924266
+            modified_index: 924266
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/alert_counters/hash
+            value: d7e09e4ccc01f8ef39882f68341c7c3f
+            expiration: 
+            dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 924264
+            modified_index: 924264
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/alert_counters/data
+            value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "alert_count":
+              0, "volume_id": "49dde9ca-0a7e-4748-8def-9ea3a0a91db2"}'
+            expiration: 
+            dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 714345
+          modified_index: 714345
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 714345
+            modified_index: 714345
+            ttl: 479
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/d655b536-191f-4fef-98b2-4525919d60ed
+            value: 
+            expiration: '2018-05-14T15:51:09.993396328Z'
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924206
+              modified_index: 924206
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/d655b536-191f-4fef-98b2-4525919d60ed/data
+              value: '{"rebal_skipped": "0", "rebal_failures": "0", "time_left": "",
+                "rebal_data": "0Bytes", "rebal_id": "00000000-0000-0000-0000-000000000000",
+                "rebal_lookedup": "0", "vol_id": "49dde9ca-0a7e-4748-8def-9ea3a0a91db2",
+                "rebal_status": "not_started", "rebal_files": "0"}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924207
+              modified_index: 924207
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/d655b536-191f-4fef-98b2-4525919d60ed/updated_at
+              value: '2018-05-14 15:42:34.986205+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924208
+              modified_index: 924208
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/d655b536-191f-4fef-98b2-4525919d60ed/hash
+              value: 7a3a41874506f86f693bdba22d08d540
+              expiration: 
+              dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 714349
+            modified_index: 714349
+            ttl: 498
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/c0ef7e50-61b7-45d3-ba47-a75168e12a60
+            value: 
+            expiration: '2018-05-14T15:51:29.016311163Z'
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924394
+              modified_index: 924394
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/c0ef7e50-61b7-45d3-ba47-a75168e12a60/data
+              value: '{"rebal_skipped": "0", "rebal_failures": "0", "time_left": "",
+                "rebal_data": "0Bytes", "rebal_id": "00000000-0000-0000-0000-000000000000",
+                "rebal_lookedup": "0", "vol_id": "49dde9ca-0a7e-4748-8def-9ea3a0a91db2",
+                "rebal_status": "not_started", "rebal_files": "0"}'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924395
+              modified_index: 924395
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/c0ef7e50-61b7-45d3-ba47-a75168e12a60/updated_at
+              value: '2018-05-14 15:42:53.978878+00:00'
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924396
+              modified_index: 924396
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/RebalanceDetails/c0ef7e50-61b7-45d3-ba47-a75168e12a60/hash
+              value: 7a3a41874506f86f693bdba22d08d540
+              expiration: 
+              dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 715062
+          modified_index: 715062
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks
+          value: 
+          expiration: 
+          dir: true
+          children:
+          - !ruby/object:Etcd::Node
+            created_index: 715062
+            modified_index: 715062
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume0
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924401
+              modified_index: 924401
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume0/tendrl-node-1:_gluster_brick1_brick1
+              value: ''
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924210
+              modified_index: 924210
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume0/tendrl-node-2:_gluster_brick1_brick1
+              value: ''
+              expiration: 
+              dir: 
+          - !ruby/object:Etcd::Node
+            created_index: 715083
+            modified_index: 715083
+            ttl: 
+            key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume1
+            value: 
+            expiration: 
+            dir: true
+            children:
+            - !ruby/object:Etcd::Node
+              created_index: 924459
+              modified_index: 924459
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume1/tendrl-node-1:_gluster_brick2_brick2
+              value: ''
+              expiration: 
+              dir: 
+            - !ruby/object:Etcd::Node
+              created_index: 924230
+              modified_index: 924230
+              ttl: 
+              key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/Bricks/subvolume1/tendrl-node-2:_gluster_brick2_brick2
+              value: ''
+              expiration: 
+              dir: 
+        - !ruby/object:Etcd::Node
+          created_index: 924485
+          modified_index: 924485
+          ttl: 
+          key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Volumes/49dde9ca-0a7e-4748-8def-9ea3a0a91db2/data
+          value: '{"redundancy_count": "0", "snapd_inited": "True", "rebal_estimated_time":
+            0, "usable_capacity": 489984, "brick_count": "4", "used_inode_capacity":
+            46, "snap_count": "0", "quorum_status": "not_applicable", "deleted_at":
+            "", "arbiter_count": "0", "stripe_count": "1", "profiling_enabled": "",
+            "status": "Started", "state": "up", "vol_type": "Distributed-Replicate",
+            "used_capacity": 26368, "current_job": {}, "deleted": "", "pcnt_inode_used":
+            "0.0182609247967", "disperse_count": "0", "subvol_count": "2", "vol_id":
+            "49dde9ca-0a7e-4748-8def-9ea3a0a91db2", "rebal_status": "not_started",
+            "integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "snapd_status":
+            "Offline", "pcnt_used": "5.38140020899", "name": "glustervol", "locked_by":
+            {}, "replica_count": "2", "transport_type": "tcp", "client_count": 8,
+            "total_inode_capacity": 251904, "options": {"debug.error-fops": "(null)",
+            "features.selinux": "on", "diagnostics.brick-log-level": "INFO", "network.tcp-window-size":
+            "(null)", "cluster.favorite-child-policy": "none", "features.alert-time":
+            "86400", "performance.strict-write-ordering": "off", "performance.least-prio-threads":
+            "1", "features.show-snapshot-directory": "off", "performance.open-behind":
+            "on", "performance.enable-least-priority": "on", "cluster.halo-max-latency":
+            "5", "performance.cache-max-file-size": "0", "server.dynamic-auth": "on",
+            "client.keepalive-count": "9", "cluster.self-heal-daemon": "on", "features.ctr-sql-db-wal-autocheckpoint":
+            "25000", "dht.force-readdirp": "on", "network.compression.min-size": "0",
+            "features.trash-dir": ".trashcan", "cluster.extra-hash-regex": "(null)",
+            "ssl.own-cert": "(null)", "cluster.self-heal-readdir-size": "1KB", "performance.nfs.strict-write-ordering":
+            "off", "cluster.tier-max-mb": "4000", "diagnostics.latency-measurement":
+            "on", "performance.normal-prio-threads": "16", "cluster.enable-shared-storage":
+            "disable", "features.ctr-sql-db-cachesize": "12500", "server.allow-insecure":
+            "(null)", "cluster.weighted-rebalance": "on", "features.record-counters":
+            "off", "features.hard-timeout": "5", "storage.owner-gid": "-1", "performance.cache-ima-xattrs":
+            "true", "cluster.tier-cold-compact-frequency": "604800", "geo-replication.ignore-pid-check":
+            "off", "features.quota": "off", "cluster.shd-wait-qlength": "1024", "debug.log-file":
+            "no", "features.trash-max-filesize": "5MB", "diagnostics.count-fop-hits":
+            "on", "performance.nfs.read-ahead": "off", "features.soft-timeout": "60",
+            "performance.read-ahead-page-count": "4", "network.frame-timeout": "1800",
+            "server.statedump-path": "/var/run/gluster", "diagnostics.client-log-flush-timeout":
+            "120", "cluster.data-self-heal-algorithm": "(null)", "features.worm":
+            "off", "features.lock-heal": "off", "cluster.halo-max-replicas": "99999",
+            "cluster.use-compound-fops": "off", "debug.trace": "off", "cluster.read-subvolume":
+            "(null)", "diagnostics.client-log-buf-size": "5", "cluster.rebalance-stats":
+            "off", "disperse.background-heals": "8", "features.ctr_lookupheal_inode_timeout":
+            "300", "performance.nl-cache-timeout": "60", "cluster.lock-migration":
+            "off", "server.outstanding-rpc-limit": "64", "server.anongid": "65534",
+            "performance.cache-samba-metadata": "false", "debug.include-ops": "(null)",
+            "changelog.fsync-interval": "5", "server.manage-gids": "off", "features.barrier":
+            "disable", "cluster.brick-multiplex": "off", "features.bitrot": "disable",
+            "network.compression.mem-level": "8", "disperse.eager-lock": "on", "performance.write-behind-window-size":
+            "1MB", "disperse.self-heal-window-size": "1", "performance.client-io-threads":
+            "off", "client.keepalive-interval": "2", "cluster.tier-query-limit": "100",
+            "cluster.heal-wait-queue-length": "128", "network.ping-timeout": "42",
+            "client.tcp-user-timeout": "0", "changelog.rollover-time": "15", "features.ctr_link_consistency":
+            "off", "diagnostics.brick-logger": "(null)", "network.compression.window-size":
+            "-15", "locks.trace": "off", "features.grace-timeout": "10", "cluster.watermark-hi":
+            "90", "debug.error-gen": "off", "ssl.ec-curve": "(null)", "debug.error-number":
+            "(null)", "features.shard-block-size": "64MB", "server.anonuid": "65534",
+            "network.compression": "off", "disperse.cpu-extensions": "auto", "performance.read-after-open":
+            "no", "cluster.halo-enabled": "False", "features.locks-monkey-unlocking":
+            "false", "transport.listen-backlog": "10", "features.shard": "off", "cluster.watermark-low":
+            "75", "cluster.quorum-type": "none", "cluster.lookup-unhashed": "on",
+            "features.quota-deem-statfs": "off", "diagnostics.stats-dnscache-ttl-sec":
+            "86400", "performance.cache-min-file-size": "0", "cluster.consistent-metadata":
+            "no", "cluster.read-subvolume-index": "-1", "cluster.choose-local": "true",
+            "locks.mandatory-locking": "off", "cluster.min-free-inodes": "5%", "ssl.crl-path":
+            "(null)", "storage.health-check-interval": "30", "diagnostics.fop-sample-interval":
+            "0", "performance.write-behind": "on", "cluster.ensure-durability": "on",
+            "performance.io-thread-count": "16", "nfs.disable": "on", "server.keepalive-time":
+            "20", "cluster.read-hash-mode": "1", "cluster.background-self-heal-count":
+            "8", "server.gid-timeout": "300", "cluster.rsync-hash-regex": "(null)",
+            "server.own-thread": "(null)", "cluster.read-freq-threshold": "0", "diagnostics.brick-log-flush-timeout":
+            "120", "cluster.tier-mode": "cache", "diagnostics.client-sys-log-level":
+            "CRITICAL", "diagnostics.fop-sample-buf-size": "65535", "diagnostics.brick-sys-log-level":
+            "CRITICAL", "debug.random-failure": "off", "performance.read-ahead": "on",
+            "features.scrub": "false", "cluster.tier-max-promote-file-size": "0",
+            "cluster.tier-compact": "on", "cluster.self-heal-window-size": "1", "ssl.ca-list":
+            "(null)", "changelog.changelog-dir": "(null)", "features.locks-revocation-clear-all":
+            "false", "cluster.quorum-reads": "no", "performance.rda-cache-limit":
+            "10MB", "cluster.dht-xattr-name": "trusted.glusterfs.dht", "performance.quick-read":
+            "on", "features.limit-usage": "(null)", "performance.high-prio-threads":
+            "16", "performance.force-readdirp": "true", "ssl.certificate-depth": "(null)",
+            "features.leases": "off", "features.uss": "off", "storage.build-pgfid":
+            "off", "changelog.changelog": "off", "client.send-gids": "on", "features.ctr_lookupheal_link_timeout":
+            "300", "features.inode-quota": "off", "diagnostics.client-log-format":
+            "(null)", "changelog.changelog-barrier-timeout": "120", "client.event-threads":
+            "2", "storage.gfid2path": "on", "server.event-threads": "1", "diagnostics.brick-log-format":
+            "(null)", "features.retention-mode": "relax", "auth.reject": "(null)",
+            "cluster.data-change-log": "on", "cluster.local-volume-name": "(null)",
+            "encryption.master-key": "(null)", "cluster.tier-max-files": "10000",
+            "features.encryption": "off", "performance.nl-cache-limit": "10MB", "storage.bd-aio":
+            "off", "transport.address-family": "inet", "features.locks-revocation-max-blocked":
+            "0", "performance.cache-capability-xattrs": "true", "diagnostics.stats-dump-interval":
+            "0", "cluster.locking-scheme": "full", "performance.low-prio-threads":
+            "16", "server.keepalive-count": "9", "features.trash-internal-op": "off",
+            "cluster.quorum-count": "(null)", "storage.batch-fsync-delay-usec": "0",
+            "performance.nl-cache": "off", "performance.nfs.flush-behind": "on", "performance.lazy-open":
+            "yes", "performance.stat-prefetch": "on", "disperse.optimistic-change-log":
+            "on", "features.default-soft-limit": "80%", "diagnostics.client-log-level":
+            "INFO", "server.tcp-user-timeout": "0", "server.keepalive-interval": "2",
+            "changelog.encoding": "ascii", "server.root-squash": "off", "cluster.stripe-coalesce":
+            "true", "cluster.write-freq-threshold": "0", "disperse.shd-wait-qlength":
+            "1024", "cluster.min-free-disk": "10%", "debug.error-failure": "(null)",
+            "disperse.read-policy": "gfid-hash", "encryption.data-key-size": "256",
+            "client.keepalive-time": "20", "cluster.server-quorum-type": "off", "features.snapshot-directory":
+            ".snaps", "cluster.granular-entry-heal": "no", "cluster.shd-max-threads":
+            "1", "auth.allow": "*", "performance.cache-refresh-timeout": "1", "cluster.lookup-optimize":
+            "off", "network.compression.compression-level": "-1", "features.trash-eliminate-path":
+            "(null)", "diagnostics.brick-log-buf-size": "5", "network.compression.debug":
+            "false", "storage.gfid2path-separator": ":", "features.ctr-record-metadata-heat":
+            "off", "performance.nfs.strict-o-direct": "off", "cluster.heal-timeout":
+            "600", "features.cache-invalidation-timeout": "60", "server.ssl": "(null)",
+            "performance.resync-failed-syncs-after-fsync": "off", "performance.cache-swift-metadata":
+            "true", "performance.md-cache-timeout": "1", "features.auto-commit-period":
+            "180", "performance.nfs.write-behind": "on", "cluster.randomize-hash-range-by-gfid":
+            "off", "storage.node-uuid-pathinfo": "off", "geo-replication.indexing":
+            "off", "features.default-retention-period": "120", "storage.linux-aio":
+            "off", "cluster.halo-shd-max-latency": "99999", "performance.nfs.quick-read":
+            "off", "cluster.tier-promote-frequency": "120", "diagnostics.client-logger":
+            "(null)", "performance.nfs.io-cache": "off", "features.locks-revocation-secs":
+            "0", "features.trash": "off", "ssl.dh-param": "(null)", "changelog.capture-del-path":
+            "off", "disperse.shd-max-threads": "1", "storage.batch-fsync-mode": "reverse-fsync",
+            "performance.strict-o-direct": "off", "features.cache-invalidation": "off",
+            "features.read-only": "off", "ssl.private-key": "(null)", "features.expiry-time":
+            "120", "features.ctr-enabled": "off", "client.bind-insecure": "(null)",
+            "performance.nfs.io-threads": "off", "disperse.heal-wait-qlength": "128",
+            "performance.nfs.write-behind-window-size": "1MB", "cluster.rebal-throttle":
+            "normal", "transport.keepalive": "1", "cluster.post-op-delay-secs": "1",
+            "cluster.stripe-block-size": "128KB", "debug.log-history": "no", "ssl.cipher-list":
+            "(null)", "features.worm-file-level": "off", "cluster.switch-pattern":
+            "(null)", "diagnostics.dump-fd-stats": "off", "features.lease-lock-recall-timeout":
+            "60", "network.inode-lru-limit": "16384", "performance.cache-priority":
+            "", "cluster.halo-nfsd-max-latency": "5", "cluster.data-self-heal": "on",
+            "performance.nfs.stat-prefetch": "off", "cluster.subvols-per-directory":
+            "(null)", "performance.cache-size": "128MB", "cluster.metadata-self-heal":
+            "on", "performance.readdir-ahead": "on", "cluster.eager-lock": "on", "features.scrub-throttle":
+            "lazy", "performance.io-cache": "on", "cluster.metadata-change-log": "on",
+            "performance.rda-request-size": "131072", "storage.owner-uid": "-1", "cluster.tier-hot-compact-frequency":
+            "604800", "cluster.disperse-self-heal-daemon": "enable", "cluster.readdir-optimize":
+            "off", "performance.rda-low-wmark": "4096", "performance.nl-cache-positive-entry":
+            "false", "cluster.tier-demote-frequency": "3600", "cluster.entry-change-log":
+            "on", "debug.exclude-ops": "(null)", "cluster.max-bricks-per-process":
+            "0", "cluster.tier-pause": "off", "network.remote-dio": "disable", "cluster.server-quorum-ratio":
+            "0", "cluster.entry-self-heal": "on", "features.barrier-timeout": "120",
+            "performance.parallel-readdir": "off", "features.scrub-freq": "biweekly",
+            "performance.cache-invalidation": "false", "encryption.block-size": "4096",
+            "diagnostics.stats-dump-format": "json", "auth.ssl-allow": "*", "performance.rda-high-wmark":
+            "128KB", "performance.flush-behind": "on"}}'
+          expiration: 
+          dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 924490
+      modified_index: 924490
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/hash
+      value: 28b7835457a36f2b2f949ba243089e28
+      expiration: 
+      dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 63483
+      modified_index: 63483
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/TendrlContext
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 924516
+        modified_index: 924516
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/TendrlContext/data
+        value: '{"integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a", "cluster_name":
+          "gluster-9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430",
+          "sds_version": "3.12.9-1", "cluster_id": "9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430",
+          "sds_name": "gluster"}'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924518
+        modified_index: 924518
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/TendrlContext/hash
+        value: 5ea5f2f79a7a721b85367eb711384af0
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924517
+        modified_index: 924517
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/TendrlContext/updated_at
+        value: '2018-05-14 15:43:07.030144+00:00'
+        expiration: 
+        dir: 
+    - !ruby/object:Etcd::Node
+      created_index: 68777
+      modified_index: 68777
+      ttl: 
+      key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Utilization
+      value: 
+      expiration: 
+      dir: true
+      children:
+      - !ruby/object:Etcd::Node
+        created_index: 924258
+        modified_index: 924258
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Utilization/data
+        value: '{"usable_capacity": 489984, "raw_capacity": "", "pcnt_used": "5.38140020899",
+          "used_capacity": 26368}'
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924260
+        modified_index: 924260
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Utilization/hash
+        value: fcfa4fb5b356afeda539004f4117ea68
+        expiration: 
+        dir: 
+      - !ruby/object:Etcd::Node
+        created_index: 924259
+        modified_index: 924259
+        ttl: 
+        key: /clusters/928ef2dd-31ab-4bcf-977b-533ddc96249a/Utilization/updated_at
+        value: '2018-05-14 15:42:38.083687+00:00'
+        expiration: 
+        dir: 
+etcd_index: 924521
+raft_index: 3537259
+raft_term: 9
