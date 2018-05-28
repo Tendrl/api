@@ -1,0 +1,58 @@
+--- !ruby/object:Etcd::Response
+action: get
+node: !ruby/object:Etcd::Node
+  created_index: 946508
+  modified_index: 946508
+  ttl: 101105
+  key: /queue/3d38fb70-6865-4d77-82e0-22509359efef
+  value: 
+  expiration: '2018-05-18T10:03:11.522478003Z'
+  dir: true
+  children:
+  - !ruby/object:Etcd::Node
+    created_index: 947059
+    modified_index: 947059
+    ttl: 
+    key: /queue/3d38fb70-6865-4d77-82e0-22509359efef/updated_at
+    value: '2018-05-16 10:03:16.926304+00:00'
+    expiration: 
+    dir: 
+  - !ruby/object:Etcd::Node
+    created_index: 947063
+    modified_index: 947063
+    ttl: 
+    key: /queue/3d38fb70-6865-4d77-82e0-22509359efef/hash
+    value: f2f150505415236da5b64c8185d6ad58
+    expiration: 
+    dir: 
+  - !ruby/object:Etcd::Node
+    created_index: 947054
+    modified_index: 947054
+    ttl: 
+    key: /queue/3d38fb70-6865-4d77-82e0-22509359efef/locked_by
+    value: '{"node_id": "c0ef7e50-61b7-45d3-ba47-a75168e12a60", "type": "node", "fqdn":
+      "tendrl-node-1", "tags": ["detected_cluster/9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430",
+      "gluster/server", "provisioner/928ef2dd-31ab-4bcf-977b-533ddc96249a", "tendrl/integration/84204743-0a5c-47bc-9e10-214a85395a59",
+      "tendrl/integration/928ef2dd-31ab-4bcf-977b-533ddc96249a", "tendrl/integration/gluster",
+      "tendrl/node", "tendrl/node_c0ef7e50-61b7-45d3-ba47-a75168e12a60"]}'
+    expiration: 
+    dir: 
+  - !ruby/object:Etcd::Node
+    created_index: 947057
+    modified_index: 947057
+    ttl: 
+    key: /queue/3d38fb70-6865-4d77-82e0-22509359efef/data
+    value: '{"status": "finished", "valid_until": "", "errors": "", "job_id": "3d38fb70-6865-4d77-82e0-22509359efef",
+      "locked_by": "{\"node_id\": \"c0ef7e50-61b7-45d3-ba47-a75168e12a60\", \"type\":
+      \"node\", \"fqdn\": \"tendrl-node-1\", \"tags\": [\"detected_cluster/9152e40ea91afacbdd65f8008ee4f85ccceed0cc57ebb01074b776493a599430\",
+      \"gluster/server\", \"provisioner/928ef2dd-31ab-4bcf-977b-533ddc96249a\", \"tendrl/integration/84204743-0a5c-47bc-9e10-214a85395a59\",
+      \"tendrl/integration/928ef2dd-31ab-4bcf-977b-533ddc96249a\", \"tendrl/integration/gluster\",
+      \"tendrl/node\", \"tendrl/node_c0ef7e50-61b7-45d3-ba47-a75168e12a60\"]}", "children":
+      "[]", "timeout": "yes", "output": {}, "payload": {"status": "new", "run": "tendrl.flows.ConfigureMonitoring",
+      "type": "node", "parameters": {"TendrlContext.integration_id": "928ef2dd-31ab-4bcf-977b-533ddc96249a"},
+      "tags": ["tendrl/node_c0ef7e50-61b7-45d3-ba47-a75168e12a60"]}}'
+    expiration: 
+    dir: 
+etcd_index: 1039888
+raft_index: 4009591
+raft_term: 10

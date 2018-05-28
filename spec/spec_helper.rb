@@ -20,36 +20,25 @@ RSpec.configure do |config|
   def app
     described_class
   end
+
+  config.before(:each) do
+    $etcd_client = $etcd_client.dup
+    allow(Tendrl.etcd).to receive(:get).and_call_original
+  end
 end
 
 def stub_definitions
   defs = YAML.load_file 'spec/fixtures/definitions/tendrl_definitions_node_agent.yaml'
-  defs = defs.to_yaml.gsub(/"/, '\"').gsub(/\n/, '\n')
-  stub_request(
-    :get,
-    "http://127.0.0.1:4001/v2/keys/_NS/node_agent/compiled_definitions/data"
-  ).
-  to_return(
-    status: 200,
-    body: File.read(
-      'spec/fixtures/definitions/tendrl_definitions_node_agent.json'
-    ).gsub('{{definitions}}', defs)
-  )
+  allow(Tendrl).to receive(:load_node_definitions).and_return(defs)
+  allow(Tendrl).to receive(:node_definitions).and_return(defs)
+  allow(Tendrl).to receive(:current_definitions).and_return(defs)
 end
 
 def stub_cluster_definitions(type='gluster')
   defs = YAML.load_file "spec/fixtures/definitions/#{type}.yaml"
-  defs = defs.to_yaml.gsub(/"/, '\"').gsub(/\n/, '\n')
-  stub_request(
-    :get,
-    "http://127.0.0.1:4001/v2/keys/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/_NS/definitions/data"
-  ).
-  to_return(
-    status: 200,
-    body: File.read(
-      "spec/fixtures/definitions/#{type}_definitions.json"
-    ).gsub('{{definitions}}', defs)
-  )
+  allow(Tendrl).to receive(:load_definitions).and_return(defs)
+  allow(Tendrl).to receive(:cluster_definitions).with('6b4b84e0-17b3-4543-af9f-e42000c52bfc').and_return(defs)
+  allow(Tendrl).to receive(:current_definitions).and_return(defs)
 end
 
 def stub_nodes
@@ -66,15 +55,8 @@ def stub_nodes
 end
 
 def stub_clusters(recursive=true)
-  stub_request(
-    :get,
-    "http://127.0.0.1:4001/v2/keys/clusters?recursive=#{recursive}"
-  ).
-  to_return(
-    :status => 200,
-    :body => File.read(
-      'spec/fixtures/clusters.json'
-    )
+  allow(Tendrl.etcd).to receive(:get).with('/clusters', recursive: true).and_return(
+    YAML.load_file('spec/fixtures/clusters.yml')
   )
 end
 
@@ -180,16 +162,7 @@ def stub_jobs
 end
 
 def stub_job
-  stub_request(
-    :get,
-    /http:\/\/127.0.0.1:4001\/v2\/keys\/queue\/.*/
-  ).
-  to_return(
-    :status => 200,
-    :body => File.read(
-      'spec/fixtures/job.json'
-    )
-  )
+  allow(Tendrl.etcd).to receive(:get).with('/queue/3d38fb70-6865-4d77-82e0-22509359efef', recursive: true).and_return(YAML.load_file('spec/fixtures/job.yml'))
 end
 
 def stub_unknown_cluster
@@ -239,19 +212,17 @@ end
 
 def stub_create_user_attributes(attributes)
   attributes.merge!(
-    password_hash: '$2a$10$d1L8axCcsr5XRMtzbNNuaOM5I6D9dKu0VJqifND/eHCnj8M1QkP1W', 
+    password_hash: '$2a$10$d1L8axCcsr5XRMtzbNNuaOM5I6D9dKu0VJqifND/eHCnj8M1QkP1W',
     password_salt: '$2a$10$d1L8axCcsr5XRMtzbNNuaO'
   )
-  attributes.each do |key, value|
-    stub_request(
-      :put,
-      "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{attributes[:username]}/#{key}"
-    ).
-    to_return(
-      :status => 200,
-      :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{attributes[:username]}/#{key}\",\"value\":\"#{CGI.unescape(value.to_s)}\",\"modifiedIndex\":184,\"createdIndex\":184}}"
-    )
-  end
+  stub_request(
+    :put,
+    "http://127.0.0.1:4001/v2/keys/_tendrl/users/#{attributes[:username]}/data"
+  ).
+  to_return(
+    :status => 200,
+    :body => "{\"action\":\"set\",\"node\":{\"key\":\"/_tendrl/users/#{attributes[:username]}/data\",\"value\":#{CGI.unescape(attributes.to_json.to_json)},\"modifiedIndex\":184,\"createdIndex\":184}}"
+  )
 end
 
 def stub_update_user_attributes(username, attributes)
@@ -268,14 +239,7 @@ def stub_update_user_attributes(username, attributes)
 end
 
 def stub_users
-  stub_request(
-    :get,
-    "http://127.0.0.1:4001/v2/keys/_tendrl/users?recursive=true"
-  ).
-  to_return(
-    :status => 200,
-    :body => File.read('spec/fixtures/users.json')
-  )
+  allow(Tendrl.etcd).to receive(:get).with('/_tendrl/users', recursive: true).and_return(YAML.load_file('spec/fixtures/users.yml'))
 end
 
 def stub_user(username)
