@@ -82,10 +82,11 @@ class ClustersController < AuthenticatedUsersController
   post '/clusters/:cluster_id/unmanage' do
     Tendrl.load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'UnmanageCluster')
+    body = JSON.parse(request.body.read.present? ? request.body.read : '{}')
     job = Tendrl::Job.new(
       current_user,
       flow,
-      integration_id: params[:cluster_id]).create({})
+      integration_id: params[:cluster_id]).create(body)
     status 202
     { job_id: job.job_id }.to_json
   end
