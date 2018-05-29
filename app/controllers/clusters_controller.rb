@@ -82,12 +82,7 @@ class ClustersController < AuthenticatedUsersController
   post '/clusters/:cluster_id/unmanage' do
     Tendrl.load_node_definitions
     flow = Tendrl::Flow.new('namespace.tendrl', 'UnmanageCluster')
-    body = JSON.parse(request.body.read)
-    body['Cluster.delete_telemetry_data'] = if ['yes', 'no'].include?(body['Cluster.delete_telemetry_data'])
-                                              body['Cluster.delete_telemetry_data']
-                                            else
-                                              'yes'
-                                            end
+    body = JSON.parse(request.body.read.present? ? request.body.read : '{}')
     job = Tendrl::Job.new(
       current_user,
       flow,
