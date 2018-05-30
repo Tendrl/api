@@ -5,7 +5,6 @@ RSpec.describe Tendrl::UserForm do
   UserForm = Tendrl::UserForm
 
   before do
-    Tendrl.etcd = Etcd::Client.new
     stub_users
   end
 
