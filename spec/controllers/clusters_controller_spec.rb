@@ -89,6 +89,10 @@ describe ClustersController do
 
     it 'managed' do
       post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/unmanage',
+      '{}', http_env
+      expect(last_response.status).to eq 202
+
+      post '/clusters/6b4b84e0-17b3-4543-af9f-e42000c52bfc/unmanage',
       nil, http_env
       expect(last_response.status).to eq 202
     end
