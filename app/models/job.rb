@@ -29,6 +29,7 @@ module Tendrl
       @payload[:node_ids] = routing[:node_ids] if routing[:node_ids].present?
       @payload[:tags] = @flow.tags(parameters)
       data = {
+        job_id: @job_id,
         status: 'new',
         payload: @payload
       }
