@@ -1,7 +1,7 @@
 class NodesController < AuthenticatedUsersController
 
   before do
-    Tendrl.load_node_definitions
+    #Tendrl.load_node_definitions
   end
 
   get '/nodes' do
@@ -296,19 +296,6 @@ class NodesController < AuthenticatedUsersController
       status 202
       { job_id: job.job_id }.to_json
     end
-
-    post '/:flow' do
-      flow = Tendrl::Flow.find_by_external_name_and_type(
-        params[:flow], 'node_agent'
-      )
-      halt 404 if flow.nil?
-      body = JSON.parse(request.body.read)
-      job = Tendrl::Job.new(current_user, flow).create(body)
-
-      status 202
-      { job_id: job.job_id }.to_json
-    end
-
 
     private
 

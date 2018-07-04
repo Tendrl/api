@@ -9,6 +9,8 @@ gem 'activemodel', '4.2.6', require: 'active_model'
 gem 'rake', '0.9.6'
 gem 'puma', '3.6.0'
 gem 'bcrypt', '3.1.11'
+gem 'httparty', '0.15.6'
+gem 'jwt', '1.5.6'
 
 group :development do
   gem 'rubocop', require: false

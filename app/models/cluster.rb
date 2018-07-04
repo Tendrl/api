@@ -1,10 +1,19 @@
 module Tendrl
   class Cluster
+    attr_accessor :uuid
 
-    attr_accessor :attributes
+    def initialize(cluster_id)
+      @uuid = cluster_id
+    end
 
-    def initialize(attributes={})
-      @attributes = attributes
+    def endpoints
+      Tendrl.etcd.get(
+        "/clusters/#{@uuid}/endpoints", recursive: true
+      ).children.map(&:value).sort.uniq.map { |e| JSON.parse e }
+    end
+
+    def gd2
+      @gd2 ||= Gd2Client.from_endpoint endpoints.sample
     end
 
     class << self

@@ -24,3 +24,8 @@ map('/1.0') {
   use AuthenticatedUsersController
   run ApplicationController
 }
+
+#map('/2.0') do
+  #use ObjectsController
+  #run ApplicationController
+#end

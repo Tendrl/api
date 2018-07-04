@@ -67,6 +67,14 @@ module Tendrl
           }
         }
       },
+      'gd2_api_error' => {
+        status: 503,
+        body: {
+          errors: {
+            message: 'GD2 API Error at: %s'
+          }
+        }
+      },
       'uncaught_exception' => {
         status: 500,
         body: {

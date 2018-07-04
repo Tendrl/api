@@ -142,6 +142,7 @@ require './lib/tendrl/object'
 require './lib/tendrl/atom'
 require './lib/tendrl/attribute'
 require './lib/tendrl/http_response_error_handler'
+require './lib/gd2_client'
 
 # Models
 require './app/models/user'
@@ -152,6 +153,7 @@ require './app/models/notification'
 require './app/models/job'
 require './app/models/volume'
 require './app/models/brick'
+require './app/models/peer'
 
 # Forms
 require './app/forms/user_form'
