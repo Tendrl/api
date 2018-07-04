@@ -10,7 +10,7 @@
 
 Name: %{name}
 Version: 1.6.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -129,6 +129,9 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Wed Jul 04 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-5
+- Add job ID to job data for node-agent
+
 * Tue May 29 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-4
 - Allow passing job flags to unmanage API
 
