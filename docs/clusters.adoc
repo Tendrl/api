@@ -114,7 +114,6 @@ Status: 202 Accepted
 The `job_id` can be used to poll the status of the job.
 The import cluster action queued a job in etcd which will be picked up by the
 node agent and processed.
-----------
 
 == Expand Cluster
 
@@ -140,8 +139,6 @@ The `job_id` can be used to poll the status of the job.
 The expand cluster action queues a job in etcd which will be picked up by the
 node agent and processed.
 
-----------
-
 == Unmanage Cluster
 
 Unmanage an already managed Gluster cluster.
@@ -165,8 +162,6 @@ Status: 202 Accepted
 The `job_id` can be used to poll the status of the job.
 The unmanage cluster action queued a job in etcd which will be picked up by the
 node agent and processed.
-
-----------
 
 == List Clusters
 
