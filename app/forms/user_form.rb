@@ -5,7 +5,7 @@ module Tendrl
     attr_accessor :name, :username, :email, :password,
       :role, :email_notifications
 
-    validates :name, :username, presence: true, length: { minimum: 4, maximum: 100 }
+    validates :name, :username, presence: true, length: { minimum: 4, maximum: 20 }
 
     validates :password, length: { minimum: 8 }, if: :password_required?
 
