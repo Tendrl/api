@@ -123,8 +123,10 @@ module Tendrl
     end
 
     def unmarshall!(attrs)
-      serialized_data = attrs.delete 'data'
-      attrs.merge! JSON.parse(serialized_data) if serialized_data
+      # data can be our serialized data, or a 'data' attribute which is not json
+      data_value = attrs.delete 'data'
+      data = JSON.parse(data_value) rescue { 'data' => data_value }
+      attrs.merge! data if data_value
       attrs
     end
   end
