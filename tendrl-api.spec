@@ -10,7 +10,7 @@
 
 Name: %{name}
 Version: 1.6.3
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Collection of tendrl api extensions
 Group: Development/Languages
 License: LGPLv2+
@@ -129,6 +129,9 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Jul 27 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-7
+- Bugfix for recursion when non-json 'data' attr is present
+
 * Wed Jul 04 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-6
 - Restrict username length to 20 chars
 
