@@ -2,6 +2,7 @@ module Tendrl
   class UserForm
     include ActiveModel::Validations
 
+    attr_reader :user
     attr_accessor :name, :username, :email, :password,
       :role, :email_notifications
 
@@ -18,6 +19,13 @@ module Tendrl
     validates :role, inclusion: { in: Tendrl::User::ROLES }
 
     validate :uniqueness
+
+    validates_each :username, :role do |record, attr, value|
+      existing_value = record.user.public_send(attr)
+      if existing_value.present? && value != existing_value
+        record.errors.add(attr, 'cannot be changed')
+      end
+    end
 
     def initialize(user, params)
       @user = user
@@ -82,7 +90,5 @@ module Tendrl
         end
       end
     end
-
   end
 end
-
