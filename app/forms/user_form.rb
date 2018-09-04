@@ -7,7 +7,7 @@ module Tendrl
 
     validates :name, :username, presence: true, length: { minimum: 4, maximum: 20 }
 
-    validates :password, length: { minimum: 8 }, if: :password_required?
+    validates :password, length: { minimum: 9, maximum: 128 }, if: :password_required?
 
     validates :email, format: {
       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i

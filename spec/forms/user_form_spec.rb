@@ -28,7 +28,7 @@ RSpec.describe Tendrl::UserForm do
         name: 'Tom Hardy',
         email: 'tom@tendrl.org',
         username: 'thardy',
-        password: 'temp1234',
+        password: 'temp12345',
         role: Tendrl::User::ADMIN,
         email_notifications: true
       })
@@ -40,7 +40,7 @@ RSpec.describe Tendrl::UserForm do
         name: 'David Warner',
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
-        password: 'temp1234',
+        password: 'temp12345',
         email_notifications: true,
         role: Tendrl::User::ADMIN
       })
@@ -79,7 +79,7 @@ RSpec.describe Tendrl::UserForm do
         name: 'Tom Hardy',
         email: 'tom@tendrl.org',
         username: 'thardy',
-        password: 'temp1234',
+        password: 'temp12345',
         role: Tendrl::User::NORMAL
       })
       expect(validator.valid?).to eq(true)
@@ -90,7 +90,7 @@ RSpec.describe Tendrl::UserForm do
         name: 'David Warner',
         email: 'dwarner@tendrl.org',
         username: 'dwarner',
-        password: 'temp1234',
+        password: 'temp12345',
         role: Tendrl::User::LIMITED
       })
       expect(validator.valid?).to eq(true)
