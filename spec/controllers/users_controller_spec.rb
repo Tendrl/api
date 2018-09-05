@@ -25,7 +25,7 @@ RSpec.describe UsersController do
           email: 'thardy@tendrl.org',
           username: 'thardy',
           name: 'Tom Hardy',
-          password: 'temp1234',
+          password: 'temp12345',
           role: 'admin',
           email_notifications: true
         }
