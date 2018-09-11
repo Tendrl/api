@@ -23,7 +23,7 @@ node: !ruby/object:Etcd::Node
       modified_index: 65748
       ttl: 
       key: /_tendrl/users/dwarner/data
-      value: '{"name":"David Warner","username":"dwarner","password_salt":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e","password_hash":"$2a$10$ACiOy8CCN57RjCP5qyd4Oe3Jokl6Jaj25vrb617NZ6xU5CUSsJTOW","email":"dwarner@tendrl.org","role":"dwarner","email_notifications":false}'
+      value: '{"name":"David Warner","username":"dwarner","password_salt":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e","password_hash":"$2a$10$ACiOy8CCN57RjCP5qyd4Oe3Jokl6Jaj25vrb617NZ6xU5CUSsJTOW","email":"dwarner@example.org","role":"dwarner","email_notifications":false}'
       expiration: 
       dir: 
   - !ruby/object:Etcd::Node
@@ -40,7 +40,7 @@ node: !ruby/object:Etcd::Node
       modified_index: 531720
       ttl: 
       key: /_tendrl/users/quentin/data
-      value: '{"name":"Quentin","username":"quentin","password_salt":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e","password_hash":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e7g5GzGzic7X4Xu1n.Cf2WCiiOuh3o.u","email":"quentin@email.com","role":"normal","email_notifications":false}'
+      value: '{"name":"Quentin","username":"quentin","password_salt":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e","password_hash":"$2a$10$2TEvrFp5cKo9dFvJSRyp6e7g5GzGzic7X4Xu1n.Cf2WCiiOuh3o.u","email":"quentin@example.com","role":"normal","email_notifications":false}'
       expiration: 
       dir: 
 etcd_index: 1039888

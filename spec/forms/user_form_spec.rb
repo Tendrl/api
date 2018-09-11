@@ -26,7 +26,7 @@ RSpec.describe Tendrl::UserForm do
     it 'with valid attributes' do
       validator = UserForm.new(user, {
         name: 'Tom Hardy',
-        email: 'tom@tendrl.org',
+        email: 'tom@example.org',
         username: 'thardy',
         password: 'temp12345',
         role: Tendrl::User::ADMIN,
@@ -38,7 +38,7 @@ RSpec.describe Tendrl::UserForm do
     it 'with existing username/email' do
       validator = UserForm.new(user, {
         name: 'David Warner',
-        email: 'dwarner@tendrl.org',
+        email: 'dwarner@example.org',
         username: 'dwarner',
         password: 'temp12345',
         email_notifications: true,
@@ -77,7 +77,7 @@ RSpec.describe Tendrl::UserForm do
     it 'with valid attributes and password' do
       validator = UserForm.new(user, {
         name: 'Tom Hardy',
-        email: 'tom@tendrl.org',
+        email: 'tom@example.org',
         username: 'thardy',
         password: 'temp12345',
         role: Tendrl::User::NORMAL
@@ -88,7 +88,7 @@ RSpec.describe Tendrl::UserForm do
     it 'with existing username/email' do
       validator = UserForm.new(user, {
         name: 'David Warner',
-        email: 'dwarner@tendrl.org',
+        email: 'dwarner@example.org',
         username: 'dwarner',
         password: 'temp12345',
         role: Tendrl::User::LIMITED

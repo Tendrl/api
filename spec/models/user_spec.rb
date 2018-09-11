@@ -2,11 +2,11 @@ require 'spec_helper'
 
 RSpec.describe Tendrl::User do
   it 'create' do
-    stub_email_notifications_index('dwarner', 'dwarner@tendrl.org')
+    stub_email_notifications_index('dwarner', 'dwarner@example.org')
     stub_user('dwarner')
     stub_user_create('dwarner')
     attributes = {
-      email: 'dwarner@tendrl.org',
+      email: 'dwarner@example.org',
       name: 'David Warner',
       username: 'dwarner',
       password: 'temp1234'

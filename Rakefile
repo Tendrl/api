@@ -18,7 +18,7 @@ namespace :etcd do
           Tendrl::User.new,
           name: 'Admin',
           username: 'admin',
-          email: 'admin@tendrl.org',
+          email: 'admin@example.org',
           role: 'admin',
           password: password,
           email_notifications: false

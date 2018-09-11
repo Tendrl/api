@@ -22,7 +22,7 @@ RSpec.describe UsersController do
 
       let(:body){
         {
-          email: 'thardy@tendrl.org',
+          email: 'thardy@example.org',
           username: 'thardy',
           name: 'Tom Hardy',
           password: 'temp12345',
@@ -111,7 +111,7 @@ RSpec.describe UsersController do
       end
 
       it 'self' do
-        stub_email_notifications_index('quentin', 'quentin@tendrl.org')
+        stub_email_notifications_index('quentin', 'quentin@example.org')
         body = { name: 'Quentin D' }
         stub_update_user_attributes('quentin', body)
         put "/users/quentin", body.to_json, http_env

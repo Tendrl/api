@@ -25,7 +25,7 @@ Sample Request
 curl -H 'Content-Type: application/json' -H 'Authorization: Bearer
 d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' 
 -XPOST -d '{"name":"Tom Hardy", "username":"thardy",
-"email":"thardy@tendrl.org", "role":"admin", "password":"pass1234",
+"email":"thardy@example.org", "role":"admin", "password":"pass1234",
 "email_notifications": true}'
 http://127.0.0.1/api/1.0/users
 ----------
@@ -36,7 +36,7 @@ Sample Response
 Status: 201 Created
 
 {
-  "email": "thardy@tendrl.org",
+  "email": "thardy@example.org",
   "username": "thardy",
   "name": "Tom Hardy",
   "role": "admin",
@@ -51,7 +51,7 @@ Update a existing user.
 Sample Request
 
 ----------
-curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XPUT -d '{"name":"Tom Hardee", "username":"thardy", "email":"thardy@tendrl.org", "role":"normal"}' http://127.0.0.1/api/1.0/users/thardy
+curl -H 'Content-Type: application/json' -H 'Authorization: Bearer d03ebb195dbe6385a7caeda699f9930ff2e49f29c381ed82dc95aa642a7660b8' -XPUT -d '{"name":"Tom Hardee", "username":"thardy", "email":"thardy@example.org", "role":"normal"}' http://127.0.0.1/api/1.0/users/thardy
 ----------
 
 Sample Response
@@ -59,7 +59,7 @@ Sample Response
 ----------
 Status: 200 OK
 {
-  "email": "thardy@tendrl.org",
+  "email": "thardy@example.org",
   "username": "thardy",
   "name": "Tom Hardee",
   "role": "normal",
@@ -99,13 +99,13 @@ Sample Response
 ----------
 Status: 200 OK
 [{
-  "email": "admin@tendrl.org",
+  "email": "admin@example.org",
   "username": "admin",
   "name": "Admin",
   "role": "admin",
   "email_notitifications": true
 }, {
-  "email": "thardy@tendrl.org",
+  "email": "thardy@example.org",
   "username": "thardy",
   "name": "Tom Hardy",
   "role": "admin",
@@ -128,7 +128,7 @@ Sample Response
 ----------
 Status: 200 OK
 {
-  "email": "thardy@tendrl.org",
+  "email": "thardy@example.org",
   "username": "thardy",
   "name": "Tom Hardy",
   "role": "admin",
@@ -153,7 +153,7 @@ Sample Response
 ----------
 Status: 200 OK
 {
-  "email": "thardy@tendrl.org",
+  "email": "thardy@example.org",
   "username": "thardy",
   "name": "Tom Hardy",
   "role": "admin",
