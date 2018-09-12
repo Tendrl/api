@@ -52,16 +52,13 @@ RSpec.describe Tendrl::UserForm do
   end
 
   context 'update' do
-
     let(:user){
       stub_user('dwarner')
       Tendrl::User.find('dwarner')
     }
 
     it 'with valid attributes and no password' do
-      validator = UserForm.new(user, {
-        role: Tendrl::User::NORMAL
-      })
+      validator = UserForm.new(user, name: 'T Hardy')
       expect(validator.valid?).to eq(true)
     end
 
@@ -75,25 +72,37 @@ RSpec.describe Tendrl::UserForm do
     end
 
     it 'with valid attributes and password' do
-      validator = UserForm.new(user, {
+      validator = UserForm.new(
+        user,
         name: 'Tom Hardy',
         email: 'tom@tendrl.org',
-        username: 'thardy',
         password: 'temp12345',
-        role: Tendrl::User::NORMAL
-      })
+      )
       expect(validator.valid?).to eq(true)
     end
 
     it 'with existing username/email' do
-      validator = UserForm.new(user, {
+      validator = UserForm.new(
+        user,
+        name: 'David Warner',
+        username: 'dwarner',
+        email: 'dwarner@tendrl.org',
+        password: 'temp12345'
+      )
+      expect(validator.valid?).to eq(true)
+    end
+
+    specify 'with different username or role not allowed' do
+      validator = UserForm.new(
+        user,
         name: 'David Warner',
         email: 'dwarner@tendrl.org',
-        username: 'dwarner',
+        username: 'thardy',
         password: 'temp12345',
         role: Tendrl::User::LIMITED
-      })
-      expect(validator.valid?).to eq(true)
+      )
+      expect(validator.valid?).to eq(false)
+      expect(validator.errors.messages.keys).to include(:username, :role)
     end
   end
 end

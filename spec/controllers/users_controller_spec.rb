@@ -50,8 +50,14 @@ RSpec.describe UsersController do
 
     end
 
-    context 'update' do
-
+    specify 'update other user' do
+      stub_user('quentin')
+      body = { name: 'Quentin2 D' }
+      expect(Tendrl::User).to receive(:save).and_return(
+        Tendrl::User.find('quentin')
+      )
+      put '/users/quentin', body.to_json, http_env
+      expect(last_response.status).to eq(200)
     end
 
     context 'delete' do
@@ -88,36 +94,38 @@ RSpec.describe UsersController do
         stub_access_token('quentin')
       end
 
-
       it 'new user is forbidden' do
         post "/users", {}.to_json, http_env
         expect(last_response.status).to eq(403)
       end
-
     end
 
     context 'update' do
-
       before do
         stub_users
         stub_user('quentin')
         stub_access_token('quentin')
-        stub_failed_create_existing_user('quentin')
       end
 
-      it 'existing user is forbidden' do
-        put "/users/thardy", { name: 'Hardy' }.to_json, http_env
+      it 'other user is forbidden' do
+        put '/users/thardy', { name: 'Hardy' }.to_json, http_env
         expect(last_response.status).to eq(403)
       end
 
-      it 'self' do
-        stub_email_notifications_index('quentin', 'quentin@tendrl.org')
-        body = { name: 'Quentin D' }
-        stub_update_user_attributes('quentin', body)
-        put "/users/quentin", body.to_json, http_env
+      specify 'self' do
+        body = { name: 'Quentin2 D', username: 'quentin' }
+        expect(Tendrl::User).to receive(:save).and_return(
+          Tendrl::User.find('quentin')
+        )
+        put '/users/quentin', body.to_json, http_env
         expect(last_response.status).to eq(200)
       end
 
+      specify 'username is not allowed' do
+        body = { name: 'Quentin2 D', username: 'quentin2' }
+        put '/users/quentin', body.to_json, http_env
+        expect(last_response.status).to eq(422)
+      end
     end
   end
 end
