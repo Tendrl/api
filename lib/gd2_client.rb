@@ -53,6 +53,18 @@ class Gd2Client
   end
 
   def volume(vol_name)
-    get("/v1/volumes#{vol_name}")
+    get("/v1/volumes/#{vol_name}")
+  end
+
+  def bricks(vol_name)
+    get("/v1/volumes/#{vol_name}/bricks")
+  end
+
+  def ping?
+    HTTParty.get(@gd2_url + "/ping").success?
+  end
+
+  def endpoints
+    get('/endpoints')
   end
 end

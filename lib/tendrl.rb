@@ -153,7 +153,6 @@ require './app/models/notification'
 require './app/models/job'
 require './app/models/volume'
 require './app/models/brick'
-require './app/models/peer'
 
 # Forms
 require './app/forms/user_form'

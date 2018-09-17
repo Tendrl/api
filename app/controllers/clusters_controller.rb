@@ -1,12 +1,16 @@
 class ClustersController < AuthenticatedUsersController
   get '/clusters' do
     clusters = Tendrl::Cluster.all
-    { clusters: ClusterPresenter.list(clusters) }.to_json
+    JSON.generate clusters: clusters
   end
 
   before '/clusters/:cluster_id/?*?' do
-    @cluster = Tendrl::Cluster.new(params[:cluster_id])
-    #@cluster.gd2.get("/ping")
+    @cluster = Tendrl::Cluster.find(params[:cluster_id])
+    raise Tendrl::HttpResponseErrorHandler.new(
+      StandardError.new,
+      cause: '/clusters/id',
+      object_id: params[:cluster_id]
+    )
   end
 
   get '/clusters/:cluster_id' do
@@ -24,41 +28,34 @@ class ClustersController < AuthenticatedUsersController
     { volumes: volumes }.to_json
   end
 
+  get '/clusters/:cluster_id/volumes/:volume_id' do
+    volume = @cluster.gd2.volumes(params[:volume_id])
+    { volume: volume }.to_json
+  end
+
+  get '/clusters/:cluster_id/volumes/:volume_id/bricks' do
+    bricks = @cluster.gd2.bricks(params[:volume_id])
+    { bricks: bricks }.to_json
+  end
+
   post '/import' do
     new_endpoint = {
-      gd2_url: parsed_body['gd2_url'],
-      secret: parsed_body['secret']
+      'gd2_url' => parsed_body['gd2_url'],
+      'secret' => parsed_body['secret']
     }
-    gd2 = Gd2Client.new new_endpoint
+    gd2 = Gd2Client.new new_endpoint.symbolize_keys
     state = gd2.state
     cluster = Tendrl::Cluster.new state['cluster-id']
     unless cluster.endpoints.include? new_endpoint
-      Tendrl.etcd.create_in_order(
-        "/clusters/#{state['cluster-id']}/endpoints",
-        value: new_endpoint.to_json
-      )
+      cluster.add_endpoint new_endpoint
     end
     status 201
     state.merge(endpoints: cluster.endpoints).to_json
   end
 
   #get '/clusters/:cluster_id/nodes/:node_id/bricks' do
-    #node = Tendrl::Node.find_by_cluster_id(
-      #params[:cluster_id], params[:node_id]
-    #)
-    #halt 404 unless node.present?
-    #bricks = Tendrl::Brick.find_all_by_cluster_id_and_node_fqdn(
-      #params[:cluster_id], node['fqdn']
-    #)
-    #{ bricks: BrickPresenter.list(bricks) }.to_json
-  #end
-
-  #get '/clusters/:cluster_id/volumes/:volume_id/bricks' do
-    #references = Tendrl::Brick.find_refs_by_cluster_id_and_volume_id(
-      #params[:cluster_id], params[:volume_id]
-    #)
-    #bricks = Tendrl::Brick.find_by_cluster_id_and_refs(params[:cluster_id], references)
-    #{ bricks: BrickPresenter.list(bricks) }.to_json
+    #bricks = @cluster.gd2.get("/endpoints")
+    #{ bricks: bricks }.to_json
   #end
 
   #get '/clusters/:cluster_id/notifications' do

@@ -7,48 +7,41 @@ module Tendrl
     end
 
     def endpoints
-      Tendrl.etcd.get(
+      @endpoints ||= Tendrl.etcd.get(
         "/clusters/#{@uuid}/endpoints", recursive: true
       ).children.map(&:value).sort.uniq.map { |e| JSON.parse e }
+    rescue Etcd::KeyNotFound
+      []
     end
 
     def gd2
-      @gd2 ||= Gd2Client.from_endpoint endpoints.sample
+      @gd2 ||= endpoints.map { |e| Gd2Client.from_endpoint e }.find(&:ping?)
+    end
+
+    def to_json(_)
+      gd2.state.merge(endpoints: endpoints).to_json
+    end
+
+    def add_endpoint(endpoint)
+      Tendrl.etcd.create_in_order(
+        "/clusters/#{@uuid}/endpoints",
+        value: endpoint.to_json
+      )
+      @endpoints = nil
     end
 
     class << self
-      def exist?(cluster_id)
-        Tendrl.etcd.get "/clusters/#{cluster_id}"
-      rescue Etcd::KeyNotFound => e
-        raise Tendrl::HttpResponseErrorHandler.new(
-          e, cause: '/clusters/id', object_id: cluster_id
-        )
-      end
-
       def find(cluster_id)
-        attributes = {}
-        begin
-          attributes = Tendrl.recurse(
-            Tendrl.etcd.get(
-              "/clusters/#{cluster_id}", recursive: true
-            )
-          )[cluster_id]
-        rescue Etcd::KeyNotFound
-          raise Tendrl::HttpResponseErrorHandler.new(
-            e, cause: '/clusters/id', object_id: cluster_id
-          )
-        end
-        new(attributes)
+        cluster = new(cluster_id)
+        return nil unless cluster.gd2.present?
       end
 
       def all
-        begin
-          Tendrl.etcd.get('/clusters', recursive: true).children.map do |cluster|
-            Tendrl.recurse(cluster)
-          end
-        rescue Etcd::KeyNotFound
-          []
+        Tendrl.etcd.get('/clusters').children.map do |etcd_node|
+          Cluster.new File.basename(etcd_node.key)
         end
+      rescue Etcd::KeyNotFound
+        []
       end
     end
   end
