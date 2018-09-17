@@ -15,11 +15,11 @@ module Tendrl
     end
 
     def gd2
-      @gd2 ||= endpoints.map { |e| Gd2Client.from_endpoint e }.find(&:ping?)
+      @gd2 ||= endpoints.map { |e| Gd2Client.new e }.find(&:ping?)
     end
 
     def to_json(_)
-      gd2.state.merge(endpoints: endpoints).to_json
+      gd2.statedump.merge(endpoints: endpoints).to_json
     end
 
     def add_endpoint(endpoint)
@@ -33,7 +33,7 @@ module Tendrl
     class << self
       def find(cluster_id)
         cluster = new(cluster_id)
-        return nil unless cluster.gd2.present?
+        cluster.gd2.present? ? cluster : nil
       end
 
       def all

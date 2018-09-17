@@ -1,50 +1,54 @@
 class ClustersController < AuthenticatedUsersController
   get '/clusters' do
-    clusters = Tendrl::Cluster.all
-    JSON.generate clusters: clusters
+    clusters = Tendrl::Cluster.all.map do |c|
+      c.gd2.statedump.to_h
+    end
+    { clusters: clusters }.to_json
   end
 
   before '/clusters/:cluster_id/?*?' do
     @cluster = Tendrl::Cluster.find(params[:cluster_id])
-    raise Tendrl::HttpResponseErrorHandler.new(
-      StandardError.new,
-      cause: '/clusters/id',
-      object_id: params[:cluster_id]
-    )
+    unless @cluster.present?
+      raise Tendrl::HttpResponseErrorHandler.new(
+        StandardError.new,
+        cause: '/clusters/id',
+        object_id: params[:cluster_id]
+      )
+    end
   end
 
   get '/clusters/:cluster_id' do
-    state = @cluster.gd2.state
-    state.to_json
+    @cluster.gd2.statedump
   end
 
   get '/clusters/:cluster_id/peers' do
-    peers = @cluster.gd2.peers
+    peers = @cluster.gd2.get_peers.to_a
     { peers: peers }.to_json
   end
 
   get '/clusters/:cluster_id/volumes' do
-    volumes = @cluster.gd2.volumes
+    volumes = @cluster.gd2.volume_list.to_a
     { volumes: volumes }.to_json
   end
 
-  get '/clusters/:cluster_id/volumes/:volume_id' do
-    volume = @cluster.gd2.volumes(params[:volume_id])
+  get '/clusters/:cluster_id/volumes/:volname' do
+    volume = @cluster.gd2.volume_info(params[:volname]).to_a
     { volume: volume }.to_json
   end
 
-  get '/clusters/:cluster_id/volumes/:volume_id/bricks' do
-    bricks = @cluster.gd2.bricks(params[:volume_id])
+  get '/clusters/:cluster_id/volumes/:volname/bricks' do
+    bricks = @cluster.gd2.volume_bricks_status(params[:volname]).to_a
     { bricks: bricks }.to_json
   end
 
   post '/import' do
     new_endpoint = {
       'gd2_url' => parsed_body['gd2_url'],
+      'user' => parsed_body['user'],
       'secret' => parsed_body['secret']
     }
-    gd2 = Gd2Client.new new_endpoint.symbolize_keys
-    state = gd2.state
+    gd2 = Gd2Client.new new_endpoint
+    state = gd2.statedump
     cluster = Tendrl::Cluster.new state['cluster-id']
     unless cluster.endpoints.include? new_endpoint
       cluster.add_endpoint new_endpoint
