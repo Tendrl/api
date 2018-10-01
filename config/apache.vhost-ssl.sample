@@ -53,4 +53,8 @@
   # The requests to /api/ will all be forwarded to the tendrl-api application.
   ProxyPass "/api" http://127.0.0.1:9292/
   ProxyPassReverse "/api" http://127.0.0.1:9292/
+
+  # https request to /grafana will be redirected to grafana server as http request
+  ProxyPass /grafana http://127.0.0.1:3000
+  ProxyPassReverse /grafana http://127.0.0.1:3000/grafana
 </VirtualHost>
