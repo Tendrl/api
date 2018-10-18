@@ -2,7 +2,7 @@ module JobPresenter
   class << self
     def single(job)
       payload = job['payload']
-      return if job['payload'].blank? || payload['created_from'] != 'API'
+      return if job['payload'].blank? || !['API', 'BackendFlow'].include?(payload['created_from'])
       {
         job_id: job['job_id'],
         status: job['status'],
