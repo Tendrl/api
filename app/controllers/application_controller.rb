@@ -79,6 +79,13 @@ class ApplicationController < Sinatra::Base
       settings.http_allow_headers.join(',')
   end
 
+  helpers do
+    def parsed_body
+      @body ||= request.body.read
+      JSON.parse(@body)
+    end
+  end
+
   options '*' do
     status 200
   end

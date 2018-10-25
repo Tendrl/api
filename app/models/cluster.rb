@@ -1,45 +1,70 @@
 module Tendrl
   class Cluster
+    attr_accessor :uuid
 
-    attr_accessor :attributes
+    def initialize(cluster_id)
+      @uuid = cluster_id
+    end
 
-    def initialize(attributes={})
-      @attributes = attributes
+    def data
+      @data ||= Tendrl.recurse(
+        Tendrl.etcd.get(
+          "/clusters/#{@uuid}", recursive: true
+        )
+      )[@uuid] rescue {'endpoints' => {}, 'short_name' => nil}
+    end
+
+    def endpoints
+      @endpoints ||= data['endpoints'].values.sort.uniq.map { |e| JSON.parse e }
+    end
+
+    def gd2
+      @gd2 ||= endpoints.map { |e| Gd2Client.new e }.find(&:ping?).generate_api_methods
+    end
+
+    def to_json(_ = nil)
+      gd2
+        .statedump.to_h
+        .merge(endpoints: endpoints)
+        .merge(peers: @gd2.get_peers.to_a)
+        .merge(volumes: @gd2.volume_list.to_a)
+        .merge(short_name: short_name)
+        .to_json
+    end
+
+    def short_name
+      data['short_name']
+    end
+
+    def add_endpoint(peer_id, endpoint)
+      Tendrl.etcd.set(
+        "/clusters/#{@uuid}/endpoints/#{peer_id}",
+        value: endpoint.to_json
+      )
+      @data = nil
+      @endpoints = nil
+    end
+
+    def add_short_name(name)
+      Tendrl.etcd.set(
+        "/clusters/#{@uuid}/short_name",
+        value: name.present? ? name : uuid
+      )
+      @data = nil
     end
 
     class << self
-      def exist?(cluster_id)
-        Tendrl.etcd.get "/clusters/#{cluster_id}"
-      rescue Etcd::KeyNotFound => e
-        raise Tendrl::HttpResponseErrorHandler.new(
-          e, cause: '/clusters/id', object_id: cluster_id
-        )
-      end
-
       def find(cluster_id)
-        attributes = {}
-        begin
-          attributes = Tendrl.recurse(
-            Tendrl.etcd.get(
-              "/clusters/#{cluster_id}", recursive: true
-            )
-          )[cluster_id]
-        rescue Etcd::KeyNotFound
-          raise Tendrl::HttpResponseErrorHandler.new(
-            e, cause: '/clusters/id', object_id: cluster_id
-          )
-        end
-        new(attributes)
+        cluster = new(cluster_id)
+        cluster.gd2.present? ? cluster : nil
       end
 
       def all
-        begin
-          Tendrl.etcd.get('/clusters', recursive: true).children.map do |cluster|
-            Tendrl.recurse(cluster)
-          end
-        rescue Etcd::KeyNotFound
-          []
+        Tendrl.etcd.get('/clusters').children.map do |etcd_node|
+          Cluster.new File.basename(etcd_node.key)
         end
+      rescue Etcd::KeyNotFound
+        []
       end
     end
   end

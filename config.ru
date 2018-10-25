@@ -12,15 +12,14 @@ if ENV['ENABLE_PROFILING']
   use Rack::RubyProf, path: path
 end
 
-map('/1.0') { 
+map('/1.0') do
   use PingController
   use SessionsController
   use AlertingController
   use NotificationsController
   use JobsController
   use UsersController
-  use NodesController
   use ClustersController
   use AuthenticatedUsersController
   run ApplicationController
-}
+end

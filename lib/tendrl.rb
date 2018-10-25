@@ -137,43 +137,31 @@ require './config/initializers/etcd'
 
 # Tendrl core
 require './lib/tendrl/version'
-require './lib/tendrl/flow'
-require './lib/tendrl/object'
-require './lib/tendrl/atom'
-require './lib/tendrl/attribute'
 require './lib/tendrl/http_response_error_handler'
+require './lib/gd2_client'
 
 # Models
 require './app/models/user'
-require './app/models/node'
 require './app/models/cluster'
 require './app/models/alert'
 require './app/models/notification'
 require './app/models/job'
-require './app/models/volume'
-require './app/models/brick'
 
 # Forms
 require './app/forms/user_form'
 
 # Presenters
-require './app/presenters/node_presenter'
-require './app/presenters/cluster_presenter'
 require './app/presenters/job_presenter'
 require './app/presenters/user_presenter'
-require './app/presenters/volume_presenter'
-require './app/presenters/brick_presenter'
 require './app/presenters/notification_presenter'
 
 # Errors
 require './lib/tendrl/errors/tendrl_error'
-require './lib/tendrl/errors/invalid_object_error'
 
 # Contollers
 require './app/controllers/application_controller'
 require './app/controllers/ping_controller'
 require './app/controllers/authenticated_users_controller'
-require './app/controllers/nodes_controller'
 require './app/controllers/clusters_controller'
 require './app/controllers/jobs_controller'
 require './app/controllers/users_controller'

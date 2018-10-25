@@ -25,6 +25,7 @@ BuildRequires: systemd
 Requires: ruby >= 2.0.0
 Requires: rubygem-activemodel >= 4.2.6
 Requires: rubygem-bcrypt >= 3.1.10
+Requires: rubygem-httparty
 Requires: rubygem-i18n >= 0.7.0
 Requires: rubygem-json
 Requires: rubygem-minitest >= 5.9.1
@@ -41,7 +42,7 @@ Requires: rubygem-etcd
 Requires: rubygem-rack-protection >= 1.5.3
 Requires: rubygem-activesupport >= 4.2.6
 Requires: rubygem-sinatra >= 1.4.5
-Requires: tendrl-node-agent
+Requires: rubygem-jwt >= 1.5.6
 
 %description
 Collection of tendrl api.

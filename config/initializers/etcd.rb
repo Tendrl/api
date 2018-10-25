@@ -29,6 +29,19 @@ module Tendrl
       cache.delete path
       delete path, opts
     end
+
+    def get(path, opts = {})
+      super('/tendrl2' + path, opts)
+    end
+    def set(path, *args)
+      super('/tendrl2' + path, *args)
+    end
+    def create_in_order(path, *args)
+      super('/tendrl2' + path, *args)
+    end
+    def delete(path, *args)
+      super('/tendrl2' + path, *args)
+    end
   end
 end
 
