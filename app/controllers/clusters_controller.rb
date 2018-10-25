@@ -1,8 +1,6 @@
 class ClustersController < AuthenticatedUsersController
   get '/clusters' do
-    clusters = Tendrl::Cluster.all.map do |c|
-      c.gd2.statedump.to_h
-    end
+    clusters = Tendrl::Cluster.all
     { clusters: clusters }.to_json
   end
 
@@ -18,7 +16,7 @@ class ClustersController < AuthenticatedUsersController
   end
 
   get '/clusters/:cluster_id' do
-    @cluster.gd2.statedump
+    @cluster.to_json
   end
 
   get '/clusters/:cluster_id/peers' do
@@ -36,6 +34,14 @@ class ClustersController < AuthenticatedUsersController
     { volume: volume }.to_json
   end
 
+  post '/clusters/:cluster_id/volumes/:volname/start' do
+    @cluster.gd2.volume_start(params[:volname]).body
+  end
+
+  post '/clusters/:cluster_id/volumes/:volname/stop' do
+    @cluster.gd2.volume_stop(params[:volname]).body
+  end
+
   get '/clusters/:cluster_id/volumes/:volname/bricks' do
     bricks = @cluster.gd2.volume_bricks_status(params[:volname]).to_a
     { bricks: bricks }.to_json
@@ -48,13 +54,48 @@ class ClustersController < AuthenticatedUsersController
       'secret' => parsed_body['secret']
     }
     gd2 = Gd2Client.new new_endpoint
-    state = gd2.statedump
+    halt 404, 'Invalid endpoint' unless gd2.ping? && gd2.generate_api_methods
+    state = gd2.statedump.to_h
     cluster = Tendrl::Cluster.new state['cluster-id']
-    unless cluster.endpoints.include? new_endpoint
-      cluster.add_endpoint new_endpoint
+    unless cluster.data['endpoints'].include? new_endpoint
+      cluster.add_endpoint state['peer-id'], new_endpoint
+    end
+    cluster.add_short_name(parsed_body['short_name'])
+    begin
+      # TODO Publish webhook to GD2 as below:
+      # cluster.gd2.events_webhook_add(url: "http://<tendrl_server>/api/1.0/clusters/#{cluster.uuid}/event_webhook")
+      # TODO See below for event_webhook API.
+    rescue Tendrl::HttpResponseErrorHandler => e
+      details = e.body[:errors][:details]
+      raise e unless details.present? && details['errors'].first['code'].to_s == '1'
     end
     status 201
-    state.merge(endpoints: cluster.endpoints).to_json
+    cluster.to_json
+  end
+
+  # Server sent events for subscribing to glusterd2 events
+  # TODO Add https://github.com/remy/polyfills/blob/master/EventSource.js polyfill to UI
+  # TODO Use http://walterbm.github.io/blog/2015/10/07/sinatra-and-server-sent-events/ as a reference on how to consume this in UI
+  connections = []
+  get '/clusters/:cluster_id/event_stream', provides: 'text/event-stream' do
+    stream(:keep_open) do |out|
+      connections << out
+      connections.reject!(&:closed?)
+    end
+  end
+
+  # This API listens to events from this cluster (to be published to GD2 as part of import)
+  # TODO Publish events to interested clients that have connected to the event_stream API
+  # TODO This API should also call prometheus alertmanager APIs if necessary
+  # TODO Add metric scraping jobs to prometheus server config, so that gluster-prometheus data starts appearing in our prometheus instance
+  post '/clusters/:cluster_id/event_webhook' do
+    connections.each do |conn|
+      conn << '{"data": "foobar"}'+"\n\n"
+    end
+  end
+
+  get '/clusters/:cluster_id/events' do
+    { events: @cluster.gd2.events_list.to_a }.to_json
   end
 
   #get '/clusters/:cluster_id/nodes/:node_id/bricks' do

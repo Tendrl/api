@@ -8,7 +8,6 @@ class Gd2Client
     @gd2_url = endpoint[:gd2_url]
     @user = endpoint[:user].present? ? endpoint[:user] : 'glustercli'
     @secret = endpoint[:secret] || File.read(File.join('var', 'lib', 'glusterd2', 'auth'))
-    generate_api_methods
   end
 
   def claim(method, path)
@@ -35,7 +34,7 @@ class Gd2Client
 
   def http_call(method, path, opts = {})
     req_data = { headers: { 'Authorization' => 'Bearer ' + jwt_token(method, path) } }
-    req_data[:body] = args[-1].to_h if %w[put post patch].include?(method) && args[-1].respond_to(:to_h)
+    req_data[:body] = opts.to_json if %w[put post patch].include?(method) && opts.present?
     HTTParty.public_send(
       method,
       @gd2_url + path,
@@ -54,9 +53,9 @@ class Gd2Client
       self.class.send(:define_method, method_name) do |*args|
         path = api['path'].gsub(/{.*?}/).with_index { |_, i| args[i] }
         path = prefixed_path(path)
-        response = http_call(action, path, args[-1].present? && args[-1].respond_to?(:to_h) ? args[-1] : {})
+        response = http_call(action, path, args[-1].present? && args[-1].respond_to?(:to_h) ? args[-1].to_h : {})
         return response if response.success?
-        raise Tendrl::HttpResponseErrorHandler.new(response.body, cause: 'gd2_api_error', object_id: api['methods'] + path.to_s)
+        raise Tendrl::HttpResponseErrorHandler.new(response.to_h, cause: 'gd2_api_error', object_id: api['methods'] + path.to_s)
       end
     end
     self

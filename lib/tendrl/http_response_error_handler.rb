@@ -71,7 +71,8 @@ module Tendrl
         status: 503,
         body: {
           errors: {
-            message: 'GD2 API Error at: %s'
+            message: 'GD2 API Error at: %s',
+            details: true
           }
         }
       },
@@ -85,7 +86,7 @@ module Tendrl
       }
     }.freeze
 
-    def initialize(error, cause: nil, object_id: nil)
+    def initialize(error, cause: nil, object_id: nil, details: nil)
       @error = error
       @cause = cause
       @object_id = object_id
@@ -94,6 +95,7 @@ module Tendrl
       if @object_id
         @body[:errors][:message] = @body[:errors][:message] % [@object_id]
       end
+      @body[:errors][:details] = @error if @body[:errors][:details]
       @status = @mapping[:status]
     end
 
