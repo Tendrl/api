@@ -39,7 +39,7 @@ Sample Response
   "public_network": "",
   "cluster_network": "",
   "is_managed": "yes",
-  "volume_profiling_flag": "enable",
+  "volume_profiling_state": "enabled",
   "import_status": "None",
   "import_job_id": "None",
   "nodes": [{
@@ -202,7 +202,7 @@ Status: 200 OK
     "public_network": "",
     "cluster_network": "",
     "is_managed": "yes",
-    "volume_profiling_flag": "enable",
+    "volume_profiling_state": "enabled",
     "import_status": "None",
     "import_job_id": "None",
     "nodes": [{
@@ -292,7 +292,7 @@ Sample Response
   "public_network": "",
   "cluster_network": "",
   "is_managed": "yes",
-  "volume_profiling_flag": "enable",
+  "volume_profiling_state": "enabled",
   "import_status": "None",
   "import_job_id": "None",
   "nodes": [{
