@@ -8,14 +8,14 @@ environment 'production'
 
 stdout_redirect "#{app_dir}/log/puma.log", "#{app_dir}/log/error.log", true
 
-threads_count = Integer(ENV['PUMA_MAX_THREADS'] || 8)
+threads_count = Integer(ENV['PUMA_MAX_THREADS'] || 2)
 threads threads_count, threads_count
 
 bind 'tcp://127.0.0.1:9292'
 
 # === Cluster mode ===
 
-workers Integer(ENV['PUMA_WORKERS'] || 2)
+workers Integer(ENV['PUMA_WORKERS'] || 4)
 
 preload_app!
 
