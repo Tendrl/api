@@ -89,6 +89,7 @@ install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
 install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{install_dir}/config/initializers/
 install -Dm 0644 firewalld/tendrl-api.xml $RPM_BUILD_ROOT%{_prefix}/lib/firewalld/services/tendrl-api.xml
+install -Dm 0644 config/tendrl-api_logrotate.conf $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/tendrl-api_logrotate.conf
 
 # Symlink writable directories onto /var
 ln -s %{log_dir} $RPM_BUILD_ROOT%{install_dir}/log
@@ -121,6 +122,7 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %{install_dir}/
 %{doc_dir}/
 %{_unitdir}/tendrl-api.service
+%config(noreplace) %{_sysconfdir}/logrotate.d/tendrl-api_logrotate.conf
 %config(noreplace) %attr(0640, root, %{app_group}) %{config_file}
 %config(noreplace) %{_prefix}/lib/firewalld/services/tendrl-api.xml
 
@@ -129,6 +131,9 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
+* Fri Jan 18 2019 Gowtham Shanmugasundaram <gshanmug@redhat.com> - 1.6.3-8
+- Log rotation for tendrl log files
+
 * Fri Jul 27 2018 Shirshendu Mukherjee <smukherj@redhat.com> - 1.6.3-7
 - Bugfix for recursion when non-json 'data' attr is present
 
