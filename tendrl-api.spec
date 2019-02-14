@@ -84,7 +84,7 @@ install -Dm 0644 lib/tendrl/errors/*.rb $RPM_BUILD_ROOT%{install_dir}/lib/tendrl
 install -Dm 0644 tendrl-api.service $RPM_BUILD_ROOT%{_unitdir}/tendrl-api.service
 install -Dm 0640 config/etcd.sample.yml $RPM_BUILD_ROOT%{config_file}
 install -Dm 0644 README.adoc Rakefile $RPM_BUILD_ROOT%{doc_dir}
-install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
+install -Dm 0644 config/apache.vhost-ssl.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/00_tendrl-ssl.conf.sample
 install -Dm 0644 config/apache.vhost.sample $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/tendrl.conf
 install -Dm 0644 config/puma/*.rb $RPM_BUILD_ROOT%{install_dir}/config/puma/
 install -Dm 0644 config/initializers/*.rb $RPM_BUILD_ROOT%{install_dir}/config/initializers/
@@ -127,7 +127,7 @@ systemctl enable tendrl-api >/dev/null 2>&1 || :
 %config(noreplace) %{_prefix}/lib/firewalld/services/tendrl-api.xml
 
 %files httpd
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl-ssl.conf.sample
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/00_tendrl-ssl.conf.sample
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tendrl.conf
 
 %changelog
