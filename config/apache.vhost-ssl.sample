@@ -5,7 +5,7 @@
 ## This configuration file assumes that mod_ssl package is installed on
 ## RHEL/CentOS hosts and it's configuration has not been modified.
 
-<VirtualHost %ssl_virtualhost_ip%:443>
+<VirtualHost _default_:443>
   # Adjust the ServerName directive to reflect the FQDN for your host. Add
   # additional ServerAlias directives if required.
   ServerName tendrl
