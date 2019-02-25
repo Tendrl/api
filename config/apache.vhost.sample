@@ -22,7 +22,7 @@
   #
   # IMPORTANT: Be sure to comment out the DocumentRoot, ProxyPass and
   # ProxyPassReverse directives above.
-  #Redirect permanent / https://%ssl_virtualhost_ip%/
+  #Redirect permanent / https://%ssl_virtualhost_fqdn%/
 
   # The requests to /grafana will be forwarded to grafana server
   ProxyPass /grafana http://127.0.0.1:3000
