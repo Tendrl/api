@@ -46,7 +46,7 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rainbow (2.1.0)
-    rake (0.9.6)
+    rake (12.3.3)
     rb-readline (0.5.5)
     rest-client (2.0.1)
       http-cookie (>= 1.0.2, < 2.0)
@@ -109,7 +109,7 @@ DEPENDENCIES
   etcd (= 0.3.0)
   puma (= 3.6.0)
   rack-test
-  rake (= 0.9.6)
+  rake (= 12.3.3)
   rb-readline
   rest-client
   rspec
